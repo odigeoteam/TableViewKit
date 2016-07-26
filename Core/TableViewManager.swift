@@ -1,5 +1,5 @@
 //
-//  ODGTableViewManager.swift
+//  TableViewManager.swift
 //  TableViewKit
 //
 //  Created by Nelson Dominguez Leon on 07/06/16.
@@ -10,26 +10,26 @@ import Foundation
 import UIKit
 
 @objc
-public protocol ODGTableViewManagerDelegate: UITableViewDelegate {
+public protocol TableViewManagerDelegate: UITableViewDelegate {
     
 }
 
-public class ODGTableViewManager: NSObject {
+public class TableViewManager: NSObject {
     
     // MARK: Properties
     
     /// Array of sections
-    public var sections: [ODGTableViewSectionProtocol] = []
+    public var sections: [TableViewSectionProtocol] = []
     
     /// TableView to be managed
     public var tableView: UITableView!
     
     /// Delegate to notify when the events occurs
-    public var delegate: ODGTableViewManagerDelegate?
+    public var delegate: TableViewManagerDelegate?
     
     // MARK: Inits
     
-    public init(tableView: UITableView, delegate: ODGTableViewManagerDelegate?) {
+    public init(tableView: UITableView, delegate: TableViewManagerDelegate?) {
         
         super.init()
         
@@ -47,7 +47,7 @@ public class ODGTableViewManager: NSObject {
      
      - returns: The element representing the cell
      */
-    private func itemForIndexPath(indexPath: NSIndexPath) -> ODGTableViewItemProtocol {
+    private func itemForIndexPath(indexPath: NSIndexPath) -> TableViewItemProtocol {
         
         let section = sections[indexPath.section]
         let item = section.items[indexPath.row]
@@ -63,7 +63,7 @@ public class ODGTableViewManager: NSObject {
      
      - parameter cell: Cell to be registered
      */
-    public func registerCell(cell: ODGTableViewCell.Type) {
+    public func registerCell(cell: TableViewCell.Type) {
         
         registerCell(cell, bundle: nil)
     }
@@ -74,7 +74,7 @@ public class ODGTableViewManager: NSObject {
      - parameter cell:   Cell to be registered
      - parameter bundle: Bundle that contain the cell
      */
-    public func registerCell(cell: ODGTableViewCell.Type, bundle: NSBundle?) {
+    public func registerCell(cell: TableViewCell.Type, bundle: NSBundle?) {
         
         assert(NSClassFromString(NSStringFromClass(cell)) != nil, "Cell class \(cell) does not exist.")
         
@@ -94,7 +94,7 @@ public class ODGTableViewManager: NSObject {
      
      - parameter section: Section to be added
      */
-    public func addSection(section: ODGTableViewSectionProtocol) {
+    public func addSection(section: TableViewSectionProtocol) {
         
         section.tableViewManager = self
         sections.append(section)
@@ -105,7 +105,7 @@ public class ODGTableViewManager: NSObject {
      
      - parameter sections: Sections to be added
      */
-    public func addSections(sections: [ODGTableViewSectionProtocol]) {
+    public func addSections(sections: [TableViewSectionProtocol]) {
         
         for section in sections {
             addSection(section)
@@ -131,7 +131,7 @@ public class ODGTableViewManager: NSObject {
     }
 }
 
-extension ODGTableViewManager: UITableViewDataSource {
+extension TableViewManager: UITableViewDataSource {
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return sections.count
@@ -201,7 +201,7 @@ extension ODGTableViewManager: UITableViewDataSource {
     }
 }
 
-extension ODGTableViewManager: UITableViewDelegate {
+extension TableViewManager: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         

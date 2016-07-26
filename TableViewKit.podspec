@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
 
-  s.name         = "ODGTableViewKit"
+  s.name         = "TableViewKit"
   s.version      = "0.1.0"
   s.summary      = "TableView Kit Layer"
   s.description  = "TableView Kit Layer"

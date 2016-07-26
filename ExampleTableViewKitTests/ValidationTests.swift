@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import ODGTableViewKit
+import TableViewKit
 import Nimble
 
 class ValidationTests: XCTestCase {
@@ -24,7 +24,7 @@ class ValidationTests: XCTestCase {
     
     func testPresenceValidatorOK() {
         
-        let presenceValidator = ODGPresenceValidator()
+        let presenceValidator = PresenceValidator()
         let error = presenceValidator.validate("String", name: "Field Name", parameters: nil)
         
         expect(error).to(beNil())
@@ -32,7 +32,7 @@ class ValidationTests: XCTestCase {
     
     func testPresenceValidatorKO() {
         
-        let presenceValidator = ODGPresenceValidator()
+        let presenceValidator = PresenceValidator()
         let error = presenceValidator.validate("", name: "Field Name", parameters: nil)
         
         expect(error).notTo(beNil())
@@ -40,7 +40,7 @@ class ValidationTests: XCTestCase {
     
     func testEmailValidatorOK() {
         
-        let emailValidator = ODGEmailValidator()
+        let emailValidator = EmailValidator()
         let error = emailValidator.validate("good@email.com", name: "Email Field", parameters: nil)
         
         expect(error).to(beNil())
@@ -48,7 +48,7 @@ class ValidationTests: XCTestCase {
     
     func testEmailValidatorKO() {
         
-        let emailValidator = ODGEmailValidator()
+        let emailValidator = EmailValidator()
         let error = emailValidator.validate("bad@email", name: "Email Field", parameters: nil)
         
         expect(error).notTo(beNil())

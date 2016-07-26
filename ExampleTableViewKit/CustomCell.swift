@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import ODGTableViewKit
+import TableViewKit
 
-class CustomCell: ODGTableViewCell {
+class CustomCell: TableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()

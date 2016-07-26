@@ -1,5 +1,5 @@
 //
-//  ODGTableViewItem.swift
+//  TableViewItem.swift
 //  TableViewKit
 //
 //  Created by Nelson Dominguez Leon on 07/06/16.
@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-public protocol ODGTableViewItemProtocol: class {
+public protocol TableViewItemProtocol: class {
     
     /// Section
-    weak var section: ODGTableViewSectionProtocol! { get set }
+    weak var section: TableViewSectionProtocol! { get set }
     
     /// Drawer used to draw cell. Strategy pattern
-    var drawer: ODGTableViewDrawerCellProtocol { get set }
+    var drawer: TableViewDrawerCellProtocol { get set }
     
     /// Cell data
     var image: UIImage? { get set }
@@ -28,9 +28,9 @@ public protocol ODGTableViewItemProtocol: class {
     var cellHeight: Float { get set }
     var indexPath: NSIndexPath? { get set }
     
-    var selectionHandler: ((ODGTableViewItemProtocol) -> ())? { get set }
+    var selectionHandler: ((TableViewItemProtocol) -> ())? { get set }
     var name: String? { get set }
-    var validators: [ODGValidator] { get set }
+    var validators: [Validator] { get set }
     
     func errors() -> [NSError]
     
@@ -41,19 +41,19 @@ public protocol ODGTableViewItemProtocol: class {
     func deleteRowWithAnimation(animation: UITableViewRowAnimation)
 }
 
-func ==(lhs: ODGTableViewItemProtocol, rhs: ODGTableViewItemProtocol) -> Bool {
+func ==(lhs: TableViewItemProtocol, rhs: TableViewItemProtocol) -> Bool {
     return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
 }
 
-func !=(lhs: ODGTableViewItemProtocol, rhs: ODGTableViewItemProtocol) -> Bool {
+func !=(lhs: TableViewItemProtocol, rhs: TableViewItemProtocol) -> Bool {
     return ObjectIdentifier(lhs) != ObjectIdentifier(rhs)
 }
 
-public class ODGTableViewItem: ODGTableViewItemProtocol {
+public class TableViewItem: TableViewItemProtocol {
     
-    public weak var section: ODGTableViewSectionProtocol!
+    public weak var section: TableViewSectionProtocol!
     
-    public var drawer: ODGTableViewDrawerCellProtocol
+    public var drawer: TableViewDrawerCellProtocol
     
     // MARK: Cell values
     
@@ -71,27 +71,27 @@ public class ODGTableViewItem: ODGTableViewItemProtocol {
     
     // MARK: Handlers
     
-    public var selectionHandler: ((ODGTableViewItemProtocol) -> ())?
+    public var selectionHandler: ((TableViewItemProtocol) -> ())?
     
     // MARK: Error validations
     
     /// Name of item, used in validation system to generate the error
     public var name: String?
     
-    /// Array of validators. See ODGPresenceValidator, ODGEmailValidator
-    /// Note: You can create your custom validator, implementing ODGValidator protocol
-    public var validators: [ODGValidator] = []
+    /// Array of validators. See PresenceValidator, EmailValidator
+    /// Note: You can create your custom validator, implementing Validator protocol
+    public var validators: [Validator] = []
     
     /**
      Add a validator
     */
-    public func add(validator validator:ODGValidator) {
+    public func add(validator validator:Validator) {
         validators.append(validator)
     }
     
     /**
      Rewrite this function and call to Validation system
-     Example: ODGValidation.validate(objectToValidate, name: self.name, validators: self.validators)
+     Example: Validation.validate(objectToValidate, name: self.name, validators: self.validators)
      
      - returns: Array of errors
      */
@@ -136,7 +136,7 @@ public class ODGTableViewItem: ODGTableViewItemProtocol {
     
     public init() {
         
-        drawer = ODGTableViewDrawerCell()
+        drawer = TableViewDrawerCell()
         
         cellStyle = .Default
         accessoryType = .None

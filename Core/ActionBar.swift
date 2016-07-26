@@ -1,5 +1,5 @@
 //
-//  ODGActionBar.swift
+//  ActionBar.swift
 //  TableViewKit
 //
 //  Created by Nelson Dominguez Leon on 22/06/16.
@@ -9,18 +9,18 @@
 import Foundation
 import UIKit
 
-public protocol ODGActionBarDelegate {
+public protocol ActionBarDelegate {
     
-    func actionBar(actionBar: ODGActionBar, navigationControlValueChanged navigationControl: UISegmentedControl)
-    func actionBar(actionBar: ODGActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem)
+    func actionBar(actionBar: ActionBar, navigationControlValueChanged navigationControl: UISegmentedControl)
+    func actionBar(actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem)
 }
 
-public class ODGActionBar: UIToolbar {
+public class ActionBar: UIToolbar {
     
     var navigationControl: UISegmentedControl!
-    var actionBarDelegate: ODGActionBarDelegate!
+    var actionBarDelegate: ActionBarDelegate!
     
-    init(delegate: ODGActionBarDelegate) {
+    init(delegate: ActionBarDelegate) {
         
         super.init(frame: CGRectZero)
         

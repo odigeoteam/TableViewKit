@@ -1,5 +1,5 @@
 //
-//  ODGValidation.swift
+//  Validation.swift
 //  TableViewKit
 //
 //  Created by Nelson Dominguez Leon on 22/06/16.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-public class ODGValidation {
+public class Validation {
     
-    public class func validate(object: AnyObject?, name: String, validators: [ODGValidator]) -> [NSError] {
+    public class func validate(object: AnyObject?, name: String, validators: [Validator]) -> [NSError] {
         
         var errors: [NSError] = []
         

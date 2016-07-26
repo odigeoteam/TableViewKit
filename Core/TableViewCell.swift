@@ -1,5 +1,5 @@
 //
-//  ODGTableViewCell.swift
+//  TableViewCell.swift
 //  TableViewKit
 //
 //  Created by Nelson Dominguez Leon on 08/06/16.
@@ -9,24 +9,24 @@
 import Foundation
 import UIKit
 
-public enum ODGTableViewCellType {
+public enum TableViewCellType {
     case First, Middle, Last, Single, Any
 }
 
-public class ODGTableViewCell : UITableViewCell {
+public class TableViewCell : UITableViewCell {
     
     // MARK: Public
     
-    weak public var tableViewManager: ODGTableViewManager!
+    weak public var tableViewManager: TableViewManager!
     
-    public var actionBar: ODGActionBar!
+    public var actionBar: ActionBar!
     
     public var rowIndex: Int!
     public var sectionIndex: Int!
     
-    public var item: ODGTableViewItemProtocol?
+    public var item: TableViewItemProtocol?
     
-    public var type: ODGTableViewCellType {
+    public var type: TableViewCellType {
         if rowIndex == 0 && item?.section?.items.count == 1 { return .Single }
         if rowIndex == 0 && item?.section?.items.count > 1 { return .First }
         if rowIndex > 0 && rowIndex < (item?.section?.items.count)! - 1 && item?.section?.items.count > 2 { return .Middle }
@@ -55,7 +55,7 @@ public class ODGTableViewCell : UITableViewCell {
     
     public func commonInit() {
         
-        actionBar = ODGActionBar(delegate: self)
+        actionBar = ActionBar(delegate: self)
     }
     
     public func configure() {
@@ -74,7 +74,7 @@ public class ODGTableViewCell : UITableViewCell {
         }
     }
     
-    public class func canFocus(withItem item: ODGTableViewItemProtocol) -> Bool {
+    public class func canFocus(withItem item: TableViewItemProtocol) -> Bool {
         return false
     }
     
@@ -83,7 +83,7 @@ public class ODGTableViewCell : UITableViewCell {
     }
 }
 
-extension ODGTableViewCell: ODGActionBarDelegate {
+extension TableViewCell: ActionBarDelegate {
     
     private func indexPathForPreviousResponderInSectionIndex(sectionIndex: Int) -> NSIndexPath? {
         
@@ -140,24 +140,24 @@ extension ODGTableViewCell: ODGActionBarDelegate {
         return nil
     }
     
-    public func actionBar(actionBar: ODGActionBar, navigationControlValueChanged navigationControl: UISegmentedControl) {
+    public func actionBar(actionBar: ActionBar, navigationControlValueChanged navigationControl: UISegmentedControl) {
         
         if let indexPath = navigationControl.selectedSegmentIndex == 0 ? indexPathForPreviousResponder() : indexPathForNextResponder() {
             
             // Get the cell
-            var cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? ODGTableViewCell
+            var cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? TableViewCell
             // No cell? Scrool tableview
             if cell == nil {
                 tableViewManager.tableView .scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
             }
             // Try again
-            cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? ODGTableViewCell
+            cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? TableViewCell
             
             cell?.responder()?.becomeFirstResponder()
         }
     }
     
-    public func actionBar(actionBar: ODGActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {
+    public func actionBar(actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {
         endEditing(true)
     }
 }

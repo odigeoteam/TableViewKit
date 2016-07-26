@@ -1,5 +1,5 @@
 //
-//  ODGTableViewSection.swift
+//  TableViewSection.swift
 //  TableViewKit
 //
 //  Created by Nelson Dominguez Leon on 07/06/16.
@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-public protocol ODGTableViewSectionProtocol: class {
+public protocol TableViewSectionProtocol: class {
     
-    weak var tableViewManager: ODGTableViewManager! { get set }
+    weak var tableViewManager: TableViewManager! { get set }
     
-    var items: [ODGTableViewItemProtocol] { get set }
+    var items: [TableViewItemProtocol] { get set }
     
     var headerTitle: String? { get set }
     var footerTitle: String? { get set }
@@ -26,28 +26,28 @@ public protocol ODGTableViewSectionProtocol: class {
     
     func errors() -> [NSError]
     
-    func addItem(item: ODGTableViewItemProtocol)
-    func addItems(items: [ODGTableViewItemProtocol])
-    func removeItem(item: ODGTableViewItemProtocol)
-    func removeItems(array: [ODGTableViewItemProtocol])
+    func addItem(item: TableViewItemProtocol)
+    func addItems(items: [TableViewItemProtocol])
+    func removeItem(item: TableViewItemProtocol)
+    func removeItems(array: [TableViewItemProtocol])
 }
 
-func ==(lhs: ODGTableViewSectionProtocol, rhs: ODGTableViewSectionProtocol) -> Bool {
+func ==(lhs: TableViewSectionProtocol, rhs: TableViewSectionProtocol) -> Bool {
     return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
 }
 
-func !=(lhs: ODGTableViewSectionProtocol, rhs: ODGTableViewSectionProtocol) -> Bool {
+func !=(lhs: TableViewSectionProtocol, rhs: TableViewSectionProtocol) -> Bool {
     return ObjectIdentifier(lhs) != ObjectIdentifier(rhs)
 }
 
-public class ODGTableViewSection: ODGTableViewSectionProtocol {
+public class TableViewSection: TableViewSectionProtocol {
     
     // MARK: Public properties
     
     /**
      An array of section items (rows).
      */
-    public var items: [ODGTableViewItemProtocol]
+    public var items: [TableViewItemProtocol]
     
     /**
      The title of the header of the specified section of the table view.
@@ -103,7 +103,7 @@ public class ODGTableViewSection: ODGTableViewSectionProtocol {
     /**
      The table view manager of this section.
      */
-    weak public var tableViewManager: ODGTableViewManager!
+    weak public var tableViewManager: TableViewManager!
     
     // MARK: Init methods
     
@@ -125,13 +125,13 @@ public class ODGTableViewSection: ODGTableViewSectionProtocol {
     
     // MARK: Add methods
     
-    public func addItem(item: ODGTableViewItemProtocol) {
+    public func addItem(item: TableViewItemProtocol) {
         
         item.section = self
         items.append(item)
     }
     
-    public func addItems(items: [ODGTableViewItemProtocol]) {
+    public func addItems(items: [TableViewItemProtocol]) {
         
         for item in items {
             addItem(item)
@@ -140,14 +140,14 @@ public class ODGTableViewSection: ODGTableViewSectionProtocol {
     
     // MARK: Remove methods
     
-    public func removeItem(item: ODGTableViewItemProtocol) {
+    public func removeItem(item: TableViewItemProtocol) {
         
         if let index = items.indexOf({ $0 == item }) {
             items.removeAtIndex(index)
         }
     }
     
-    public func removeItems(array: [ODGTableViewItemProtocol]) {
+    public func removeItems(array: [TableViewItemProtocol]) {
         
         for element in array {
             removeItem(element)

@@ -6,9 +6,9 @@
 //  Copyright © 2016 ODIGEO. All rights reserved.
 //
 
-import ODGTableViewKit
+import TableViewKit
 
-class CustomItem: ODGTableViewItem {
+class CustomItem: TableViewItem {
 
     override init() {
         
@@ -19,9 +19,9 @@ class CustomItem: ODGTableViewItem {
     }
 }
 
-class CustomDrawer: ODGTableViewDrawerCell {
+class CustomDrawer: TableViewDrawerCell {
     
-    override func cellClass() -> ODGTableViewCell.Type {
+    override func cellClass() -> TableViewCell.Type {
         return CustomCell.self
     }
 }

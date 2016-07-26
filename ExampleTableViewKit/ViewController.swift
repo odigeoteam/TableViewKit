@@ -7,19 +7,19 @@
 //
 
 import UIKit
-import ODGTableViewKit
+import TableViewKit
 
 class ViewController: UITableViewController {
     
-    var tableViewManager: ODGTableViewManager!
+    var tableViewManager: TableViewManager!
     
-    private var pickerControl: ODGPickerControl?
+    private var pickerControl: PickerControl?
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        tableViewManager = ODGTableViewManager(tableView: self.tableView, delegate: nil)
+        tableViewManager = TableViewManager(tableView: self.tableView, delegate: nil)
         tableViewManager.registerCell(CustomCell.self)
         
         addFirstSection()
@@ -30,11 +30,11 @@ class ViewController: UITableViewController {
     
     private func addFirstSection() {
         
-        let section = ODGTableViewSection(headerTitle: "Section title")
+        let section = TableViewSection(headerTitle: "Section title")
         section.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
         tableViewManager.addSection(section)
         
-        let item = ODGTableViewItem(title: "Passengers", subtitle: nil)
+        let item = TableViewItem(title: "Passengers", subtitle: nil)
         item.image = UIImage(named: "search")
         item.accessoryType = .DisclosureIndicator
         item.selectionHandler = { item in
@@ -43,7 +43,7 @@ class ViewController: UITableViewController {
         }
         section.addItem(item)
         
-        let dateItem = ODGTableViewItem(title: "Birthday", subtitle: nil)
+        let dateItem = TableViewItem(title: "Birthday", subtitle: nil)
         dateItem.accessoryType = .DisclosureIndicator
         dateItem.selectionHandler = { item in
             item.deselectRowAnimated(true)
@@ -51,7 +51,7 @@ class ViewController: UITableViewController {
         }
         section.addItem(dateItem)
         
-        let selectionItem = ODGTableViewItem(title: "Selection", subtitle: nil)
+        let selectionItem = TableViewItem(title: "Selection", subtitle: nil)
         selectionItem.accessoryType = .DisclosureIndicator
         selectionItem.selectionHandler = { item in
             item.deselectRowAnimated(true)
@@ -62,7 +62,7 @@ class ViewController: UITableViewController {
     
     private func addSecondSection() {
         
-        let personalSection = ODGTableViewSection(headerTitle: "Personal Data")
+        let personalSection = TableViewSection(headerTitle: "Personal Data")
         tableViewManager.addSection(personalSection)
         
         let customItem = CustomItem()
@@ -76,7 +76,7 @@ class ViewController: UITableViewController {
         
         let numbers: [Int] = Array(0...10)
         
-        let pickerControl = ODGPickerControl(elements: [numbers, numbers, numbers], selectCallback: nil, cancelCallback: nil)
+        let pickerControl = PickerControl(elements: [numbers, numbers, numbers], selectCallback: nil, cancelCallback: nil)
         pickerControl.title = "Passengers"
         pickerControl.selectValue(1, component: 0)
         pickerControl.selectCallback = { selection in
@@ -87,11 +87,11 @@ class ViewController: UITableViewController {
         self.pickerControl = pickerControl
     }
     
-    func showDatePickerControl(fromItem: ODGTableViewItemProtocol) {
+    func showDatePickerControl(fromItem: TableViewItemProtocol) {
         
         let fromDate = NSDate(timeIntervalSinceNow: -4600000)
         let toDate = NSDate(timeIntervalSinceNow: 4600000)
-        let pickerControl = ODGPickerControl(datePickerMode: .Date, fromDate: fromDate, toDate: toDate, minuteInterval: 0, selectCallback: { selection in
+        let pickerControl = PickerControl(datePickerMode: .Date, fromDate: fromDate, toDate: toDate, minuteInterval: 0, selectCallback: { selection in
             if let date = selection as? NSDate {
                 print(date)
             }
@@ -104,14 +104,14 @@ class ViewController: UITableViewController {
     
     func showSelectionViewController() {
         
-        var items: [ODGSelectionItemProtocol] = []
+        var items: [SelectionItemProtocol] = []
         for index in 1 ... 10 {
-            let item = ODGSelectionItem(title: "Item \(index)", value: index)
+            let item = SelectionItem(title: "Item \(index)", value: index)
             item.selected = index % 2 == 0
             items.append(item)
         }
         
-        let selectionViewController = ODGSelectionViewController(style: .Grouped, selectionType: .Multiple)
+        let selectionViewController = SelectionViewController(style: .Grouped, selectionType: .Multiple)
         selectionViewController.title = "Selection"
         selectionViewController.items = items
         selectionViewController.selectionHandler = { items in
@@ -123,7 +123,7 @@ class ViewController: UITableViewController {
     @objc private func validationAction() {
         
         if let error = tableViewManager.errors().first {
-            print("\(error.localizedDescription) with error code: \(ODGValidatorErrorCode(rawValue: error.code)!)")
+            print("\(error.localizedDescription) with error code: \(ValidatorErrorCode(rawValue: error.code)!)")
         }
         else {
             print("All Ok")

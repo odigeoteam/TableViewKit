@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public protocol ODGPickerItemProtocol: class {
+public protocol PickerItemProtocol: class {
     
     var title: String { get }
     var value: Any { get }
@@ -17,15 +17,15 @@ public protocol ODGPickerItemProtocol: class {
     init(title: String, value: Any)
 }
 
-public enum ODGPickerControlType {
+public enum PickerControlType {
     case Single, MultiColumn, Date
 }
 
-public enum ODGPickerControlDismissType {
+public enum PickerControlDismissType {
     case None, Select, Cancel
 }
 
-public class ODGPickerItem: ODGPickerItemProtocol, CustomStringConvertible {
+public class PickerItem: PickerItemProtocol, CustomStringConvertible {
     
     public var title: String
     public var value: Any
@@ -43,18 +43,18 @@ public class ODGPickerItem: ODGPickerItemProtocol, CustomStringConvertible {
 public typealias SelectCallBack = (Any) -> ()
 public typealias CancelCallBack = () -> ()
 
-public class ODGPickerControl: NSObject {
+public class PickerControl: NSObject {
     
-    private var type: ODGPickerControlType
-    private var dismissType: ODGPickerControlDismissType
+    private var type: PickerControlType
+    private var dismissType: PickerControlDismissType
     
     // Single columns
-    private var items: [ODGPickerItemProtocol]!
-    private var selection: ODGPickerItemProtocol!
+    private var items: [PickerItemProtocol]!
+    private var selection: PickerItemProtocol!
     
     // Multicolumn
-    private var components: [[ODGPickerItemProtocol]]!
-    private var selections: [ODGPickerItemProtocol!]!
+    private var components: [[PickerItemProtocol]]!
+    private var selections: [PickerItemProtocol!]!
     
     // Date
     private var dateSelection: NSDate?
@@ -114,15 +114,15 @@ public class ODGPickerControl: NSObject {
         
         for value in elements {
             
-            // Each item is ODGPickerItem
-            if value is ODGPickerItemProtocol {
+            // Each item is PickerItem
+            if value is PickerItemProtocol {
                 
                 if emptyFirstItem {
-                    let emptyItem = ODGPickerItem(title: "", value: "")
+                    let emptyItem = PickerItem(title: "", value: "")
                     items.append(emptyItem)
                 }
                 
-                items.append(value as! ODGPickerItemProtocol)
+                items.append(value as! PickerItemProtocol)
             }
             // We have a array
             else if let array = value as? [AnyObject] {
@@ -130,20 +130,20 @@ public class ODGPickerControl: NSObject {
                 type = .MultiColumn
                 
                 // Column items
-                var components: [ODGPickerItemProtocol] = []
+                var components: [PickerItemProtocol] = []
                 
                 for element in array {
                     
                     if emptyFirstItem {
-                        let emptyItem = ODGPickerItem(title: "", value: "")
+                        let emptyItem = PickerItem(title: "", value: "")
                         components.append(emptyItem)
                     }
                     
-                    if element is ODGPickerItemProtocol {
-                        components.append(element as! ODGPickerItemProtocol)
+                    if element is PickerItemProtocol {
+                        components.append(element as! PickerItemProtocol)
                     }
                     else {
-                        let item = ODGPickerItem(title: String(element), value: element)
+                        let item = PickerItem(title: String(element), value: element)
                         components.append(item)
                     }
                 }
@@ -156,11 +156,11 @@ public class ODGPickerControl: NSObject {
             else {
                 
                 if emptyFirstItem {
-                    let emptyItem = ODGPickerItem(title: "", value: "")
+                    let emptyItem = PickerItem(title: "", value: "")
                     items.append(emptyItem)
                 }
                 
-                let item = ODGPickerItem(title: String(value), value: value)
+                let item = PickerItem(title: String(value), value: value)
                 items.append(item)
             }
         }
@@ -271,7 +271,7 @@ public class ODGPickerControl: NSObject {
         })
     }
     
-    public func selectValue(value: ODGPickerItemProtocol) {
+    public func selectValue(value: PickerItemProtocol) {
         
         if type != .Single {
             return
@@ -286,7 +286,7 @@ public class ODGPickerControl: NSObject {
         }
     }
     
-    public func selectValue(value: ODGPickerItemProtocol, component: Int) {
+    public func selectValue(value: PickerItemProtocol, component: Int) {
         
         if type != .MultiColumn {
             return
@@ -394,7 +394,7 @@ public class ODGPickerControl: NSObject {
     }
 }
 
-extension ODGPickerControl: UIPickerViewDataSource {
+extension PickerControl: UIPickerViewDataSource {
     
     @objc public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         
@@ -439,7 +439,7 @@ extension ODGPickerControl: UIPickerViewDataSource {
     }
 }
 
-extension ODGPickerControl: UIPickerViewDelegate {
+extension PickerControl: UIPickerViewDelegate {
     
     public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
@@ -447,7 +447,7 @@ extension ODGPickerControl: UIPickerViewDelegate {
     }
 }
 
-extension ODGPickerControl: UIToolbarDelegate {
+extension PickerControl: UIToolbarDelegate {
     
     public func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
         

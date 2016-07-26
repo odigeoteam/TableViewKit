@@ -1,5 +1,5 @@
 //
-//  ODGValidator.swift
+//  Validator.swift
 //  TableViewKit
 //
 //  Created by Nelson Dominguez Leon on 22/06/16.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-public enum ODGValidatorErrorCode: Int {
+public enum ValidatorErrorCode: Int {
     
     case Presence = 998, Email = 997
 }
 
-public protocol ODGValidator: class {
+public protocol Validator: class {
     
     func name() -> String
     

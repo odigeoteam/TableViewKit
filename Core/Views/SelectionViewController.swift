@@ -1,5 +1,5 @@
 //
-//  ODGSelectionViewController.swift
+//  SelectionViewController.swift
 //  TableViewKit
 //
 //  Created by Nelson Dominguez Leon on 28/06/16.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public protocol ODGSelectionItemProtocol: ODGTableViewItemProtocol {
+public protocol SelectionItemProtocol: TableViewItemProtocol {
     
     var value: Any { get }
     var selected: Bool { get set }
@@ -17,11 +17,11 @@ public protocol ODGSelectionItemProtocol: ODGTableViewItemProtocol {
     init(title: String, value: Any, selected: Bool)
 }
 
-public enum ODGSelectionType {
+public enum SelectionType {
     case Single, Multiple
 }
 
-public class ODGSelectionItem: ODGTableViewItem, ODGSelectionItemProtocol {
+public class SelectionItem: TableViewItem, SelectionItemProtocol {
     
     public var value: Any
     public var selected: Bool
@@ -37,14 +37,14 @@ public class ODGSelectionItem: ODGTableViewItem, ODGSelectionItemProtocol {
     }
 }
 
-public class ODGSelectionViewController: UITableViewController {
+public class SelectionViewController: UITableViewController {
     
-    private var tableViewManager: ODGTableViewManager!
-    private var selectionType: ODGSelectionType!
-    private var selectedItems: [ODGSelectionItemProtocol]!
+    private var tableViewManager: TableViewManager!
+    private var selectionType: SelectionType!
+    private var selectedItems: [SelectionItemProtocol]!
     
-    public var items: [ODGSelectionItemProtocol]!
-    public var selectionHandler: (([ODGSelectionItemProtocol]) -> ())?
+    public var items: [SelectionItemProtocol]!
+    public var selectionHandler: (([SelectionItemProtocol]) -> ())?
     
     private func commonInit() {
         
@@ -58,7 +58,7 @@ public class ODGSelectionViewController: UITableViewController {
         commonInit()
     }
     
-    public init(style: UITableViewStyle, selectionType: ODGSelectionType) {
+    public init(style: UITableViewStyle, selectionType: SelectionType) {
         
         super.init(style: style)
         commonInit()
@@ -80,7 +80,7 @@ public class ODGSelectionViewController: UITableViewController {
         
         super.viewDidLoad()
         
-        tableViewManager = ODGTableViewManager(tableView: self.tableView, delegate: nil)
+        tableViewManager = TableViewManager(tableView: self.tableView, delegate: nil)
         setupTaleViewItems()
     }
     
@@ -98,13 +98,13 @@ public class ODGSelectionViewController: UITableViewController {
     
     private func setupTaleViewItems() {
         
-        let section = ODGTableViewSection()
+        let section = TableViewSection()
         tableViewManager.addSection(section)
         
         for element in items {
             
             element.selectionHandler = { item in
-                self.toogleItemCheck(item as! ODGSelectionItemProtocol)
+                self.toogleItemCheck(item as! SelectionItemProtocol)
             }
             element.accessoryType = element.selected ? .Checkmark : .None
             section.addItem(element)
@@ -113,7 +113,7 @@ public class ODGSelectionViewController: UITableViewController {
         fillSelected()
     }
     
-    private func toogleItemCheck(item: ODGSelectionItemProtocol) {
+    private func toogleItemCheck(item: SelectionItemProtocol) {
         
         if selectionType == .Single {
             
@@ -131,12 +131,12 @@ public class ODGSelectionViewController: UITableViewController {
         fillSelected()
     }
     
-    private func itemSelected() -> ODGSelectionItemProtocol? {
+    private func itemSelected() -> SelectionItemProtocol? {
         
         for section in tableViewManager.sections {
             let checkedItems = section.items.filter { $0.accessoryType == .Checkmark }
             if checkedItems.count != 0 {
-                return checkedItems.first as? ODGSelectionItemProtocol
+                return checkedItems.first as? SelectionItemProtocol
             }
         }
         return nil
