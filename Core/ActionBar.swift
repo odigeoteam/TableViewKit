@@ -9,9 +9,14 @@
 import Foundation
 import UIKit
 
+public enum Direction {
+    case next
+    case previous
+}
+
 public protocol ActionBarDelegate {
     
-    func actionBar(actionBar: ActionBar, navigationControlValueChanged navigationControl: UISegmentedControl)
+    func actionBar(actionBar: ActionBar, direction direction: Direction)
     func actionBar(actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem)
 }
 
@@ -37,33 +42,27 @@ public class ActionBar: UIToolbar {
     
     private func setup() {
         
+        let previousButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.init(rawValue: 105)!, target: self, action: #selector(previousHandler))
+        let nextButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.init(rawValue: 106)!, target: self, action: #selector(nextHandler))
         let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(handleActionBarDone))
         
-        navigationControl = UISegmentedControl(items: ["Previous", "Next"])
-        navigationControl.momentary = true
-        navigationControl.addTarget(self, action: #selector(handleActionBarPreviousNext), forControlEvents: .ValueChanged)
-        navigationControl.setDividerImage(UIImage(), forLeftSegmentState: .Normal, rightSegmentState: .Normal, barMetrics: .Default)
+        let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+        spacer.width = 40.0
         
-        navigationControl.setImage(UIImage(named: "UIButtonBarArrowLeft"), forSegmentAtIndex: 0)
-        navigationControl.setWidth(50.0, forSegmentAtIndex: 0)
-        navigationControl.setImage(UIImage(named: "UIButtonBarArrowRight"), forSegmentAtIndex: 1)
-        navigationControl.setWidth(50.0, forSegmentAtIndex: 1)
-        
-        navigationControl.setBackgroundImage(UIImage(named: "Transparent"), forState: .Normal, barMetrics: .Default)
-        
-        let prevNextWrapper = UIBarButtonItem(customView: navigationControl)
         let flexible = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         
-        items = [prevNextWrapper, flexible, doneButton]
+        items = [previousButtonItem, spacer, nextButtonItem, flexible, doneButton]
     }
     
     @objc func handleActionBarDone(item: UIBarButtonItem) {
-        
         actionBarDelegate.actionBar(self, doneButtonPressed: item)
     }
     
-    @objc func handleActionBarPreviousNext() {
-        
-        actionBarDelegate.actionBar(self, navigationControlValueChanged: navigationControl)
+    @objc func previousHandler(sender: UIBarButtonItem) {
+        actionBarDelegate.actionBar(self, direction: .previous)
+    }
+    
+    @objc func nextHandler(sender: UIBarButtonItem) {
+        actionBarDelegate.actionBar(self, direction: .next)
     }
 }

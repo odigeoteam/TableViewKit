@@ -144,21 +144,24 @@ extension TableViewCell: ActionBarDelegate {
         return nil
     }
     
-    public func actionBar(actionBar: ActionBar, navigationControlValueChanged navigationControl: UISegmentedControl) {
+    private func indexPathForResponder(forDirection direction: Direction) -> NSIndexPath? {
         
-        if let indexPath = navigationControl.selectedSegmentIndex == 0 ? indexPathForPreviousResponder() : indexPathForNextResponder() {
-            
-            // Get the cell
-            var cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? TableViewCell
-            // No cell? Scrool tableview
-            if cell == nil {
-                tableViewManager.tableView .scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
-            }
-            // Try again
-            cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? TableViewCell
-            
-            cell?.responder?.becomeFirstResponder()
+        switch direction {
+        case .next:
+            return indexPathForNextResponder()
+        case .previous:
+            return indexPathForPreviousResponder()
         }
+    }
+    
+    public func actionBar(actionBar: ActionBar, direction direction: Direction) {
+        
+        guard let indexPath = indexPathForResponder(forDirection: direction) else { return }
+        
+        tableViewManager.tableView .scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
+        
+        var cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? TableViewCell
+        cell?.responder?.becomeFirstResponder()
     }
     
     public func actionBar(actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {
