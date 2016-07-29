@@ -118,8 +118,9 @@ public class TableViewManager: NSObject {
         }
     }
     
-    public func validate(item: Validationable, setup: (Validation<String?>) -> Validation<String?>) {
-        validator.add(validation: setup(item.validation))
+    public func validate(item: Validationable, setup: (Validation<String?>) -> Void) {
+        setup(item.validation)
+        validator.add(validation: item.validation)
     }
 }
 

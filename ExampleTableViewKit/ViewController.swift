@@ -62,20 +62,16 @@ class ViewController: UITableViewController {
         textFieldItem.placeHolder = "Name"
         section.addItem(textFieldItem)
         
-        tableViewManager.validate(textFieldItem) { validation in
-            var validation = validation
-            validation.add(rule: NameRule())
-            return validation
+        tableViewManager.validate(textFieldItem) {
+            $0.add(rule: NameRule())
         }
         
         let textFieldItem2 = TextFieldItem()
         textFieldItem2.placeHolder = "Surname"
         section.addItem(textFieldItem2)
         
-        tableViewManager.validate(textFieldItem2) { validation in
-            var validation = validation
-            validation.add(rule: NameRule())
-            return validation
+        tableViewManager.validate(textFieldItem2) {
+            $0.add(rule: NameRule())
         }
 
     }
@@ -91,10 +87,8 @@ class ViewController: UITableViewController {
         
         section.addItem(textFieldItem)
         
-        tableViewManager.validate(textFieldItem) { validation in
-            var validation = validation
-            validation.add(rule: NameRule())
-            return validation
+        tableViewManager.validate(textFieldItem) {
+            $0.add(rule: NameRule())
         }
     }
     

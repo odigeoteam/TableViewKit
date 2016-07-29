@@ -25,7 +25,7 @@ struct AnyValidatable<Input>: Validatable {
     
 }
 
-public struct Validation<Input> {
+public class Validation<Input> {
     let forInput: () -> Input
     let identifier: Any?
     var rules: [AnyValidatable<Input>] = []
@@ -55,7 +55,7 @@ public struct Validation<Input> {
         self.rules.append(AnyValidatable.init(base: rule))
     }
     
-    public mutating func add<R: Validatable where R.Input == Input>(rule rule: R) {
+    public func add<R: Validatable where R.Input == Input>(rule rule: R) {
         self.rules.append(AnyValidatable.init(base: rule))
     }
 }
