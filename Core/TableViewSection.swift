@@ -111,8 +111,12 @@ public class TableViewSection: TableViewSectionProtocol {
     // MARK: Add methods
     
     public func addItem(item: TableViewItemProtocol) {
+        
         item.section = self
         items.append(item)
+        
+        tableViewManager.register(cell: item.drawer.cell)
+
     }
     
     public func addItems(items: [TableViewItemProtocol]) {

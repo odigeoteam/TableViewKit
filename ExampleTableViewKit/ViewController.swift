@@ -20,12 +20,6 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         tableViewManager = TableViewManager(tableView: self.tableView, delegate: nil)
-        // TODO: this MUST be automatic
-
-        
-        tableViewManager.register(cell: TableViewDrawerCell.cell)
-
-        tableViewManager.register(cell: TextFieldDrawer.cell)
         
         addFirstSection()
         addSecondSection()
@@ -66,7 +60,6 @@ class ViewController: UITableViewController {
         
         let textFieldItem = TextFieldItem()
         textFieldItem.placeHolder = "Name"
-        
         section.addItem(textFieldItem)
         
         tableViewManager.validate(textFieldItem) { validation in
@@ -77,7 +70,6 @@ class ViewController: UITableViewController {
         
         let textFieldItem2 = TextFieldItem()
         textFieldItem2.placeHolder = "Surname"
-        
         section.addItem(textFieldItem2)
         
         tableViewManager.validate(textFieldItem2) { validation in
