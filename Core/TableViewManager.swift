@@ -27,12 +27,21 @@ public class TableViewManager: NSObject {
     /// Delegate to notify when the events occurs
     public var delegate: TableViewManagerDelegate?
     
+    public var validator: ValidatorManager<String?> = ValidatorManager()
+    
+    public var errors: [ValidationError] {
+        get {
+            return validator.errors
+        }
+    }
+
+    
     // MARK: Inits
     
     public init(tableView: UITableView, delegate: TableViewManagerDelegate?) {
         
         super.init()
-        
+                
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -63,9 +72,9 @@ public class TableViewManager: NSObject {
      
      - parameter cell: Cell to be registered
      */
-    public func registerCell(cell: TableViewCell.Type) {
+    public func register(cell cell: TableViewCellType) {
         
-        registerCell(cell, bundle: nil)
+        register(cell: cell, bundle: nil)
     }
     
     /**
@@ -74,17 +83,14 @@ public class TableViewManager: NSObject {
      - parameter cell:   Cell to be registered
      - parameter bundle: Bundle that contain the cell
      */
-    public func registerCell(cell: TableViewCell.Type, bundle: NSBundle?) {
-        
-        assert(NSClassFromString(NSStringFromClass(cell)) != nil, "Cell class \(cell) does not exist.")
-        
-        let mainBundle = bundle != nil ? bundle! : NSBundle.mainBundle()
-        let nibName = String(cell)
-        
-        if mainBundle.pathForResource(nibName, ofType: "nib") != nil {
-            let nib = UINib(nibName: nibName, bundle: mainBundle)
-            tableView.registerNib(nib, forCellReuseIdentifier: String(cell))
+    public func register(cell cell: TableViewCellType, bundle: NSBundle?) {
+        switch cell {
+        case .Class(let cellClass):
+            tableView.registerClass(cell.cellClass, forCellReuseIdentifier: cell.reusableIdentifier)
+        case .Nib(let nib, let cellClass):
+            tableView.registerNib(nib, forCellReuseIdentifier: cell.reusableIdentifier)
         }
+
     }
     
     // MARK: Managing sections
@@ -112,24 +118,11 @@ public class TableViewManager: NSObject {
         }
     }
     
-    /**
-     Returns errors found in your sections
-     TODO: Use map
-     - returns: Array of errors
-     */
-    public func errors() -> [NSError] {
-        
-        var errors: [NSError] = []
-        
-        for section in sections {
-            for error in section.errors() {
-                errors.append(error)
-            }
-        }
-        
-        return errors
+    public func validate(item: Validationable, setup: (Validation<String?>) -> Validation<String?>) {
+        validator.add(validation: setup(item.validation))
     }
 }
+
 
 extension TableViewManager: UITableViewDataSource {
     
@@ -147,6 +140,7 @@ extension TableViewManager: UITableViewDataSource {
         let item = itemForIndexPath(indexPath)
         
         let tableViewCell = item.drawer.cell(forTableView: tableView, atIndexPath: indexPath)
+        tableViewCell.item = item
         tableViewCell.tableViewManager = self
         
         item.drawer.draw(cell: tableViewCell, withItem: item)

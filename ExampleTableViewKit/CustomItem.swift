@@ -19,7 +19,7 @@ class CustomItem: TableViewItem {
     }
 }
 
-class CustomDrawer: TableViewDrawerCell {
+class CustomDrawer: TableViewItemProtocol {
     
     override func cellClass() -> TableViewCell.Type {
         return CustomCell.self

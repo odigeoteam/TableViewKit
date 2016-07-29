@@ -9,8 +9,32 @@
 import Foundation
 import UIKit
 
-public enum TableViewCellType {
+public enum TableViewCellPosition {
     case First, Middle, Last, Single, Any
+}
+
+public enum TableViewCellType {
+    
+    case Nib(UINib, UITableViewCell.Type)
+    case Class(UITableViewCell.Type)
+    
+    public var reusableIdentifier: String {
+        switch self {
+        case .Class(let cellClass):
+            return String(cellClass)
+        case .Nib(_, let cellClass):
+            return String(cellClass)
+        }
+    }
+    
+    public var cellClass: UITableViewCell.Type {
+        switch self {
+        case .Class(let cellClass):
+            return cellClass
+        case .Nib(_, let cellClass):
+            return cellClass
+        }
+    }
 }
 
 public class TableViewCell : UITableViewCell {
@@ -19,14 +43,14 @@ public class TableViewCell : UITableViewCell {
     
     weak public var tableViewManager: TableViewManager!
     
-    public var actionBar: ActionBar!
+    public var responder: UIResponder?
     
-    public var rowIndex: Int!
-    public var sectionIndex: Int!
+    public var actionBar: ActionBar!
     
     public var item: TableViewItemProtocol?
     
-    public var type: TableViewCellType {
+    public var type: TableViewCellPosition {
+        let rowIndex = item?.indexPath?.row
         if rowIndex == 0 && item?.section?.items.count == 1 { return .Single }
         if rowIndex == 0 && item?.section?.items.count > 1 { return .First }
         if rowIndex > 0 && rowIndex < (item?.section?.items.count)! - 1 && item?.section?.items.count > 2 { return .Middle }
@@ -57,30 +81,7 @@ public class TableViewCell : UITableViewCell {
         
         actionBar = ActionBar(delegate: self)
     }
-    
-    public func configure() {
-        
-        if let cellItem = item {
-            
-            sectionIndex = cellItem.indexPath!.section
-            rowIndex = cellItem.indexPath!.row
-            
-            accessoryType = cellItem.accessoryType
-            accessoryView = cellItem.accessoryView
-            
-            imageView?.image = cellItem.image
-            textLabel?.text = cellItem.title
-            detailTextLabel?.text = cellItem.subtitle
-        }
-    }
-    
-    public class func canFocus(withItem item: TableViewItemProtocol) -> Bool {
-        return false
-    }
-    
-    public func responder() -> UIResponder? {
-        return nil
-    }
+
 }
 
 extension TableViewCell: ActionBarDelegate {
@@ -90,13 +91,13 @@ extension TableViewCell: ActionBarDelegate {
         let section = tableViewManager.sections[sectionIndex]
         let indexInSection = section == item!.section ? section.items.indexOf { $0 == item! } : section.items.count
         
-        if indexInSection > 0 {
+        guard indexInSection > 0 else { return nil }
             
-            for itemIndex in (0 ... indexInSection! - 1).reverse() {
-                let previousItem = section.items[itemIndex]
-                if previousItem.drawer.cellClass().canFocus(withItem: previousItem) {
-                    return NSIndexPath(forRow: itemIndex, inSection: sectionIndex)
-                }
+        for itemIndex in (0 ..< indexInSection!).reverse() {
+            let previousItem = section.items[itemIndex]
+            let cell = previousItem.drawer.cell(forTableView: tableViewManager.tableView, atIndexPath: previousItem.indexPath!)
+            if cell.responder != nil {
+                return previousItem.indexPath
             }
         }
         
@@ -104,7 +105,8 @@ extension TableViewCell: ActionBarDelegate {
     }
     
     private func indexPathForPreviousResponder() -> NSIndexPath? {
-        
+        let sectionIndex = (item?.indexPath?.section)!
+
         for index in (0 ... sectionIndex).reverse() {
             if let indexPath = indexPathForPreviousResponderInSectionIndex(index) {
                 return indexPath
@@ -119,10 +121,11 @@ extension TableViewCell: ActionBarDelegate {
         let section = tableViewManager.sections[sectionIndex]
         let indexInSection = section == item!.section ? section.items.indexOf { $0 == item! } : -1
         
-        for itemIndex in indexInSection! + 1 ... section.items.count - 1 {
+        for itemIndex in indexInSection! + 1 ..< section.items.count {
             let nextItem = section.items[itemIndex]
-            if nextItem.drawer.cellClass().canFocus(withItem: nextItem) {
-                return NSIndexPath(forRow: itemIndex, inSection: sectionIndex)
+            let cell = nextItem.drawer.cell(forTableView: tableViewManager.tableView, atIndexPath: nextItem.indexPath!)
+            if cell.responder != nil {
+                return nextItem.indexPath
             }
         }
         
@@ -130,7 +133,8 @@ extension TableViewCell: ActionBarDelegate {
     }
     
     private func indexPathForNextResponder() -> NSIndexPath? {
-        
+        let sectionIndex = (item?.indexPath?.section)!
+
         for index in sectionIndex ... tableViewManager.sections.count - 1 {
             if let indexPath = indexPathForNextResponderInSectionIndex(index) {
                 return indexPath
@@ -153,7 +157,7 @@ extension TableViewCell: ActionBarDelegate {
             // Try again
             cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? TableViewCell
             
-            cell?.responder()?.becomeFirstResponder()
+            cell?.responder?.becomeFirstResponder()
         }
     }
     

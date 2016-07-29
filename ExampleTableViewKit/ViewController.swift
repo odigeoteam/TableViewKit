@@ -20,7 +20,12 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         tableViewManager = TableViewManager(tableView: self.tableView, delegate: nil)
-        tableViewManager.registerCell(CustomCell.self)
+        // TODO: this MUST be automatic
+
+        
+        tableViewManager.register(cell: TableViewDrawerCell.cell)
+
+        tableViewManager.register(cell: TextFieldDrawer.cell)
         
         addFirstSection()
         addSecondSection()
@@ -39,7 +44,7 @@ class ViewController: UITableViewController {
         item.accessoryType = .DisclosureIndicator
         item.selectionHandler = { item in
             item.deselectRowAnimated(true)
-            self.showPickerControl()
+            //self.showPickerControl()
         }
         section.addItem(item)
         
@@ -47,7 +52,7 @@ class ViewController: UITableViewController {
         dateItem.accessoryType = .DisclosureIndicator
         dateItem.selectionHandler = { item in
             item.deselectRowAnimated(true)
-            self.showDatePickerControl(item)
+            //self.showDatePickerControl(item)
         }
         section.addItem(dateItem)
         
@@ -55,79 +60,58 @@ class ViewController: UITableViewController {
         selectionItem.accessoryType = .DisclosureIndicator
         selectionItem.selectionHandler = { item in
             item.deselectRowAnimated(true)
-            self.showSelectionViewController()
+            //self.showSelectionViewController()
         }
         section.addItem(selectionItem)
+        
+        let textFieldItem = TextFieldItem()
+        textFieldItem.placeHolder = "Name"
+        
+        section.addItem(textFieldItem)
+        
+        tableViewManager.validate(textFieldItem) { validation in
+            var validation = validation
+            validation.add(rule: NameRule())
+            return validation
+        }
+        
+        let textFieldItem2 = TextFieldItem()
+        textFieldItem2.placeHolder = "Surname"
+        
+        section.addItem(textFieldItem2)
+        
+        tableViewManager.validate(textFieldItem2) { validation in
+            var validation = validation
+            validation.add(rule: NameRule())
+            return validation
+        }
+
     }
     
     private func addSecondSection() {
+
+        let section = TableViewSection(headerTitle: "Section second")
+        section.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
+        tableViewManager.addSection(section)
+
+        let textFieldItem = TextFieldItem()
+        textFieldItem.placeHolder = "Place of birth"
         
-        let personalSection = TableViewSection(headerTitle: "Personal Data")
-        tableViewManager.addSection(personalSection)
+        section.addItem(textFieldItem)
         
-        let customItem = CustomItem()
-        customItem.selectionHandler = { item in
-            item.deselectRowAnimated(true)
+        tableViewManager.validate(textFieldItem) { validation in
+            var validation = validation
+            validation.add(rule: NameRule())
+            return validation
         }
-        personalSection.addItem(customItem)
-    }
-    
-    func showPickerControl() {
-        
-        let numbers: [Int] = Array(0...10)
-        
-        let pickerControl = PickerControl(elements: [numbers, numbers, numbers], selectCallback: nil, cancelCallback: nil)
-        pickerControl.title = "Passengers"
-        pickerControl.selectValue(1, component: 0)
-        pickerControl.selectCallback = { selection in
-            print(selection)
-        }
-        pickerControl.presentPickerOnView(view)
-        
-        self.pickerControl = pickerControl
-    }
-    
-    func showDatePickerControl(fromItem: TableViewItemProtocol) {
-        
-        let fromDate = NSDate(timeIntervalSinceNow: -4600000)
-        let toDate = NSDate(timeIntervalSinceNow: 4600000)
-        let pickerControl = PickerControl(datePickerMode: .Date, fromDate: fromDate, toDate: toDate, minuteInterval: 0, selectCallback: { selection in
-            if let date = selection as? NSDate {
-                print(date)
-            }
-        })
-        pickerControl.title = "Birthday"
-        pickerControl.presentPickerOnView(view)
-        
-        self.pickerControl = pickerControl
-    }
-    
-    func showSelectionViewController() {
-        
-        var items: [SelectionItemProtocol] = []
-        for index in 1 ... 10 {
-            let item = SelectionItem(title: "Item \(index)", value: index)
-            item.selected = index % 2 == 0
-            items.append(item)
-        }
-        
-        let selectionViewController = SelectionViewController(style: .Grouped, selectionType: .Multiple)
-        selectionViewController.title = "Selection"
-        selectionViewController.items = items
-        selectionViewController.selectionHandler = { items in
-            print(items.map { $0.title! })
-        }
-        navigationController?.pushViewController(selectionViewController, animated: true)
     }
     
     @objc private func validationAction() {
+        guard let error = tableViewManager.errors.first else { return }
+//        let item = error.identifier as! CanShowError
+//        item.show(error: error)
+        print(error)
         
-        if let error = tableViewManager.errors().first {
-            print("\(error.localizedDescription) with error code: \(ValidatorErrorCode(rawValue: error.code)!)")
-        }
-        else {
-            print("All Ok")
-        }
     }
 }
 

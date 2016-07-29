@@ -15,7 +15,7 @@ public protocol TableViewItemProtocol: class {
     weak var section: TableViewSectionProtocol! { get set }
     
     /// Drawer used to draw cell. Strategy pattern
-    var drawer: TableViewDrawerCellProtocol { get set }
+    var drawer: TableViewDrawerCellProtocol! { get set }
     
     /// Cell data
     var image: UIImage? { get set }
@@ -29,11 +29,7 @@ public protocol TableViewItemProtocol: class {
     var indexPath: NSIndexPath? { get set }
     
     var selectionHandler: ((TableViewItemProtocol) -> ())? { get set }
-    var name: String? { get set }
-    var validators: [Validator] { get set }
-    
-    func errors() -> [NSError]
-    
+
     func selectRowAnimated(animated: Bool)
     func selectRowAnimated(animated: Bool, scrollPosition: UITableViewScrollPosition)
     func deselectRowAnimated(animated: Bool)
@@ -49,11 +45,11 @@ func !=(lhs: TableViewItemProtocol, rhs: TableViewItemProtocol) -> Bool {
     return ObjectIdentifier(lhs) != ObjectIdentifier(rhs)
 }
 
-public class TableViewItem: TableViewItemProtocol {
+public class TableViewItem: TableViewItemProtocol { // BaseItem
     
     public weak var section: TableViewSectionProtocol!
     
-    public var drawer: TableViewDrawerCellProtocol
+    public var drawer: TableViewDrawerCellProtocol!
     
     // MARK: Cell values
     
@@ -69,25 +65,12 @@ public class TableViewItem: TableViewItemProtocol {
     public var cellHeight: Float
     public var indexPath: NSIndexPath?
     
+    
     // MARK: Handlers
     
     public var selectionHandler: ((TableViewItemProtocol) -> ())?
     
     // MARK: Error validations
-    
-    /// Name of item, used in validation system to generate the error
-    public var name: String?
-    
-    /// Array of validators. See PresenceValidator, EmailValidator
-    /// Note: You can create your custom validator, implementing Validator protocol
-    public var validators: [Validator] = []
-    
-    /**
-     Add a validator
-    */
-    public func add(validator validator:Validator) {
-        validators.append(validator)
-    }
     
     /**
      Rewrite this function and call to Validation system
@@ -135,9 +118,7 @@ public class TableViewItem: TableViewItemProtocol {
     // MARK: Constructor
     
     public init() {
-        
         drawer = TableViewDrawerCell()
-        
         cellStyle = .Default
         accessoryType = .None
         cellHeight = 44.0

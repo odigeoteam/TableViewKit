@@ -24,8 +24,6 @@ public protocol TableViewSectionProtocol: class {
     
     var index: Int? { get }
     
-    func errors() -> [NSError]
-    
     func addItem(item: TableViewItemProtocol)
     func addItems(items: [TableViewItemProtocol])
     func removeItem(item: TableViewItemProtocol)
@@ -87,19 +85,6 @@ public class TableViewSection: TableViewSectionProtocol {
         //return tableViewManager.sections.indexOf(self)
     }
     
-    public func errors() -> [NSError] {
-        
-        var errors: [NSError] = []
-        
-        for item in items {
-            for error in item.errors() {
-                errors.append(error)
-            }
-        }
-        
-        return errors
-    }
-    
     /**
      The table view manager of this section.
      */
@@ -126,7 +111,6 @@ public class TableViewSection: TableViewSectionProtocol {
     // MARK: Add methods
     
     public func addItem(item: TableViewItemProtocol) {
-        
         item.section = self
         items.append(item)
     }

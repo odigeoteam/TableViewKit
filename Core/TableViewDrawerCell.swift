@@ -9,35 +9,31 @@
 import Foundation
 import UIKit
 
-public protocol TableViewDrawerCellProtocol: class {
+public protocol TableViewDrawerCellProtocol {
     
-    func cellClass() -> TableViewCell.Type
+    static var cell: TableViewCellType { get }
     func cell(forTableView tableView: UITableView, atIndexPath indexPath: NSIndexPath) -> TableViewCell
     func draw(cell cell: TableViewCell, withItem item: TableViewItemProtocol)
 }
 
-public class TableViewDrawerCell: TableViewDrawerCellProtocol {
-    
-    public init() {}
-    
-    public func cellClass() -> TableViewCell.Type {
-        return TableViewCell.self
+public extension TableViewDrawerCellProtocol {
+    func cell(forTableView tableView: UITableView, atIndexPath indexPath: NSIndexPath) -> TableViewCell {
+        return tableView.dequeueReusableCellWithIdentifier(self.dynamicType.cell.reusableIdentifier) as! TableViewCell
     }
+}
+
+
+public struct TableViewDrawerCell: TableViewDrawerCellProtocol {
     
-    public func cell(forTableView tableView: UITableView, atIndexPath indexPath: NSIndexPath) -> TableViewCell {
-        
-        let cellIdentifier = String(cellClass())
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? TableViewCell
-        if cell == nil {
-            cell = cellClass().init(style: .Default, reuseIdentifier: cellIdentifier)
-        }
-        
-        return cell!
-    }
+    public static var cell = TableViewCellType.Class(TableViewCell.self)
     
     public func draw(cell cell: TableViewCell, withItem item: TableViewItemProtocol) {
         
-        cell.item = item
-        cell.configure()
+        cell.accessoryType = item.accessoryType
+        cell.accessoryView = item.accessoryView
+        
+        cell.imageView?.image = item.image
+        cell.textLabel?.text = item.title
+        cell.detailTextLabel?.text = item.subtitle
     }
 }
