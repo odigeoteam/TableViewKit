@@ -16,16 +16,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Field" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mWC-MZ-lOp">
-                        <rect key="frame" x="8" y="10" width="304" height="30"/>
+                        <rect key="frame" x="18" y="10" width="304" height="30"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="mWC-MZ-lOp" firstAttribute="leading" secondItem="zUq-l2-d3a" secondAttribute="leadingMargin" id="DOb-7Q-BPN"/>
+                    <constraint firstItem="mWC-MZ-lOp" firstAttribute="leading" secondItem="zUq-l2-d3a" secondAttribute="leadingMargin" constant="10" id="DOb-7Q-BPN"/>
                     <constraint firstAttribute="bottomMargin" secondItem="mWC-MZ-lOp" secondAttribute="bottom" constant="2" id="c4b-HW-Hls"/>
                     <constraint firstItem="mWC-MZ-lOp" firstAttribute="top" secondItem="zUq-l2-d3a" secondAttribute="topMargin" constant="2" id="pz9-Y7-NwM"/>
-                    <constraint firstItem="mWC-MZ-lOp" firstAttribute="trailing" secondItem="zUq-l2-d3a" secondAttribute="trailingMargin" id="wJD-cP-oX4"/>
+                    <constraint firstItem="mWC-MZ-lOp" firstAttribute="trailing" secondItem="zUq-l2-d3a" secondAttribute="trailingMargin" constant="10" id="wJD-cP-oX4"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

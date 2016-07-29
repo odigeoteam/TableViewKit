@@ -9,7 +9,6 @@
 import Foundation
 import TableViewKit
 
-
 class TextFieldCell: TableViewCell {
     
     var textFieldItem: TextFieldItem {
@@ -21,8 +20,10 @@ class TextFieldCell: TableViewCell {
     @IBOutlet var textField: UITextField!
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         
+        selectionStyle = .None
         responder = textField
         
         textField.addTarget(self, action: #selector(onTextChange), forControlEvents: UIControlEvents.EditingChanged)
@@ -55,13 +56,12 @@ class TextFieldItem: TableViewItem, ContentValidatable, Validationable {
             return value
         }
     }
-    
 }
 
 class TextFieldDrawer: TableViewDrawerCellProtocol {
     
     static let nib = UINib(nibName: String(TextFieldCell.self), bundle: NSBundle.mainBundle())
-    static let cell = TableViewCellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
+    let cell = TableViewCellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
     
     func draw(cell cell: TableViewCell, withItem item: TableViewItemProtocol) {
 
