@@ -7,11 +7,10 @@
 //
 
 import Foundation
-import TableViewKit
 
-class TextFieldCell: TableViewCell {
+public class TextFieldCell: TableViewCell {
     
-    var textFieldItem: TextFieldItem {
+    public var textFieldItem: TextFieldItem {
         get {
             return item as! TextFieldItem
         }
@@ -19,7 +18,7 @@ class TextFieldCell: TableViewCell {
     
     @IBOutlet var textField: UITextField!
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         
         super.awakeFromNib()
         
@@ -30,40 +29,40 @@ class TextFieldCell: TableViewCell {
         textField.inputAccessoryView = actionBar
     }
     
-    func onTextChange(textField: UITextField) {
+    public func onTextChange(textField: UITextField) {
         textFieldItem.value = textField.text
     }
 
 }
 
-class TextFieldItem: TableViewItem, ContentValidatable, Validationable {
+public class TextFieldItem: TableViewItem, ContentValidatable, Validationable {
 
-    lazy var validation: Validation<String?> = {
+    public lazy var validation: Validation<String?> = {
         return Validation<String?>(forInput: self, withIdentifier: self)
     }()
     
-    var placeHolder: String?
-    var value: String?
+    public var placeHolder: String?
+    public var value: String?
     
-    override init() {
+    override public init() {
         super.init()
         drawer = TextFieldDrawer()
-        cellHeight = 51
+        cellHeight = 44
     }
     
-    var validationContent: String? {
+    public var validationContent: String? {
         get {
             return value
         }
     }
 }
 
-class TextFieldDrawer: TableViewDrawerCellProtocol {
+public class TextFieldDrawer: TableViewDrawerCellProtocol {
     
-    static let nib = UINib(nibName: String(TextFieldCell.self), bundle: NSBundle.mainBundle())
-    let cell = TableViewCellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
+    public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: NSBundle.tableViewKitBundle())
+    public let cell = TableViewCellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
     
-    func draw(cell cell: TableViewCell, withItem item: TableViewItemProtocol) {
+    public func draw(cell cell: TableViewCell, withItem item: TableViewItemProtocol) {
 
         let textCell = cell as! TextFieldCell
         let textItem = item as! TextFieldItem

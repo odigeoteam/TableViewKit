@@ -14,8 +14,6 @@
 		257F72CC1D07204A00F7B954 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 257F72CB1D07204A00F7B954 /* Assets.xcassets */; };
 		257F72CF1D07204A00F7B954 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 257F72CD1D07204A00F7B954 /* LaunchScreen.storyboard */; };
 		25FA9E1B1D24123100E2C899 /* ExampleTableViewKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FA9E1A1D24123100E2C899 /* ExampleTableViewKitTests.swift */; };
-		4BF4C76D1D4A19CC00CE69F6 /* TextFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF4C76C1D4A19CC00CE69F6 /* TextFieldItem.swift */; };
-		4BF4C76F1D4A19F700CE69F6 /* TextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BF4C76E1D4A19F700CE69F6 /* TextFieldCell.xib */; };
 		9A0EAAB46EF5FB1021C63F37 /* Pods_ExampleTableViewKit_ExampleTableViewKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDC0D41A114704CCBFC8E1C /* Pods_ExampleTableViewKit_ExampleTableViewKitTests.framework */; };
 		9D2329D631C4931DA7A8E3BB /* Pods_ExampleTableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5F5834D7FA0FFA2AB599361 /* Pods_ExampleTableViewKit.framework */; };
 /* End PBXBuildFile section */
@@ -44,8 +42,6 @@
 		25FA9E1A1D24123100E2C899 /* ExampleTableViewKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTableViewKitTests.swift; sourceTree = "<group>"; };
 		25FA9E1C1D24123100E2C899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3921ED508D2CDC8C3024DCB2 /* Pods-ExampleTableViewKit-ExampleTableViewKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTableViewKit-ExampleTableViewKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleTableViewKit-ExampleTableViewKitTests/Pods-ExampleTableViewKit-ExampleTableViewKitTests.release.xcconfig"; sourceTree = "<group>"; };
-		4BF4C76C1D4A19CC00CE69F6 /* TextFieldItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldItem.swift; sourceTree = "<group>"; };
-		4BF4C76E1D4A19F700CE69F6 /* TextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextFieldCell.xib; sourceTree = "<group>"; };
 		7CDC0D41A114704CCBFC8E1C /* Pods_ExampleTableViewKit_ExampleTableViewKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTableViewKit_ExampleTableViewKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		956B9E06447375CE316759A8 /* Pods-ExampleTableViewKit-ExampleTableViewKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTableViewKit-ExampleTableViewKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleTableViewKit-ExampleTableViewKitTests/Pods-ExampleTableViewKit-ExampleTableViewKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D368DEDD0DD5DD15CD2C3F65 /* Pods-ExampleTableViewKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTableViewKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleTableViewKit/Pods-ExampleTableViewKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -73,13 +69,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2553B19A1D19572700275F46 /* CustomCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = CustomCell;
-			sourceTree = "<group>";
-		};
 		257F72B81D07204A00F7B954 = {
 			isa = PBXGroup;
 			children = (
@@ -103,8 +92,6 @@
 		257F72C31D07204A00F7B954 /* ExampleTableViewKit */ = {
 			isa = PBXGroup;
 			children = (
-				4BF4C76B1D4A19A900CE69F6 /* TextFieldCell */,
-				2553B19A1D19572700275F46 /* CustomCell */,
 				257F72C41D07204A00F7B954 /* AppDelegate.swift */,
 				257F72C61D07204A00F7B954 /* ViewController.swift */,
 				257F72C81D07204A00F7B954 /* Main.storyboard */,
@@ -123,15 +110,6 @@
 				25FA9E1C1D24123100E2C899 /* Info.plist */,
 			);
 			path = ExampleTableViewKitTests;
-			sourceTree = "<group>";
-		};
-		4BF4C76B1D4A19A900CE69F6 /* TextFieldCell */ = {
-			isa = PBXGroup;
-			children = (
-				4BF4C76C1D4A19CC00CE69F6 /* TextFieldItem.swift */,
-				4BF4C76E1D4A19F700CE69F6 /* TextFieldCell.xib */,
-			);
-			name = TextFieldCell;
 			sourceTree = "<group>";
 		};
 		656E266DCC21BBEF9A5DDB6C /* Pods */ = {
@@ -243,7 +221,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				257F72CF1D07204A00F7B954 /* LaunchScreen.storyboard in Resources */,
-				4BF4C76F1D4A19F700CE69F6 /* TextFieldCell.xib in Resources */,
 				257F72CC1D07204A00F7B954 /* Assets.xcassets in Resources */,
 				257F72CA1D07204A00F7B954 /* Main.storyboard in Resources */,
 			);
@@ -358,7 +335,6 @@
 			files = (
 				257F72C71D07204A00F7B954 /* ViewController.swift in Sources */,
 				257F72C51D07204A00F7B954 /* AppDelegate.swift in Sources */,
-				4BF4C76D1D4A19CC00CE69F6 /* TextFieldItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,7 +468,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/ExampleTableViewKit/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.ExampleTableViewKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.tableviewkit.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -506,7 +482,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/ExampleTableViewKit/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.ExampleTableViewKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.tableviewkit.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
