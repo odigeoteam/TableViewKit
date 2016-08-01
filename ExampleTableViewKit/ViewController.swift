@@ -13,7 +13,7 @@ class ViewController: UITableViewController {
     
     var tableViewManager: TableViewManager!
     
-    private var pickerControl: PickerControl?
+    var pickerControl: PickerControl?
 
     override func viewDidLoad() {
         
@@ -38,7 +38,7 @@ class ViewController: UITableViewController {
         item.accessoryType = .DisclosureIndicator
         item.selectionHandler = { item in
             item.deselectRowAnimated(true)
-            //self.showPickerControl()
+            self.showPickerControl()
         }
         section.addItem(item)
         
@@ -46,7 +46,7 @@ class ViewController: UITableViewController {
         dateItem.accessoryType = .DisclosureIndicator
         dateItem.selectionHandler = { item in
             item.deselectRowAnimated(true)
-            //self.showDatePickerControl(item)
+            self.showDatePickerControl()
         }
         section.addItem(dateItem)
         
@@ -54,7 +54,7 @@ class ViewController: UITableViewController {
         selectionItem.accessoryType = .DisclosureIndicator
         selectionItem.selectionHandler = { item in
             item.deselectRowAnimated(true)
-            //self.showSelectionViewController()
+            self.showPickerControl()
         }
         section.addItem(selectionItem)
         
@@ -63,7 +63,7 @@ class ViewController: UITableViewController {
         section.addItem(textFieldItem)
         
         tableViewManager.validate(textFieldItem) {
-            $0.add(rule: NameRule())
+            $0.add(rule: ExistRule())
         }
         
         let textFieldItem2 = TextFieldItem()
@@ -71,15 +71,14 @@ class ViewController: UITableViewController {
         section.addItem(textFieldItem2)
         
         tableViewManager.validate(textFieldItem2) {
-            $0.add(rule: NameRule())
+            $0.add(rule: ExistRule())
         }
 
     }
     
     private func addSecondSection() {
 
-        let section = TableViewSection(headerTitle: "Section second")
-        section.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
+        let section = TableViewSection(headerTitle: "Second Section")
         tableViewManager.addSection(section)
 
         let textFieldItem = TextFieldItem()
@@ -88,14 +87,45 @@ class ViewController: UITableViewController {
         section.addItem(textFieldItem)
         
         tableViewManager.validate(textFieldItem) {
-            $0.add(rule: NameRule())
+            $0.add(rule: ExistRule())
         }
+    }
+    
+    private func showPickerControl() {
+        
+        var elements = [PickerItem]()
+        
+        let options = ["Option 1", "Option 2", "Option 3"]
+        options.forEach { elements.append(PickerItem(title: $0, value: $0)) }
+        
+        let pickerControl = PickerControl(elements: elements, emptyFirstItem: true, selectCallback: { pickerControl, selectedElement in
+            print(selectedElement)
+            pickerControl.dismissPickerView()
+            self.pickerControl = nil
+        })
+        pickerControl.presentPickerOnView(view)
+        
+        self.pickerControl = pickerControl
+    }
+    
+    private func showDatePickerControl() {
+        
+        let toDate = NSCalendar.currentCalendar().dateByAddingUnit(.Year, value: 1, toDate: NSDate(), options: NSCalendarOptions.MatchNextTime)!
+        let pickerDateControl = PickerControl(datePickerMode: .Date, fromDate: NSDate(), toDate: toDate, minuteInterval: 0, selectCallback: { pickerControl, date in
+            
+            pickerControl.dismissPickerView()
+            print(date)
+            
+            self.pickerControl = nil
+            
+        }, cancelCallback: nil)
+        pickerDateControl.presentPickerOnView(view)
+        
+        pickerControl = pickerDateControl
     }
     
     @objc private func validationAction() {
         guard let error = tableViewManager.errors.first else { return }
-//        let item = error.identifier as! CanShowError
-//        item.show(error: error)
         print(error)
         
     }

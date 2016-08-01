@@ -40,8 +40,8 @@ public class PickerItem: PickerItemProtocol, CustomStringConvertible {
     }
 }
 
-public typealias SelectCallBack = (Any) -> ()
-public typealias CancelCallBack = () -> ()
+public typealias SelectCallBack = (PickerControl, Any) -> ()
+public typealias CancelCallBack = (PickerControl) -> ()
 
 public class PickerControl: NSObject {
     
@@ -379,15 +379,15 @@ public class PickerControl: NSObject {
         
         if type == .Single {
             
-            selectCallback?(selection)
+            selectCallback?(self, selection)
         }
         else if type == .MultiColumn {
             
-            selectCallback?(selections)
+            selectCallback?(self, selections)
         }
         else if type == .Date {
             
-            selectCallback?(dateSelection)
+            selectCallback?(self, dateSelection)
         }
         
         dismissPickerView()
