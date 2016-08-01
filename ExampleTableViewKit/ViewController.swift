@@ -98,7 +98,7 @@ class ViewController: UITableViewController {
         let options = ["Option 1", "Option 2", "Option 3"]
         options.forEach { elements.append(PickerItem(title: $0, value: $0)) }
         
-        let pickerControl = PickerControl(elements: elements, emptyFirstItem: true, selectCallback: { pickerControl, selectedElement in
+        let pickerControl = PickerControl(elements: elements, selectCallback: { pickerControl, selectedElement in
             print(selectedElement)
             pickerControl.dismissPickerView()
             self.pickerControl = nil

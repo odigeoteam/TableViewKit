@@ -108,7 +108,7 @@ public class PickerControl: NSObject {
         okButtonItem = UIBarButtonItem(title: NSLocalizedString("OK", comment: ""), style: .Plain, target: self, action: #selector(selectButtonPressed))
     }
     
-    public convenience init(elements: [AnyObject], emptyFirstItem: Bool = false, selectCallback: SelectCallBack? = nil, cancelCallback: CancelCallBack? = nil) {
+    public convenience init(elements: [AnyObject], selectCallback: SelectCallBack? = nil, cancelCallback: CancelCallBack? = nil) {
         
         self.init()
         
@@ -116,12 +116,6 @@ public class PickerControl: NSObject {
             
             // Each item is PickerItem
             if value is PickerItemProtocol {
-                
-                if emptyFirstItem {
-                    let emptyItem = PickerItem(title: "", value: "")
-                    items.append(emptyItem)
-                }
-                
                 items.append(value as! PickerItemProtocol)
             }
             // We have a array
@@ -133,11 +127,6 @@ public class PickerControl: NSObject {
                 var components: [PickerItemProtocol] = []
                 
                 for element in array {
-                    
-                    if emptyFirstItem {
-                        let emptyItem = PickerItem(title: "", value: "")
-                        components.append(emptyItem)
-                    }
                     
                     if element is PickerItemProtocol {
                         components.append(element as! PickerItemProtocol)
@@ -154,12 +143,6 @@ public class PickerControl: NSObject {
                 }
             }
             else {
-                
-                if emptyFirstItem {
-                    let emptyItem = PickerItem(title: "", value: "")
-                    items.append(emptyItem)
-                }
-                
                 let item = PickerItem(title: String(value), value: value)
                 items.append(item)
             }
