@@ -25,7 +25,9 @@ class ViewController: UITableViewController {
         
         super.viewDidLoad()
         
-        tableViewManager = TableViewManager(tableView: self.tableView, sections: sections)
+        tableViewManager = TableViewManager(tableView: self.tableView)
+        tableViewManager.append(sections)
+        tableViewManager.register()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
     }
@@ -70,17 +72,14 @@ class ViewController: UITableViewController {
     
     private func secondSection() -> Section {
 
-        let section = Section(headerTitle: "Second Section")
-        tableViewManager.append(section)
-
         let textFieldItem = TextFieldItem()
         textFieldItem.placeHolder = "Place of birth"
-        
-        section.append(textFieldItem)
-        
         tableViewManager.validate(textFieldItem) {
             $0.add(rule: ExistRule())
         }
+        
+        let section = Section(items: [textFieldItem])
+        section.headerTitle = "Second Section"
         return section
     }
     
