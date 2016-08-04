@@ -40,7 +40,6 @@ public class TableViewManager: NSObject {
     public convenience init(tableView: UITableView, sections: [Section]) {
         self.init(tableView: tableView)
         append(sections)
-        register()
     }
     
     // MARK: Public methods
