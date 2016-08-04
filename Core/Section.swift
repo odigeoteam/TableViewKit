@@ -56,14 +56,6 @@ public class Section {
         array.forEach(remove)
     }
     
-    func removeLastItem() {
-        items.removeLast()
-    }
-    
-    func removeFirstItem() {
-        items.removeFirst()
-    }
-    
     public func register() {
         items.forEach { tableViewManager.register(type: $0.drawer.cellType) }
     }
@@ -84,8 +76,12 @@ extension Section {
 
 extension Section {
     
+    public convenience init(items: [BaseItem]) {
+        self.init()
+        self.append(items)
+    }
+    
     public convenience init(headerTitle: String) {
-        
         self.init()
         self.headerTitle = headerTitle
     }

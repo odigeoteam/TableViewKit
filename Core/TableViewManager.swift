@@ -31,11 +31,16 @@ public class TableViewManager: NSObject {
     // MARK: Inits
     
     public init(tableView: UITableView) {
-        
         super.init()
         self.tableView = tableView
         self.tableView.dataSource = self
         self.tableView.delegate = self
+    }
+    
+    public convenience init(tableView: UITableView, sections: [Section]) {
+        self.init(tableView: tableView)
+        append(sections)
+        register()
     }
     
     // MARK: Public methods

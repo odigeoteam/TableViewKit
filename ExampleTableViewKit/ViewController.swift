@@ -14,24 +14,24 @@ class ViewController: UITableViewController {
     var tableViewManager: TableViewManager!
     
     var pickerControl: PickerControl?
+    
+    var sections: [Section] {
+        get {
+            return [firstSection(), secondSection()]
+        }
+    }
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        tableViewManager = TableViewManager(tableView: self.tableView)
-        
-        addFirstSection()
-        addSecondSection()
+        tableViewManager = TableViewManager(tableView: self.tableView, sections: sections)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
     }
     
-    private func addFirstSection() {
-        
-        let section = Section(headerTitle: "Section title")
-        section.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
-        
+    private func firstSection() -> Section {
+
         let item = BaseItem(title: "Passengers")
         item.selectionHandler = { item in
             item.deselectRowAnimated(true)
@@ -62,13 +62,13 @@ class ViewController: UITableViewController {
             $0.add(rule: ExistRule())
         }
         
-    
-        section.append([item, dateItem, selectionItem, textFieldItem, textFieldItem2])
-        tableViewManager.append(section)
-        tableViewManager.register()
+        let section = Section(items: [item, dateItem, selectionItem, textFieldItem, textFieldItem2])
+        section.headerTitle = "Section title"
+        section.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
+        return section
     }
     
-    private func addSecondSection() {
+    private func secondSection() -> Section {
 
         let section = Section(headerTitle: "Second Section")
         tableViewManager.append(section)
@@ -81,6 +81,7 @@ class ViewController: UITableViewController {
         tableViewManager.validate(textFieldItem) {
             $0.add(rule: ExistRule())
         }
+        return section
     }
     
     private func showPickerControl() {
