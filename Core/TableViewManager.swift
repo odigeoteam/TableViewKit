@@ -9,23 +9,16 @@
 import Foundation
 import UIKit
 
-@objc
-public protocol TableViewManagerDelegate: UITableViewDelegate {
-    
-}
-
 public class TableViewManager: NSObject {
     
     // MARK: Properties
     
     /// Array of sections
-    public var sections: [TableViewSectionProtocol] = []
+    public var sections: [Section] = []
     
     /// TableView to be managed
     public var tableView: UITableView!
     
-    /// Delegate to notify when the events occurs
-    public var delegate: TableViewManagerDelegate?
     
     public var validator: ValidatorManager<String?> = ValidatorManager()
     
@@ -35,87 +28,44 @@ public class TableViewManager: NSObject {
         }
     }
 
-    
     // MARK: Inits
     
-    public init(tableView: UITableView, delegate: TableViewManagerDelegate?) {
+    public init(tableView: UITableView) {
         
         super.init()
-                
-        tableView.dataSource = self
-        tableView.delegate = self
-        
         self.tableView = tableView
-        self.delegate = delegate
-    }
-    
-    /**
-     Return the item at indexPath
-     
-     - parameter indexPath: Position of element we want to get
-     
-     - returns: The element representing the cell
-     */
-    private func itemForIndexPath(indexPath: NSIndexPath) -> TableViewItemProtocol {
-        
-        let section = sections[indexPath.section]
-        let item = section.items[indexPath.row]
-        
-        item.indexPath = indexPath
-        return item
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
     }
     
     // MARK: Public methods
     
-    /**
-     Register a nib cell into tableView
-     
-     - parameter cell: Cell to be registered
-     */
-    public func register(cell cell: TableViewCellType) {
-        
-        register(cell: cell, bundle: nil)
+    public func register(type type: CellType) {
+        register(type: type, bundle: nil)
     }
     
-    /**
-     Register a nib cell into tableView
-     
-     - parameter cell:   Cell to be registered
-     - parameter bundle: Bundle that contain the cell
-     */
-    public func register(cell cell: TableViewCellType, bundle: NSBundle?) {
-        switch cell {
+    public func register(type type: CellType, bundle: NSBundle?) {
+        switch type {
         case .Class(let cellClass):
-            tableView.registerClass(cell.cellClass, forCellReuseIdentifier: cell.reusableIdentifier)
+            tableView.registerClass(type.cellClass, forCellReuseIdentifier: type.reusableIdentifier)
         case .Nib(let nib, let cellClass):
-            tableView.registerNib(nib, forCellReuseIdentifier: cell.reusableIdentifier)
+            tableView.registerNib(nib, forCellReuseIdentifier: type.reusableIdentifier)
         }
-
+    }
+    
+    public func register() {
+        sections.forEach { $0.register() }
     }
     
     // MARK: Managing sections
     
-    /**
-     Add a section
-     
-     - parameter section: Section to be added
-     */
-    public func addSection(section: TableViewSectionProtocol) {
-        
+    public func append(section: Section) {
         section.tableViewManager = self
         sections.append(section)
     }
     
-    /**
-     Add array of sections
-     
-     - parameter sections: Sections to be added
-     */
-    public func addSections(sections: [TableViewSectionProtocol]) {
-        
-        for section in sections {
-            addSection(section)
-        }
+    public func append(sections: [Section]) {
+        sections.forEach(append)
     }
     
     public func validate(item: Validationable, setup: (Validation<String?>) -> Void) {
@@ -124,6 +74,12 @@ public class TableViewManager: NSObject {
     }
 }
 
+extension TableViewManager {
+    
+    private func itemForIndexPath(indexPath: NSIndexPath) -> BaseItem {
+        return sections[indexPath.section].items[indexPath.row]
+    }
+}
 
 extension TableViewManager: UITableViewDataSource {
     
@@ -149,15 +105,16 @@ extension TableViewManager: UITableViewDataSource {
         return tableViewCell
     }
     
+    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        guard tableView == self.tableView else { return tableView.rowHeight }
+        let item = itemForIndexPath(indexPath)
+        return item.cellHeight ?? tableView.estimatedRowHeight
+    }
+    
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if let height = delegate?.tableView?(tableView, heightForRowAtIndexPath: indexPath) {
-            return height
-        }
-        else {
-            let item = itemForIndexPath(indexPath)
-            return CGFloat(item.cellHeight)
-        }
+        guard tableView == self.tableView else { return tableView.rowHeight }
+        let item = itemForIndexPath(indexPath)
+        return item.cellHeight ?? tableView.rowHeight
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -172,34 +129,25 @@ extension TableViewManager: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        let section = sections[section]
-        return section.headerTitle
+        return sections[section].headerTitle
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let section = sections[section]
-        return section.headerView
+        return sections[section].headerView
     }
     
     public func tableView(tableView: UITableView, titleForFooterInSection sectionIndex: Int) -> String? {
-        
-        let section = sections[sectionIndex]
-        return section.footerTitle
+        return sections[sectionIndex].footerTitle
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection sectionIndex: Int) -> UIView? {
-        
-        let section = sections[sectionIndex]
-        return section.footerView
+        return sections[sectionIndex].footerView
     }
 }
 
 extension TableViewManager: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         let item = itemForIndexPath(indexPath)
         item.selectionHandler?(item)
     }

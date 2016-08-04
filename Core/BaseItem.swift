@@ -9,26 +9,23 @@
 import Foundation
 import UIKit
 
-public protocol TableViewItemProtocol: class {
+public protocol ItemProtocol: class {
     
     /// Section
-    weak var section: TableViewSectionProtocol! { get set }
-    
+    weak var section: Section! { get set }
+    var indexPath: NSIndexPath? { get }
+
     /// Drawer used to draw cell. Strategy pattern
-    var drawer: TableViewDrawerCellProtocol! { get set }
+    var drawer: CellDrawer { get set }
     
-    /// Cell data
-    var image: UIImage? { get set }
     var title: String? { get set }
-    var subtitle: String? { get set }
     
     var cellStyle: UITableViewCellStyle { get set }
     var accessoryType: UITableViewCellAccessoryType { get set }
     var accessoryView: UIView? { get set }
-    var cellHeight: Float { get set }
-    var indexPath: NSIndexPath? { get set }
-    
-    var selectionHandler: ((TableViewItemProtocol) -> ())? { get set }
+    var cellHeight: CGFloat? { get set }
+
+    var selectionHandler: ((BaseItem) -> ())? { get set }
 
     func selectRowAnimated(animated: Bool)
     func selectRowAnimated(animated: Bool, scrollPosition: UITableViewScrollPosition)
@@ -37,50 +34,32 @@ public protocol TableViewItemProtocol: class {
     func deleteRowWithAnimation(animation: UITableViewRowAnimation)
 }
 
-func ==(lhs: TableViewItemProtocol, rhs: TableViewItemProtocol) -> Bool {
-    return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
-}
-
-func !=(lhs: TableViewItemProtocol, rhs: TableViewItemProtocol) -> Bool {
-    return ObjectIdentifier(lhs) != ObjectIdentifier(rhs)
-}
-
-public class TableViewItem: TableViewItemProtocol { // BaseItem
+public class BaseItem: ItemProtocol {
     
-    public weak var section: TableViewSectionProtocol!
+    public weak var section: Section!
+    public var indexPath: NSIndexPath? {
+        get {
+            guard let sectionIndex = section?.index, let rowIndex = section?.items.indexOf(self) else { return nil }
+            return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+        }
+    }
     
-    public var drawer: TableViewDrawerCellProtocol!
+    public var drawer: CellDrawer = BaseDrawer()
     
     // MARK: Cell values
     
-    public var image: UIImage?
     public var title: String?
-    public var subtitle: String?
     
     // MARK: Cell style
     
-    public var cellStyle: UITableViewCellStyle
-    public var accessoryType: UITableViewCellAccessoryType
+    public var cellStyle: UITableViewCellStyle = .Default
+    public var accessoryType: UITableViewCellAccessoryType = .None
     public var accessoryView: UIView?
-    public var cellHeight: Float
-    public var indexPath: NSIndexPath?
-    
+    public var cellHeight: CGFloat? = UITableViewAutomaticDimension
     
     // MARK: Handlers
     
-    public var selectionHandler: ((TableViewItemProtocol) -> ())?
-    
-    // MARK: Error validations
-    
-    /**
-     Rewrite this function and call to Validation system
-     Example: Validation.validate(objectToValidate, name: self.name, validators: self.validators)
-     
-     - returns: Array of errors
-     */
-    public func errors() -> [NSError] {
-        return []
-    }
+    public var selectionHandler: ((BaseItem) -> ())?
     
     // MARK: Manipulating table view row
     
@@ -117,18 +96,16 @@ public class TableViewItem: TableViewItemProtocol { // BaseItem
     
     // MARK: Constructor
     
-    public init() {
-        drawer = TableViewDrawerCell()
-        cellStyle = .Default
-        accessoryType = .None
-        cellHeight = 44.0
-    }
+    public init() { }
     
-    public convenience init(title: String, subtitle: String?) {
-        
+    public convenience init(title: String) {
         self.init()
         self.title = title
-        self.subtitle = subtitle
     }
+}
+
+extension BaseItem: Equatable {}
+public func ==(lhs: BaseItem, rhs: BaseItem) -> Bool {
+    return lhs === rhs
 }
 

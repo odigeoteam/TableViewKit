@@ -19,7 +19,7 @@ class ViewController: UITableViewController {
         
         super.viewDidLoad()
         
-        tableViewManager = TableViewManager(tableView: self.tableView, delegate: nil)
+        tableViewManager = TableViewManager(tableView: self.tableView)
         
         addFirstSection()
         addSecondSection()
@@ -29,62 +29,54 @@ class ViewController: UITableViewController {
     
     private func addFirstSection() {
         
-        let section = TableViewSection(headerTitle: "Section title")
+        let section = Section(headerTitle: "Section title")
         section.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
-        tableViewManager.addSection(section)
         
-        let item = TableViewItem(title: "Passengers", subtitle: nil)
-        item.image = UIImage(named: "search")
-        item.accessoryType = .DisclosureIndicator
+        let item = BaseItem(title: "Passengers")
         item.selectionHandler = { item in
             item.deselectRowAnimated(true)
             self.showPickerControl()
         }
-        section.addItem(item)
-        
-        let dateItem = TableViewItem(title: "Birthday", subtitle: nil)
+        let dateItem = BaseItem(title: "Birthday")
         dateItem.accessoryType = .DisclosureIndicator
         dateItem.selectionHandler = { item in
             item.deselectRowAnimated(true)
             self.showDatePickerControl()
         }
-        section.addItem(dateItem)
-        
-        let selectionItem = TableViewItem(title: "Selection", subtitle: nil)
+        let selectionItem = BaseItem(title: "Selection")
         selectionItem.accessoryType = .DisclosureIndicator
         selectionItem.selectionHandler = { item in
             item.deselectRowAnimated(true)
             self.showPickerControl()
         }
-        section.addItem(selectionItem)
         
         let textFieldItem = TextFieldItem()
         textFieldItem.placeHolder = "Name"
-        section.addItem(textFieldItem)
-        
         tableViewManager.validate(textFieldItem) {
             $0.add(rule: ExistRule())
         }
         
         let textFieldItem2 = TextFieldItem()
         textFieldItem2.placeHolder = "Surname"
-        section.addItem(textFieldItem2)
-        
         tableViewManager.validate(textFieldItem2) {
             $0.add(rule: ExistRule())
         }
-
+        
+    
+        section.append([item, dateItem, selectionItem, textFieldItem, textFieldItem2])
+        tableViewManager.append(section)
+        tableViewManager.register()
     }
     
     private func addSecondSection() {
 
-        let section = TableViewSection(headerTitle: "Second Section")
-        tableViewManager.addSection(section)
+        let section = Section(headerTitle: "Second Section")
+        tableViewManager.append(section)
 
         let textFieldItem = TextFieldItem()
         textFieldItem.placeHolder = "Place of birth"
         
-        section.addItem(textFieldItem)
+        section.append(textFieldItem)
         
         tableViewManager.validate(textFieldItem) {
             $0.add(rule: ExistRule())

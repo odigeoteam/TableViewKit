@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TextFieldCell: TableViewCell {
+public class TextFieldCell: BaseCell {
     
     public var textFieldItem: TextFieldItem {
         get {
@@ -35,7 +35,7 @@ public class TextFieldCell: TableViewCell {
 
 }
 
-public class TextFieldItem: TableViewItem, ContentValidatable, Validationable {
+public class TextFieldItem: BaseItem, ContentValidatable, Validationable {
 
     public lazy var validation: Validation<String?> = {
         return Validation<String?>(forInput: self, withIdentifier: self)
@@ -47,7 +47,6 @@ public class TextFieldItem: TableViewItem, ContentValidatable, Validationable {
     override public init() {
         super.init()
         drawer = TextFieldDrawer()
-        cellHeight = 44
     }
     
     public var validationContent: String? {
@@ -57,12 +56,12 @@ public class TextFieldItem: TableViewItem, ContentValidatable, Validationable {
     }
 }
 
-public class TextFieldDrawer: TableViewDrawerCellProtocol {
+public class TextFieldDrawer: CellDrawer {
     
     public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: NSBundle.tableViewKitBundle())
-    public let cell = TableViewCellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
+    public let cellType = CellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
     
-    public func draw(cell cell: TableViewCell, withItem item: TableViewItemProtocol) {
+    public func draw(cell cell: BaseCell, withItem item: BaseItem) {
 
         let textCell = cell as! TextFieldCell
         let textItem = item as! TextFieldItem

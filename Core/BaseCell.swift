@@ -9,11 +9,7 @@
 import Foundation
 import UIKit
 
-public enum TableViewCellPosition {
-    case First, Middle, Last, Single, Any
-}
-
-public enum TableViewCellType {
+public enum CellType {
     
     case Nib(UINib, UITableViewCell.Type)
     case Class(UITableViewCell.Type)
@@ -37,7 +33,7 @@ public enum TableViewCellType {
     }
 }
 
-public class TableViewCell : UITableViewCell {
+public class BaseCell : UITableViewCell {
     
     // MARK: Public
     
@@ -47,16 +43,7 @@ public class TableViewCell : UITableViewCell {
     
     public var actionBar: ActionBar!
     
-    public var item: TableViewItemProtocol?
-    
-    public var type: TableViewCellPosition {
-        let rowIndex = item?.indexPath?.row
-        if rowIndex == 0 && item?.section?.items.count == 1 { return .Single }
-        if rowIndex == 0 && item?.section?.items.count > 1 { return .First }
-        if rowIndex > 0 && rowIndex < (item?.section?.items.count)! - 1 && item?.section?.items.count > 2 { return .Middle }
-        if rowIndex == (item?.section?.items.count)! - 1 && (item?.section?.items.count)! > 1 { return .Last }
-        return .Any
-    }
+    public var item: BaseItem?
     
     // MARK: Constructors
     
@@ -78,18 +65,19 @@ public class TableViewCell : UITableViewCell {
     // MARK: Configure
     
     public func commonInit() {
-        
         actionBar = ActionBar(delegate: self)
     }
 
 }
 
-extension TableViewCell: ActionBarDelegate {
+extension BaseCell: ActionBarDelegate {
     
     private func indexPathForPreviousResponderInSectionIndex(sectionIndex: Int) -> NSIndexPath? {
         
+        guard let item = item else { return nil }
+        
         let section = tableViewManager.sections[sectionIndex]
-        let indexInSection = section == item!.section ? section.items.indexOf { $0 == item! } : section.items.count
+        let indexInSection = section == item.section ? section.items.indexOf(item) : section.items.count
         
         guard indexInSection > 0 else { return nil }
             
@@ -160,7 +148,7 @@ extension TableViewCell: ActionBarDelegate {
         
         tableViewManager.tableView .scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
         
-        var cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? TableViewCell
+        var cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? BaseCell
         cell?.responder?.becomeFirstResponder()
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public protocol SelectionItemProtocol: TableViewItemProtocol {
+public protocol SelectionItemProtocol: ItemProtocol {
     
     var value: Any { get }
     var selected: Bool { get set }
@@ -21,7 +21,7 @@ public enum SelectionType {
     case Single, Multiple
 }
 
-public class SelectionItem: TableViewItem, SelectionItemProtocol {
+public class SelectionItem: BaseItem, SelectionItemProtocol {
     
     public var value: Any
     public var selected: Bool
@@ -41,10 +41,10 @@ public class SelectionViewController: UITableViewController {
     
     private var tableViewManager: TableViewManager!
     private var selectionType: SelectionType!
-    private var selectedItems: [SelectionItemProtocol]!
+    private var selectedItems: [SelectionItem]!
     
-    public var items: [SelectionItemProtocol]!
-    public var selectionHandler: (([SelectionItemProtocol]) -> ())?
+    public var items: [SelectionItem]!
+    public var selectionHandler: (([SelectionItem]) -> ())?
     
     private func commonInit() {
         
@@ -80,7 +80,7 @@ public class SelectionViewController: UITableViewController {
         
         super.viewDidLoad()
         
-        tableViewManager = TableViewManager(tableView: self.tableView, delegate: nil)
+        tableViewManager = TableViewManager(tableView: self.tableView)
         setupTaleViewItems()
     }
     
@@ -98,8 +98,8 @@ public class SelectionViewController: UITableViewController {
     
     private func setupTaleViewItems() {
         
-        let section = TableViewSection()
-        tableViewManager.addSection(section)
+        let section = Section()
+        tableViewManager.append(section)
         
         for element in items {
             
@@ -107,7 +107,7 @@ public class SelectionViewController: UITableViewController {
                 self.toogleItemCheck(item as! SelectionItemProtocol)
             }
             element.accessoryType = element.selected ? .Checkmark : .None
-            section.addItem(element)
+            section.append(element)
         }
         
         fillSelected()
