@@ -1,11 +1,11 @@
 platform :ios, "8.0"
 use_frameworks!
 
-target 'TableViewKit' do
-    
-	pod 'ODGTableViewKit', :path => '.'
-    
-    target 'TableViewKitTests' do
+target 'ExampleTableViewKit' do
+
+	pod 'TableViewKit', :path => '.'
+
+    target 'ExampleTableViewKitTests' do
         pod 'Nimble'
     end
 end
