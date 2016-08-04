@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         				= "TableViewKit"
-  s.version      				= "0.1.0"
+  s.version      				= "0.2.0"
   s.summary      				= "TableView Kit Layer"
   s.description  				= "TableView Kit Layer"
   s.homepage     				= "http://www.edreamsodigeo.com/"
