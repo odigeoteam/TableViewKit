@@ -8,16 +8,17 @@
 
 import Foundation
 import UIKit
+import ReactiveKit
 
 public class Section {
     
     // MARK: Public properties
     
-    public private(set) var items: [BaseItem]
-
+    public var items: CollectionProperty<[BaseItem]> = CollectionProperty([])
+    
     public var index: Int? { return tableViewManager?.sections.indexOf(self) }
     
-    weak public var tableViewManager: TableViewManager!
+    weak public private(set) var  tableViewManager: TableViewManager!
     
     public var headerTitle: String?
     public var footerTitle: String?
@@ -29,36 +30,20 @@ public class Section {
     // MARK: Init methods
     
     public required init() {
-        items = []
-    }
-    
-    // MARK: Add methods
-    
-    public func append(item: BaseItem) {
-        item.section = self
-        items.append(item)
-    }
-    
-    public func append(items: [BaseItem]) {
-        items.forEach(append)
-    }
-    
-    // MARK: Remove methods
-    
-    public func remove(item: BaseItem) {
-        
-        if let index = items.indexOf(item) {
-            items.removeAtIndex(index)
+        items.observeNext { e in
+            e.inserts.forEach { index in
+                e.collection[index].section = self
+            }
         }
     }
     
-    public func remove(array: [BaseItem]) {
-        array.forEach(remove)
+    public func register(tableViewManager manager: TableViewManager) {
+        tableViewManager = manager
+        items.forEach {
+           manager.register(type: $0.drawer.cellType)
+        }
     }
     
-    public func register() {
-        items.forEach { tableViewManager.register(type: $0.drawer.cellType) }
-    }
 }
 
 extension Section: Equatable {}
@@ -78,7 +63,7 @@ extension Section {
     
     public convenience init(items: [BaseItem]) {
         self.init()
-        self.append(items)
+        self.items.insertContentsOf(items, at: 0)
     }
     
     public convenience init(headerTitle: String) {

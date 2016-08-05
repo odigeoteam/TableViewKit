@@ -99,7 +99,7 @@ public class SelectionViewController: UITableViewController {
     private func setupTaleViewItems() {
         
         let section = Section()
-        tableViewManager.append(section)
+        tableViewManager.sections.append(section)
         
         for element in items {
             
@@ -107,7 +107,7 @@ public class SelectionViewController: UITableViewController {
                 self.toogleItemCheck(item as! SelectionItemProtocol)
             }
             element.accessoryType = element.selected ? .Checkmark : .None
-            section.append(element)
+            section.items.append(element)
         }
         
         fillSelected()
@@ -133,12 +133,12 @@ public class SelectionViewController: UITableViewController {
     
     private func itemSelected() -> SelectionItemProtocol? {
         
-        for section in tableViewManager.sections {
-            let checkedItems = section.items.filter { $0.accessoryType == .Checkmark }
-            if checkedItems.count != 0 {
-                return checkedItems.first as? SelectionItemProtocol
-            }
-        }
+//        for section in tableViewManager.sections {
+//            let checkedItems = section.items.filter { $0.accessoryType == .Checkmark }
+//            if checkedItems.count != 0 {
+//                return checkedItems.first as? SelectionItemProtocol
+//            }
+//        }
         return nil
     }
 }

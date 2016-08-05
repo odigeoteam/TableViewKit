@@ -26,8 +26,7 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         tableViewManager = TableViewManager(tableView: self.tableView)
-        tableViewManager.append(sections)
-        tableViewManager.register()
+        tableViewManager.sections.insertContentsOf(sections, at: 0)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
     }

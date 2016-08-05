@@ -8,13 +8,14 @@
 
 import Foundation
 import UIKit
+import ReactiveKit
 
 public class TableViewManager: NSObject {
     
     // MARK: Properties
     
     /// Array of sections
-    public var sections: [Section] = []
+    public var sections: CollectionProperty<[Section]> = CollectionProperty([])
     
     /// TableView to be managed
     public var tableView: UITableView!
@@ -32,14 +33,20 @@ public class TableViewManager: NSObject {
     
     public init(tableView: UITableView) {
         super.init()
+
         self.tableView = tableView
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+        sections.observeNext { e in
+            e.inserts.forEach { index in
+                e.collection[index].register(tableViewManager: self)
+            }
+        }
     }
     
     public convenience init(tableView: UITableView, sections: [Section]) {
         self.init(tableView: tableView)
-        append(sections)
     }
     
     // MARK: Public methods
@@ -55,21 +62,6 @@ public class TableViewManager: NSObject {
         case .Nib(let nib, let cellClass):
             tableView.registerNib(nib, forCellReuseIdentifier: type.reusableIdentifier)
         }
-    }
-    
-    public func register() {
-        sections.forEach { $0.register() }
-    }
-    
-    // MARK: Managing sections
-    
-    public func append(section: Section) {
-        section.tableViewManager = self
-        sections.append(section)
-    }
-    
-    public func append(sections: [Section]) {
-        sections.forEach(append)
     }
     
     public func validate(item: Validationable, setup: (Validation<String?>) -> Void) {
