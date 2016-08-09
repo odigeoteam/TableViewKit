@@ -42,6 +42,22 @@ public class TableViewManager: NSObject {
             e.inserts.forEach { index in
                 e.collection[index].register(tableViewManager: self)
             }
+            
+            guard let tableView = self.tableView else { return }
+            
+            tableView.beginUpdates()
+            if e.inserts.count > 0 {
+                tableView.insertSections(NSIndexSet(e.inserts), withRowAnimation: .Automatic)
+            }
+            
+            if e.updates.count > 0 {
+                tableView.reloadSections(NSIndexSet(e.updates), withRowAnimation: .Automatic)
+            }
+            
+            if e.deletes.count > 0 {
+                tableView.deleteSections(NSIndexSet(e.deletes), withRowAnimation: .Automatic)
+            }
+            tableView.endUpdates()
         }
     }
     

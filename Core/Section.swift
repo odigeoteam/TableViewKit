@@ -34,6 +34,25 @@ public class Section {
             e.inserts.forEach { index in
                 e.collection[index].section = self
             }
+            
+            guard let sectionIndex = self.index, tableView = self.tableViewManager?.tableView else { return }
+            
+            tableView.beginUpdates()
+            if e.inserts.count > 0 {
+                let indexPaths = e.inserts.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+                tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            }
+            
+            if e.updates.count > 0 {
+                let indexPaths = e.updates.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+                tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            }
+            
+            if e.deletes.count > 0 {
+                let indexPaths = e.deletes.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+                tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            }
+            tableView.endUpdates()
         }
     }
     
