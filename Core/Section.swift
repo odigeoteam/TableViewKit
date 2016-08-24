@@ -46,7 +46,6 @@ public class Section {
     // MARK: Remove methods
     
     public func remove(item: BaseItem) {
-        
         if let index = items.indexOf(item) {
             items.removeAtIndex(index)
         }
@@ -56,8 +55,11 @@ public class Section {
         array.forEach(remove)
     }
     
-    public func register() {
-        items.forEach { tableViewManager.register(type: $0.drawer.cellType) }
+    public func register(tableViewManager manager: TableViewManager) {
+        tableViewManager = manager
+        items.forEach {
+            manager.tableView.register(type: $0.drawer.cellType)
+        }
     }
 }
 

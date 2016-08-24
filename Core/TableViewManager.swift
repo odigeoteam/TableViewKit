@@ -44,21 +44,14 @@ public class TableViewManager: NSObject {
     
     // MARK: Public methods
     
-    public func register(type type: CellType) {
-        register(type: type, bundle: nil)
-    }
+
     
-    public func register(type type: CellType, bundle: NSBundle?) {
-        switch type {
-        case .Class(let cellClass):
-            tableView.registerClass(type.cellClass, forCellReuseIdentifier: type.reusableIdentifier)
-        case .Nib(let nib, let cellClass):
-            tableView.registerNib(nib, forCellReuseIdentifier: type.reusableIdentifier)
-        }
+    public func register(type type: CellType, bundle: NSBundle? = nil) {
+        tableView.register(type: type, bundle: bundle)
     }
     
     public func register() {
-        sections.forEach { $0.register() }
+        sections.forEach { $0.register(tableViewManager: self) }
     }
     
     // MARK: Managing sections
