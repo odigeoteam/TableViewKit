@@ -157,7 +157,7 @@ extension BaseCell: ActionBarDelegate {
     }
 }
 
-extension UITableView {
+public extension UITableView {
     public func register(type type: CellType, bundle: NSBundle? = nil) {
         switch type {
         case .Class(let cellClass):
