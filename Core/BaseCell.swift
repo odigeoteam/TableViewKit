@@ -157,6 +157,15 @@ extension BaseCell: ActionBarDelegate {
     }
 }
 
-
+extension UITableView {
+    public func register(type type: CellType, bundle: NSBundle? = nil) {
+        switch type {
+        case .Class(let cellClass):
+            registerClass(type.cellClass, forCellReuseIdentifier: type.reusableIdentifier)
+        case .Nib(let nib, let cellClass):
+            registerNib(nib, forCellReuseIdentifier: type.reusableIdentifier)
+        }
+    }
+}
 
 

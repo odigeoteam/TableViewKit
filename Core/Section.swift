@@ -59,7 +59,7 @@ public class Section {
     public func register(tableViewManager manager: TableViewManager) {
         tableViewManager = manager
         items.forEach {
-           manager.register(type: $0.drawer.cellType)
+           manager.tableView.register(type: $0.drawer.cellType)
         }
     }
     
