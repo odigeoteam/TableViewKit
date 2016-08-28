@@ -24,7 +24,6 @@
 		CCBE45981D72F79C00414A64 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45841D72F79C00414A64 /* Validation.swift */; };
 		CCBE45991D72F79C00414A64 /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45851D72F79C00414A64 /* ValidationError.swift */; };
 		CCBE459A1D72F79C00414A64 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45861D72F79C00414A64 /* Validator.swift */; };
-		CCBE459B1D72F79C00414A64 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45881D72F79C00414A64 /* SelectionViewController.swift */; };
 		CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45891D72F79C00414A64 /* BaseCell.swift */; };
 		CCBE459D1D72F79C00414A64 /* CellDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458A1D72F79C00414A64 /* CellDrawer.swift */; };
 		CCBE459E1D72F79C00414A64 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458B1D72F79C00414A64 /* Constants.swift */; };
@@ -67,7 +66,6 @@
 		CCBE45841D72F79C00414A64 /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		CCBE45851D72F79C00414A64 /* ValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
 		CCBE45861D72F79C00414A64 /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
-		CCBE45881D72F79C00414A64 /* SelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
 		CCBE45891D72F79C00414A64 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		CCBE458A1D72F79C00414A64 /* CellDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellDrawer.swift; sourceTree = "<group>"; };
 		CCBE458B1D72F79C00414A64 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 				CCBE457D1D72F79C00414A64 /* Items */,
 				CCBE45801D72F79C00414A64 /* Resources */,
 				CCBE45821D72F79C00414A64 /* Validator */,
-				CCBE45871D72F79C00414A64 /* Views */,
 				CCBE45891D72F79C00414A64 /* BaseCell.swift */,
 				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
 				CCBE458B1D72F79C00414A64 /* Constants.swift */,
@@ -213,14 +210,6 @@
 				CCBE45861D72F79C00414A64 /* Validator.swift */,
 			);
 			path = Validator;
-			sourceTree = "<group>";
-		};
-		CCBE45871D72F79C00414A64 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				CCBE45881D72F79C00414A64 /* SelectionViewController.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,7 +406,6 @@
 			files = (
 				CCBE45A01D72F79C00414A64 /* Section.swift in Sources */,
 				CCBE45921D72F79C00414A64 /* NSIndexSet+Array.swift in Sources */,
-				CCBE459B1D72F79C00414A64 /* SelectionViewController.swift in Sources */,
 				CCBE45991D72F79C00414A64 /* ValidationError.swift in Sources */,
 				CCBE45971D72F79C00414A64 /* Rules.swift in Sources */,
 				CCBE45911D72F79C00414A64 /* NSBundle+TableViewKit.swift in Sources */,

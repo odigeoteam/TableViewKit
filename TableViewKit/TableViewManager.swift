@@ -35,6 +35,8 @@ public class TableViewManager: NSObject {
         self.tableView.delegate = self
         
         sections.observeNext { e in
+            guard e.inserts.count + e.updates.count + e.deletes.count > 0 else { return }
+
             e.inserts.forEach { index in
                 e.collection[index].register(tableViewManager: self)
             }
@@ -58,12 +60,6 @@ public class TableViewManager: NSObject {
     public convenience init(tableView: UITableView, sections: [Section]) {
         self.init(tableView: tableView)
         self.sections.insertContentsOf(sections, at: 0)
-    }
-    
-    // MARK: Public methods
-    
-    public func register(type type: CellType, bundle: NSBundle? = nil) {
-        tableView.register(type: type, bundle: bundle)
     }
     
 }
@@ -98,13 +94,11 @@ extension TableViewManager: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        guard tableView == self.tableView else { return tableView.rowHeight }
         let item = itemForIndexPath(indexPath)
         return item.cellHeight ?? tableView.estimatedRowHeight
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        guard tableView == self.tableView else { return tableView.rowHeight }
         let item = itemForIndexPath(indexPath)
         return item.cellHeight ?? tableView.rowHeight
     }

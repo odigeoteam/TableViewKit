@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import TableViewKit
 
 public protocol SelectionItemProtocol: ItemProtocol {
     
