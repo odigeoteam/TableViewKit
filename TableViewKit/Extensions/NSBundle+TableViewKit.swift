@@ -11,10 +11,10 @@ import Foundation
 extension NSBundle {
     
     public class func tableViewKitBundle() -> NSBundle {
-        
-        if let bundlePath = NSBundle(forClass: TableViewManager.self).pathForResource("TableViewKit", ofType: "bundle") {
+        let bundle = NSBundle(forClass: TableViewManager.self)
+        if let bundlePath = bundle.pathForResource("TableViewKit", ofType: "bundle") {
             return NSBundle(path: bundlePath)!
         }
-        return NSBundle.mainBundle()
+        return bundle
     }
 }

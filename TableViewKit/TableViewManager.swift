@@ -87,7 +87,7 @@ extension TableViewManager: UITableViewDataSource {
         let item = itemForIndexPath(indexPath)
         let drawer = item.drawer
         
-        let cell = drawer.cell(inManager: self, withItem: item)
+        let cell = drawer.cell(inManager: self, withItem: item, forIndexPath: indexPath)
         drawer.draw(cell: cell, withItem: item)
         
         return cell

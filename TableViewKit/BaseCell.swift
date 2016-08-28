@@ -39,7 +39,7 @@ public class BaseCell : UITableViewCell {
     
     weak public var tableViewManager: TableViewManager!
     public var item: ItemProtocol?
-
+    
     public var responder: UIResponder?
     
     public var actionBar: ActionBar!
@@ -67,6 +67,21 @@ public class BaseCell : UITableViewCell {
     public func commonInit() {
         actionBar = ActionBar(delegate: self)
     }
+    
+    public override func canBecomeFirstResponder() -> Bool {
+        guard let responder = responder else { return false }
+        return responder.canBecomeFirstResponder()
+    }
+    
+    public override func becomeFirstResponder() -> Bool {
+        guard let responder = responder else { return false }
+        return responder.becomeFirstResponder()
+    }
+
+    public override func isFirstResponder() -> Bool {
+        guard let responder = responder else { return false }
+        return responder.isFirstResponder()
+    }
 
 }
 
@@ -83,10 +98,13 @@ extension BaseCell: ActionBarDelegate {
             
         for itemIndex in (0 ..< indexInSection!).reverse() {
             let previousItem = section.items[itemIndex]
-            let cell = previousItem.drawer.cell(inManager: tableViewManager, withItem: previousItem)
-            if cell.responder != nil {
-                return previousItem.indexPath(inManager: tableViewManager)
+            guard let indexPath = previousItem.indexPath(inManager: tableViewManager),
+                let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath)
+                else { continue }
+            if cell.canBecomeFirstResponder() {
+                return indexPath
             }
+
         }
         
         return nil
@@ -111,9 +129,11 @@ extension BaseCell: ActionBarDelegate {
         
         for itemIndex in indexInSection! + 1 ..< section.items.count {
             let nextItem = section.items[itemIndex]
-            let cell = nextItem.drawer.cell(inManager: tableViewManager, withItem: nextItem)
-            if cell.responder != nil {
-                return nextItem.indexPath(inManager: tableViewManager)
+            guard let indexPath = nextItem.indexPath(inManager: tableViewManager),
+                let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath)
+                else { continue }
+            if cell.canBecomeFirstResponder() {
+                return indexPath
             }
         }
         
@@ -147,8 +167,8 @@ extension BaseCell: ActionBarDelegate {
         
         tableViewManager.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
         
-        let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? BaseCell
-        cell?.responder?.becomeFirstResponder()
+        let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as! BaseCell
+        cell.becomeFirstResponder()
     }
     
     public func actionBar(actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {

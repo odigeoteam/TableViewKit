@@ -25,13 +25,14 @@ public class TextFieldCell: BaseCell {
         selectionStyle = .None
         responder = textField
         
-        textField.addTarget(self, action: #selector(onTextChange), forControlEvents: UIControlEvents.EditingChanged)
+        textField.addTarget(self, action: #selector(onTextChange), forControlEvents: .EditingChanged)
         textField.inputAccessoryView = actionBar
     }
     
     public func onTextChange(textField: UITextField) {
         textFieldItem.value = textField.text
     }
+
 }
 
 public class TextFieldDrawer: CellDrawer {
