@@ -2,8 +2,8 @@
 //  TableViewKitTests.swift
 //  TableViewKitTests
 //
-//  Created by Nelson Dominguez Leon on 29/06/16.
-//  Copyright © 2016 ODIGEO. All rights reserved.
+//  Created by Alfredo Delli Bovi on 28/08/16.
+//  Copyright © 2016 odigeo. All rights reserved.
 //
 
 import XCTest
@@ -13,39 +13,41 @@ import Nimble
 @testable import TableViewKit
 
 class TableViewKitTests: XCTestCase {
-    
+
     private var tableViewManager: TableViewManager!
-    
+
     override func setUp() {
-        
+
         super.setUp()
-        
-        tableViewManager = TableViewManager(tableView: UITableView(), delegate: nil)
+
+        tableViewManager = TableViewManager(tableView: UITableView())
     }
-    
+
     override func tearDown() {
-        
+
         tableViewManager = nil
-        
+
         super.tearDown()
     }
-    
+
     func testAddSection() {
-        
-        let section = TableViewSection()
-        tableViewManager.addSection(section)
-        
+
+        let section = Section()
+        tableViewManager.sections.append(section)
+
         expect(self.tableViewManager.sections.count).to(equal(1))
     }
-    
+
     func testAddItem() {
-        
-        let item = TableViewItem()
-        
-        let section = TableViewSection()
-        section.addItem(item)
+
+        let item: ItemProtocol = CustomItem()
+
+        let section = Section()
+        section.items.append(item)
+
+        tableViewManager.sections.append(section)
         
         expect(section.items.count).to(equal(1))
-        expect(item.section).notTo(beNil())
+        expect(item.section(inManager: self.tableViewManager)).notTo(beNil())
     }
 }

@@ -142,12 +142,12 @@ extension BaseCell: ActionBarDelegate {
         }
     }
     
-    public func actionBar(actionBar: ActionBar, direction direction: Direction) {
+    public func actionBar(actionBar: ActionBar, direction: Direction) {
         guard let indexPath = indexPathForResponder(forDirection: direction) else { return }
         
         tableViewManager.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
         
-        var cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? BaseCell
+        let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? BaseCell
         cell?.responder?.becomeFirstResponder()
     }
     

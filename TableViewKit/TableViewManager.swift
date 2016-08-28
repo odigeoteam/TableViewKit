@@ -22,6 +22,9 @@ public class TableViewManager: NSObject {
             return validator.errors
         }
     }
+    
+    let disposeBag = DisposeBag()
+
 
     // MARK: Inits
     
@@ -49,7 +52,7 @@ public class TableViewManager: NSObject {
                 tableView.deleteSections(NSIndexSet(e.deletes), withRowAnimation: .Automatic)
             }
             tableView.endUpdates()
-        }
+        }.disposeIn(disposeBag)
     }
     
     public convenience init(tableView: UITableView, sections: [Section]) {

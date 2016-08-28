@@ -27,6 +27,8 @@ public class Section {
     public var headerView: UIView?
     public var footerView: UIView?
     
+    let disposeBag = DisposeBag()
+
     // MARK: Init methods
     
     public init() {
@@ -49,7 +51,7 @@ public class Section {
                 tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
             }
             tableView.endUpdates()
-        }
+        }.disposeIn(disposeBag)
     }
     
     public func register(tableViewManager manager: TableViewManager) {

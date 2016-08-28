@@ -12,8 +12,8 @@ public extension UITableView {
     public func register(type type: CellType, bundle: NSBundle? = nil) {
         switch type {
         case .Class(let cellClass):
-            registerClass(type.cellClass, forCellReuseIdentifier: type.reusableIdentifier)
-        case .Nib(let nib, let cellClass):
+            registerClass(cellClass, forCellReuseIdentifier: type.reusableIdentifier)
+        case .Nib(let nib, _):
             registerNib(nib, forCellReuseIdentifier: type.reusableIdentifier)
         }
     }
