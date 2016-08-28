@@ -50,17 +50,5 @@ class TableViewKitTests: XCTestCase {
         expect(section.items.count).to(equal(1))
         expect(item.section(inManager: self.tableViewManager)).notTo(beNil())
     }
-    
-    func testCell() {
 
-        let section = Section()
-        section.items.append(CustomItem())
-        
-        tableViewManager.sections.append(section)
-        
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        let cell = self.tableViewManager.tableView(self.tableViewManager.tableView, cellForRowAtIndexPath: indexPath)
-        
-        expect(cell).to(beAnInstanceOf(BaseCell))
-    }
 }
