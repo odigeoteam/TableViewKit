@@ -21,18 +21,24 @@ public enum SelectionType {
     case Single, Multiple
 }
 
-public class SelectionItem: BaseItem, SelectionItemProtocol {
+public class SelectionItem: SelectionItemProtocol {    
+    public var title: String?
     
     public var value: Any
     public var selected: Bool
- 
+    
+    public var onSelection: (ItemProtocol) -> () = { _ in }
+    
+    public var accessoryType: UITableViewCellAccessoryType = .None
+    public var accessoryView: UIView?
+    public var cellHeight: CGFloat? = UITableViewAutomaticDimension
+    
+    public var drawer: CellDrawer.Type = CustomDrawer.self
+
+    
     public required init(title: String, value: Any, selected: Bool = false) {
-        
         self.value = value
         self.selected = selected
-        
-        super.init()
-        
         self.title = title
     }
 }
@@ -44,7 +50,7 @@ public class SelectionViewController: UITableViewController {
     private var selectedItems: [SelectionItem]!
     
     public var items: [SelectionItem]!
-    public var selectionHandler: (([SelectionItem]) -> ())?
+    public var onSelection: (([SelectionItem]) -> ())?
     
     private func commonInit() {
         
@@ -88,7 +94,7 @@ public class SelectionViewController: UITableViewController {
         
         super.viewWillDisappear(animated)
         
-        selectionHandler?(selectedItems)
+        onSelection?(selectedItems)
     }
     
     private func fillSelected() {
@@ -103,8 +109,8 @@ public class SelectionViewController: UITableViewController {
         
         for element in items {
             
-            element.selectionHandler = { item in
-                self.toogleItemCheck(item as! SelectionItemProtocol)
+            element.onSelection = { item in
+                self.toogleItemCheck(item as! SelectionItem)
             }
             element.accessoryType = element.selected ? .Checkmark : .None
             section.items.append(element)
@@ -113,25 +119,25 @@ public class SelectionViewController: UITableViewController {
         fillSelected()
     }
     
-    private func toogleItemCheck(item: SelectionItemProtocol) {
+    private func toogleItemCheck(item: SelectionItem) {
         
         if selectionType == .Single {
             
             if let checkedItem = itemSelected() {
                 checkedItem.selected = false
                 checkedItem.accessoryType = .None
-                checkedItem.reloadRowWithAnimation(.Fade)
+                checkedItem.reloadRow(inManager: tableViewManager, withAnimation: .Fade)
             }
         }
         
         item.selected = !item.selected
         item.accessoryType = item.accessoryType == .Checkmark ? .None : .Checkmark
-        item.reloadRowWithAnimation(.Fade)
+        item.reloadRow(inManager: tableViewManager, withAnimation: .Fade)
         
         fillSelected()
     }
     
-    private func itemSelected() -> SelectionItemProtocol? {
+    private func itemSelected() -> SelectionItem? {
         
 //        for section in tableViewManager.sections {
 //            let checkedItems = section.items.filter { $0.accessoryType == .Checkmark }

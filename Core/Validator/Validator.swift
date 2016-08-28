@@ -49,6 +49,7 @@ public struct ValidatorManager<Input> {
     }
     
     public mutating func add(validation validation: Validation<Input>) {
+        guard (!validations.contains { $0 === validation }) else { return }
         validations.append(validation)
     }
     

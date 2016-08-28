@@ -38,12 +38,12 @@ public class BaseCell : UITableViewCell {
     // MARK: Public
     
     weak public var tableViewManager: TableViewManager!
-    
+    public var item: ItemProtocol?
+
     public var responder: UIResponder?
     
     public var actionBar: ActionBar!
     
-    public var item: BaseItem?
     
     // MARK: Constructors
     
@@ -77,15 +77,15 @@ extension BaseCell: ActionBarDelegate {
         guard let item = item else { return nil }
         
         let section = tableViewManager.sections[sectionIndex]
-        let indexInSection = section == item.section ? section.items.indexOf(item) : section.items.count
+        let indexInSection = section == item.section(inManager: tableViewManager) ? section.items.indexOf(item) : section.items.count
         
         guard indexInSection > 0 else { return nil }
             
         for itemIndex in (0 ..< indexInSection!).reverse() {
             let previousItem = section.items[itemIndex]
-            let cell = previousItem.drawer.cell(forTableView: tableViewManager.tableView, atIndexPath: previousItem.indexPath!)
+            let cell = previousItem.drawer.cell(inManager: tableViewManager, withItem: previousItem)
             if cell.responder != nil {
-                return previousItem.indexPath
+                return previousItem.indexPath(inManager: tableViewManager)
             }
         }
         
@@ -93,7 +93,7 @@ extension BaseCell: ActionBarDelegate {
     }
     
     private func indexPathForPreviousResponder() -> NSIndexPath? {
-        let sectionIndex = (item?.indexPath?.section)!
+        let sectionIndex = (item?.indexPath(inManager: tableViewManager)?.section)!
 
         for index in (0 ... sectionIndex).reverse() {
             if let indexPath = indexPathForPreviousResponderInSectionIndex(index) {
@@ -107,13 +107,13 @@ extension BaseCell: ActionBarDelegate {
     private func indexPathForNextResponderInSectionIndex(sectionIndex: Int) -> NSIndexPath? {
         
         let section = tableViewManager.sections[sectionIndex]
-        let indexInSection = section == item!.section ? section.items.indexOf { $0 == item! } : -1
+        let indexInSection = section == item!.section(inManager: tableViewManager) ? section.items.indexOf(item!) : -1
         
         for itemIndex in indexInSection! + 1 ..< section.items.count {
             let nextItem = section.items[itemIndex]
-            let cell = nextItem.drawer.cell(forTableView: tableViewManager.tableView, atIndexPath: nextItem.indexPath!)
+            let cell = nextItem.drawer.cell(inManager: tableViewManager, withItem: nextItem)
             if cell.responder != nil {
-                return nextItem.indexPath
+                return nextItem.indexPath(inManager: tableViewManager)
             }
         }
         
@@ -121,7 +121,7 @@ extension BaseCell: ActionBarDelegate {
     }
     
     private func indexPathForNextResponder() -> NSIndexPath? {
-        let sectionIndex = (item?.indexPath?.section)!
+        let sectionIndex = (item?.indexPath(inManager: tableViewManager)?.section)!
 
         for index in sectionIndex ... tableViewManager.sections.count - 1 {
             if let indexPath = indexPathForNextResponderInSectionIndex(index) {
@@ -143,10 +143,9 @@ extension BaseCell: ActionBarDelegate {
     }
     
     public func actionBar(actionBar: ActionBar, direction direction: Direction) {
-        
         guard let indexPath = indexPathForResponder(forDirection: direction) else { return }
         
-        tableViewManager.tableView .scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
+        tableViewManager.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
         
         var cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as? BaseCell
         cell?.responder?.becomeFirstResponder()
@@ -156,16 +155,3 @@ extension BaseCell: ActionBarDelegate {
         endEditing(true)
     }
 }
-
-public extension UITableView {
-    public func register(type type: CellType, bundle: NSBundle? = nil) {
-        switch type {
-        case .Class(let cellClass):
-            registerClass(type.cellClass, forCellReuseIdentifier: type.reusableIdentifier)
-        case .Nib(let nib, let cellClass):
-            registerNib(nib, forCellReuseIdentifier: type.reusableIdentifier)
-        }
-    }
-}
-
-

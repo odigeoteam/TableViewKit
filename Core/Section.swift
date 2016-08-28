@@ -14,7 +14,7 @@ public class Section {
     
     // MARK: Public properties
     
-    public var items: CollectionProperty<[BaseItem]> = CollectionProperty([])
+    public var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
     
     public var index: Int? { return tableViewManager?.sections.indexOf(self) }
     
@@ -29,12 +29,8 @@ public class Section {
     
     // MARK: Init methods
     
-    public required init() {
+    public init() {
         items.observeNext { e in
-            e.inserts.forEach { index in
-                e.collection[index].section = self
-            }
-            
             guard let sectionIndex = self.index, tableView = self.tableViewManager?.tableView else { return }
             
             tableView.beginUpdates()
@@ -59,6 +55,10 @@ public class Section {
     public func register(tableViewManager manager: TableViewManager) {
         tableViewManager = manager
         items.forEach {
+            if let item = $0 as? Validationable {
+                manager.validator.add(validation: item.validation)
+            }
+
            manager.tableView.register(type: $0.drawer.cellType)
         }
     }
@@ -80,7 +80,7 @@ extension Section {
 
 extension Section {
     
-    public convenience init(items: [BaseItem]) {
+    public convenience init(items: [ItemProtocol]) {
         self.init()
         self.items.insertContentsOf(items, at: 0)
     }

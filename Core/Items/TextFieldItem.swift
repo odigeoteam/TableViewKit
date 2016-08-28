@@ -32,10 +32,31 @@ public class TextFieldCell: BaseCell {
     public func onTextChange(textField: UITextField) {
         textFieldItem.value = textField.text
     }
-
 }
 
-public class TextFieldItem: BaseItem, ContentValidatable, Validationable {
+public class TextFieldDrawer: CellDrawer {
+    
+    public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: NSBundle.tableViewKitBundle())
+    public static let cellType = CellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
+    
+    public static func draw(cell cell: BaseCell, withItem item: Any) {
+        
+        let textCell = cell as! TextFieldCell
+        let textItem = item as! TextFieldItem
+        
+        textCell.textField.placeholder = textItem.placeHolder
+        textCell.textField.text = textItem.value
+    }
+}
+
+public class TextFieldItem: ItemProtocol, ContentValidatable, Validationable {
+        
+    public var onSelection: (ItemProtocol) -> () = { _ in }
+    public var drawer: CellDrawer.Type = TextFieldDrawer.self
+    
+    // MARK: Cell style
+    
+    public var cellHeight: CGFloat? = UITableViewAutomaticDimension
 
     public lazy var validation: Validation<String?> = {
         return Validation<String?>(forInput: self, withIdentifier: self)
@@ -44,29 +65,13 @@ public class TextFieldItem: BaseItem, ContentValidatable, Validationable {
     public var placeHolder: String?
     public var value: String?
     
-    override public init() {
-        super.init()
-        drawer = TextFieldDrawer()
+    public init(placeHolder: String?) {
+        self.placeHolder = placeHolder
     }
     
     public var validationContent: String? {
         get {
             return value
         }
-    }
-}
-
-public class TextFieldDrawer: CellDrawer {
-    
-    public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: NSBundle.tableViewKitBundle())
-    public let cellType = CellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
-    
-    public func draw(cell cell: BaseCell, withItem item: BaseItem) {
-
-        let textCell = cell as! TextFieldCell
-        let textItem = item as! TextFieldItem
-        
-        textCell.textField.placeholder = textItem.placeHolder
-        textCell.textField.text = textItem.value
     }
 }

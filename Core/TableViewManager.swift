@@ -13,16 +13,10 @@ import ReactiveKit
 public class TableViewManager: NSObject {
     
     // MARK: Properties
-    
-    /// Array of sections
+    public let tableView: UITableView
     public var sections: CollectionProperty<[Section]> = CollectionProperty([])
     
-    /// TableView to be managed
-    public var tableView: UITableView!
-    
-    
     public var validator: ValidatorManager<String?> = ValidatorManager()
-    
     public var errors: [ValidationError] {
         get {
             return validator.errors
@@ -32,9 +26,8 @@ public class TableViewManager: NSObject {
     // MARK: Inits
     
     public init(tableView: UITableView) {
-        super.init()
-
         self.tableView = tableView
+        super.init()
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
@@ -42,8 +35,6 @@ public class TableViewManager: NSObject {
             e.inserts.forEach { index in
                 e.collection[index].register(tableViewManager: self)
             }
-            
-            guard let tableView = self.tableView else { return }
             
             tableView.beginUpdates()
             if e.inserts.count > 0 {
@@ -63,25 +54,20 @@ public class TableViewManager: NSObject {
     
     public convenience init(tableView: UITableView, sections: [Section]) {
         self.init(tableView: tableView)
+        self.sections.insertContentsOf(sections, at: 0)
     }
     
     // MARK: Public methods
-    
-
     
     public func register(type type: CellType, bundle: NSBundle? = nil) {
         tableView.register(type: type, bundle: bundle)
     }
     
-    public func validate(item: Validationable, setup: (Validation<String?>) -> Void) {
-        setup(item.validation)
-        validator.add(validation: item.validation)
-    }
 }
 
 extension TableViewManager {
     
-    private func itemForIndexPath(indexPath: NSIndexPath) -> BaseItem {
+    private func itemForIndexPath(indexPath: NSIndexPath) -> ItemProtocol {
         return sections[indexPath.section].items[indexPath.row]
     }
 }
@@ -100,14 +86,12 @@ extension TableViewManager: UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let item = itemForIndexPath(indexPath)
+        let drawer = item.drawer
         
-        let tableViewCell = item.drawer.cell(forTableView: tableView, atIndexPath: indexPath)
-        tableViewCell.item = item
-        tableViewCell.tableViewManager = self
+        let cell = drawer.cell(inManager: self, withItem: item)
+        drawer.draw(cell: cell, withItem: item)
         
-        item.drawer.draw(cell: tableViewCell, withItem: item)
-        
-        return tableViewCell
+        return cell
     }
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -154,7 +138,7 @@ extension TableViewManager: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let item = itemForIndexPath(indexPath)
-        item.selectionHandler?(item)
+        item.onSelection(item)
     }
     
 }

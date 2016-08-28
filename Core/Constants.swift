@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct Constants {
+struct Constants {
     
-    struct Frame {
+    enum Frame {
         
         static let PickerHeight = 260.0
         static let PickerViewHeight = 216.0
@@ -18,7 +18,7 @@ public struct Constants {
         static let HeaderViewHeight = 44.0
     }
     
-    struct Animation {
+    enum Animation {
         
         static let Duration = 0.3
     }

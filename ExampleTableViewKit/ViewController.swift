@@ -9,106 +9,58 @@
 import UIKit
 import TableViewKit
 
-struct Configuration {
+class FirstSection: Section {
     let vc: ViewController
-    
-    let item = BaseItem(title: "Passengers")
-    let dateItem = BaseItem(title: "Birthday")
-    let selectionItem = BaseItem(title: "Selection")
-    let textFieldItem = TextFieldItem()
-    let textFieldItem2 = TextFieldItem()
-    let specialItem = BaseItem(title: "Special")
 
-
-    
-    
-    var normalState: [Section] {
-        mutating get {
-            return [firstSection, secondSection]
-        }
-    }
-    
-    var specialState: [Section] {
-        mutating get {
-            return [modifiedSection, secondSection]
-        }
-    }
-    
     init(vc: ViewController) {
         self.vc = vc
+        super.init()
+        self.headerTitle = "First section title"
+        self.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
         
-        self.item.selectionHandler = { item in
-            item.deselectRowAnimated(true)
+        let item = CustomItem(title: "Passengers")
+        let dateItem = CustomItem(title: "Birthday")
+        let selectionItem = CustomItem(title: "Selection")
+        let textFieldItem = TextFieldItem(placeHolder: "Name")
+        textFieldItem.validation.add(rule: ExistRule())
+        let textFieldItem2 = TextFieldItem(placeHolder: "Surname")
+        textFieldItem2.validation.add(rule: ExistRule())
+        
+        item.onSelection = { item in
+            item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
-        self.dateItem.accessoryType = .DisclosureIndicator
-        self.dateItem.selectionHandler = { item in
-            item.deselectRowAnimated(true)
+        dateItem.accessoryType = .DisclosureIndicator
+        dateItem.onSelection = { item in
+            item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
             self.vc.showDatePickerControl()
         }
-        self.selectionItem.accessoryType = .DisclosureIndicator
-        self.selectionItem.selectionHandler = { item in
-            item.deselectRowAnimated(true)
+        selectionItem.accessoryType = .DisclosureIndicator
+        selectionItem.onSelection = { item in
+            item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
         
-        self.textFieldItem.placeHolder = "Name"
-        self.vc.tableViewManager.validate(self.textFieldItem) {
-            $0.add(rule: ExistRule())
-        }
+        self.items.insertContentsOf([item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: 0)
+    }
+}
+
+class SecondSection: Section {
+    
+    override init() {
+        super.init()
+        self.headerTitle = "Second Section"
         
-        self.textFieldItem2.placeHolder = "Surname"
-        self.vc.tableViewManager.validate(self.textFieldItem2) {
-            $0.add(rule: ExistRule())
-        }
-
-    }
-    
-    
-    
-    private lazy var sharedSection: Section = {
-        let section = Section()
-        section.headerTitle = "Section title"
-        section.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
-        return section
-    }()
-    
-    private var modifiedSection: Section {
-        mutating get {
-            let section = self.sharedSection
-            section.items.replace([self.dateItem, self.textFieldItem, self.specialItem, self.textFieldItem2], performDiff: true)
-            
-            return section
-        }
-    }
-    
-    private var firstSection: Section {
-        mutating get {
-            let section = self.sharedSection
-            section.items.replace([self.item, self.dateItem, self.selectionItem, self.textFieldItem, self.textFieldItem2], performDiff: true)
-            return section
-        }
-    }
-    
-    private lazy var secondSection: Section = {
-        let textFieldItem = TextFieldItem()
-        textFieldItem.placeHolder = "Place of birth"
-        self.vc.tableViewManager.validate(textFieldItem) {
-            $0.add(rule: ExistRule())
-        }
+        let textFieldItem = TextFieldItem(placeHolder: "Place of birth")
+        textFieldItem.validation.add(rule: ExistRule())
         
-        let section = Section(items: [textFieldItem])
-        section.headerTitle = "Second Section"
-        return section
-    }()
-
-
+        self.items.insertContentsOf([textFieldItem], at: 0)
+    }
 }
 
 class ViewController: UITableViewController {
     
     var tableViewManager: TableViewManager!
-    var configuration: Configuration!
     var pickerControl: PickerControl?
     
 
@@ -116,9 +68,7 @@ class ViewController: UITableViewController {
         
         super.viewDidLoad()
         
-        tableViewManager = TableViewManager(tableView: self.tableView)
-        configuration = Configuration.init(vc: self)
-        tableViewManager.sections.insertContentsOf(configuration.normalState, at: 0)
+        tableViewManager = TableViewManager(tableView: self.tableView, sections: [FirstSection(vc: self), SecondSection()])
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
     }
@@ -158,11 +108,6 @@ class ViewController: UITableViewController {
     }
     
     @objc private func validationAction() {
-        if (arc4random_uniform(2) == 0) {
-            tableViewManager.sections.replace(configuration.normalState, performDiff: true)
-        } else {
-            tableViewManager.sections.replace(configuration.specialState, performDiff: true)
-        }
         guard let error = tableViewManager.errors.first else { return }
         print(error)
         
