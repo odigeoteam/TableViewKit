@@ -141,7 +141,7 @@ extension BaseCell: ActionBarDelegate {
     }
     
     private func indexPathForNextResponder() -> NSIndexPath? {
-        let sectionIndex = (item?.indexPath(inManager: tableViewManager)?.section)!
+        guard let sectionIndex = item?.indexPath(inManager: tableViewManager)?.section else { return nil }
 
         for index in sectionIndex ... tableViewManager.sections.count - 1 {
             if let indexPath = indexPathForNextResponderInSectionIndex(index) {
@@ -162,13 +162,14 @@ extension BaseCell: ActionBarDelegate {
         }
     }
     
-    public func actionBar(actionBar: ActionBar, direction: Direction) {
-        guard let indexPath = indexPathForResponder(forDirection: direction) else { return }
+    public func actionBar(actionBar: ActionBar, direction: Direction) -> NSIndexPath? {
+        guard let indexPath = indexPathForResponder(forDirection: direction) else { return nil }
         
         tableViewManager.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
         
         let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as! BaseCell
         cell.becomeFirstResponder()
+        return indexPath
     }
     
     public func actionBar(actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {

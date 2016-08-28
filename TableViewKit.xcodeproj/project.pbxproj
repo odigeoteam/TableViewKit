@@ -31,6 +31,7 @@
 		CCBE45A01D72F79C00414A64 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458D1D72F79C00414A64 /* Section.swift */; };
 		CCBE45A11D72F79C00414A64 /* TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458E1D72F79C00414A64 /* TableViewManager.swift */; };
 		CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */; };
+		CCE400FA1D73321600537715 /* ActionBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F91D73321600537715 /* ActionBarTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		CCBE458D1D72F79C00414A64 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		CCBE458E1D72F79C00414A64 /* TableViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
 		CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceTests.swift; sourceTree = "<group>"; };
+		CCE400F91D73321600537715 /* ActionBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBarTests.swift; sourceTree = "<group>"; };
 		D0E1FB244FF2B149DB428D40 /* Pods-TableViewKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKit/Pods-TableViewKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -161,6 +163,7 @@
 		CCBE456A1D72F69500414A64 /* TableViewKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				CCE400F91D73321600537715 /* ActionBarTests.swift */,
 				CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */,
 				CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */,
 				CCBE456D1D72F69500414A64 /* Info.plist */,
@@ -431,6 +434,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCE400FA1D73321600537715 /* ActionBarTests.swift in Sources */,
 				CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */,
 				CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */,
 			);

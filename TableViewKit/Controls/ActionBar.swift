@@ -16,7 +16,7 @@ public enum Direction {
 
 public protocol ActionBarDelegate {
     
-    func actionBar(actionBar: ActionBar, direction: Direction)
+    func actionBar(actionBar: ActionBar, direction: Direction) -> NSIndexPath?
     func actionBar(actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem)
 }
 
