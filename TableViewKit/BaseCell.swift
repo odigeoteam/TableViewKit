@@ -89,7 +89,7 @@ extension BaseCell: ActionBarDelegate {
     
     private func indexPathForPreviousResponderInSectionIndex(sectionIndex: Int) -> NSIndexPath? {
         
-        guard let item = item else { return nil }
+        guard let item = self.item else { return nil }
         
         let section = tableViewManager.sections[sectionIndex]
         let indexInSection = section == item.section(inManager: tableViewManager) ? section.items.indexOf(item) : section.items.count

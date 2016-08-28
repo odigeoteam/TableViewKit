@@ -13,22 +13,6 @@ import XCTest
 import TableViewKit
 import Nimble
 
-extension UIView {
-    func currentFirstResponder() -> UIResponder? {
-        if self.isFirstResponder() {
-            return self
-        }
-        
-        for view in self.subviews {
-            if let responder = view.currentFirstResponder() {
-                return responder
-            }
-        }
-        
-        return nil
-    }
-}
-
 class ActionBarTests: XCTestCase {
     
     private var tableViewManager: TableViewManager!
@@ -63,7 +47,10 @@ class ActionBarTests: XCTestCase {
         cell = tableViewManager.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! BaseCell
 
         expect(cell.actionBar(cell.actionBar, direction: .next)).to(equal(NSIndexPath(forRow: 0, inSection: 1)))
+        expect(cell.actionBar(cell.actionBar, direction: .previous)).to(beNil())
 
+        cell = tableViewManager.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1)) as! BaseCell
+        expect(cell.actionBar(cell.actionBar, direction: .previous)).to(equal(NSIndexPath(forRow: 0, inSection: 0)))
     }
     
     
