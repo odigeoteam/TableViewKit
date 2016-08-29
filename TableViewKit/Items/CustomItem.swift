@@ -22,7 +22,7 @@ public class CustomDrawer: CellDrawer {
 }
 
 
-public class CustomItem: ItemProtocol {
+public class CustomItem: ItemSelectable, ItemProtocol {
     
     public var title: String?
     

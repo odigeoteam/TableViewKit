@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7892A1603117CFA582BFCAC3 /* Pods_TableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */; };
 		AD0E465917E1381DFF2E904B /* Pods_TableViewKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */; };
+		CC97D76D1D741DC4009CDF9D /* ItemSelectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC97D76C1D741DC4009CDF9D /* ItemSelectable.swift */; };
 		CCBE45601D72F69500414A64 /* TableViewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = CCBE455F1D72F69500414A64 /* TableViewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CCBE45671D72F69500414A64 /* TableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBE455C1D72F69400414A64 /* TableViewKit.framework */; };
 		CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */; };
@@ -50,6 +51,7 @@
 		5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C8E0D2A241295B7A143FE9 /* Pods-TableViewKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKitTests/Pods-TableViewKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		CC97D76C1D741DC4009CDF9D /* ItemSelectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemSelectable.swift; path = Protocols/ItemSelectable.swift; sourceTree = "<group>"; };
 		CCBE455C1D72F69400414A64 /* TableViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCBE455F1D72F69500414A64 /* TableViewKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewKit.h; sourceTree = "<group>"; };
 		CCBE45611D72F69500414A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,7 +73,7 @@
 		CCBE45891D72F79C00414A64 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		CCBE458A1D72F79C00414A64 /* CellDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellDrawer.swift; sourceTree = "<group>"; };
 		CCBE458B1D72F79C00414A64 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemProtocol.swift; sourceTree = "<group>"; };
+		CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemProtocol.swift; path = Protocols/ItemProtocol.swift; sourceTree = "<group>"; };
 		CCBE458D1D72F79C00414A64 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		CCBE458E1D72F79C00414A64 /* TableViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
 		CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceTests.swift; sourceTree = "<group>"; };
@@ -111,6 +113,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CC97D76B1D741D8E009CDF9D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */,
+				CC97D76C1D741DC4009CDF9D /* ItemSelectable.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		CCAE56B0F1D6CA998E92E8A3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +154,7 @@
 		CCBE455E1D72F69500414A64 /* TableViewKit */ = {
 			isa = PBXGroup;
 			children = (
+				CC97D76B1D741D8E009CDF9D /* Protocols */,
 				CCBE45761D72F79C00414A64 /* Controls */,
 				CCBE45791D72F79C00414A64 /* Extensions */,
 				CCBE457D1D72F79C00414A64 /* Items */,
@@ -151,7 +163,6 @@
 				CCBE45891D72F79C00414A64 /* BaseCell.swift */,
 				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
 				CCBE458B1D72F79C00414A64 /* Constants.swift */,
-				CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */,
 				CCBE458D1D72F79C00414A64 /* Section.swift */,
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
@@ -414,6 +425,7 @@
 				CCBE45921D72F79C00414A64 /* NSIndexSet+Array.swift in Sources */,
 				CCBE45991D72F79C00414A64 /* ValidationError.swift in Sources */,
 				CCBE45971D72F79C00414A64 /* Rules.swift in Sources */,
+				CC97D76D1D741DC4009CDF9D /* ItemSelectable.swift in Sources */,
 				CCBE45911D72F79C00414A64 /* NSBundle+TableViewKit.swift in Sources */,
 				CCBE459E1D72F79C00414A64 /* Constants.swift in Sources */,
 				CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */,

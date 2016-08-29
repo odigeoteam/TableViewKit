@@ -134,7 +134,7 @@ extension TableViewManager: UITableViewDataSource {
 extension TableViewManager: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let item = itemForIndexPath(indexPath)
+        guard let item = itemForIndexPath(indexPath) as? ItemSelectable else { return }
         item.onSelection(item)
     }
     

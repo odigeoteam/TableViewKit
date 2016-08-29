@@ -13,13 +13,9 @@ public protocol ItemProtocol: class {
     
     var cellHeight: CGFloat? { get set }
     
-    var onSelection: (ItemProtocol) -> () { get set }
-    
     func indexPath(inManager manager: TableViewManager) -> NSIndexPath?
     func section(inManager manager: TableViewManager) -> Section?
     
-    func selectRow(inManager manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition)
-    func deselectRow(inManager manager: TableViewManager, animated: Bool)
     func reloadRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
     func deleteRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
 }
@@ -39,18 +35,6 @@ extension ItemProtocol {
             return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
         }
         return nil
-    }
-    
-    public func selectRow(inManager manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) {
-        
-        manager.tableView.selectRowAtIndexPath(indexPath(inManager: manager), animated: animated, scrollPosition: scrollPosition)
-    }
-    
-    public func deselectRow(inManager manager: TableViewManager, animated: Bool) {
-        
-        if let itemIndexPath = indexPath(inManager: manager) {
-            manager.tableView.deselectRowAtIndexPath(itemIndexPath, animated: animated)
-        }
     }
     
     public func reloadRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation) {

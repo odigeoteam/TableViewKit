@@ -52,7 +52,6 @@ public class TextFieldDrawer: CellDrawer {
 
 public class TextFieldItem: ItemProtocol, ContentValidatable, Validationable {
         
-    public var onSelection: (ItemProtocol) -> () = { _ in }
     public var drawer: CellDrawer.Type = TextFieldDrawer.self
     
     // MARK: Cell style
