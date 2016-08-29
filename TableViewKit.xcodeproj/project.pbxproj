@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25F08BBD1D7427680033AD0E /* ValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F08BBC1D7427680033AD0E /* ValidatorTests.swift */; };
 		7892A1603117CFA582BFCAC3 /* Pods_TableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */; };
 		AD0E465917E1381DFF2E904B /* Pods_TableViewKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */; };
 		CC97D76D1D741DC4009CDF9D /* ItemSelectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC97D76C1D741DC4009CDF9D /* ItemSelectable.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		08A270D360D8629E318EBF6E /* Pods-TableViewKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKit/Pods-TableViewKit.debug.xcconfig"; sourceTree = "<group>"; };
+		25F08BBC1D7427680033AD0E /* ValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidatorTests.swift; sourceTree = "<group>"; };
 		4B8E33116CC0B70461DC5ED6 /* Pods-TableViewKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKitTests/Pods-TableViewKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,6 +179,7 @@
 				CCE400F91D73321600537715 /* ActionBarTests.swift */,
 				CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */,
 				CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */,
+				25F08BBC1D7427680033AD0E /* ValidatorTests.swift */,
 				CCBE456D1D72F69500414A64 /* Info.plist */,
 			);
 			path = TableViewKitTests;
@@ -446,6 +449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25F08BBD1D7427680033AD0E /* ValidatorTests.swift in Sources */,
 				CCE400FA1D73321600537715 /* ActionBarTests.swift in Sources */,
 				CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */,
 				CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */,
