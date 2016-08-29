@@ -1,11 +1,12 @@
-platform :ios, "8.0"
+# Note: You must be using Cocoapods 1.0.0 or above
+
 use_frameworks!
 
-target 'ExampleTableViewKit' do
+target :'TableViewKit' do
+  pod 'ReactiveKit', '~> 2.1.1'
+end
 
-	pod 'TableViewKit', :path => '.'
-
-    target 'ExampleTableViewKitTests' do
-        pod 'Nimble'
-    end
+target :'TableViewKitTests' do
+  pod 'ReactiveKit', '~> 2.1.1'
+  pod 'Nimble'
 end
