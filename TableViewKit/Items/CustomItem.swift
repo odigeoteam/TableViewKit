@@ -26,7 +26,7 @@ public class CustomItem: ItemSelectable, ItemProtocol {
     
     public var title: String?
     
-    public var onSelection: (ItemProtocol) -> () = { _ in }
+    public var onSelection: (ItemSelectable) -> () = { _ in }
     
     public var cellStyle: UITableViewCellStyle = .Default
     public var accessoryType: UITableViewCellAccessoryType = .None

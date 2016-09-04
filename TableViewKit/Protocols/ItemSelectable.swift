@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol ItemSelectable: ItemProtocol {
-    var onSelection: (ItemProtocol) -> () { get set }
+    var onSelection: (ItemSelectable) -> () { get set }
     
     func selectRow(inManager manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition)
     func deselectRow(inManager manager: TableViewManager, animated: Bool)
