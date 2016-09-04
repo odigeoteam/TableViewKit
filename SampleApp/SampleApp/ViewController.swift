@@ -8,15 +8,18 @@
 
 import UIKit
 import TableViewKit
+import ReactiveKit
 
 class FirstSection: Section {
-    let vc: ViewController
+    var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
 
-    init(vc: ViewController) {
+    let vc: ViewController
+    
+    internal var headerTitle: String? = "First section title"
+    internal var footerTitle: String? = "Section footer"
+
+    required init(vc: ViewController) {
         self.vc = vc
-        super.init()
-        self.headerTitle = "First section title"
-        self.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
         
         let item = CustomItem(title: "Passengers")
         let dateItem = CustomItem(title: "Birthday")
@@ -43,14 +46,16 @@ class FirstSection: Section {
         
         self.items.insertContentsOf([item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: 0)
     }
+    
+
 }
 
 class SecondSection: Section {
+    var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
+
+    internal var footerTitle: String? =  "Second Section"
     
-    override init() {
-        super.init()
-        self.headerTitle = "Second Section"
-        
+    required init() {
         let textFieldItem = TextFieldItem(placeHolder: "Place of birth")
         textFieldItem.validation.add(rule: ExistRule())
         

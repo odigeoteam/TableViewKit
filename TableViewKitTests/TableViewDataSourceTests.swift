@@ -9,6 +9,20 @@
 import XCTest
 import TableViewKit
 import Nimble
+import ReactiveKit
+
+class TestSection: Section {
+    var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
+    weak var tableViewManager: TableViewManager!
+    
+    internal var headerTitle: String? { return "Header" }
+    internal var footerTitle: String? { return "Footer" }
+
+    convenience init(items: [ItemProtocol]) {
+        self.init()
+        self.items.insertContentsOf(items, at: 0)
+    }
+}
 
 class TableViewDataSourceTests: XCTestCase {
     
@@ -16,17 +30,12 @@ class TableViewDataSourceTests: XCTestCase {
     private var item: ItemProtocol!
     private var section: Section!
     
-    private let headerTitle = "Header Title"
-    private let footerTitle = "Footer Title"
-    
     override func setUp() {
         super.setUp()
         tableViewManager = TableViewManager(tableView: UITableView())
         item = CustomItem()
         
-        section = Section()
-        section.headerTitle = headerTitle
-        section.footerTitle = footerTitle
+        section = TestSection()
         section.items.append(item)
         
         tableViewManager.sections.append(section)

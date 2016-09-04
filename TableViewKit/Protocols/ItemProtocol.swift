@@ -30,7 +30,7 @@ extension ItemProtocol {
     public func indexPath(inManager manager: TableViewManager) -> NSIndexPath? {
         for section in manager.sections {
             guard
-                let sectionIndex = section.index,
+                let sectionIndex = section.index(inManager: manager),
                 let rowIndex = section.items.indexOf(self) else { continue }
             return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
         }

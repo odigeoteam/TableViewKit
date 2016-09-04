@@ -9,6 +9,14 @@
 import Foundation
 import UIKit
 import TableViewKit
+import ReactiveKit
+
+class SelectionSection: Section {
+    var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
+    weak var tableViewManager: TableViewManager!
+
+    required init() { }
+}
 
 public protocol SelectionItemProtocol: ItemProtocol {
     
@@ -105,7 +113,7 @@ public class SelectionViewController: UITableViewController {
     
     private func setupTaleViewItems() {
         
-        let section = Section()
+        let section = SelectionSection()
         tableViewManager.sections.append(section)
         
         for element in items {

@@ -38,7 +38,8 @@ public class TableViewManager: NSObject {
             guard e.inserts.count + e.updates.count + e.deletes.count > 0 else { return }
 
             e.inserts.forEach { index in
-                e.collection[index].register(tableViewManager: self)
+                e.collection[index].setup(inManager: self)
+                e.collection[index].register(inManager: self)
             }
             
             tableView.beginUpdates()

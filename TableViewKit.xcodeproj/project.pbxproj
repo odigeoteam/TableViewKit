@@ -118,6 +118,7 @@
 		CC97D76B1D741D8E009CDF9D /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				CCBE458D1D72F79C00414A64 /* Section.swift */,
 				CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */,
 				CC97D76C1D741DC4009CDF9D /* ItemSelectable.swift */,
 			);
@@ -165,7 +166,6 @@
 				CCBE45891D72F79C00414A64 /* BaseCell.swift */,
 				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
 				CCBE458B1D72F79C00414A64 /* Constants.swift */,
-				CCBE458D1D72F79C00414A64 /* Section.swift */,
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
 				CCBE45611D72F69500414A64 /* Info.plist */,

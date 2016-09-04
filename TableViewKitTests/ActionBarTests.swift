@@ -23,10 +23,10 @@ class ActionBarTests: XCTestCase {
         tableViewManager = TableViewManager(tableView: controller.tableView)
         
         tableViewManager.sections.append(
-            Section(items: [TextFieldItem(placeHolder: "0.0"), TextFieldItem(placeHolder: "0.1")])
+            TestSection(items: [TextFieldItem(placeHolder: "0.0"), TextFieldItem(placeHolder: "0.1")])
             )
         tableViewManager.sections.append(
-            Section(items: [TextFieldItem(placeHolder: "1.0")])
+            TestSection(items: [TextFieldItem(placeHolder: "1.0")])
             )
         tableViewManager.tableView.reloadData()
     }

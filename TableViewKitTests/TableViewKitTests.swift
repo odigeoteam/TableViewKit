@@ -32,7 +32,7 @@ class TableViewKitTests: XCTestCase {
 
     func testAddSection() {
 
-        let section = Section()
+        let section = TestSection()
         tableViewManager.sections.append(section)
 
         expect(self.tableViewManager.sections.count).to(equal(1))
@@ -42,7 +42,7 @@ class TableViewKitTests: XCTestCase {
 
         let item: ItemProtocol = CustomItem()
 
-        let section = Section()
+        let section = TestSection()
         section.items.append(item)
 
         tableViewManager.sections.append(section)

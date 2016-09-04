@@ -92,7 +92,7 @@ extension BaseCell: ActionBarDelegate {
         guard let item = self.item else { return nil }
         
         let section = tableViewManager.sections[sectionIndex]
-        let indexInSection = section == item.section(inManager: tableViewManager) ? section.items.indexOf(item) : section.items.count
+        let indexInSection = section === item.section(inManager: tableViewManager) ? section.items.indexOf(item) : section.items.count
         
         guard indexInSection > 0 else { return nil }
             
@@ -111,7 +111,8 @@ extension BaseCell: ActionBarDelegate {
     }
     
     private func indexPathForPreviousResponder() -> NSIndexPath? {
-        let sectionIndex = (item?.indexPath(inManager: tableViewManager)?.section)!
+        guard let sectionIndex = item?.indexPath(inManager: tableViewManager)?.section else { return nil }
+
 
         for index in (0 ... sectionIndex).reverse() {
             if let indexPath = indexPathForPreviousResponderInSectionIndex(index) {
@@ -125,7 +126,7 @@ extension BaseCell: ActionBarDelegate {
     private func indexPathForNextResponderInSectionIndex(sectionIndex: Int) -> NSIndexPath? {
         
         let section = tableViewManager.sections[sectionIndex]
-        let indexInSection = section == item!.section(inManager: tableViewManager) ? section.items.indexOf(item!) : -1
+        let indexInSection = section === item!.section(inManager: tableViewManager) ? section.items.indexOf(item!) : -1
         
         for itemIndex in indexInSection! + 1 ..< section.items.count {
             let nextItem = section.items[itemIndex]
