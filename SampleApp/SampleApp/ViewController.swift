@@ -55,11 +55,25 @@ class SecondSection: Section {
 
     internal var footerTitle: String? =  "Second Section"
     
-    required init() {
-        let textFieldItem = TextFieldItem(placeHolder: "Place of birth")
-        textFieldItem.validation.add(rule: ExistRule())
+    let vc: ViewController
+
+    required init(vc: ViewController) {
+        self.vc = vc
         
-        self.items.insertContentsOf([textFieldItem], at: 0)
+        let total: [Int] = Array(1...100)
+        let items = total.map({ (index) -> ItemProtocol in
+            if (index % 2 == 0) {
+                let item = TextFieldItem(placeHolder: "Textfield \(index)")
+                return item
+            } else {
+                let item = CustomItem(title: "Label  \(index)")
+                item.onSelection = { item in
+                    item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+                }
+                return item
+            }
+        })
+        self.items.insertContentsOf(items, at: 0)
     }
 }
 
@@ -73,7 +87,7 @@ class ViewController: UITableViewController {
         
         super.viewDidLoad()
         
-        tableViewManager = TableViewManager(tableView: self.tableView, sections: [FirstSection(vc: self), SecondSection()])
+        tableViewManager = TableViewManager(tableView: self.tableView, sections: [FirstSection(vc: self), SecondSection(vc: self)])
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
     }
