@@ -23,7 +23,6 @@
 		CCBE459A1D72F79C00414A64 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45861D72F79C00414A64 /* Validator.swift */; };
 		CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45891D72F79C00414A64 /* BaseCell.swift */; };
 		CCBE459D1D72F79C00414A64 /* CellDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458A1D72F79C00414A64 /* CellDrawer.swift */; };
-		CCBE459E1D72F79C00414A64 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458B1D72F79C00414A64 /* Constants.swift */; };
 		CCBE459F1D72F79C00414A64 /* ItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */; };
 		CCBE45A01D72F79C00414A64 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458D1D72F79C00414A64 /* Section.swift */; };
 		CCBE45A11D72F79C00414A64 /* TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458E1D72F79C00414A64 /* TableViewManager.swift */; };
@@ -69,7 +68,6 @@
 		CCBE45861D72F79C00414A64 /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		CCBE45891D72F79C00414A64 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		CCBE458A1D72F79C00414A64 /* CellDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellDrawer.swift; sourceTree = "<group>"; };
-		CCBE458B1D72F79C00414A64 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemProtocol.swift; path = Protocols/ItemProtocol.swift; sourceTree = "<group>"; };
 		CCBE458D1D72F79C00414A64 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		CCBE458E1D72F79C00414A64 /* TableViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
@@ -166,7 +164,6 @@
 				CCCAC12A1D7DA2E90001FC1D /* HeaderFooter */,
 				CCBE45891D72F79C00414A64 /* BaseCell.swift */,
 				CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */,
-				CCBE458B1D72F79C00414A64 /* Constants.swift */,
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
 				CCBE45611D72F69500414A64 /* Info.plist */,
@@ -429,7 +426,6 @@
 				CCBE45971D72F79C00414A64 /* Rules.swift in Sources */,
 				CC97D76D1D741DC4009CDF9D /* ItemSelectable.swift in Sources */,
 				CCCAC1281D7DA2D00001FC1D /* ImmutableMutableHeight.swift in Sources */,
-				CCBE459E1D72F79C00414A64 /* Constants.swift in Sources */,
 				CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */,
 				CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */,
 				CCBE458F1D72F79C00414A64 /* ActionBar.swift in Sources */,
