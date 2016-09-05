@@ -13,7 +13,7 @@ public protocol Item: class {
     
     var height: ImmutableMutableHeight? { get }
     
-    func indexPath(inManager manager: TableViewManager) -> NSIndexPath?
+    func indexPath(inManager manager: TableViewManager) -> IndexPath?
     func section(inManager manager: TableViewManager) -> Section?
     
     func reloadRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
@@ -28,15 +28,15 @@ extension Item {
     
     public func section(inManager manager: TableViewManager) -> Section? {
         guard let indexPath = self.indexPath(inManager: manager) else { return nil }
-        return manager.sections[indexPath.section]
+        return manager.sections[(indexPath as NSIndexPath).section]
     }
     
-    public func indexPath(inManager manager: TableViewManager) -> NSIndexPath? {
+    public func indexPath(inManager manager: TableViewManager) -> IndexPath? {
         for section in manager.sections {
             guard
                 let sectionIndex = section.index(inManager: manager),
                 let rowIndex = section.items.indexOf(self) else { continue }
-            return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+            return IndexPath(row: rowIndex, section: sectionIndex)
         }
         return nil
     }
@@ -44,20 +44,20 @@ extension Item {
     public func reloadRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation) {
         
         if let itemIndexPath = indexPath(inManager: manager) {
-            manager.tableView.reloadRowsAtIndexPaths([itemIndexPath], withRowAnimation: animation)
+            manager.tableView.reloadRows(at: [itemIndexPath], with: animation)
         }
     }
     
     public func deleteRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation) {
         
         if let itemIndexPath = indexPath(inManager: manager) {
-            manager.tableView.deleteRowsAtIndexPaths([itemIndexPath], withRowAnimation: animation)
+            manager.tableView.deleteRows(at: [itemIndexPath], with: animation)
         }
     }
 }
 
-extension CollectionType where Generator.Element == Item {
-    func indexOf(element: Generator.Element) -> Index? {
-        return indexOf({ $0 === element })
+extension Collection where Iterator.Element == Item {
+    func indexOf(_ element: Iterator.Element) -> Index? {
+        return index(where: { $0 === element })
     }
 }

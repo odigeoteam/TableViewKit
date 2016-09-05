@@ -8,17 +8,37 @@
 
 import Foundation
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class BaseCell : UITableViewCell {
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class BaseCell : UITableViewCell {
     
     // MARK: Public
     
-    weak public var tableViewManager: TableViewManager!
-    public var item: Item?
+    weak open var tableViewManager: TableViewManager!
+    open var item: Item?
     
-    public var responder: UIResponder?
+    open var responder: UIResponder?
     
-    public var actionBar: ActionBar!
+    open var actionBar: ActionBar!
     
     
     // MARK: Constructors
@@ -33,37 +53,37 @@ public class BaseCell : UITableViewCell {
         commonInit()
     }
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         super.awakeFromNib()
         commonInit()
     }
     
     // MARK: Configure
     
-    public func commonInit() {
+    open func commonInit() {
         actionBar = ActionBar(delegate: self)
     }
-    
-    public override func canBecomeFirstResponder() -> Bool {
+
+    open override var canBecomeFirstResponder: Bool {
         guard let responder = responder else { return false }
-        return responder.canBecomeFirstResponder()
+        return responder.canBecomeFirstResponder
     }
     
-    public override func becomeFirstResponder() -> Bool {
+    open override func becomeFirstResponder() -> Bool {
         guard let responder = responder else { return false }
         return responder.becomeFirstResponder()
     }
 
-    public override func isFirstResponder() -> Bool {
+    open override var isFirstResponder: Bool {
         guard let responder = responder else { return false }
-        return responder.isFirstResponder()
+        return responder.isFirstResponder
     }
 
 }
 
 extension BaseCell: ActionBarDelegate {
     
-    private func indexPathForPreviousResponderInSectionIndex(sectionIndex: Int) -> NSIndexPath? {
+    fileprivate func indexPathForPreviousResponderInSectionIndex(_ sectionIndex: Int) -> IndexPath? {
         
         guard let item = self.item else { return nil }
         
@@ -72,12 +92,12 @@ extension BaseCell: ActionBarDelegate {
         
         guard indexInSection > 0 else { return nil }
             
-        for itemIndex in (0 ..< indexInSection!).reverse() {
+        for itemIndex in (0 ..< indexInSection!).reversed() {
             let previousItem = section.items[itemIndex]
             guard let indexPath = previousItem.indexPath(inManager: tableViewManager),
-                let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath)
+                let cell = tableViewManager.tableView.cellForRow(at: indexPath)
                 else { continue }
-            if cell.canBecomeFirstResponder() {
+            if cell.canBecomeFirstResponder {
                 return indexPath
             }
 
@@ -86,11 +106,11 @@ extension BaseCell: ActionBarDelegate {
         return nil
     }
     
-    private func indexPathForPreviousResponder() -> NSIndexPath? {
-        guard let sectionIndex = item?.indexPath(inManager: tableViewManager)?.section else { return nil }
+    fileprivate func indexPathForPreviousResponder() -> IndexPath? {
+        guard let sectionIndex = (item?.indexPath(inManager: tableViewManager) as NSIndexPath?)?.section else { return nil }
 
 
-        for index in (0 ... sectionIndex).reverse() {
+        for index in (0 ... sectionIndex).reversed() {
             if let indexPath = indexPathForPreviousResponderInSectionIndex(index) {
                 return indexPath
             }
@@ -99,7 +119,7 @@ extension BaseCell: ActionBarDelegate {
         return nil
     }
     
-    private func indexPathForNextResponderInSectionIndex(sectionIndex: Int) -> NSIndexPath? {
+    fileprivate func indexPathForNextResponderInSectionIndex(_ sectionIndex: Int) -> IndexPath? {
         
         let section = tableViewManager.sections[sectionIndex]
         let indexInSection = section === item!.section(inManager: tableViewManager) ? section.items.indexOf(item!) : -1
@@ -107,9 +127,9 @@ extension BaseCell: ActionBarDelegate {
         for itemIndex in indexInSection! + 1 ..< section.items.count {
             let nextItem = section.items[itemIndex]
             guard let indexPath = nextItem.indexPath(inManager: tableViewManager),
-                let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath)
+                let cell = tableViewManager.tableView.cellForRow(at: indexPath)
                 else { continue }
-            if cell.canBecomeFirstResponder() {
+            if cell.canBecomeFirstResponder {
                 return indexPath
             }
         }
@@ -117,8 +137,8 @@ extension BaseCell: ActionBarDelegate {
         return nil
     }
     
-    private func indexPathForNextResponder() -> NSIndexPath? {
-        guard let sectionIndex = item?.indexPath(inManager: tableViewManager)?.section else { return nil }
+    fileprivate func indexPathForNextResponder() -> IndexPath? {
+        guard let sectionIndex = (item?.indexPath(inManager: tableViewManager) as NSIndexPath?)?.section else { return nil }
 
         for index in sectionIndex ... tableViewManager.sections.count - 1 {
             if let indexPath = indexPathForNextResponderInSectionIndex(index) {
@@ -129,7 +149,7 @@ extension BaseCell: ActionBarDelegate {
         return nil
     }
     
-    private func indexPathForResponder(forDirection direction: Direction) -> NSIndexPath? {
+    fileprivate func indexPathForResponder(forDirection direction: Direction) -> IndexPath? {
         
         switch direction {
         case .next:
@@ -139,16 +159,16 @@ extension BaseCell: ActionBarDelegate {
         }
     }
     
-    public func actionBar(actionBar: ActionBar, direction: Direction) -> NSIndexPath? {
+    public func actionBar(_ actionBar: ActionBar, direction: Direction) -> IndexPath? {
         guard let indexPath = indexPathForResponder(forDirection: direction) else { return nil }
-        tableViewManager.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+        tableViewManager.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         
-        let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as! BaseCell
-        cell.becomeFirstResponder()
+        let cell = tableViewManager.tableView.cellForRow(at: indexPath) as! BaseCell
+        let _ = cell.becomeFirstResponder()
         return indexPath
     }
     
-    public func actionBar(actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {
+    public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {
         endEditing(true)
     }
 }

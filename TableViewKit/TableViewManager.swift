@@ -9,15 +9,16 @@
 import Foundation
 import UIKit
 import ReactiveKit
+import Bond
 
-public class TableViewManager: NSObject {
+open class TableViewManager: NSObject {
     
     // MARK: Properties
-    public let tableView: UITableView
-    public var sections: CollectionProperty<[Section]> = CollectionProperty([])
+    open let tableView: UITableView
+    open var sections: MutableObservableArray<Section> = MutableObservableArray([])
     
-    public var validator: ValidatorManager<String?> = ValidatorManager()
-    public var errors: [ValidationError] {
+    open var validator: ValidatorManager<String?> = ValidatorManager()
+    open var errors: [ValidationError] {
         get {
             return validator.errors
         }
@@ -35,47 +36,47 @@ public class TableViewManager: NSObject {
         self.tableView.delegate = self
         
         sections.observeNext { e in
-            guard e.inserts.count + e.updates.count + e.deletes.count > 0 else { return }
-
-            e.inserts.forEach { index in
-                e.collection[index].setup(inManager: self)
-                e.collection[index].register(inManager: self)
+            
+            switch e.change {
+            case .initial: break
+            case .inserts(let array):
+                array.forEach { index in
+                    self.sections[index].setup(inManager: self)
+                    self.sections[index].register(inManager: self)
+                }
+                tableView.insertSections(IndexSet(array), with: .automatic)
+            case .deletes(let array):
+                tableView.deleteSections(IndexSet(array), with: .automatic)
+            case .updates(let array):
+                tableView.reloadSections(IndexSet(array), with: .automatic)
+            case .move(_, _): break
+            case .beginBatchEditing:
+                tableView.beginUpdates()
+            case .endBatchEditing:
+                tableView.endUpdates()
             }
             
-            tableView.beginUpdates()
-            if e.inserts.count > 0 {
-                tableView.insertSections(NSIndexSet(e.inserts), withRowAnimation: .Automatic)
-            }
-            
-            if e.updates.count > 0 {
-                tableView.reloadSections(NSIndexSet(e.updates), withRowAnimation: .Automatic)
-            }
-            
-            if e.deletes.count > 0 {
-                tableView.deleteSections(NSIndexSet(e.deletes), withRowAnimation: .Automatic)
-            }
-            tableView.endUpdates()
         }.disposeIn(disposeBag)
     }
     
     public convenience init(tableView: UITableView, sections: [Section]) {
         self.init(tableView: tableView)
-        self.sections.insertContentsOf(sections, at: 0)
+        self.sections.insert(contentsOf: sections, at: 0)
     }
     
 }
 
 extension TableViewManager {
     
-    private func item(forIndexPath indexPath: NSIndexPath) -> Item {
-        return sections[indexPath.section].items[indexPath.row]
+    fileprivate func item(forIndexPath indexPath: IndexPath) -> Item {
+        return sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row]
     }
     
-    private func header(inSection section: Int) -> HeaderFooter? {
+    fileprivate func header(inSection section: Int) -> HeaderFooter? {
         return sections[section].header
     }
     
-    private func footer(inSection section: Int) -> HeaderFooter? {
+    fileprivate func footer(inSection section: Int) -> HeaderFooter? {
         return sections[section].footer
     }
 
@@ -83,16 +84,16 @@ extension TableViewManager {
 
 extension TableViewManager: UITableViewDataSource {
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection sectionIndex: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection sectionIndex: Int) -> Int {
         let section = sections[sectionIndex]
         return section.items.count
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let currentItem = item(forIndexPath: indexPath)
         let drawer = currentItem.drawer
@@ -104,12 +105,12 @@ extension TableViewManager: UITableViewDataSource {
     }
     
     
-    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].headerTitle
     }
     
     
-    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return sections[section].footerTitle
     }
     
@@ -118,12 +119,12 @@ extension TableViewManager: UITableViewDataSource {
 
 extension TableViewManager: UITableViewDelegate {
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentItem = item(forIndexPath: indexPath) as? Selectable else { return }
         currentItem.onSelection(currentItem)
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let height = item(forIndexPath: indexPath).height else { return tableView.rowHeight }
         switch height {
         case .immutable(let value):
@@ -133,7 +134,7 @@ extension TableViewManager: UITableViewDelegate {
         }
     }
     
-    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let currentItem = header(inSection: section), let height = currentItem.height
             else { return tableView.sectionHeaderHeight }
         
@@ -145,7 +146,7 @@ extension TableViewManager: UITableViewDelegate {
         }
     }
     
-    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         guard let currentItem = footer(inSection: section), let height = currentItem.height
             else { return tableView.sectionFooterHeight }
         
@@ -157,7 +158,7 @@ extension TableViewManager: UITableViewDelegate {
         }
     }
     
-    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let height = item(forIndexPath: indexPath).height else { return tableView.estimatedRowHeight }
         switch height {
         case .immutable(_):
@@ -167,7 +168,7 @@ extension TableViewManager: UITableViewDelegate {
         }
     }
     
-    public func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         guard let currentItem = header(inSection: section), let height = currentItem.height
             else { return tableView.estimatedSectionHeaderHeight }
         
@@ -179,7 +180,7 @@ extension TableViewManager: UITableViewDelegate {
         }        
     }
     
-    public func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
         guard let currentItem = footer(inSection: section), let height = currentItem.height
             else { return tableView.estimatedSectionFooterHeight }
         
@@ -191,7 +192,7 @@ extension TableViewManager: UITableViewDelegate {
         }
     }
     
-    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let currentItem = header(inSection: section) else { return nil }
         
         let drawer = currentItem.drawer
@@ -201,7 +202,7 @@ extension TableViewManager: UITableViewDelegate {
         return view
     }
     
-    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard let currentItem = footer(inSection: section) else { return nil }
         
         let drawer = currentItem.drawer

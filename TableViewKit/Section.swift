@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 import ReactiveKit
+import Bond
 
 
 public protocol Section: class {
-    var items: CollectionProperty<[Item]> { get }
+    var items: MutableObservableArray<Item> { get }
 
     var headerTitle: String? { get }
     var footerTitle: String? { get }
@@ -52,28 +53,30 @@ extension Section {
             guard let sectionIndex = manager.sections.indexOf(self) else { return }
             let tableView = manager.tableView
             
-            tableView.beginUpdates()
-            if e.inserts.count > 0 {
-                let indexPaths = e.inserts.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            switch e.change {
+            case .initial: break
+            case .inserts(let array):
+                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+            case .deletes(let array):
+                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+                tableView.deleteRows(at: indexPaths, with: .automatic)
+            case .updates(let array):
+                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+                tableView.reloadRows(at: indexPaths, with: .automatic)
+            case .move(_, _): break
+            case .beginBatchEditing:
+                tableView.beginUpdates()
+            case .endBatchEditing:
+                tableView.endUpdates()
             }
             
-            if e.updates.count > 0 {
-                let indexPaths = e.updates.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            }
-            
-            if e.deletes.count > 0 {
-                let indexPaths = e.deletes.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            }
-            tableView.endUpdates()
         }.disposeIn(manager.disposeBag)
     }
 }
 
-extension CollectionType where Generator.Element == Section {
-    func indexOf(element: Generator.Element) -> Index? {
-        return indexOf({ $0 === element })
+extension Collection where Iterator.Element == Section {
+    func indexOf(_ element: Iterator.Element) -> Index? {
+        return index(where: { $0 === element })
     }
 }

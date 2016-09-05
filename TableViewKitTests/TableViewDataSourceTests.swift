@@ -10,9 +10,10 @@ import XCTest
 import TableViewKit
 import Nimble
 import ReactiveKit
+import Bond
 
 class TestSection: Section {
-    var items: CollectionProperty<[Item]> = CollectionProperty([])
+    var items: MutableObservableArray<Item> = MutableObservableArray([])
     weak var tableViewManager: TableViewManager!
     
     internal var headerTitle: String? { return "Header" }
@@ -20,15 +21,15 @@ class TestSection: Section {
 
     convenience init(items: [Item]) {
         self.init()
-        self.items.insertContentsOf(items, at: 0)
+        self.items.insert(contentsOf: items, at: 0)
     }
 }
 
 class TestDrawer: CellDrawer {
     
-    static internal var cellType = CellType.Class(BaseCell.self)
+    static internal var cellType = CellType.class(BaseCell.self)
     
-    static internal func draw(cell: BaseCell, withItem item: Any) {    }
+    static internal func draw(_ cell: BaseCell, withItem item: Any) {    }
 }
 
 class TestItem: Item {
@@ -37,9 +38,9 @@ class TestItem: Item {
 
 class TableViewDataSourceTests: XCTestCase {
     
-    private var tableViewManager: TableViewManager!
-    private var item: Item!
-    private var section: Section!
+    fileprivate var tableViewManager: TableViewManager!
+    fileprivate var item: Item!
+    fileprivate var section: Section!
     
     override func setUp() {
         super.setUp()
@@ -47,9 +48,9 @@ class TableViewDataSourceTests: XCTestCase {
         item = TestItem()
         
         section = TestSection()
-        section.items.append(item)
+        section.items.insert(item, at: 0)
         
-        tableViewManager.sections.append(section)
+        tableViewManager.sections.insert(section, at: 0)
 
     }
 
@@ -61,20 +62,20 @@ class TableViewDataSourceTests: XCTestCase {
     }
     
     func testCellForRow() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        let cell = self.tableViewManager.tableView(self.tableViewManager.tableView, cellForRowAtIndexPath: indexPath)
+        let indexPath = IndexPath(row: 0, section: 0)
+        let cell = self.tableViewManager.tableView(self.tableViewManager.tableView, cellForRowAt: indexPath)
         
-        expect(cell).to(beAnInstanceOf(BaseCell))
+        expect(cell).to(beAnInstanceOf(BaseCell.self))
     }
     
     func testNumberOfSections() {
-        let count = self.tableViewManager.numberOfSectionsInTableView(self.tableViewManager.tableView)
-        expect(count).to(be(1))
+        let count = self.tableViewManager.numberOfSections(in: self.tableViewManager.tableView)
+        expect(count) == 1
     }
     
     func testNumberOfRowsInSection() {
         let count = self.tableViewManager.tableView(self.tableViewManager.tableView, numberOfRowsInSection: 0)
-        expect(count).to(be(1))
+        expect(count) == 1
     }
     
     func testTitleForHeaderInSection() {
@@ -98,15 +99,15 @@ class TableViewDataSourceTests: XCTestCase {
     }
     
     func testEstimatedHeightForRowAtIndexPath() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        let height = self.tableViewManager.tableView(self.tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
+        let indexPath = IndexPath(row: 0, section: 0)
+        let height = self.tableViewManager.tableView(self.tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
         expect(height).to(equal(44.0))
     }
     
     
     func testHeightForRowAtIndexPath() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        let height = self.tableViewManager.tableView(self.tableViewManager.tableView, heightForRowAtIndexPath: indexPath)
+        let indexPath = IndexPath(row: 0, section: 0)
+        let height = self.tableViewManager.tableView(self.tableViewManager.tableView, heightForRowAt: indexPath)
         expect(height).to(equal(UITableViewAutomaticDimension))
     }
     

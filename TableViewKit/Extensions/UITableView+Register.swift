@@ -9,21 +9,21 @@
 import UIKit
 
 public extension UITableView {
-    public func register(type type: CellType, bundle: NSBundle? = nil) {
+    public func register(type: CellType, bundle: Bundle? = nil) {
         switch type {
-        case .Class(let cellClass):
-            registerClass(cellClass, forCellReuseIdentifier: type.reusableIdentifier)
-        case .Nib(let nib, _):
-            registerNib(nib, forCellReuseIdentifier: type.reusableIdentifier)
+        case .class(let cellClass):
+            self.register(cellClass, forCellReuseIdentifier: type.reusableIdentifier)
+        case .nib(let nib, _):
+            self.register(nib, forCellReuseIdentifier: type.reusableIdentifier)
         }
     }
     
-    public func register(type type: HeaderFooterType, bundle: NSBundle? = nil) {
+    public func register(type: HeaderFooterType, bundle: Bundle? = nil) {
         switch type {
-        case .Class(let cellClass):
-            registerClass(cellClass, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
-        case .Nib(let nib, _):
-            registerNib(nib, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
+        case .class(let cellClass):
+            self.register(cellClass, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
+        case .nib(let nib, _):
+            self.register(nib, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
         }
     }
 }

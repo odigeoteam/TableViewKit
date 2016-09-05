@@ -12,14 +12,14 @@ import UIKit
 public protocol CellDrawer {
     
     static var cellType: CellType { get }
-    static func cell(inManager manager: TableViewManager, withItem item: Item, forIndexPath: NSIndexPath) -> BaseCell
-    static func draw(cell: BaseCell, withItem item: Any)
+    static func cell(inManager manager: TableViewManager, withItem item: Item, forIndexPath: IndexPath) -> BaseCell
+    static func draw(_ cell: BaseCell, withItem item: Any)
     
 }
 
 public extension CellDrawer {
-    static func cell(inManager manager: TableViewManager, withItem item: Item, forIndexPath indexPath: NSIndexPath) -> BaseCell {
-        let cell = manager.tableView.dequeueReusableCellWithIdentifier(self.cellType.reusableIdentifier, forIndexPath: indexPath) as! BaseCell
+    static func cell(inManager manager: TableViewManager, withItem item: Item, forIndexPath indexPath: IndexPath) -> BaseCell {
+        let cell = manager.tableView.dequeueReusableCell(withIdentifier: self.cellType.reusableIdentifier, for: indexPath) as! BaseCell
         cell.tableViewManager = manager
         cell.item = item
         return cell

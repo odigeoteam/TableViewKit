@@ -13,12 +13,12 @@ public protocol HeaderFooterDrawer {
     
     static var headerFooterType: HeaderFooterType { get }
     static func view(inManager manager: TableViewManager, withItem item: HeaderFooter) -> UITableViewHeaderFooterView
-    static func draw(view: UITableViewHeaderFooterView, withItem item: Any)
+    static func draw(_ view: UITableViewHeaderFooterView, withItem item: Any)
     
 }
 
 public extension HeaderFooterDrawer {
     static func view(inManager manager: TableViewManager, withItem item: HeaderFooter) -> UITableViewHeaderFooterView {
-        return manager.tableView.dequeueReusableHeaderFooterViewWithIdentifier(self.headerFooterType.reusableIdentifier)!
+        return manager.tableView.dequeueReusableHeaderFooterView(withIdentifier: self.headerFooterType.reusableIdentifier)!
     }
 }

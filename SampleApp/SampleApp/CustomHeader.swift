@@ -17,10 +17,10 @@ public class CustomHeaderFooterView: UITableViewHeaderFooterView {
 
 public class CustomHeaderDrawer: HeaderFooterDrawer {
     
-    public static let nib = UINib(nibName: String(CustomHeaderFooterView.self), bundle: nil)
-    static public var headerFooterType = HeaderFooterType.Nib(CustomHeaderDrawer.nib, CustomHeaderFooterView.self)
+    public static let nib = UINib(nibName: String(describing: CustomHeaderFooterView.self), bundle: nil)
+    static public var headerFooterType = HeaderFooterType.nib(CustomHeaderDrawer.nib, CustomHeaderFooterView.self)
     
-    static public func draw(view: UITableViewHeaderFooterView, withItem item: Any) {
+    static public func draw(_ view: UITableViewHeaderFooterView, withItem item: Any) {
         let item = item as! CustomHeaderItem
         let view = view as! CustomHeaderFooterView
         view.label.text = item.title

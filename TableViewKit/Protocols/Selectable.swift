@@ -17,15 +17,15 @@ public protocol Selectable: Item {
 
 extension Selectable {
     
-    public func selectRow(inManager manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) {
+    public func selectRow(inManager manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
         
-        manager.tableView.selectRowAtIndexPath(indexPath(inManager: manager), animated: animated, scrollPosition: scrollPosition)
+        manager.tableView.selectRow(at: indexPath(inManager: manager) as IndexPath?, animated: animated, scrollPosition: scrollPosition)
     }
     
     public func deselectRow(inManager manager: TableViewManager, animated: Bool) {
         
         if let itemIndexPath = indexPath(inManager: manager) {
-            manager.tableView.deselectRowAtIndexPath(itemIndexPath, animated: animated)
+            manager.tableView.deselectRow(at: itemIndexPath as IndexPath, animated: animated)
         }
     }
     

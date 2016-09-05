@@ -14,7 +14,7 @@ import Nimble
 
 class TableViewKitTests: XCTestCase {
 
-    private var tableViewManager: TableViewManager!
+    fileprivate var tableViewManager: TableViewManager!
 
     override func setUp() {
 
@@ -33,7 +33,7 @@ class TableViewKitTests: XCTestCase {
     func testAddSection() {
 
         let section = TestSection()
-        tableViewManager.sections.append(section)
+        tableViewManager.sections.insert(section, at: 0)
 
         expect(self.tableViewManager.sections.count).to(equal(1))
     }
@@ -43,9 +43,9 @@ class TableViewKitTests: XCTestCase {
         let item: Item = TestItem()
 
         let section = TestSection()
-        section.items.append(item)
+        section.items.insert(item, at: 0)
 
-        tableViewManager.sections.append(section)
+        tableViewManager.sections.insert(section, at: 0)
         
         expect(section.items.count).to(equal(1))
         expect(item.section(inManager: self.tableViewManager)).notTo(beNil())

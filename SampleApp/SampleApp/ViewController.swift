@@ -9,9 +9,10 @@
 import UIKit
 import TableViewKit
 import ReactiveKit
+import Bond
 
 class FirstSection: Section {
-    var items: CollectionProperty<[Item]> = CollectionProperty([])
+    var items: MutableObservableArray<Item> = MutableObservableArray([])
 
     let vc: ViewController
     
@@ -33,25 +34,25 @@ class FirstSection: Section {
             item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
-        dateItem.accessoryType = .DisclosureIndicator
+        dateItem.accessoryType = .disclosureIndicator
         dateItem.onSelection = { item in
             item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
             self.vc.showDatePickerControl()
         }
-        selectionItem.accessoryType = .DisclosureIndicator
+        selectionItem.accessoryType = .disclosureIndicator
         selectionItem.onSelection = { item in
             item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
         
-        self.items.insertContentsOf([item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: 0)
+        self.items.insert(contentsOf: [item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: 0)
     }
     
 
 }
 
 class SecondSection: Section {
-    var items: CollectionProperty<[Item]> = CollectionProperty([])
+    var items: MutableObservableArray<Item> = MutableObservableArray([])
 
     internal var header: HeaderFooter? = CustomHeaderItem(title: "Second Section")
     
@@ -73,7 +74,7 @@ class SecondSection: Section {
                 return item
             }
         })
-        self.items.insertContentsOf(items, at: 0)
+        self.items.insert(contentsOf: items, at: 0)
     }
 }
 
@@ -95,11 +96,11 @@ class ViewController: UITableViewController {
 
         tableViewManager = TableViewManager(tableView: self.tableView, sections: [FirstSection(vc: self), SecondSection(vc: self)])
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .plain, target: self, action: #selector(validationAction))
     }
 
     
-    private func showPickerControl() {
+    fileprivate func showPickerControl() {
         
         var elements = [PickerItem]()
         
@@ -116,10 +117,10 @@ class ViewController: UITableViewController {
         self.pickerControl = pickerControl
     }
     
-    private func showDatePickerControl() {
+    fileprivate func showDatePickerControl() {
         
-        let toDate = NSCalendar.currentCalendar().dateByAddingUnit(.Year, value: 1, toDate: NSDate(), options: NSCalendarOptions.MatchNextTime)!
-        let pickerDateControl = PickerControl(datePickerMode: .Date, fromDate: NSDate(), toDate: toDate, minuteInterval: 0, selectCallback: { pickerControl, date in
+        let toDate = Calendar.current.date(byAdding: .year, value: 1, to: Date())!
+        let pickerDateControl = PickerControl(datePickerMode: .date, fromDate: Date(), toDate: toDate, minuteInterval: 0, selectCallback: { pickerControl, date in
             
             pickerControl.dismissPickerView()
             print(date)
@@ -132,7 +133,7 @@ class ViewController: UITableViewController {
         pickerControl = pickerDateControl
     }
     
-    @objc private func validationAction() {
+    @objc fileprivate func validationAction() {
         guard let error = tableViewManager.errors.first else { return }
         print(error)
         

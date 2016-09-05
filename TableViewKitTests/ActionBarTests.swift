@@ -17,11 +17,11 @@ import Nimble
 
 class ActionBarTests: XCTestCase {
     
-    private var tableViewManager: TableViewManager!
+    fileprivate var tableViewManager: TableViewManager!
     
     override func setUp() {
         super.setUp()
-        let controller = UITableViewController(style: .Plain)
+        let controller = UITableViewController(style: .plain)
         tableViewManager = TableViewManager(tableView: controller.tableView)
         
 //        tableViewManager.sections.append(
