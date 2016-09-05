@@ -100,7 +100,7 @@ class TableViewDataSourceTests: XCTestCase {
     func testEstimatedHeightForRowAtIndexPath() {
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         let height = self.tableViewManager.tableView(self.tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
-        expect(height).to(equal(UITableViewAutomaticDimension))
+        expect(height).to(equal(44.0))
     }
     
     
