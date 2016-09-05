@@ -54,10 +54,6 @@ public class TextFieldItem: ItemProtocol, ContentValidatable, Validationable {
         
     public var drawer: CellDrawer.Type = TextFieldDrawer.self
     
-    // MARK: Cell style
-    
-    public var cellHeight: CGFloat? = UITableViewAutomaticDimension
-
     public lazy var validation: Validation<String?> = {
         return Validation<String?>(forInput: self, withIdentifier: self)
     }()

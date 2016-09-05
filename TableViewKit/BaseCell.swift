@@ -9,30 +9,6 @@
 import Foundation
 import UIKit
 
-public enum CellType {
-    
-    case Nib(UINib, UITableViewCell.Type)
-    case Class(UITableViewCell.Type)
-    
-    public var reusableIdentifier: String {
-        switch self {
-        case .Class(let cellClass):
-            return String(cellClass)
-        case .Nib(_, let cellClass):
-            return String(cellClass)
-        }
-    }
-    
-    public var cellClass: UITableViewCell.Type {
-        switch self {
-        case .Class(let cellClass):
-            return cellClass
-        case .Nib(_, let cellClass):
-            return cellClass
-        }
-    }
-}
-
 public class BaseCell : UITableViewCell {
     
     // MARK: Public
@@ -165,8 +141,7 @@ extension BaseCell: ActionBarDelegate {
     
     public func actionBar(actionBar: ActionBar, direction: Direction) -> NSIndexPath? {
         guard let indexPath = indexPathForResponder(forDirection: direction) else { return nil }
-        
-        tableViewManager.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
+        tableViewManager.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
         
         let cell = tableViewManager.tableView.cellForRowAtIndexPath(indexPath) as! BaseCell
         cell.becomeFirstResponder()

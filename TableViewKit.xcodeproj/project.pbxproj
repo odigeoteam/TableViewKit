@@ -32,6 +32,10 @@
 		CCBE459F1D72F79C00414A64 /* ItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */; };
 		CCBE45A01D72F79C00414A64 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458D1D72F79C00414A64 /* Section.swift */; };
 		CCBE45A11D72F79C00414A64 /* TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458E1D72F79C00414A64 /* TableViewManager.swift */; };
+		CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC11F1D7D9E150001FC1D /* CellType.swift */; };
+		CCCAC1221D7D9E440001FC1D /* HeaderFooterDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */; };
+		CCCAC1241D7D9E6D0001FC1D /* HeaderFooterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */; };
+		CCCAC1261D7D9EE00001FC1D /* HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */; };
 		CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */; };
 		CCE400FA1D73321600537715 /* ActionBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F91D73321600537715 /* ActionBarTests.swift */; };
 /* End PBXBuildFile section */
@@ -78,6 +82,10 @@
 		CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemProtocol.swift; path = Protocols/ItemProtocol.swift; sourceTree = "<group>"; };
 		CCBE458D1D72F79C00414A64 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		CCBE458E1D72F79C00414A64 /* TableViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
+		CCCAC11F1D7D9E150001FC1D /* CellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
+		CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterDrawer.swift; sourceTree = "<group>"; };
+		CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterType.swift; sourceTree = "<group>"; };
+		CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderFooter.swift; path = Protocols/HeaderFooter.swift; sourceTree = "<group>"; };
 		CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceTests.swift; sourceTree = "<group>"; };
 		CCE400F91D73321600537715 /* ActionBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBarTests.swift; sourceTree = "<group>"; };
 		D0E1FB244FF2B149DB428D40 /* Pods-TableViewKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKit/Pods-TableViewKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -121,6 +129,7 @@
 				CCBE458D1D72F79C00414A64 /* Section.swift */,
 				CCBE458C1D72F79C00414A64 /* ItemProtocol.swift */,
 				CC97D76C1D741DC4009CDF9D /* ItemSelectable.swift */,
+				CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -163,8 +172,11 @@
 				CCBE457D1D72F79C00414A64 /* Items */,
 				CCBE45801D72F79C00414A64 /* Resources */,
 				CCBE45821D72F79C00414A64 /* Validator */,
-				CCBE45891D72F79C00414A64 /* BaseCell.swift */,
+				CCCAC11F1D7D9E150001FC1D /* CellType.swift */,
 				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
+				CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */,
+				CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */,
+				CCBE45891D72F79C00414A64 /* BaseCell.swift */,
 				CCBE458B1D72F79C00414A64 /* Constants.swift */,
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
@@ -432,13 +444,17 @@
 				CCBE45911D72F79C00414A64 /* NSBundle+TableViewKit.swift in Sources */,
 				CCBE459E1D72F79C00414A64 /* Constants.swift in Sources */,
 				CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */,
+				CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */,
 				CCBE458F1D72F79C00414A64 /* ActionBar.swift in Sources */,
 				CCBE459A1D72F79C00414A64 /* Validator.swift in Sources */,
 				CCBE45981D72F79C00414A64 /* Validation.swift in Sources */,
 				CCBE45901D72F79C00414A64 /* PickerControl.swift in Sources */,
+				CCCAC1261D7D9EE00001FC1D /* HeaderFooter.swift in Sources */,
 				CCBE45951D72F79C00414A64 /* TextFieldItem.swift in Sources */,
+				CCCAC1241D7D9E6D0001FC1D /* HeaderFooterType.swift in Sources */,
 				CCBE45A11D72F79C00414A64 /* TableViewManager.swift in Sources */,
 				CCBE45931D72F79C00414A64 /* UITableView+Register.swift in Sources */,
+				CCCAC1221D7D9E440001FC1D /* HeaderFooterDrawer.swift in Sources */,
 				CCBE459D1D72F79C00414A64 /* CellDrawer.swift in Sources */,
 				CCBE459F1D72F79C00414A64 /* ItemProtocol.swift in Sources */,
 				CCBE45941D72F79C00414A64 /* CustomItem.swift in Sources */,

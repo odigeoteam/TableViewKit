@@ -15,10 +15,8 @@ public protocol Section: class {
 
     var headerTitle: String? { get }
     var footerTitle: String? { get }
-    var headerHeight: CGFloat? { get }
-    var footerHeight: CGFloat? { get }
-    var headerView: UIView? { get }
-    var footerView: UIView? { get }
+    var header: HeaderFooter? { get }
+    var footer: HeaderFooter? { get }
     var items: CollectionProperty<[ItemProtocol]> { get }
 
     func index(inManager manager: TableViewManager) -> Int?
@@ -29,13 +27,17 @@ public protocol Section: class {
 extension Section {
     public var headerTitle: String? { return nil }
     public var footerTitle: String? { return nil }
-    public var headerHeight: CGFloat? { return nil }
-    public var footerHeight: CGFloat? { return nil }
-    public var headerView: UIView? { return nil }
-    public var footerView: UIView? { return nil }
+    public var header: HeaderFooter? { return nil }
+    public var footer: HeaderFooter? { return nil }
     
     public func index(inManager manager: TableViewManager) -> Int? { return manager.sections.indexOf(self) }
     public func register(inManager manager: TableViewManager) {
+        if let header = header {
+            manager.tableView.register(type: header.drawer.cellType)
+        }
+        if let header = header {
+            manager.tableView.register(type: header.drawer.cellType)
+        }
         items.forEach {
             if let item = $0 as? Validationable {
                 manager.validator.add(validation: item.validation)

@@ -15,8 +15,8 @@ class FirstSection: Section {
 
     let vc: ViewController
     
-    internal var headerTitle: String? = "First section title"
-    internal var footerTitle: String? = "Section footer"
+    internal var header: HeaderFooter? = CustomHeaderItem(title: "First Section")
+    internal var footer: HeaderFooter? = CustomHeaderItem(title: "Section Footer\nHola")
 
     required init(vc: ViewController) {
         self.vc = vc
@@ -53,7 +53,7 @@ class FirstSection: Section {
 class SecondSection: Section {
     var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
 
-    internal var footerTitle: String? =  "Second Section"
+    internal var header: HeaderFooter? = CustomHeaderItem(title: "Second Section")
     
     let vc: ViewController
 
@@ -87,6 +87,12 @@ class ViewController: UITableViewController {
         
         super.viewDidLoad()
         
+        self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
+        self.tableView.sectionFooterHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedSectionHeaderHeight = 100;
+        self.tableView.estimatedSectionFooterHeight = 100;
+
+
         tableViewManager = TableViewManager(tableView: self.tableView, sections: [FirstSection(vc: self), SecondSection(vc: self)])
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
