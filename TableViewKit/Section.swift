@@ -12,12 +12,12 @@ import ReactiveKit
 
 
 public protocol Section: class {
+    var items: CollectionProperty<[ItemProtocol]> { get }
 
     var headerTitle: String? { get }
     var footerTitle: String? { get }
     var header: HeaderFooter? { get }
     var footer: HeaderFooter? { get }
-    var items: CollectionProperty<[ItemProtocol]> { get }
 
     func index(inManager manager: TableViewManager) -> Int?
     func setup(inManager manager: TableViewManager)
@@ -33,10 +33,10 @@ extension Section {
     public func index(inManager manager: TableViewManager) -> Int? { return manager.sections.indexOf(self) }
     public func register(inManager manager: TableViewManager) {
         if let header = header {
-            manager.tableView.register(type: header.drawer.cellType)
+            manager.tableView.register(type: header.drawer.headerFooterType)
         }
         if let header = header {
-            manager.tableView.register(type: header.drawer.cellType)
+            manager.tableView.register(type: header.drawer.headerFooterType)
         }
         items.forEach {
             if let item = $0 as? Validationable {

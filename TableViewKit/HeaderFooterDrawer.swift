@@ -11,14 +11,14 @@ import UIKit
 
 public protocol HeaderFooterDrawer {
     
-    static var cellType: HeaderFooterType { get }
+    static var headerFooterType: HeaderFooterType { get }
     static func view(inManager manager: TableViewManager, withItem item: HeaderFooter) -> UITableViewHeaderFooterView
-    static func draw(cell cell: UITableViewHeaderFooterView, withItem item: Any)
+    static func draw(view: UITableViewHeaderFooterView, withItem item: Any)
     
 }
 
 public extension HeaderFooterDrawer {
     static func view(inManager manager: TableViewManager, withItem item: HeaderFooter) -> UITableViewHeaderFooterView {
-        return manager.tableView.dequeueReusableHeaderFooterViewWithIdentifier(self.cellType.reusableIdentifier)!
+        return manager.tableView.dequeueReusableHeaderFooterViewWithIdentifier(self.headerFooterType.reusableIdentifier)!
     }
 }

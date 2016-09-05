@@ -18,13 +18,12 @@ public class CustomHeaderFooterView: UITableViewHeaderFooterView {
 public class CustomHeaderDrawer: HeaderFooterDrawer {
     
     public static let nib = UINib(nibName: String(CustomHeaderFooterView.self), bundle: nil)
-    static public var cellType = HeaderFooterType.Nib(CustomHeaderDrawer.nib, CustomHeaderFooterView.self)
+    static public var headerFooterType = HeaderFooterType.Nib(CustomHeaderDrawer.nib, CustomHeaderFooterView.self)
     
-    static public func draw(cell cell: UITableViewHeaderFooterView, withItem item: Any) {
+    static public func draw(view: UITableViewHeaderFooterView, withItem item: Any) {
         let item = item as! CustomHeaderItem
-        let cell = cell as! CustomHeaderFooterView
-        cell.label.text = item.title
-        cell.setNeedsUpdateConstraints()
+        let view = view as! CustomHeaderFooterView
+        view.label.text = item.title
     }
 }
 
@@ -32,8 +31,7 @@ public class CustomHeaderDrawer: HeaderFooterDrawer {
 public class CustomHeaderItem: HeaderFooter {
     
     public var title: String?
-    public var height: CGFloat? = UITableViewAutomaticDimension
-    public var estimatedHeight: CGFloat? = 40.0
+    public var height: ImmutableMutableHeight? = ImmutableMutableHeight.mutable(44.0)
     
     public var drawer: HeaderFooterDrawer.Type = CustomHeaderDrawer.self
     

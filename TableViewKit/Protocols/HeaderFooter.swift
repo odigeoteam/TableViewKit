@@ -10,16 +10,5 @@ import Foundation
 
 public protocol HeaderFooter: class {
     var drawer: HeaderFooterDrawer.Type { get }
-    var height: CGFloat? { get }
-    var estimatedHeight: CGFloat? { get }
-}
-
-extension HeaderFooter {
-    public var height: CGFloat? {
-        return nil
-    }
-    
-    public var estimatedHeight: CGFloat? {
-        return nil
-    }
+    var height: ImmutableMutableHeight? { get }
 }

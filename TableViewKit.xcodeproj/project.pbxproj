@@ -36,6 +36,7 @@
 		CCCAC1221D7D9E440001FC1D /* HeaderFooterDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */; };
 		CCCAC1241D7D9E6D0001FC1D /* HeaderFooterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */; };
 		CCCAC1261D7D9EE00001FC1D /* HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */; };
+		CCCAC1281D7DA2D00001FC1D /* ImmutableMutableHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */; };
 		CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */; };
 		CCE400FA1D73321600537715 /* ActionBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F91D73321600537715 /* ActionBarTests.swift */; };
 /* End PBXBuildFile section */
@@ -86,6 +87,7 @@
 		CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterDrawer.swift; sourceTree = "<group>"; };
 		CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterType.swift; sourceTree = "<group>"; };
 		CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderFooter.swift; path = Protocols/HeaderFooter.swift; sourceTree = "<group>"; };
+		CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmutableMutableHeight.swift; sourceTree = "<group>"; };
 		CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceTests.swift; sourceTree = "<group>"; };
 		CCE400F91D73321600537715 /* ActionBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBarTests.swift; sourceTree = "<group>"; };
 		D0E1FB244FF2B149DB428D40 /* Pods-TableViewKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKit/Pods-TableViewKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -172,11 +174,10 @@
 				CCBE457D1D72F79C00414A64 /* Items */,
 				CCBE45801D72F79C00414A64 /* Resources */,
 				CCBE45821D72F79C00414A64 /* Validator */,
-				CCCAC11F1D7D9E150001FC1D /* CellType.swift */,
-				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
-				CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */,
-				CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */,
+				CCCAC1291D7DA2DB0001FC1D /* Cell */,
+				CCCAC12A1D7DA2E90001FC1D /* HeaderFooter */,
 				CCBE45891D72F79C00414A64 /* BaseCell.swift */,
+				CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */,
 				CCBE458B1D72F79C00414A64 /* Constants.swift */,
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
@@ -242,6 +243,24 @@
 				CCBE45861D72F79C00414A64 /* Validator.swift */,
 			);
 			path = Validator;
+			sourceTree = "<group>";
+		};
+		CCCAC1291D7DA2DB0001FC1D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CCCAC11F1D7D9E150001FC1D /* CellType.swift */,
+				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		CCCAC12A1D7DA2E90001FC1D /* HeaderFooter */ = {
+			isa = PBXGroup;
+			children = (
+				CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */,
+				CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */,
+			);
+			name = HeaderFooter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -441,6 +460,7 @@
 				CCBE45991D72F79C00414A64 /* ValidationError.swift in Sources */,
 				CCBE45971D72F79C00414A64 /* Rules.swift in Sources */,
 				CC97D76D1D741DC4009CDF9D /* ItemSelectable.swift in Sources */,
+				CCCAC1281D7DA2D00001FC1D /* ImmutableMutableHeight.swift in Sources */,
 				CCBE45911D72F79C00414A64 /* NSBundle+TableViewKit.swift in Sources */,
 				CCBE459E1D72F79C00414A64 /* Constants.swift in Sources */,
 				CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */,

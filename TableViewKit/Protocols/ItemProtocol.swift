@@ -11,7 +11,7 @@ import Foundation
 public protocol ItemProtocol: class {
     var drawer: CellDrawer.Type { get }
     
-    var cellHeight: CGFloat? { get }
+    var height: ImmutableMutableHeight? { get }
     
     func indexPath(inManager manager: TableViewManager) -> NSIndexPath?
     func section(inManager manager: TableViewManager) -> Section?
@@ -22,8 +22,8 @@ public protocol ItemProtocol: class {
 
 extension ItemProtocol {
     
-    public var cellHeight: CGFloat? {
-        return UITableViewAutomaticDimension
+    public var height: ImmutableMutableHeight? {
+        return .mutable(44.0)
     }
     
     public func section(inManager manager: TableViewManager) -> Section? {

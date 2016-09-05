@@ -13,7 +13,7 @@ public class CustomDrawer: CellDrawer {
     
     static public var cellType = CellType.Class(BaseCell.self)
     
-    static public func draw(cell cell: BaseCell, withItem item: Any) {
+    static public func draw(cell: BaseCell, withItem item: Any) {
         let item = item as! CustomItem
         cell.accessoryType = item.accessoryType
         cell.accessoryView = item.accessoryView

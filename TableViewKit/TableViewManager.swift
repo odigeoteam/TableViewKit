@@ -98,7 +98,7 @@ extension TableViewManager: UITableViewDataSource {
         let drawer = currentItem.drawer
         
         let cell = drawer.cell(inManager: self, withItem: currentItem, forIndexPath: indexPath)
-        drawer.draw(cell: cell, withItem: currentItem)
+        drawer.draw(cell, withItem: currentItem)
         
         return cell
     }
@@ -124,33 +124,71 @@ extension TableViewManager: UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let currentItem = item(forIndexPath: indexPath)
-        return currentItem.cellHeight ?? tableView.rowHeight
+        guard let height = item(forIndexPath: indexPath).height else { return tableView.rowHeight }
+        switch height {
+        case .immutable(let value):
+            return value
+        case .mutable(_):
+            return UITableViewAutomaticDimension
+        }
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let currentItem = header(inSection: section)
-        return currentItem?.height ?? tableView.sectionHeaderHeight
+        guard let currentItem = header(inSection: section), let height = currentItem.height
+            else { return tableView.sectionHeaderHeight }
+        
+        switch height {
+        case .immutable(let value):
+            return value
+        case .mutable(_):
+            return UITableViewAutomaticDimension
+        }
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let currentItem = footer(inSection: section)
-        return currentItem?.height ?? tableView.sectionFooterHeight
+        guard let currentItem = footer(inSection: section), let height = currentItem.height
+            else { return tableView.sectionFooterHeight }
+        
+        switch height {
+        case .immutable(let value):
+            return value
+        case .mutable(_):
+            return UITableViewAutomaticDimension
+        }
     }
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let currentItem = item(forIndexPath: indexPath)
-        return currentItem.cellHeight ?? tableView.estimatedRowHeight
+        guard let height = item(forIndexPath: indexPath).height else { return tableView.estimatedRowHeight }
+        switch height {
+        case .immutable(_):
+            return 0.0
+        case .mutable(let value):
+            return value
+        }
     }
     
     public func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        let currentItem = header(inSection: section)
-        return currentItem?.estimatedHeight ?? tableView.estimatedSectionHeaderHeight
+        guard let currentItem = header(inSection: section), let height = currentItem.height
+            else { return tableView.estimatedSectionHeaderHeight }
+        
+        switch height {
+        case .immutable(_):
+            return 0.0
+        case .mutable(let value):
+            return value
+        }        
     }
     
     public func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        let currentItem = footer(inSection: section)
-        return currentItem?.estimatedHeight ?? tableView.estimatedSectionFooterHeight
+        guard let currentItem = footer(inSection: section), let height = currentItem.height
+            else { return tableView.estimatedSectionFooterHeight }
+        
+        switch height {
+        case .immutable(_):
+            return 0.0
+        case .mutable(let value):
+            return value
+        }
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -158,7 +196,7 @@ extension TableViewManager: UITableViewDelegate {
         
         let drawer = currentItem.drawer
         let view = drawer.view(inManager: self, withItem: currentItem)
-        drawer.draw(cell: view, withItem: currentItem)
+        drawer.draw(view, withItem: currentItem)
         
         return view
     }
@@ -168,7 +206,7 @@ extension TableViewManager: UITableViewDelegate {
         
         let drawer = currentItem.drawer
         let view = drawer.view(inManager: self, withItem: currentItem)
-        drawer.draw(cell: view, withItem: currentItem)
+        drawer.draw(view, withItem: currentItem)
         
         return view
         

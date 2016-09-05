@@ -40,7 +40,7 @@ public class TextFieldDrawer: CellDrawer {
     public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: NSBundle.tableViewKitBundle())
     public static let cellType = CellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
     
-    public static func draw(cell cell: BaseCell, withItem item: Any) {
+    public static func draw(cell: BaseCell, withItem item: Any) {
         
         let textCell = cell as! TextFieldCell
         let textItem = item as! TextFieldItem
