@@ -24,6 +24,17 @@ class TestSection: Section {
     }
 }
 
+class TestDrawer: CellDrawer {
+    
+    static internal var cellType = CellType.Class(BaseCell.self)
+    
+    static internal func draw(cell: BaseCell, withItem item: Any) {    }
+}
+
+class TestItem: ItemProtocol {
+    internal var drawer: CellDrawer.Type = TestDrawer.self
+}
+
 class TableViewDataSourceTests: XCTestCase {
     
     private var tableViewManager: TableViewManager!
@@ -33,7 +44,7 @@ class TableViewDataSourceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         tableViewManager = TableViewManager(tableView: UITableView())
-        item = CustomItem()
+        item = TestItem()
         
         section = TestSection()
         section.items.append(item)
