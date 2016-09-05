@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TableViewKit
 
 public class TextFieldCell: BaseCell {
     
@@ -37,7 +38,7 @@ public class TextFieldCell: BaseCell {
 
 public class TextFieldDrawer: CellDrawer {
     
-    public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: NSBundle.tableViewKitBundle())
+    public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: nil)
     public static let cellType = CellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
     
     public static func draw(cell: BaseCell, withItem item: Any) {

@@ -15,13 +15,8 @@
 		CCBE45671D72F69500414A64 /* TableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBE455C1D72F69400414A64 /* TableViewKit.framework */; };
 		CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */; };
 		CCBE458F1D72F79C00414A64 /* ActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45771D72F79C00414A64 /* ActionBar.swift */; };
-		CCBE45901D72F79C00414A64 /* PickerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45781D72F79C00414A64 /* PickerControl.swift */; };
-		CCBE45911D72F79C00414A64 /* NSBundle+TableViewKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE457A1D72F79C00414A64 /* NSBundle+TableViewKit.swift */; };
 		CCBE45921D72F79C00414A64 /* NSIndexSet+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE457B1D72F79C00414A64 /* NSIndexSet+Array.swift */; };
 		CCBE45931D72F79C00414A64 /* UITableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */; };
-		CCBE45941D72F79C00414A64 /* CustomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE457E1D72F79C00414A64 /* CustomItem.swift */; };
-		CCBE45951D72F79C00414A64 /* TextFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE457F1D72F79C00414A64 /* TextFieldItem.swift */; };
-		CCBE45961D72F79C00414A64 /* TextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCBE45811D72F79C00414A64 /* TextFieldCell.xib */; };
 		CCBE45971D72F79C00414A64 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45831D72F79C00414A64 /* Rules.swift */; };
 		CCBE45981D72F79C00414A64 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45841D72F79C00414A64 /* Validation.swift */; };
 		CCBE45991D72F79C00414A64 /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45851D72F79C00414A64 /* ValidationError.swift */; };
@@ -66,13 +61,8 @@
 		CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewKitTests.swift; sourceTree = "<group>"; };
 		CCBE456D1D72F69500414A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCBE45771D72F79C00414A64 /* ActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBar.swift; sourceTree = "<group>"; };
-		CCBE45781D72F79C00414A64 /* PickerControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerControl.swift; sourceTree = "<group>"; };
-		CCBE457A1D72F79C00414A64 /* NSBundle+TableViewKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+TableViewKit.swift"; sourceTree = "<group>"; };
 		CCBE457B1D72F79C00414A64 /* NSIndexSet+Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSIndexSet+Array.swift"; sourceTree = "<group>"; };
 		CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Register.swift"; sourceTree = "<group>"; };
-		CCBE457E1D72F79C00414A64 /* CustomItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomItem.swift; sourceTree = "<group>"; };
-		CCBE457F1D72F79C00414A64 /* TextFieldItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldItem.swift; sourceTree = "<group>"; };
-		CCBE45811D72F79C00414A64 /* TextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextFieldCell.xib; sourceTree = "<group>"; };
 		CCBE45831D72F79C00414A64 /* Rules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
 		CCBE45841D72F79C00414A64 /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		CCBE45851D72F79C00414A64 /* ValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
@@ -171,8 +161,6 @@
 				CC97D76B1D741D8E009CDF9D /* Protocols */,
 				CCBE45761D72F79C00414A64 /* Controls */,
 				CCBE45791D72F79C00414A64 /* Extensions */,
-				CCBE457D1D72F79C00414A64 /* Items */,
-				CCBE45801D72F79C00414A64 /* Resources */,
 				CCBE45821D72F79C00414A64 /* Validator */,
 				CCCAC1291D7DA2DB0001FC1D /* Cell */,
 				CCCAC12A1D7DA2E90001FC1D /* HeaderFooter */,
@@ -202,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				CCBE45771D72F79C00414A64 /* ActionBar.swift */,
-				CCBE45781D72F79C00414A64 /* PickerControl.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -210,28 +197,10 @@
 		CCBE45791D72F79C00414A64 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				CCBE457A1D72F79C00414A64 /* NSBundle+TableViewKit.swift */,
 				CCBE457B1D72F79C00414A64 /* NSIndexSet+Array.swift */,
 				CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		CCBE457D1D72F79C00414A64 /* Items */ = {
-			isa = PBXGroup;
-			children = (
-				CCBE457E1D72F79C00414A64 /* CustomItem.swift */,
-				CCBE457F1D72F79C00414A64 /* TextFieldItem.swift */,
-			);
-			path = Items;
-			sourceTree = "<group>";
-		};
-		CCBE45801D72F79C00414A64 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				CCBE45811D72F79C00414A64 /* TextFieldCell.xib */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		CCBE45821D72F79C00414A64 /* Validator */ = {
@@ -359,7 +328,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCBE45961D72F79C00414A64 /* TextFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,23 +429,19 @@
 				CCBE45971D72F79C00414A64 /* Rules.swift in Sources */,
 				CC97D76D1D741DC4009CDF9D /* ItemSelectable.swift in Sources */,
 				CCCAC1281D7DA2D00001FC1D /* ImmutableMutableHeight.swift in Sources */,
-				CCBE45911D72F79C00414A64 /* NSBundle+TableViewKit.swift in Sources */,
 				CCBE459E1D72F79C00414A64 /* Constants.swift in Sources */,
 				CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */,
 				CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */,
 				CCBE458F1D72F79C00414A64 /* ActionBar.swift in Sources */,
 				CCBE459A1D72F79C00414A64 /* Validator.swift in Sources */,
 				CCBE45981D72F79C00414A64 /* Validation.swift in Sources */,
-				CCBE45901D72F79C00414A64 /* PickerControl.swift in Sources */,
 				CCCAC1261D7D9EE00001FC1D /* HeaderFooter.swift in Sources */,
-				CCBE45951D72F79C00414A64 /* TextFieldItem.swift in Sources */,
 				CCCAC1241D7D9E6D0001FC1D /* HeaderFooterType.swift in Sources */,
 				CCBE45A11D72F79C00414A64 /* TableViewManager.swift in Sources */,
 				CCBE45931D72F79C00414A64 /* UITableView+Register.swift in Sources */,
 				CCCAC1221D7D9E440001FC1D /* HeaderFooterDrawer.swift in Sources */,
 				CCBE459D1D72F79C00414A64 /* CellDrawer.swift in Sources */,
 				CCBE459F1D72F79C00414A64 /* ItemProtocol.swift in Sources */,
-				CCBE45941D72F79C00414A64 /* CustomItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
