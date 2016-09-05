@@ -12,13 +12,13 @@ import Nimble
 import ReactiveKit
 
 class TestSection: Section {
-    var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
+    var items: CollectionProperty<[Item]> = CollectionProperty([])
     weak var tableViewManager: TableViewManager!
     
     internal var headerTitle: String? { return "Header" }
     internal var footerTitle: String? { return "Footer" }
 
-    convenience init(items: [ItemProtocol]) {
+    convenience init(items: [Item]) {
         self.init()
         self.items.insertContentsOf(items, at: 0)
     }
@@ -31,14 +31,14 @@ class TestDrawer: CellDrawer {
     static internal func draw(cell: BaseCell, withItem item: Any) {    }
 }
 
-class TestItem: ItemProtocol {
+class TestItem: Item {
     internal var drawer: CellDrawer.Type = TestDrawer.self
 }
 
 class TableViewDataSourceTests: XCTestCase {
     
     private var tableViewManager: TableViewManager!
-    private var item: ItemProtocol!
+    private var item: Item!
     private var section: Section!
     
     override func setUp() {

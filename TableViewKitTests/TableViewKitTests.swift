@@ -40,7 +40,7 @@ class TableViewKitTests: XCTestCase {
 
     func testAddItem() {
 
-        let item: ItemProtocol = TestItem()
+        let item: Item = TestItem()
 
         let section = TestSection()
         section.items.append(item)

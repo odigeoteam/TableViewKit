@@ -51,7 +51,7 @@ public class TextFieldDrawer: CellDrawer {
     }
 }
 
-public class TextFieldItem: ItemProtocol, ContentValidatable, Validationable {
+public class TextFieldItem: Item, ContentValidatable, Validationable {
         
     public var drawer: CellDrawer.Type = TextFieldDrawer.self
     

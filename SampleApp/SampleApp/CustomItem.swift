@@ -23,11 +23,11 @@ public class CustomDrawer: CellDrawer {
 }
 
 
-public class CustomItem: ItemSelectable, ItemProtocol {
+public class CustomItem: Selectable, Item {
     
     public var title: String?
     
-    public var onSelection: (ItemSelectable) -> () = { _ in }
+    public var onSelection: (Selectable) -> () = { _ in }
     
     public var cellStyle: UITableViewCellStyle = .Default
     public var accessoryType: UITableViewCellAccessoryType = .None

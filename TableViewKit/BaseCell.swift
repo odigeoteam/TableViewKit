@@ -14,7 +14,7 @@ public class BaseCell : UITableViewCell {
     // MARK: Public
     
     weak public var tableViewManager: TableViewManager!
-    public var item: ItemProtocol?
+    public var item: Item?
     
     public var responder: UIResponder?
     

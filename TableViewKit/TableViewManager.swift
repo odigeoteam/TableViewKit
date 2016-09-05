@@ -67,7 +67,7 @@ public class TableViewManager: NSObject {
 
 extension TableViewManager {
     
-    private func item(forIndexPath indexPath: NSIndexPath) -> ItemProtocol {
+    private func item(forIndexPath indexPath: NSIndexPath) -> Item {
         return sections[indexPath.section].items[indexPath.row]
     }
     
@@ -119,7 +119,7 @@ extension TableViewManager: UITableViewDataSource {
 extension TableViewManager: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let currentItem = item(forIndexPath: indexPath) as? ItemSelectable else { return }
+        guard let currentItem = item(forIndexPath: indexPath) as? Selectable else { return }
         currentItem.onSelection(currentItem)
     }
     

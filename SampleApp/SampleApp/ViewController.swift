@@ -11,7 +11,7 @@ import TableViewKit
 import ReactiveKit
 
 class FirstSection: Section {
-    var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
+    var items: CollectionProperty<[Item]> = CollectionProperty([])
 
     let vc: ViewController
     
@@ -51,7 +51,7 @@ class FirstSection: Section {
 }
 
 class SecondSection: Section {
-    var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
+    var items: CollectionProperty<[Item]> = CollectionProperty([])
 
     internal var header: HeaderFooter? = CustomHeaderItem(title: "Second Section")
     
@@ -61,7 +61,7 @@ class SecondSection: Section {
         self.vc = vc
         
         let total: [Int] = Array(1...100)
-        let items = total.map({ (index) -> ItemProtocol in
+        let items = total.map({ (index) -> Item in
             if (index % 2 == 0) {
                 let item = TextFieldItem(placeHolder: "Textfield \(index)")
                 return item

@@ -1,5 +1,5 @@
 //
-//  ItemSelectable.swift
+//  Selectable.swift
 //  TableViewKit
 //
 //  Created by Alfredo Delli Bovi on 29/08/16.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-public protocol ItemSelectable: ItemProtocol {
-    var onSelection: (ItemSelectable) -> () { get set }
+public protocol Selectable: Item {
+    var onSelection: (Selectable) -> () { get set }
     
     func selectRow(inManager manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition)
     func deselectRow(inManager manager: TableViewManager, animated: Bool)
 }
 
-extension ItemSelectable {
+extension Selectable {
     
     public func selectRow(inManager manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) {
         

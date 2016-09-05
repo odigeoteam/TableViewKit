@@ -1,5 +1,5 @@
 //
-//  ItemProtocol.swift
+//  Item.swift
 //  Pods
 //
 //  Created by Alfredo Delli Bovi on 27/08/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol ItemProtocol: class {
+public protocol Item: class {
     var drawer: CellDrawer.Type { get }
     
     var height: ImmutableMutableHeight? { get }
@@ -20,7 +20,7 @@ public protocol ItemProtocol: class {
     func deleteRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
 }
 
-extension ItemProtocol {
+extension Item {
     
     public var height: ImmutableMutableHeight? {
         return .mutable(44.0)
@@ -56,7 +56,7 @@ extension ItemProtocol {
     }
 }
 
-extension CollectionType where Generator.Element == ItemProtocol {
+extension CollectionType where Generator.Element == Item {
     func indexOf(element: Generator.Element) -> Index? {
         return indexOf({ $0 === element })
     }

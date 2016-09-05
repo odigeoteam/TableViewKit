@@ -12,7 +12,7 @@ import ReactiveKit
 
 
 public protocol Section: class {
-    var items: CollectionProperty<[ItemProtocol]> { get }
+    var items: CollectionProperty<[Item]> { get }
 
     var headerTitle: String? { get }
     var footerTitle: String? { get }

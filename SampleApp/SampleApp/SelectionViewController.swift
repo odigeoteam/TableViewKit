@@ -12,13 +12,13 @@ import TableViewKit
 import ReactiveKit
 
 class SelectionSection: Section {
-    var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
+    var items: CollectionProperty<[Item]> = CollectionProperty([])
     weak var tableViewManager: TableViewManager!
 
     required init() { }
 }
 
-public protocol SelectionItemProtocol: ItemProtocol {
+public protocol SelectionItemProtocol: Item {
     
     var value: Any { get }
     var selected: Bool { get set }
@@ -36,7 +36,7 @@ public class SelectionItem: SelectionItemProtocol {
     public var value: Any
     public var selected: Bool
     
-    public var onSelection: (ItemProtocol) -> () = { _ in }
+    public var onSelection: (Selectable) -> () = { _ in }
     
     public var accessoryType: UITableViewCellAccessoryType = .None
     public var accessoryView: UIView?
