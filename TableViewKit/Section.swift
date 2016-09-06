@@ -29,7 +29,7 @@ extension Section {
     public var footerTitle: String? { return nil }
     public var header: HeaderFooter? { return nil }
     public var footer: HeaderFooter? { return nil }
-    
+
     public func index(inManager manager: TableViewManager) -> Int? { return manager.sections.indexOf(self) }
     public func register(inManager manager: TableViewManager) {
         if let header = header {
@@ -42,7 +42,7 @@ extension Section {
             if let item = $0 as? Validationable {
                 manager.validator.add(validation: item.validation)
             }
-            
+
             manager.tableView.register(type: $0.drawer.cellType)
         }
     }
@@ -51,18 +51,18 @@ extension Section {
         items.observeNext { e in
             guard let sectionIndex = manager.sections.indexOf(self) else { return }
             let tableView = manager.tableView
-            
+
             tableView.beginUpdates()
             if e.inserts.count > 0 {
                 let indexPaths = e.inserts.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
                 tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
             }
-            
+
             if e.updates.count > 0 {
                 let indexPaths = e.updates.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
                 tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
             }
-            
+
             if e.deletes.count > 0 {
                 let indexPaths = e.deletes.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
                 tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)

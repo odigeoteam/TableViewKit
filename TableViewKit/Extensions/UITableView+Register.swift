@@ -17,7 +17,7 @@ public extension UITableView {
             registerNib(nib, forCellReuseIdentifier: type.reusableIdentifier)
         }
     }
-    
+
     public func register(type type: HeaderFooterType, bundle: NSBundle? = nil) {
         switch type {
         case .Class(let cellClass):

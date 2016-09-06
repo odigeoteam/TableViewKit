@@ -9,11 +9,11 @@
 import Foundation
 
 extension NSIndexSet {
-    
+
     convenience init(_ array: [Int]) {
-        
+
         let mutable = NSMutableIndexSet()
-        array.forEach{mutable.addIndex($0)}
+        array.forEach {mutable.addIndex($0)}
         self.init(indexSet: mutable)
     }
 }
