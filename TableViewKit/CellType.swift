@@ -9,10 +9,10 @@
 import Foundation
 
 public enum CellType {
-    
+
     case nib(UINib, UITableViewCell.Type)
     case `class`(UITableViewCell.Type)
-    
+
     public var reusableIdentifier: String {
         switch self {
         case .class(let cellClass):
@@ -21,7 +21,7 @@ public enum CellType {
             return String(describing: cellClass)
         }
     }
-    
+
     public var cellClass: UITableViewCell.Type {
         switch self {
         case .class(let cellClass):

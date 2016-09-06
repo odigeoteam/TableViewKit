@@ -19,14 +19,14 @@ public protocol Validationable {
 
 public protocol Validatable {
     associatedtype Input
-    
+
     var error: NSError? { get }
     func test(_ validationContent: Input) -> Bool
 }
 
 
 public protocol Regexable {
-    var regex:String { get }
+    var regex: String { get }
 }
 
 public extension Regexable where Self: Validatable {
@@ -41,17 +41,17 @@ public struct ValidatorManager<Input> {
             return validations.reduce([], { $0 + $1.errors })
         }
     }
-    
+
     fileprivate var validations: [Validation<Input>] = []
-    
+
     public mutating func add<R: Validatable>(_ getInput: @escaping () -> Input, withRule rule: R) where R.Input == Input {
         validations.append(Validation.init(forInput: getInput, rule: rule))
     }
-    
+
     public mutating func add(validation: Validation<Input>) {
         guard (!validations.contains { $0 === validation }) else { return }
         validations.append(validation)
     }
-    
+
     public init() { }
 }

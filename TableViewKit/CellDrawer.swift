@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 public protocol CellDrawer {
-    
+
     static var cellType: CellType { get }
     static func cell(inManager manager: TableViewManager, withItem item: Item, forIndexPath: IndexPath) -> BaseCell
     static func draw(_ cell: BaseCell, withItem item: Any)
-    
+
 }
 
 public extension CellDrawer {

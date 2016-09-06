@@ -17,7 +17,7 @@ public extension UITableView {
             self.register(nib, forCellReuseIdentifier: type.reusableIdentifier)
         }
     }
-    
+
     public func register(type: HeaderFooterType, bundle: Bundle? = nil) {
         switch type {
         case .class(let cellClass):

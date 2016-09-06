@@ -30,7 +30,7 @@ extension Section {
     public var footerTitle: String? { return nil }
     public var header: HeaderFooter? { return nil }
     public var footer: HeaderFooter? { return nil }
-    
+
     public func index(inManager manager: TableViewManager) -> Int? { return manager.sections.indexOf(self) }
     public func register(inManager manager: TableViewManager) {
         if let header = header {
@@ -43,7 +43,7 @@ extension Section {
             if let item = $0 as? Validationable {
                 manager.validator.add(validation: item.validation)
             }
-            
+
             manager.tableView.register(type: $0.drawer.cellType)
         }
     }
@@ -52,7 +52,7 @@ extension Section {
         items.observeNext { e in
             guard let sectionIndex = manager.sections.indexOf(self) else { return }
             let tableView = manager.tableView
-            
+
             switch e.change {
             case .initial: break
             case .inserts(let array):
@@ -70,7 +70,7 @@ extension Section {
             case .endBatchEditing:
                 tableView.endUpdates()
             }
-            
+
         }.disposeIn(manager.disposeBag)
     }
 }
