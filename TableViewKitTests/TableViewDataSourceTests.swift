@@ -9,24 +9,44 @@
 import XCTest
 import TableViewKit
 import Nimble
+import ReactiveKit
+
+class TestSection: Section {
+    var items: CollectionProperty<[Item]> = CollectionProperty([])
+    weak var tableViewManager: TableViewManager!
+    
+    internal var headerTitle: String? { return "Header" }
+    internal var footerTitle: String? { return "Footer" }
+
+    convenience init(items: [Item]) {
+        self.init()
+        self.items.insertContentsOf(items, at: 0)
+    }
+}
+
+class TestDrawer: CellDrawer {
+    
+    static internal var cellType = CellType.Class(BaseCell.self)
+    
+    static internal func draw(cell: BaseCell, withItem item: Any) {    }
+}
+
+class TestItem: Item {
+    internal var drawer: CellDrawer.Type = TestDrawer.self
+}
 
 class TableViewDataSourceTests: XCTestCase {
     
     private var tableViewManager: TableViewManager!
-    private var item: ItemProtocol!
+    private var item: Item!
     private var section: Section!
-    
-    private let headerTitle = "Header Title"
-    private let footerTitle = "Footer Title"
     
     override func setUp() {
         super.setUp()
         tableViewManager = TableViewManager(tableView: UITableView())
-        item = CustomItem()
+        item = TestItem()
         
-        section = Section()
-        section.headerTitle = headerTitle
-        section.footerTitle = footerTitle
+        section = TestSection()
         section.items.append(item)
         
         tableViewManager.sections.append(section)
@@ -80,7 +100,7 @@ class TableViewDataSourceTests: XCTestCase {
     func testEstimatedHeightForRowAtIndexPath() {
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         let height = self.tableViewManager.tableView(self.tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
-        expect(height).to(equal(UITableViewAutomaticDimension))
+        expect(height).to(equal(44.0))
     }
     
     

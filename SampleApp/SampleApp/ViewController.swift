@@ -8,15 +8,18 @@
 
 import UIKit
 import TableViewKit
+import ReactiveKit
 
 class FirstSection: Section {
-    let vc: ViewController
+    var items: CollectionProperty<[Item]> = CollectionProperty([])
 
-    init(vc: ViewController) {
+    let vc: ViewController
+    
+    internal var header: HeaderFooter? = CustomHeaderItem(title: "First Section")
+    internal var footer: HeaderFooter? = CustomHeaderItem(title: "Section Footer\nHola")
+
+    required init(vc: ViewController) {
         self.vc = vc
-        super.init()
-        self.headerTitle = "First section title"
-        self.footerTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta blandit interdum. In nec eleifend libero. Morbi maximus nulla non dapibus blandit"
         
         let item = CustomItem(title: "Passengers")
         let dateItem = CustomItem(title: "Birthday")
@@ -43,18 +46,34 @@ class FirstSection: Section {
         
         self.items.insertContentsOf([item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: 0)
     }
+    
+
 }
 
 class SecondSection: Section {
+    var items: CollectionProperty<[Item]> = CollectionProperty([])
+
+    internal var header: HeaderFooter? = CustomHeaderItem(title: "Second Section")
     
-    override init() {
-        super.init()
-        self.headerTitle = "Second Section"
+    let vc: ViewController
+
+    required init(vc: ViewController) {
+        self.vc = vc
         
-        let textFieldItem = TextFieldItem(placeHolder: "Place of birth")
-        textFieldItem.validation.add(rule: ExistRule())
-        
-        self.items.insertContentsOf([textFieldItem], at: 0)
+        let total: [Int] = Array(1...100)
+        let items = total.map({ (index) -> Item in
+            if (index % 2 == 0) {
+                let item = TextFieldItem(placeHolder: "Textfield \(index)")
+                return item
+            } else {
+                let item = CustomItem(title: "Label  \(index)")
+                item.onSelection = { item in
+                    item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+                }
+                return item
+            }
+        })
+        self.items.insertContentsOf(items, at: 0)
     }
 }
 
@@ -68,7 +87,13 @@ class ViewController: UITableViewController {
         
         super.viewDidLoad()
         
-        tableViewManager = TableViewManager(tableView: self.tableView, sections: [FirstSection(vc: self), SecondSection()])
+        self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
+        self.tableView.sectionFooterHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedSectionHeaderHeight = 100;
+        self.tableView.estimatedSectionFooterHeight = 100;
+
+
+        tableViewManager = TableViewManager(tableView: self.tableView, sections: [FirstSection(vc: self), SecondSection(vc: self)])
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
     }

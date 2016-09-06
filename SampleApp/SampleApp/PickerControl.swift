@@ -8,6 +8,23 @@
 
 import Foundation
 import UIKit
+import TableViewKit
+
+struct Constants {
+    
+    enum Frame {
+        
+        static let PickerHeight = 260.0
+        static let PickerViewHeight = 216.0
+        static let NavigationBarHeight = 44.0
+        static let HeaderViewHeight = 44.0
+    }
+    
+    enum Animation {
+        
+        static let Duration = 0.3
+    }
+}
 
 public protocol PickerItemProtocol: class {
     

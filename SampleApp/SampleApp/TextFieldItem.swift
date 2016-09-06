@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TableViewKit
 
 public class TextFieldCell: BaseCell {
     
@@ -37,10 +38,10 @@ public class TextFieldCell: BaseCell {
 
 public class TextFieldDrawer: CellDrawer {
     
-    public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: NSBundle.tableViewKitBundle())
+    public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: nil)
     public static let cellType = CellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
     
-    public static func draw(cell cell: BaseCell, withItem item: Any) {
+    public static func draw(cell: BaseCell, withItem item: Any) {
         
         let textCell = cell as! TextFieldCell
         let textItem = item as! TextFieldItem
@@ -50,14 +51,10 @@ public class TextFieldDrawer: CellDrawer {
     }
 }
 
-public class TextFieldItem: ItemProtocol, ContentValidatable, Validationable {
+public class TextFieldItem: Item, ContentValidatable, Validationable {
         
     public var drawer: CellDrawer.Type = TextFieldDrawer.self
     
-    // MARK: Cell style
-    
-    public var cellHeight: CGFloat? = UITableViewAutomaticDimension
-
     public lazy var validation: Validation<String?> = {
         return Validation<String?>(forInput: self, withIdentifier: self)
     }()

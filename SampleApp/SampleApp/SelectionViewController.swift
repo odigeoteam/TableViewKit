@@ -9,8 +9,16 @@
 import Foundation
 import UIKit
 import TableViewKit
+import ReactiveKit
 
-public protocol SelectionItemProtocol: ItemProtocol {
+class SelectionSection: Section {
+    var items: CollectionProperty<[Item]> = CollectionProperty([])
+    weak var tableViewManager: TableViewManager!
+
+    required init() { }
+}
+
+public protocol SelectionItemProtocol: Item {
     
     var value: Any { get }
     var selected: Bool { get set }
@@ -28,7 +36,7 @@ public class SelectionItem: SelectionItemProtocol {
     public var value: Any
     public var selected: Bool
     
-    public var onSelection: (ItemProtocol) -> () = { _ in }
+    public var onSelection: (Selectable) -> () = { _ in }
     
     public var accessoryType: UITableViewCellAccessoryType = .None
     public var accessoryView: UIView?
@@ -105,7 +113,7 @@ public class SelectionViewController: UITableViewController {
     
     private func setupTaleViewItems() {
         
-        let section = Section()
+        let section = SelectionSection()
         tableViewManager.sections.append(section)
         
         for element in items {

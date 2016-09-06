@@ -10,91 +10,70 @@ import Foundation
 import UIKit
 import ReactiveKit
 
-public class Section {
-    
-    // MARK: Public properties
-    
-    public var items: CollectionProperty<[ItemProtocol]> = CollectionProperty([])
-    
-    public var index: Int? { return tableViewManager?.sections.indexOf(self) }
-    
-    weak public private(set) var  tableViewManager: TableViewManager!
-    
-    public var headerTitle: String?
-    public var footerTitle: String?
-    public var headerHeight: CGFloat?
-    public var footerHeight: CGFloat?
-    public var headerView: UIView?
-    public var footerView: UIView?
-    
-    let disposeBag = DisposeBag()
 
-    // MARK: Init methods
-    
-    public init() {
-        items.observeNext { e in
-            guard let sectionIndex = self.index, tableView = self.tableViewManager?.tableView else { return }
-            
-            tableView.beginUpdates()
-            if e.inserts.count > 0 {
-                let indexPaths = e.inserts.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            }
-            
-            if e.updates.count > 0 {
-                let indexPaths = e.updates.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            }
-            
-            if e.deletes.count > 0 {
-                let indexPaths = e.deletes.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            }
-            tableView.endUpdates()
-        }.disposeIn(disposeBag)
-    }
-    
-    public func register(tableViewManager manager: TableViewManager) {
-        tableViewManager = manager
+public protocol Section: class {
+    var items: CollectionProperty<[Item]> { get }
+
+    var headerTitle: String? { get }
+    var footerTitle: String? { get }
+    var header: HeaderFooter? { get }
+    var footer: HeaderFooter? { get }
+
+    func index(inManager manager: TableViewManager) -> Int?
+    func setup(inManager manager: TableViewManager)
+    func register(inManager manager: TableViewManager)
+}
+
+extension Section {
+    public var headerTitle: String? { return nil }
+    public var footerTitle: String? { return nil }
+    public var header: HeaderFooter? { return nil }
+    public var footer: HeaderFooter? { return nil }
+
+    public func index(inManager manager: TableViewManager) -> Int? { return manager.sections.indexOf(self) }
+    public func register(inManager manager: TableViewManager) {
+        if let header = header {
+            manager.tableView.register(type: header.drawer.headerFooterType)
+        }
+        if let header = header {
+            manager.tableView.register(type: header.drawer.headerFooterType)
+        }
         items.forEach {
             if let item = $0 as? Validationable {
                 manager.validator.add(validation: item.validation)
             }
 
-           manager.tableView.register(type: $0.drawer.cellType)
+            manager.tableView.register(type: $0.drawer.cellType)
         }
     }
-    
-}
 
-extension Section: Equatable {}
-public func ==(lhs: Section, rhs: Section) -> Bool{
-    return lhs === rhs
-}
+    public func setup(inManager manager: TableViewManager) {
+        items.observeNext { e in
+            guard let sectionIndex = manager.sections.indexOf(self) else { return }
+            let tableView = manager.tableView
 
-extension Section {
-    
-    public func reload(rowAnimation: UITableViewRowAnimation = .None) {
-        guard let tableView = tableViewManager?.tableView, index = index else { return }
-        tableView.reloadSections(NSIndexSet(index: index), withRowAnimation: rowAnimation)
+            tableView.beginUpdates()
+            if e.inserts.count > 0 {
+                let indexPaths = e.inserts.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+                tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            }
+
+            if e.updates.count > 0 {
+                let indexPaths = e.updates.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+                tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            }
+
+            if e.deletes.count > 0 {
+                let indexPaths = e.deletes.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+                tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            }
+            tableView.endUpdates()
+        }.disposeIn(manager.disposeBag)
     }
 }
 
-extension Section {
-    
-    public convenience init(items: [ItemProtocol]) {
-        self.init()
-        self.items.insertContentsOf(items, at: 0)
-    }
-    
-    public convenience init(headerTitle: String) {
-        self.init()
-        self.headerTitle = headerTitle
-    }
-    
-    public convenience init(headerTitle: String, footerTitle: String) {
-        
-        self.init(headerTitle: headerTitle)
-        self.footerTitle = footerTitle
+extension CollectionType where Generator.Element == Section {
+    func indexOf(element: Generator.Element) -> Index? {
+        return indexOf({ $0 === element })
     }
 }

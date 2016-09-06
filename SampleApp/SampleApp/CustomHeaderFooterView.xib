@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" id="LU3-lz-dcf" customClass="CustomHeaderFooterView" customModule="SampleApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="452" height="59"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tAb-0A-oYg">
+                    <rect key="frame" x="8" y="19" width="436" height="21"/>
+                    <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="tAb-0A-oYg" firstAttribute="leading" secondItem="LU3-lz-dcf" secondAttribute="leading" constant="8" id="3kl-MA-Mye"/>
+                <constraint firstItem="tAb-0A-oYg" firstAttribute="top" secondItem="LU3-lz-dcf" secondAttribute="top" priority="900" constant="19" id="44R-ou-38V"/>
+                <constraint firstAttribute="trailing" secondItem="tAb-0A-oYg" secondAttribute="trailing" constant="8" id="7E8-Id-YBE"/>
+                <constraint firstAttribute="bottom" secondItem="tAb-0A-oYg" secondAttribute="bottom" priority="900" constant="19" id="arC-uj-RpR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="label" destination="tAb-0A-oYg" id="yua-gC-ynd"/>
+            </connections>
+            <point key="canvasLocation" x="233" y="341.5"/>
+        </view>
+    </objects>
+</document>
