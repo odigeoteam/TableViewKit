@@ -52,17 +52,18 @@ extension Section {
 
             switch change {
             case .inserts(let array):
-                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-                tableView.insertRows(at: indexPaths, with: .automatic)
+                
+                let indexPaths = array.map { NSIndexPath(forRow: $0, inSection: sectionIndex) }
+                tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
             case .deletes(let array):
-                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-                tableView.deleteRows(at: indexPaths, with: .automatic)
+                let indexPaths = array.map { NSIndexPath(forRow: $0, inSection: sectionIndex) }
+                tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
             case .updates(let array):
-                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-                tableView.reloadRows(at: indexPaths, with: .automatic)
+                let indexPaths = array.map { NSIndexPath(forRow: $0, inSection: sectionIndex) }
+                tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
             case .moves(let array):
-                let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
-                let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
+                let fromIndexPaths = array.map { NSIndexPath(forRow: $0.0, inSection: sectionIndex) }
+                let toIndexPaths = array.map { NSIndexPath(forRow: $0.1, inSection: sectionIndex) }
                 tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
             case .beginUpdates:
                 tableView.beginUpdates()

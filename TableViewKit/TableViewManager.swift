@@ -39,11 +39,11 @@ public class TableViewManager: NSObject {
                     self.sections[index].setup(inManager: self)
                     self.sections[index].register(inManager: self)
                 }
-                tableView.insertSections(IndexSet(array), with: .automatic)
+                tableView.insertSections(NSIndexSet(array), withRowAnimation: .Automatic)
             case .deletes(let array):
-                tableView.deleteSections(IndexSet(array), with: .automatic)
+                tableView.deleteSections(NSIndexSet(array), withRowAnimation: .Automatic)
             case .updates(let array):
-                tableView.reloadSections(IndexSet(array), with: .automatic)
+                tableView.reloadSections(NSIndexSet(array), withRowAnimation: .Automatic)
             case .moves(_): break
             case .beginUpdates:
                 tableView.beginUpdates()
@@ -53,6 +53,12 @@ public class TableViewManager: NSObject {
 
         }
     }
+    
+    public convenience init(tableView: UITableView, sections: [Section]) {
+        self.init(tableView: tableView)
+        self.sections.insertContentsOf(sections, at: 0)
+    }
+}
 
 extension TableViewManager {
 

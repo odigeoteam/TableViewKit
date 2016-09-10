@@ -14,7 +14,7 @@ struct Diff {
 }
 
 
-class DiffIterator : IteratorProtocol {
+class DiffIterator : GeneratorType {
     struct Coordinates {
         var x: Int
         var y: Int
@@ -50,14 +50,14 @@ class DiffIterator : IteratorProtocol {
     }
 }
 
-class DiffSequence : Sequence {
+class DiffSequence : SequenceType {
     private let matrix: [[Int]]
     
     init(matrix: [[Int]]){
         self.matrix = matrix
     }
     
-    func makeIterator() -> DiffIterator {
+    func generate() -> DiffIterator {
         return DiffIterator(matrix: matrix)
     }
 }
@@ -67,9 +67,9 @@ class DiffSequence : Sequence {
 extension Array {
     
     static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff {
-        var matrix = [[Int]](repeating: [Int](repeating: 0, count: y.count+1), count: x.count+1)
-        for (i, xElem) in x.enumerated() {
-            for (j, yElem) in y.enumerated() {
+        var matrix = [[Int]](count: x.count+1, repeatedValue: [Int](count: y.count+1, repeatedValue: 0))
+        for (i, xElem) in x.enumerate() {
+            for (j, yElem) in y.enumerate() {
                 if predicate(xElem, yElem) {
                     matrix[i+1][j+1] = matrix[i][j] + 1
                 } else {
@@ -82,13 +82,13 @@ extension Array {
         let inserts: [Int] = changes.flatMap { change -> [Int] in
             guard case .inserts(let array) = change else { return [] }
             return array
-            }.sorted { $0 > $1 }
+            }.sort { $0 > $1 }
 
         
         let deletes: [Int] = changes.flatMap { change -> [Int] in
             guard case .deletes(let array) = change else { return [] }
             return array
-            }.sorted { $0 < $1 }
+            }.sort { $0 < $1 }
 
         
         return Diff(inserts: inserts, deletes: deletes)

@@ -58,9 +58,9 @@ class FirstSection: Section {
             self.vc.showPickerControl()
         }
         
-        states.insert([item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: State.preParty.rawValue)
-        states.insert([item2, selectionItem, dateItem, item3, textFieldItem2, textFieldItem], at: State.onParty.rawValue)
-        states.insert([item2], at: State.afterParty.rawValue)
+        states.insert([item, dateItem, selectionItem, textFieldItem, textFieldItem2], atIndex: State.preParty.rawValue)
+        states.insert([item2, selectionItem, dateItem, item3, textFieldItem2, textFieldItem], atIndex: State.onParty.rawValue)
+        states.insert([item2], atIndex: State.afterParty.rawValue)
         swap(to: .preParty)
     }
     

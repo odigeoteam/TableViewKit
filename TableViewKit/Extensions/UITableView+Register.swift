@@ -27,9 +27,9 @@ public extension UITableView {
         }
     }
     
-    func moveRows(at indexPaths: [IndexPath], to newIndexPaths: [IndexPath]) {
-        for (index, _) in indexPaths.enumerated() {
-            moveRow(at: indexPaths[index], to: newIndexPaths[index])
+    func moveRows(at indexPaths: [NSIndexPath], to newIndexPaths: [NSIndexPath]) {
+        for (index, _) in indexPaths.enumerate() {
+            moveRowAtIndexPath(indexPaths[index], toIndexPath: newIndexPaths[index])
         }
     }
 
