@@ -614,7 +614,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4B8E33116CC0B70461DC5ED6 /* Pods-TableViewKitTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = TableViewKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.TableViewKitTests;
@@ -627,7 +626,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C6C8E0D2A241295B7A143FE9 /* Pods-TableViewKitTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = TableViewKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.TableViewKitTests;
