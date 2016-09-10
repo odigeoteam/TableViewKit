@@ -8,20 +8,34 @@
 
 import UIKit
 import TableViewKit
-import ReactiveKit
 
 class FirstSection: Section {
-    var items: CollectionProperty<[Item]> = CollectionProperty([])
+    var items: ObservableArray<Item> = []
+    var states: [[Item]] = []
+    
+    enum State: Int, RawRepresentable {
+        case preParty
+        case onParty
+        case afterParty
+    }
+    
+    var currentState: State = .preParty {
+        didSet {
+            items.replace(with: states[currentState.rawValue])
+        }
+    }
 
     let vc: ViewController
     
-    internal var header: HeaderFooter? = CustomHeaderItem(title: "First Section")
-    internal var footer: HeaderFooter? = CustomHeaderItem(title: "Section Footer\nHola")
+    internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "First Section"))
+    internal var footer: HeaderFooterView = .view(CustomHeaderItem(title: "Section Footer\nHola"))
 
     required init(vc: ViewController) {
         self.vc = vc
         
         let item = CustomItem(title: "Passengers")
+        let item2 = CustomItem(title: "Testing")
+        let item3 = CustomItem(title: "Testing 2")
         let dateItem = CustomItem(title: "Birthday")
         let selectionItem = CustomItem(title: "Selection")
         let textFieldItem = TextFieldItem(placeHolder: "Name")
@@ -44,16 +58,22 @@ class FirstSection: Section {
             self.vc.showPickerControl()
         }
         
-        self.items.insertContentsOf([item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: 0)
+        states.insert([item, dateItem, selectionItem, textFieldItem, textFieldItem2], atIndex: State.preParty.rawValue)
+        states.insert([item2, selectionItem, dateItem, item3, textFieldItem2, textFieldItem], atIndex: State.onParty.rawValue)
+        states.insert([item2], atIndex: State.afterParty.rawValue)
+        swap(to: .preParty)
     }
     
+    func swap(to newState: State) {
+        currentState = newState
+    }
 
 }
 
 class SecondSection: Section {
-    var items: CollectionProperty<[Item]> = CollectionProperty([])
+    var items: ObservableArray<Item> = []
 
-    internal var header: HeaderFooter? = CustomHeaderItem(title: "Second Section")
+    internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "Second Section"))
     
     let vc: ViewController
 
@@ -82,6 +102,7 @@ class ViewController: UITableViewController {
     var tableViewManager: TableViewManager!
     var pickerControl: PickerControl?
     
+    var firstSection: FirstSection!
 
     override func viewDidLoad() {
         
@@ -93,7 +114,8 @@ class ViewController: UITableViewController {
         self.tableView.estimatedSectionFooterHeight = 100;
 
 
-        tableViewManager = TableViewManager(tableView: self.tableView, sections: [FirstSection(vc: self), SecondSection(vc: self)])
+        firstSection = FirstSection(vc: self)
+        tableViewManager = TableViewManager(tableView: self.tableView, sections: [firstSection, SecondSection(vc: self)])
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
     }
@@ -133,9 +155,11 @@ class ViewController: UITableViewController {
     }
     
     @objc private func validationAction() {
+        firstSection.swap(to: firstSection.currentState == .preParty ? .onParty : .afterParty)
         guard let error = tableViewManager.errors.first else { return }
         print(error)
         
     }
 }
+
 

@@ -26,4 +26,11 @@ public extension UITableView {
             registerNib(nib, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
         }
     }
+    
+    func moveRows(at indexPaths: [NSIndexPath], to newIndexPaths: [NSIndexPath]) {
+        for (index, _) in indexPaths.enumerate() {
+            moveRowAtIndexPath(indexPaths[index], toIndexPath: newIndexPaths[index])
+        }
+    }
+
 }

@@ -8,16 +8,12 @@
 
 import Foundation
 import UIKit
-import ReactiveKit
-
 
 public protocol Section: class {
-    var items: CollectionProperty<[Item]> { get }
+    var items: ObservableArray<Item> { get set }
 
-    var headerTitle: String? { get }
-    var footerTitle: String? { get }
-    var header: HeaderFooter? { get }
-    var footer: HeaderFooter? { get }
+    var header: HeaderFooterView { get }
+    var footer: HeaderFooterView { get }
 
     func index(inManager manager: TableViewManager) -> Int?
     func setup(inManager manager: TableViewManager)
@@ -25,18 +21,16 @@ public protocol Section: class {
 }
 
 extension Section {
-    public var headerTitle: String? { return nil }
-    public var footerTitle: String? { return nil }
-    public var header: HeaderFooter? { return nil }
-    public var footer: HeaderFooter? { return nil }
+    public var header: HeaderFooterView { return nil }
+    public var footer: HeaderFooterView { return nil }
 
     public func index(inManager manager: TableViewManager) -> Int? { return manager.sections.indexOf(self) }
     public func register(inManager manager: TableViewManager) {
-        if let header = header {
+        if case .view(let header) = header {
             manager.tableView.register(type: header.drawer.headerFooterType)
         }
-        if let header = header {
-            manager.tableView.register(type: header.drawer.headerFooterType)
+        if case .view(let footer) = footer {
+            manager.tableView.register(type: footer.drawer.headerFooterType)
         }
         items.forEach {
             if let item = $0 as? Validationable {
@@ -48,27 +42,32 @@ extension Section {
     }
 
     public func setup(inManager manager: TableViewManager) {
-        items.observeNext { e in
+        items.callback = { change in
             guard let sectionIndex = manager.sections.indexOf(self) else { return }
             let tableView = manager.tableView
 
-            tableView.beginUpdates()
-            if e.inserts.count > 0 {
-                let indexPaths = e.inserts.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+            switch change {
+            case .inserts(let array):
+                
+                let indexPaths = array.map { NSIndexPath(forRow: $0, inSection: sectionIndex) }
                 tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            }
-
-            if e.updates.count > 0 {
-                let indexPaths = e.updates.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            }
-
-            if e.deletes.count > 0 {
-                let indexPaths = e.deletes.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+            case .deletes(let array):
+                let indexPaths = array.map { NSIndexPath(forRow: $0, inSection: sectionIndex) }
                 tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            case .updates(let array):
+                let indexPaths = array.map { NSIndexPath(forRow: $0, inSection: sectionIndex) }
+                tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            case .moves(let array):
+                let fromIndexPaths = array.map { NSIndexPath(forRow: $0.0, inSection: sectionIndex) }
+                let toIndexPaths = array.map { NSIndexPath(forRow: $0.1, inSection: sectionIndex) }
+                tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
+            case .beginUpdates:
+                tableView.beginUpdates()
+            case .endUpdates:
+                tableView.endUpdates()
             }
-            tableView.endUpdates()
-        }.disposeIn(manager.disposeBag)
+
+        }
     }
 }
 

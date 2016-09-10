@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                    = "TableViewKit"
-  s.version                 = "0.4.1"
+  s.version                 = "0.5.0"
   s.summary                 = "TableView Kit Layer"
   s.description             = "TableView Kit Layer"
   s.homepage                = "http://www.edreamsodigeo.com/"
@@ -12,5 +12,4 @@ Pod::Spec.new do |s|
   s.resource_bundles	 			= { "TableViewKit" => "TableViewKit/Resources/*.*" }
   s.framework  							= "UIKit", "Foundation"
   s.requires_arc 						= true
-  s.dependency 'ReactiveKit', '~> 2.1.1'
 end
