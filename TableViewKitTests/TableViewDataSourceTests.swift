@@ -9,10 +9,9 @@
 import XCTest
 import TableViewKit
 import Nimble
-import ReactiveKit
 
 class TestSection: Section {
-    var items: CollectionProperty<[Item]> = CollectionProperty([])
+    var items: ObservableArray<Item> = []
     weak var tableViewManager: TableViewManager!
     
     internal var headerTitle: String? { return "Header" }

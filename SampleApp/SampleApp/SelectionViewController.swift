@@ -9,10 +9,9 @@
 import Foundation
 import UIKit
 import TableViewKit
-import ReactiveKit
 
 class SelectionSection: Section {
-    var items: CollectionProperty<[Item]> = CollectionProperty([])
+    var items: ObservableArray<Item> = []
     weak var tableViewManager: TableViewManager!
 
     required init() { }

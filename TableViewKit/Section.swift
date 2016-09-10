@@ -8,11 +8,9 @@
 
 import Foundation
 import UIKit
-import ReactiveKit
-
 
 public protocol Section: class {
-    var items: CollectionProperty<[Item]> { get }
+    var items: ObservableArray<Item> { get set }
 
     var headerTitle: String? { get }
     var footerTitle: String? { get }
@@ -48,27 +46,31 @@ extension Section {
     }
 
     public func setup(inManager manager: TableViewManager) {
-        items.observeNext { e in
+        items.callback = { change in
             guard let sectionIndex = manager.sections.indexOf(self) else { return }
             let tableView = manager.tableView
 
-            tableView.beginUpdates()
-            if e.inserts.count > 0 {
-                let indexPaths = e.inserts.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            switch change {
+            case .inserts(let array):
+                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+            case .deletes(let array):
+                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+                tableView.deleteRows(at: indexPaths, with: .automatic)
+            case .updates(let array):
+                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+                tableView.reloadRows(at: indexPaths, with: .automatic)
+            case .moves(let array):
+                let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
+                let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
+                tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
+            case .beginUpdates:
+                tableView.beginUpdates()
+            case .endUpdates:
+                tableView.endUpdates()
             }
 
-            if e.updates.count > 0 {
-                let indexPaths = e.updates.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            }
-
-            if e.deletes.count > 0 {
-                let indexPaths = e.deletes.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
-                tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            }
-            tableView.endUpdates()
-        }.disposeIn(manager.disposeBag)
+        }
     }
 }
 

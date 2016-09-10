@@ -8,13 +8,12 @@
 
 import Foundation
 import UIKit
-import ReactiveKit
 
 public class TableViewManager: NSObject {
 
     // MARK: Properties
     public let tableView: UITableView
-    public var sections: CollectionProperty<[Section]> = CollectionProperty([])
+    public var sections: ObservableArray<Section> = []
 
     public var validator: ValidatorManager<String?> = ValidatorManager()
     public var errors: [ValidationError] {
@@ -22,8 +21,6 @@ public class TableViewManager: NSObject {
             return validator.errors
         }
     }
-
-    let disposeBag = DisposeBag()
 
 
     // MARK: Inits
@@ -34,36 +31,28 @@ public class TableViewManager: NSObject {
         self.tableView.dataSource = self
         self.tableView.delegate = self
 
-        sections.observeNext { e in
-            guard e.inserts.count + e.updates.count + e.deletes.count > 0 else { return }
+        sections.callback = { change in
 
-            e.inserts.forEach { index in
-                e.collection[index].setup(inManager: self)
-                e.collection[index].register(inManager: self)
+            switch change {
+            case .inserts(let array):
+                array.forEach { index in
+                    self.sections[index].setup(inManager: self)
+                    self.sections[index].register(inManager: self)
+                }
+                tableView.insertSections(IndexSet(array), with: .automatic)
+            case .deletes(let array):
+                tableView.deleteSections(IndexSet(array), with: .automatic)
+            case .updates(let array):
+                tableView.reloadSections(IndexSet(array), with: .automatic)
+            case .moves(_): break
+            case .beginUpdates:
+                tableView.beginUpdates()
+            case .endUpdates:
+                tableView.endUpdates()
             }
 
-            tableView.beginUpdates()
-            if e.inserts.count > 0 {
-                tableView.insertSections(NSIndexSet(e.inserts), withRowAnimation: .Automatic)
-            }
-
-            if e.updates.count > 0 {
-                tableView.reloadSections(NSIndexSet(e.updates), withRowAnimation: .Automatic)
-            }
-
-            if e.deletes.count > 0 {
-                tableView.deleteSections(NSIndexSet(e.deletes), withRowAnimation: .Automatic)
-            }
-            tableView.endUpdates()
-        }.disposeIn(disposeBag)
+        }
     }
-
-    public convenience init(tableView: UITableView, sections: [Section]) {
-        self.init(tableView: tableView)
-        self.sections.insertContentsOf(sections, at: 0)
-    }
-
-}
 
 extension TableViewManager {
 
