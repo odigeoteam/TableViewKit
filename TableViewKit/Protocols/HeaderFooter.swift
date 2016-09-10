@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum HeaderFooterView: NilLiteralConvertible, Equatable {
+public enum HeaderFooterView: ExpressibleByNilLiteral, Equatable {
     case title(String)
     case view(HeaderFooter)
     case none
