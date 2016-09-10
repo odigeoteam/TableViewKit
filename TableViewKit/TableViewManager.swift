@@ -58,21 +58,77 @@ open class TableViewManager: NSObject {
         self.init(tableView: tableView)
         self.sections.insert(contentsOf: sections, at: 0)
     }
-
 }
 
 extension TableViewManager {
 
     fileprivate func item(forIndexPath indexPath: IndexPath) -> Item {
-        return sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row]
+        return sections[indexPath.section].items[indexPath.row]
+    }
+    
+    fileprivate func view(forKey key: (Section) -> HeaderFooterView, inSection section: Int) -> UIView? {
+        guard case .view(let item) = key(sections[section]) else { return nil }
+        
+        let drawer = item.drawer
+        let view = drawer.view(inManager: self, withItem: item)
+        drawer.draw(view, withItem: item)
+        
+        return view
+    }
+    
+    fileprivate func title(forKey key: (Section) -> HeaderFooterView, inSection section: Int) -> String? {
+        if case .title(let value) = key(sections[section]) {
+            return value
+        }
+        return nil
+
+    }
+    
+    fileprivate func estimatedHeight(forKey key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
+        let item = key(sections[section])
+        switch item {
+        case .view(let view):
+            guard let height = view.height else { return nil }
+            return estimatedHeight(height)
+        case .title(_):
+            return 1.0
+        default:
+            return nil
+        }
     }
 
-    fileprivate func header(inSection section: Int) -> HeaderFooter? {
-        return sections[section].header
+    fileprivate func estimatedHeight(atIndexPath indexPath: IndexPath) -> CGFloat? {
+        guard let height = item(forIndexPath: indexPath).height else { return nil }
+        return estimatedHeight(height)
+}
+
+    fileprivate func estimatedHeight(_ height: ImmutableMutableHeight) -> CGFloat {
+        switch height {
+        case .immutable(_):
+            return 0.0
+        case .mutable(let value):
+            return value
+        }
     }
 
-    fileprivate func footer(inSection section: Int) -> HeaderFooter? {
-        return sections[section].footer
+    fileprivate func height(forKey key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
+        guard case .view(let view) = key(sections[section]), let value = view.height
+            else { return nil }
+        return height(value)
+    }
+
+    fileprivate func height(atIndexPath indexPath: IndexPath) -> CGFloat? {
+        guard let value = item(forIndexPath: indexPath).height else { return nil }
+        return height(value)
+    }
+
+    fileprivate func height(_ height: ImmutableMutableHeight) -> CGFloat {
+        switch height {
+        case .immutable(let value):
+            return value
+        case .mutable(_):
+            return UITableViewAutomaticDimension
+        }
     }
 
 }
@@ -100,13 +156,13 @@ extension TableViewManager: UITableViewDataSource {
     }
 
 
-    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].headerTitle
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return title(forKey: {$0.header}, inSection: section)
     }
 
 
-    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].footerTitle
+    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return title(forKey: {$0.footer}, inSection: section)
     }
 
 
@@ -119,93 +175,36 @@ extension TableViewManager: UITableViewDelegate {
         currentItem.onSelection(currentItem)
     }
 
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let height = item(forIndexPath: indexPath).height else { return tableView.rowHeight }
-        switch height {
-        case .immutable(let value):
-            return value
-        case .mutable(_):
-            return UITableViewAutomaticDimension
+    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return height(atIndexPath: indexPath) ?? tableView.rowHeight
         }
-    }
 
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let currentItem = header(inSection: section), let height = currentItem.height
-            else { return tableView.sectionHeaderHeight }
-
-        switch height {
-        case .immutable(let value):
-            return value
-        case .mutable(_):
-            return UITableViewAutomaticDimension
+    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return height(forKey: {$0.header}, inSection: section) ?? tableView.sectionHeaderHeight
         }
-    }
 
-    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        guard let currentItem = footer(inSection: section), let height = currentItem.height
-            else { return tableView.sectionFooterHeight }
-
-        switch height {
-        case .immutable(let value):
-            return value
-        case .mutable(_):
-            return UITableViewAutomaticDimension
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return height(forKey: {$0.footer}, inSection: section) ?? tableView.sectionFooterHeight
         }
+
+    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return estimatedHeight(atIndexPath: indexPath) ?? tableView.estimatedRowHeight
     }
 
-    public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let height = item(forIndexPath: indexPath).height else { return tableView.estimatedRowHeight }
-        switch height {
-        case .immutable(_):
-            return 0.0
-        case .mutable(let value):
-            return value
-        }
+    public func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return estimatedHeight(forKey: {$0.header}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
 
-    public func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        guard let currentItem = header(inSection: section), let height = currentItem.height
-            else { return tableView.estimatedSectionHeaderHeight }
-
-        switch height {
-        case .immutable(_):
-            return 0.0
-        case .mutable(let value):
-            return value
-        }
+    public func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+        return estimatedHeight(forKey: {$0.footer}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
 
-    public func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        guard let currentItem = footer(inSection: section), let height = currentItem.height
-            else { return tableView.estimatedSectionFooterHeight }
-
-        switch height {
-        case .immutable(_):
-            return 0.0
-        case .mutable(let value):
-            return value
-        }
+    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return view(forKey: {$0.header}, inSection: section)
     }
 
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let currentItem = header(inSection: section) else { return nil }
-
-        let drawer = currentItem.drawer
-        let view = drawer.view(inManager: self, withItem: currentItem)
-        drawer.draw(view, withItem: currentItem)
-
-        return view
-    }
-
-    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let currentItem = footer(inSection: section) else { return nil }
-
-        let drawer = currentItem.drawer
-        let view = drawer.view(inManager: self, withItem: currentItem)
-        drawer.draw(view, withItem: currentItem)
-
-        return view
-
+    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return view(forKey: {$0.footer}, inSection: section)
     }
 
 }
