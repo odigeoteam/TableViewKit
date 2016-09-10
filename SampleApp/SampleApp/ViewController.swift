@@ -27,8 +27,8 @@ class FirstSection: Section {
 
     let vc: ViewController
     
-    internal var header: HeaderFooter? = CustomHeaderItem(title: "First Section")
-    internal var footer: HeaderFooter? = CustomHeaderItem(title: "Section Footer\nHola")
+    internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "First Section"))
+    internal var footer: HeaderFooterView = .view(CustomHeaderItem(title: "Section Footer\nHola"))
 
     required init(vc: ViewController) {
         self.vc = vc
@@ -73,7 +73,7 @@ class FirstSection: Section {
 class SecondSection: Section {
     var items: ObservableArray<Item> = []
 
-    internal var header: HeaderFooter? = CustomHeaderItem(title: "Second Section")
+    internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "Second Section"))
     
     let vc: ViewController
 
