@@ -10,7 +10,7 @@ import XCTest
 import TableViewKit
 import Nimble
 
-class TestSection: Section {
+class HeaderFooterTitleSection: Section {
     var items: ObservableArray<Item> = []
     weak var tableViewManager: TableViewManager!
     
@@ -45,10 +45,12 @@ class TableViewDataSourceTests: XCTestCase {
         tableViewManager = TableViewManager(tableView: UITableView())
         item = TestItem()
         
-        section = TestSection()
+        section = HeaderFooterTitleSection()
         section.items.append(item)
         
         tableViewManager.sections.append(section)
+        
+        tableViewManager.sections.append(ViewHeaderFooterSection(items: [NoHeigthItem(), StaticHeigthItem()]))
 
     }
 
@@ -68,7 +70,7 @@ class TableViewDataSourceTests: XCTestCase {
     
     func testNumberOfSections() {
         let count = self.tableViewManager.numberOfSectionsInTableView(self.tableViewManager.tableView)
-        expect(count).to(be(1))
+        expect(count).to(be(2))
     }
     
     func testNumberOfRowsInSection() {
@@ -82,8 +84,14 @@ class TableViewDataSourceTests: XCTestCase {
     }
     
     func testTitleForFooterInSection() {
-        let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)!
-        expect(HeaderFooterView.title(title)).to(equal(section.footer))
+        var title: String?
+        
+        title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)
+        expect(HeaderFooterView.title(title!)).to(equal(section.footer))
+        
+        title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 1)
+        expect(title).to(beNil())
+
     }
     
     func testViewForHeaderInSection() {
@@ -92,21 +100,13 @@ class TableViewDataSourceTests: XCTestCase {
     }
     
     func testViewForFooterInSection() {
-        let view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 0)
+        var view: UIView?
+        view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 0)
         expect(view).to(beNil())
-    }
-    
-    func testEstimatedHeightForRowAtIndexPath() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        let height = self.tableViewManager.tableView(self.tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
-        expect(height).to(equal(44.0))
-    }
-    
-    
-    func testHeightForRowAtIndexPath() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        let height = self.tableViewManager.tableView(self.tableViewManager.tableView, heightForRowAtIndexPath: indexPath)
-        expect(height).to(equal(UITableViewAutomaticDimension))
+        
+        view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 1)
+        expect(view).notTo(beNil())
+
     }
     
 }

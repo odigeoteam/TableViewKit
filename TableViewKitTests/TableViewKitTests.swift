@@ -14,41 +14,42 @@ import Nimble
 
 class TableViewKitTests: XCTestCase {
 
-    private var tableViewManager: TableViewManager!
-
     override func setUp() {
-
         super.setUp()
-
-        tableViewManager = TableViewManager(tableView: UITableView())
     }
 
     override func tearDown() {
-
-        tableViewManager = nil
-
         super.tearDown()
     }
 
     func testAddSection() {
+        let tableViewManager = TableViewManager(tableView: UITableView())
 
-        let section = TestSection()
+        let section = HeaderFooterTitleSection()
         tableViewManager.sections.append(section)
 
-        expect(self.tableViewManager.sections.count).to(equal(1))
+        expect(tableViewManager.sections.count).to(equal(1))
     }
 
     func testAddItem() {
 
+        let tableViewManager = TableViewManager(tableView: UITableView())
+
         let item: Item = TestItem()
 
-        let section = TestSection()
+        let section = HeaderFooterTitleSection()
         section.items.append(item)
 
         tableViewManager.sections.append(section)
         
         expect(section.items.count).to(equal(1))
-        expect(item.section(inManager: self.tableViewManager)).notTo(beNil())
+        expect(item.section(inManager: tableViewManager)).notTo(beNil())
+    }
+    
+    func testConvenienceInit() {
+        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
+        
+        expect(tableViewManager.sections.count).to(equal(1))
     }
 
 }
