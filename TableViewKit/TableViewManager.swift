@@ -85,9 +85,16 @@ extension TableViewManager {
     }
     
     private func estimatedHeight(forKey key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
-        guard case .view(let view) = key(sections[section]), let height = view.height
-            else { return nil }
-        return estimatedHeight(height)
+        let item = key(sections[section])
+        switch item {
+        case .view(let view):
+            guard let height = view.height else { return nil }
+            return estimatedHeight(height)
+        case .title(_):
+            return 1.0
+        default:
+            return nil
+        }
     }
     
     private func estimatedHeight(atIndexPath indexPath: NSIndexPath) -> CGFloat? {
