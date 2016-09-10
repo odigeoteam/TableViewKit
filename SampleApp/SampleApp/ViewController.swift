@@ -8,21 +8,34 @@
 
 import UIKit
 import TableViewKit
-import ReactiveKit
-import Bond
 
 class FirstSection: Section {
-    var items: MutableObservableArray<Item> = MutableObservableArray([])
-
+    var items: ObservableArray<Item> = []
+    var states: [[Item]] = []
+    
+    enum State: Int, RawRepresentable {
+        case preParty
+        case onParty
+        case afterParty
+    }
+    
+    var currentState: State = .preParty {
+        didSet {
+            items.replace(with: states[currentState.rawValue])
+        }
+    }
+    
     let vc: ViewController
     
     internal var header: HeaderFooter? = CustomHeaderItem(title: "First Section")
     internal var footer: HeaderFooter? = CustomHeaderItem(title: "Section Footer\nHola")
-
+    
     required init(vc: ViewController) {
         self.vc = vc
         
         let item = CustomItem(title: "Passengers")
+        let item2 = CustomItem(title: "Testing")
+        let item3 = CustomItem(title: "Testing 2")
         let dateItem = CustomItem(title: "Birthday")
         let selectionItem = CustomItem(title: "Selection")
         let textFieldItem = TextFieldItem(placeHolder: "Name")
@@ -45,19 +58,25 @@ class FirstSection: Section {
             self.vc.showPickerControl()
         }
         
-        self.items.insert(contentsOf: [item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: 0)
+        states.insert([item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: State.preParty.rawValue)
+        states.insert([item2, selectionItem, dateItem, item3, textFieldItem2, textFieldItem], at: State.onParty.rawValue)
+        states.insert([item2], at: State.afterParty.rawValue)
+        swap(to: .preParty)
     }
     
-
+    func swap(to newState: State) {
+        currentState = newState
+    }
+    
 }
 
 class SecondSection: Section {
-    var items: MutableObservableArray<Item> = MutableObservableArray([])
-
+    var items: ObservableArray<Item> = []
+    
     internal var header: HeaderFooter? = CustomHeaderItem(title: "Second Section")
     
     let vc: ViewController
-
+    
     required init(vc: ViewController) {
         self.vc = vc
         
@@ -83,7 +102,8 @@ class ViewController: UITableViewController {
     var tableViewManager: TableViewManager!
     var pickerControl: PickerControl?
     
-
+    var firstSection: FirstSection!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -92,13 +112,14 @@ class ViewController: UITableViewController {
         self.tableView.sectionFooterHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedSectionHeaderHeight = 100;
         self.tableView.estimatedSectionFooterHeight = 100;
-
-
-        tableViewManager = TableViewManager(tableView: self.tableView, sections: [FirstSection(vc: self), SecondSection(vc: self)])
+        
+        
+        firstSection = FirstSection(vc: self)
+        tableViewManager = TableViewManager(tableView: self.tableView, sections: [firstSection, SecondSection(vc: self)])
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .plain, target: self, action: #selector(validationAction))
     }
-
+    
     
     fileprivate func showPickerControl() {
         
@@ -127,16 +148,18 @@ class ViewController: UITableViewController {
             
             self.pickerControl = nil
             
-        }, cancelCallback: nil)
+            }, cancelCallback: nil)
         pickerDateControl.presentPickerOnView(view)
         
         pickerControl = pickerDateControl
     }
     
     @objc fileprivate func validationAction() {
+        firstSection.swap(to: firstSection.currentState == .preParty ? .onParty : .afterParty)
         guard let error = tableViewManager.errors.first else { return }
         print(error)
         
     }
 }
+
 

@@ -8,14 +8,12 @@
 
 import Foundation
 import UIKit
-import ReactiveKit
-import Bond
 
 open class TableViewManager: NSObject {
 
     // MARK: Properties
     open let tableView: UITableView
-    open var sections: MutableObservableArray<Section> = MutableObservableArray([])
+    open var sections: ObservableArray<Section> = []
 
     open var validator: ValidatorManager<String?> = ValidatorManager()
     open var errors: [ValidationError] {
@@ -23,8 +21,6 @@ open class TableViewManager: NSObject {
             return validator.errors
         }
     }
-
-    let disposeBag = DisposeBag()
 
 
     // MARK: Inits
@@ -35,10 +31,9 @@ open class TableViewManager: NSObject {
         self.tableView.dataSource = self
         self.tableView.delegate = self
 
-        sections.observeNext { e in
+        sections.callback = { change in
 
-            switch e.change {
-            case .initial: break
+            switch change {
             case .inserts(let array):
                 array.forEach { index in
                     self.sections[index].setup(inManager: self)
@@ -49,14 +44,14 @@ open class TableViewManager: NSObject {
                 tableView.deleteSections(IndexSet(array), with: .automatic)
             case .updates(let array):
                 tableView.reloadSections(IndexSet(array), with: .automatic)
-            case .move(_, _): break
-            case .beginBatchEditing:
+            case .moves(_): break
+            case .beginUpdates:
                 tableView.beginUpdates()
-            case .endBatchEditing:
+            case .endUpdates:
                 tableView.endUpdates()
             }
 
-        }.disposeIn(disposeBag)
+        }
     }
 
     public convenience init(tableView: UITableView, sections: [Section]) {

@@ -9,11 +9,9 @@
 import XCTest
 import TableViewKit
 import Nimble
-import ReactiveKit
-import Bond
 
 class TestSection: Section {
-    var items: MutableObservableArray<Item> = MutableObservableArray([])
+    var items: ObservableArray<Item> = []
     weak var tableViewManager: TableViewManager!
     
     internal var headerTitle: String? { return "Header" }

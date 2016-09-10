@@ -12,6 +12,4 @@ Pod::Spec.new do |s|
   s.resource_bundles	 			= { "TableViewKit" => "TableViewKit/Resources/*.*" }
   s.framework  							= "UIKit", "Foundation"
   s.requires_arc 						= true
-  s.dependency 'ReactiveKit', '~> 3.0.0-beta1'
-  s.dependency 'Bond', '~> 5.0.0-beta2'
 end

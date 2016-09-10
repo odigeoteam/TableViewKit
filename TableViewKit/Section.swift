@@ -8,12 +8,9 @@
 
 import Foundation
 import UIKit
-import ReactiveKit
-import Bond
-
 
 public protocol Section: class {
-    var items: MutableObservableArray<Item> { get }
+    var items: ObservableArray<Item> { get set }
 
     var headerTitle: String? { get }
     var footerTitle: String? { get }
@@ -49,12 +46,11 @@ extension Section {
     }
 
     public func setup(inManager manager: TableViewManager) {
-        items.observeNext { e in
+        items.callback = { change in
             guard let sectionIndex = manager.sections.indexOf(self) else { return }
             let tableView = manager.tableView
 
-            switch e.change {
-            case .initial: break
+            switch change {
             case .inserts(let array):
                 let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
                 tableView.insertRows(at: indexPaths, with: .automatic)
@@ -64,14 +60,17 @@ extension Section {
             case .updates(let array):
                 let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
                 tableView.reloadRows(at: indexPaths, with: .automatic)
-            case .move(_, _): break
-            case .beginBatchEditing:
+            case .moves(let array):
+                let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
+                let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
+                tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
+            case .beginUpdates:
                 tableView.beginUpdates()
-            case .endBatchEditing:
+            case .endUpdates:
                 tableView.endUpdates()
             }
 
-        }.disposeIn(manager.disposeBag)
+        }
     }
 }
 

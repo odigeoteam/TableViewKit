@@ -9,11 +9,9 @@
 import Foundation
 import UIKit
 import TableViewKit
-import ReactiveKit
-import Bond
 
 class SelectionSection: Section {
-    var items: MutableObservableArray<Item> = MutableObservableArray([])
+    var items: ObservableArray<Item> = []
     weak var tableViewManager: TableViewManager!
 
     required init() { }
