@@ -14,8 +14,8 @@ class TestSection: Section {
     var items: ObservableArray<Item> = []
     weak var tableViewManager: TableViewManager!
     
-    internal var headerTitle: String? { return "Header" }
-    internal var footerTitle: String? { return "Footer" }
+    internal var header: HeaderFooterView { return .title("Header") }
+    internal var footer: HeaderFooterView { return .title("Footer") }
 
     convenience init(items: [Item]) {
         self.init()
@@ -77,13 +77,13 @@ class TableViewDataSourceTests: XCTestCase {
     }
     
     func testTitleForHeaderInSection() {
-        let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForHeaderInSection: 0)
-        expect(title).to(equal(section.headerTitle))
+        let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForHeaderInSection: 0)!
+        expect(HeaderFooterView.title(title)).to(equal(section.header))
     }
     
     func testTitleForFooterInSection() {
-        let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)
-        expect(title).to(equal(section.footerTitle))
+        let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)!
+        expect(HeaderFooterView.title(title)).to(equal(section.footer))
     }
     
     func testViewForHeaderInSection() {
