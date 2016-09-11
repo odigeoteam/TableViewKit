@@ -10,6 +10,21 @@ import XCTest
 import TableViewKit
 import Nimble
 
+extension HeaderFooterView: Equatable {
+    public static func == (lhs: HeaderFooterView, rhs: HeaderFooterView) -> Bool {
+        switch (lhs, rhs) {
+        case (.none, .none):
+            return true
+        case (.view(let lhs), .view(let rhs)):
+            return lhs === rhs
+        case (.title(let lhs), .title(let rhs)):
+            return lhs == rhs
+        default:
+            return false
+        }
+    }
+}
+
 class HeaderFooterTitleSection: Section {
     var items: ObservableArray<Item> = []
     weak var tableViewManager: TableViewManager!

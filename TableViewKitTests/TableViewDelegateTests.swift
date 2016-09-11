@@ -84,6 +84,16 @@ class StaticHeigthItem: Item {
     internal var height: ImmutableMutableHeight? = .immutable(20.0)
 }
 
+class SelectableItem: Selectable, Item {
+    public var onSelection: (Selectable) -> ()
+    
+    internal var drawer: CellDrawer.Type = TestDrawer.self
+    
+    public init(callback: @escaping (Selectable) -> ()) {
+        onSelection = callback
+    }
+}
+
 
 class TableViewDelegateTests: XCTestCase {
     
@@ -190,6 +200,31 @@ class TableViewDelegateTests: XCTestCase {
         expect(height).to(equal(StaticHeigthItem.testStaticHeightValue))
 
 
+    }
+    
+    func testSelectRow() {
+        var indexPath: IndexPath
+        
+        indexPath = IndexPath(row: 0, section: 0)
+        tableViewManager.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
+        
+        var check = 0;
+
+        let section = tableViewManager.sections[0]
+        indexPath = IndexPath(row: section.items.count, section: 0)
+        let item = SelectableItem(callback: { _ in
+            check += 1
+        })
+        section.items.append(item)
+        
+        tableViewManager.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
+        expect(check).to(equal(1))
+
+        item.select(inManager: tableViewManager, animated: true)
+        expect(check).to(equal(2))
+        
+        item.deselect(inManager: tableViewManager, animated: true)
+        expect(check).to(equal(2))
     }
     
 }

@@ -14,12 +14,7 @@ public enum HeaderFooterType {
     case `class`(UITableViewHeaderFooterView.Type)
 
     public var reusableIdentifier: String {
-        switch self {
-        case .class(let cellClass):
-            return String(describing: cellClass)
-        case .nib(_, let cellClass):
-            return String(describing: cellClass)
-        }
+        return String(describing: cellClass)
     }
 
     public var cellClass: UITableViewHeaderFooterView.Type {

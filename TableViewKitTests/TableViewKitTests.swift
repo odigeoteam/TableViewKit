@@ -12,6 +12,21 @@ import Nimble
 
 @testable import TableViewKit
 
+class TestReloadDrawer: CellDrawer {
+    
+    static internal var cellType = CellType.class(BaseCell.self)
+    
+    static internal func draw(_ cell: BaseCell, withItem item: Any) {
+        cell.textLabel?.text = (item as! TestReloadItem).title
+    }
+}
+
+class TestReloadItem: Item {
+    internal var drawer: CellDrawer.Type = TestReloadDrawer.self
+    internal var title: String?
+}
+
+
 class TableViewKitTests: XCTestCase {
 
     override func setUp() {
@@ -56,5 +71,36 @@ class TableViewKitTests: XCTestCase {
         
         expect(tableViewManager.sections.count).to(equal(1))
     }
+    
+    func testReloadRow() {
+        let tableViewManager = TableViewManager(tableView: UITableView())
+        
+        let item: Item = TestReloadItem()
+        (item as! TestReloadItem).title = "Before"
+        
+        let section = HeaderFooterTitleSection()
+        section.items.append(item)
+        
+        tableViewManager.sections.append(section)
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        let cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
+        
+        expect(cell.textLabel?.text).to(equal("Before"))
+        
+        (item as! TestReloadItem).title = "After"
+        item.reload(inManager: tableViewManager, withAnimation: .automatic)
+        
+        expect(cell.textLabel?.text).to(equal("After"))
+    }
 
+    func testNoCrashOnNonAddedItem() {
+        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
+
+        let item: Item = TestReloadItem()
+        item.reload(inManager: tableViewManager, withAnimation: .automatic)
+        
+        let section = item.section(inManager: tableViewManager)
+        expect(section).to(beNil())
+    }
 }

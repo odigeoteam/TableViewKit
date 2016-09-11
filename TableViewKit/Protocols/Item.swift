@@ -16,8 +16,7 @@ public protocol Item: class {
     func indexPath(inManager manager: TableViewManager) -> IndexPath?
     func section(inManager manager: TableViewManager) -> Section?
 
-    func reloadRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
-    func deleteRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
+    func reload(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
 }
 
 extension Item {
@@ -28,7 +27,7 @@ extension Item {
 
     public func section(inManager manager: TableViewManager) -> Section? {
         guard let indexPath = self.indexPath(inManager: manager) else { return nil }
-        return manager.sections[(indexPath as NSIndexPath).section]
+        return manager.sections[indexPath.section]
     }
 
     public func indexPath(inManager manager: TableViewManager) -> IndexPath? {
@@ -41,19 +40,12 @@ extension Item {
         return nil
     }
 
-    public func reloadRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation) {
-
-        if let itemIndexPath = indexPath(inManager: manager) {
-            manager.tableView.reloadRows(at: [itemIndexPath], with: animation)
-        }
+    public func reload(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation) {
+        guard let indexPath = self.indexPath(inManager: manager) else { return }
+        let section = manager.sections[indexPath.section]
+        section.items.callback?(.updates([indexPath.row]))
     }
 
-    public func deleteRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation) {
-
-        if let itemIndexPath = indexPath(inManager: manager) {
-            manager.tableView.deleteRows(at: [itemIndexPath], with: animation)
-        }
-    }
 }
 
 public extension Collection where Iterator.Element == Item {
