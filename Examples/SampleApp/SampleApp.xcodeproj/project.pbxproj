@@ -16,6 +16,7 @@
 		CC19AB271D7DAB7F00B8B196 /* PickerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC19AB261D7DAB7F00B8B196 /* PickerControl.swift */; };
 		CC28B4091D7D060B00B7CA97 /* CustomHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC28B4081D7D060B00B7CA97 /* CustomHeaderFooterView.xib */; };
 		CC28B40B1D7D064700B7CA97 /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC28B40A1D7D064700B7CA97 /* CustomHeader.swift */; };
+		CC2B23AE1D84DF4B0025CDF8 /* ActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B23AD1D84DF4B0025CDF8 /* ActionBar.swift */; };
 		CC5234581D730EF500F312E7 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5234571D730EF500F312E7 /* SelectionViewController.swift */; };
 		CCDDB6971D7DA9CB006C0F9F /* CustomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDDB6951D7DA9CB006C0F9F /* CustomItem.swift */; };
 		CCDDB6981D7DA9CB006C0F9F /* TextFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDDB6961D7DA9CB006C0F9F /* TextFieldItem.swift */; };
@@ -46,6 +47,7 @@
 		CC19AB261D7DAB7F00B8B196 /* PickerControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerControl.swift; sourceTree = "<group>"; };
 		CC28B4081D7D060B00B7CA97 /* CustomHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomHeaderFooterView.xib; sourceTree = "<group>"; };
 		CC28B40A1D7D064700B7CA97 /* CustomHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
+		CC2B23AD1D84DF4B0025CDF8 /* ActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBar.swift; sourceTree = "<group>"; };
 		CC5234571D730EF500F312E7 /* SelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
 		CCDDB6951D7DA9CB006C0F9F /* CustomItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomItem.swift; sourceTree = "<group>"; };
 		CCDDB6961D7DA9CB006C0F9F /* TextFieldItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldItem.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				CCDDB6951D7DA9CB006C0F9F /* CustomItem.swift */,
 				CC19AB261D7DAB7F00B8B196 /* PickerControl.swift */,
 				CCDDB6961D7DA9CB006C0F9F /* TextFieldItem.swift */,
+				CC2B23AD1D84DF4B0025CDF8 /* ActionBar.swift */,
 				CC28B40A1D7D064700B7CA97 /* CustomHeader.swift */,
 				CCDDB6991D7DA9DE006C0F9F /* TextFieldCell.xib */,
 				CC28B4081D7D060B00B7CA97 /* CustomHeaderFooterView.xib */,
@@ -248,7 +251,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		6AF3F1B07CA3D96A8145F9B2 /* [CP] Copy Pods Resources */ = {
@@ -293,6 +296,7 @@
 				CC28B40B1D7D064700B7CA97 /* CustomHeader.swift in Sources */,
 				CC5234581D730EF500F312E7 /* SelectionViewController.swift in Sources */,
 				CC19AB271D7DAB7F00B8B196 /* PickerControl.swift in Sources */,
+				CC2B23AE1D84DF4B0025CDF8 /* ActionBar.swift in Sources */,
 				257F72C51D07204A00F7B954 /* AppDelegate.swift in Sources */,
 				CCDDB6971D7DA9CB006C0F9F /* CustomItem.swift in Sources */,
 			);

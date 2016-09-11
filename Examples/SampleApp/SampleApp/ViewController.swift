@@ -38,9 +38,9 @@ class FirstSection: Section {
         let item3 = CustomItem(title: "Testing 2")
         let dateItem = CustomItem(title: "Birthday")
         let selectionItem = CustomItem(title: "Selection")
-        let textFieldItem = TextFieldItem(placeHolder: "Name")
+        let textFieldItem = TextFieldItem(placeHolder: "Name", actionBarDelegate: vc)
         textFieldItem.validation.add(rule: ExistRule())
-        let textFieldItem2 = TextFieldItem(placeHolder: "Surname")
+        let textFieldItem2 = TextFieldItem(placeHolder: "Surname", actionBarDelegate: vc)
         textFieldItem2.validation.add(rule: ExistRule())
         
         item.onSelection = { item in
@@ -83,7 +83,7 @@ class SecondSection: Section {
         let total: [Int] = Array(1...100)
         let items = total.map({ (index) -> Item in
             if (index % 2 == 0) {
-                let item = TextFieldItem(placeHolder: "Textfield \(index)")
+                let item = TextFieldItem(placeHolder: "Textfield \(index)", actionBarDelegate: vc)
                 return item
             } else {
                 let item = CustomItem(title: "Label  \(index)")
@@ -97,7 +97,7 @@ class SecondSection: Section {
     }
 }
 
-class ViewController: UITableViewController {
+class ViewController: UITableViewController, ActionBarDelegate {
     
     var tableViewManager: TableViewManager!
     var pickerControl: PickerControl?
@@ -160,6 +160,55 @@ class ViewController: UITableViewController {
         print(error)
         
     }
+    
+    fileprivate func indexPathForResponder(forDirection direction: Direction) -> IndexPath? {
+        
+        func isFirstResponder(item: Item) -> Bool {
+            if isResponder(item: item),
+                let indexPath = item.indexPath(inManager: tableViewManager),
+                tableViewManager.tableView.cellForRow(at: indexPath)?.isFirstResponder == true {
+                return true
+            }
+            return false
+        }
+        
+        func isResponder(item: Item) -> Bool {
+            if let responder = item as? UIResponder,
+                responder.canBecomeFirstResponder {
+                return true
+            }
+            return false
+        }
+        
+        let array = tableViewManager.sections.flatMap { $0.items }
+        
+        guard let currentItem = array.first(where: isFirstResponder),
+            let index = array.indexOf(currentItem)
+            else { return nil }
+
+        let item: Item?
+        
+        switch direction {
+        case .next:
+            item = array.suffix(from: index).dropFirst().first(where: isResponder)
+        case .previous:
+            item = array.prefix(upTo: index).reversed().first(where: isResponder)
+        }
+        
+        return item?.indexPath(inManager: tableViewManager)
+        
+    }
+    
+    public func actionBar(_ actionBar: ActionBar, direction: Direction) -> IndexPath? {
+        guard let indexPath = indexPathForResponder(forDirection: direction) else { return nil }
+        
+        tableViewManager.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        tableViewManager.tableView.cellForRow(at: indexPath)?.becomeFirstResponder()
+        return indexPath
+    }
+    
+    public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) { }
+
 }
 
 

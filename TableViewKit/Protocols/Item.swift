@@ -56,7 +56,7 @@ extension Item {
     }
 }
 
-extension Collection where Iterator.Element == Item {
+public extension Collection where Iterator.Element == Item {
     func indexOf(_ element: Iterator.Element) -> Index? {
         return index(where: { $0 === element })
     }

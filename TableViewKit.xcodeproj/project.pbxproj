@@ -16,7 +16,6 @@
 		CCBE45601D72F69500414A64 /* TableViewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = CCBE455F1D72F69500414A64 /* TableViewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CCBE45671D72F69500414A64 /* TableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBE455C1D72F69400414A64 /* TableViewKit.framework */; };
 		CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */; };
-		CCBE458F1D72F79C00414A64 /* ActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45771D72F79C00414A64 /* ActionBar.swift */; };
 		CCBE45921D72F79C00414A64 /* NSIndexSet+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE457B1D72F79C00414A64 /* NSIndexSet+Array.swift */; };
 		CCBE45931D72F79C00414A64 /* UITableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */; };
 		CCBE45971D72F79C00414A64 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45831D72F79C00414A64 /* Rules.swift */; };
@@ -35,7 +34,6 @@
 		CCCAC1281D7DA2D00001FC1D /* ImmutableMutableHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */; };
 		CCDB8FAB1D83649B00E44A99 /* ObservableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDB8FAA1D83649B00E44A99 /* ObservableArray.swift */; };
 		CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */; };
-		CCE400FA1D73321600537715 /* ActionBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F91D73321600537715 /* ActionBarTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +62,6 @@
 		CCBE45661D72F69500414A64 /* TableViewKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TableViewKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewKitTests.swift; sourceTree = "<group>"; };
 		CCBE456D1D72F69500414A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CCBE45771D72F79C00414A64 /* ActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBar.swift; sourceTree = "<group>"; };
 		CCBE457B1D72F79C00414A64 /* NSIndexSet+Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSIndexSet+Array.swift"; sourceTree = "<group>"; };
 		CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Register.swift"; sourceTree = "<group>"; };
 		CCBE45831D72F79C00414A64 /* Rules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
@@ -83,7 +80,6 @@
 		CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmutableMutableHeight.swift; sourceTree = "<group>"; };
 		CCDB8FAA1D83649B00E44A99 /* ObservableArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableArray.swift; sourceTree = "<group>"; };
 		CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceTests.swift; sourceTree = "<group>"; };
-		CCE400F91D73321600537715 /* ActionBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBarTests.swift; sourceTree = "<group>"; };
 		D0E1FB244FF2B149DB428D40 /* Pods-TableViewKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKit/Pods-TableViewKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -167,7 +163,6 @@
 				CCCAC12A1D7DA2E90001FC1D /* HeaderFooter */,
 				CCBE45791D72F79C00414A64 /* Extensions */,
 				CCBE45821D72F79C00414A64 /* Validator */,
-				CCBE45761D72F79C00414A64 /* Controls */,
 				CCDB8FAA1D83649B00E44A99 /* ObservableArray.swift */,
 				CCBE45891D72F79C00414A64 /* BaseCell.swift */,
 				CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */,
@@ -182,7 +177,6 @@
 		CCBE456A1D72F69500414A64 /* TableViewKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				CCE400F91D73321600537715 /* ActionBarTests.swift */,
 				CC9D50E01D8496180010FCA3 /* TableViewDelegateTests.swift */,
 				CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */,
 				CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */,
@@ -190,14 +184,6 @@
 				CCBE456D1D72F69500414A64 /* Info.plist */,
 			);
 			path = TableViewKitTests;
-			sourceTree = "<group>";
-		};
-		CCBE45761D72F79C00414A64 /* Controls */ = {
-			isa = PBXGroup;
-			children = (
-				CCBE45771D72F79C00414A64 /* ActionBar.swift */,
-			);
-			path = Controls;
 			sourceTree = "<group>";
 		};
 		CCBE45791D72F79C00414A64 /* Extensions */ = {
@@ -376,7 +362,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		78E805C3C2C195FFA08ABCC3 /* [CP] Check Pods Manifest.lock */ = {
@@ -391,7 +377,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E222C0F57807B3353D60F61A /* [CP] Copy Pods Resources */ = {
@@ -441,7 +427,6 @@
 				CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */,
 				CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */,
 				CCDB8FAB1D83649B00E44A99 /* ObservableArray.swift in Sources */,
-				CCBE458F1D72F79C00414A64 /* ActionBar.swift in Sources */,
 				CCBE459A1D72F79C00414A64 /* Validator.swift in Sources */,
 				CCBE45981D72F79C00414A64 /* Validation.swift in Sources */,
 				CCCAC1261D7D9EE00001FC1D /* HeaderFooter.swift in Sources */,
@@ -460,7 +445,6 @@
 			files = (
 				CC9D50E11D8496180010FCA3 /* TableViewDelegateTests.swift in Sources */,
 				25F08BBD1D7427680033AD0E /* ValidatorTests.swift in Sources */,
-				CCE400FA1D73321600537715 /* ActionBarTests.swift in Sources */,
 				CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */,
 				CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */,
 			);

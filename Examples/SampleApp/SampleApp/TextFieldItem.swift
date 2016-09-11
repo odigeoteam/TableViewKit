@@ -9,7 +9,7 @@
 import Foundation
 import TableViewKit
 
-public class TextFieldCell: BaseCell {
+public class TextFieldCell: BaseCell, ActionBarDelegate {
     
     public var textFieldItem: TextFieldItem {
         get {
@@ -24,14 +24,31 @@ public class TextFieldCell: BaseCell {
         super.awakeFromNib()
         
         selectionStyle = .none
-        responder = textField
         
         textField.addTarget(self, action: #selector(onTextChange), for: .editingChanged)
-        textField.inputAccessoryView = actionBar
+        textField.inputAccessoryView = ActionBar(delegate: self)
+
     }
     
     public func onTextChange(textField: UITextField) {
         textFieldItem.value = textField.text
+    }
+    
+    public func actionBar(_ actionBar: ActionBar, direction: Direction) -> IndexPath? {
+        return textFieldItem.actionBar(actionBar, direction: direction)
+    }
+    public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {
+        textField.resignFirstResponder()
+    }
+    
+    override open var isFirstResponder: Bool {
+        get {
+            return textField.isFirstResponder
+        }
+    }
+    
+    override open func becomeFirstResponder() -> Bool {
+        return textField.becomeFirstResponder()
     }
 
 }
@@ -52,7 +69,7 @@ public class TextFieldDrawer: CellDrawer {
     }
 }
 
-public class TextFieldItem: Item, ContentValidatable, Validationable {
+public class TextFieldItem: UIResponder, Item, ContentValidatable, Validationable {
         
     public var drawer: CellDrawer.Type = TextFieldDrawer.self
     
@@ -63,8 +80,11 @@ public class TextFieldItem: Item, ContentValidatable, Validationable {
     public var placeHolder: String?
     public var value: String?
     
-    public init(placeHolder: String?) {
+    fileprivate let actionBarDelegate: ActionBarDelegate
+    
+    public init(placeHolder: String?, actionBarDelegate: ActionBarDelegate) {
         self.placeHolder = placeHolder
+        self.actionBarDelegate = actionBarDelegate
     }
     
     public var validationContent: String? {
@@ -72,4 +92,20 @@ public class TextFieldItem: Item, ContentValidatable, Validationable {
             return value
         }
     }
+    
+    override open var canBecomeFirstResponder: Bool {
+        get {
+            return true
+        }
+    }
+}
+
+extension TextFieldItem: ActionBarDelegate {
+
+    public func actionBar(_ actionBar: ActionBar, direction: Direction) -> IndexPath? {
+        return actionBarDelegate.actionBar(actionBar, direction: direction)
+    }
+
+    public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) { }
+
 }

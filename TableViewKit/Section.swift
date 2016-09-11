@@ -70,7 +70,7 @@ extension Section {
     }
 }
 
-extension Collection where Iterator.Element == Section {
+public extension Collection where Iterator.Element == Section {
     func indexOf(_ element: Iterator.Element) -> Index? {
         return index(where: { $0 === element })
     }
