@@ -44,6 +44,11 @@ class TableViewKitTests: XCTestCase {
         
         expect(section.items.count).to(equal(1))
         expect(item.section(inManager: tableViewManager)).notTo(beNil())
+        
+        section.items.remove(at: 0)
+        section.items.append(item)
+        
+        section.items.replace(with: [TestItem(), item])
     }
     
     func testConvenienceInit() {
