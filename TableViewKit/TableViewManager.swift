@@ -13,7 +13,7 @@ open class TableViewManager: NSObject {
 
     // MARK: Properties
     open let tableView: UITableView
-    open var sections: ObservableArray<Section> = []
+    open var sections: ObservableArray<Section>
 
     open var validator: ValidatorManager<String?> = ValidatorManager()
     open var errors: [ValidationError] {
@@ -27,36 +27,46 @@ open class TableViewManager: NSObject {
 
     public init(tableView: UITableView) {
         self.tableView = tableView
+        self.sections = []
         super.init()
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.setupSections()
+        
+    }
 
-        sections.callback = { change in
-
+    public init(tableView: UITableView, sections: [Section]) {
+        self.tableView = tableView
+        self.sections = []
+        super.init()
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.setupSections()
+        self.sections.replace(with: sections)
+    }
+    
+    private func setupSections() {
+        sections.callback = { [weak self] change in
+            guard let weakSelf = self else { return }
+            
             switch change {
             case .inserts(let array):
                 array.forEach { index in
-                    self.sections[index].setup(inManager: self)
-                    self.sections[index].register(inManager: self)
+                    weakSelf.sections[index].setup(inManager: weakSelf)
+                    weakSelf.sections[index].register(inManager: weakSelf)
                 }
-                tableView.insertSections(IndexSet(array), with: .automatic)
+                weakSelf.tableView.insertSections(IndexSet(array), with: .automatic)
             case .deletes(let array):
-                tableView.deleteSections(IndexSet(array), with: .automatic)
+                weakSelf.tableView.deleteSections(IndexSet(array), with: .automatic)
             case .updates(let array):
-                tableView.reloadSections(IndexSet(array), with: .automatic)
+                weakSelf.tableView.reloadSections(IndexSet(array), with: .automatic)
             case .moves(_): break
             case .beginUpdates:
-                tableView.beginUpdates()
+                weakSelf.tableView.beginUpdates()
             case .endUpdates:
-                tableView.endUpdates()
+                weakSelf.tableView.endUpdates()
             }
-
         }
-    }
-
-    public convenience init(tableView: UITableView, sections: [Section]) {
-        self.init(tableView: tableView)
-        self.sections.insert(contentsOf: sections, at: 0)
     }
 }
 

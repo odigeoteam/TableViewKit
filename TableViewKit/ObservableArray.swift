@@ -29,34 +29,17 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
         }
         didSet {
             let newArray =   _array as [AnyObject]
-            var oldArray = oldValue as [AnyObject]
-            
-            let moves = newArray.enumerated().flatMap { (toIndex, element) -> (Int, Int)? in
-                guard
-                    let fromIndex = oldArray.index(where: { $0 === element }),
-                    fromIndex != toIndex else { return nil }
-                
-                oldArray.remove(at: fromIndex)
-                if (toIndex >= oldArray.count) {
-                    oldArray.append(element)
-                } else {
-                    oldArray.insert(element, at: toIndex)
-                }
-                return (fromIndex, toIndex)
-            }
-            
-            let equals: Predicate = { lhs, rhs in
+            let oldArray = oldValue as [AnyObject]
+
+            let diff = Array.diff(between: oldArray, and: newArray, where: { lhs, rhs in
                 let lhs = lhs as AnyObject
                 let rhs = rhs as AnyObject
                 return lhs === rhs
-            }
-            let diff = Array.diff(between: oldArray, and: newArray, where: equals)
-            let deletes = diff.deletes
-            let inserts = diff.inserts
+            })
             
-            callback?(.moves(moves))
-            callback?(.deletes(deletes))
-            callback?(.inserts(inserts))
+            callback?(.moves(diff.moves))
+            callback?(.deletes(diff.deletes))
+            callback?(.inserts(diff.inserts))
             callback?(.endUpdates)
         }
     }

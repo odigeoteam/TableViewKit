@@ -11,6 +11,7 @@ import Foundation
 struct Diff {
     public var inserts: [Int]
     public var deletes: [Int]
+    public var moves: [(Int, Int)]
 }
 
 
@@ -67,6 +68,17 @@ class DiffSequence : Sequence {
 extension Array {
     
     static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff {
+        var x = x
+        let moves = y.enumerated().flatMap { (toIndex, element) -> (Int, Int)? in
+            guard let fromIndex = x.index(where: { predicate($0, element) }),
+                fromIndex != toIndex else { return nil }
+            
+            x.remove(at: fromIndex)
+            x.insert(element, at: (toIndex >= x.count) ? x.count : toIndex)
+            
+            return (fromIndex, toIndex)
+        }
+        
         var matrix = [[Int]](repeating: [Int](repeating: 0, count: y.count+1), count: x.count+1)
         for (i, xElem) in x.enumerated() {
             for (j, yElem) in y.enumerated() {
@@ -91,7 +103,7 @@ extension Array {
             }.sorted { $0 < $1 }
 
         
-        return Diff(inserts: inserts, deletes: deletes)
+        return Diff(inserts: inserts, deletes: deletes, moves: moves)
     }
     
 }
