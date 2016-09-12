@@ -94,32 +94,32 @@ class TableViewDataSourceTests: XCTestCase {
     }
     
     func testTitleForHeaderInSection() {
-        let title = self.tableViewManager.tableView(tableView: self.tableViewManager.tableView, titleForHeaderInSection: 0)!
+        let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForHeaderInSection: 0)!
         expect(HeaderFooterView.title(title)).to(equal(section.header))
     }
     
     func testTitleForFooterInSection() {
         var title: String?
         
-        title = self.tableViewManager.tableView(tableView: self.tableViewManager.tableView, titleForFooterInSection: 0)
+        title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)
         expect(HeaderFooterView.title(title!)).to(equal(section.footer))
         
-        title = self.tableViewManager.tableView(tableView: self.tableViewManager.tableView, titleForFooterInSection: 1)
+        title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 1)
         expect(title).to(beNil())
 
     }
     
     func testViewForHeaderInSection() {
-        let view = self.tableViewManager.tableView(tableView: self.tableViewManager.tableView, viewForHeaderInSection: 0)
+        let view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForHeaderInSection: 0)
         expect(view).to(beNil())
     }
     
     func testViewForFooterInSection() {
         var view: UIView?
-        view = self.tableViewManager.tableView(tableView: self.tableViewManager.tableView, viewForFooterInSection: 0)
+        view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 0)
         expect(view).to(beNil())
     
-        view = self.tableViewManager.tableView(tableView: self.tableViewManager.tableView, viewForFooterInSection: 1)
+        view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 1)
         expect(view).notTo(beNil())
     
     }
