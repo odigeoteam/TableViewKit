@@ -44,17 +44,17 @@ class FirstSection: Section {
         textFieldItem2.validation.add(rule: ExistRule())
         
         item.onSelection = { item in
-            item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+            item.deselect(inManager: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
         dateItem.accessoryType = .disclosureIndicator
         dateItem.onSelection = { item in
-            item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+            item.deselect(inManager: self.vc.tableViewManager, animated: true)
             self.vc.showDatePickerControl()
         }
         selectionItem.accessoryType = .disclosureIndicator
         selectionItem.onSelection = { item in
-            item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+            item.deselect(inManager: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
         
@@ -88,7 +88,7 @@ class SecondSection: Section {
             } else {
                 let item = CustomItem(title: "Label  \(index)")
                 item.onSelection = { item in
-                    item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+                    item.deselect(inManager: self.vc.tableViewManager, animated: true)
                 }
                 return item
             }

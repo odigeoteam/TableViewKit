@@ -134,13 +134,13 @@ public class SelectionViewController: UITableViewController {
             if let checkedItem = itemSelected() {
                 checkedItem.selected = false
                 checkedItem.accessoryType = .none
-                checkedItem.reloadRow(inManager: tableViewManager, withAnimation: .fade)
+                checkedItem.reload(inManager: tableViewManager, withAnimation: .fade)
             }
         }
         
         item.selected = !item.selected
         item.accessoryType = item.accessoryType == .checkmark ? .none : .checkmark
-        item.reloadRow(inManager: tableViewManager, withAnimation: .fade)
+        item.reload(inManager: tableViewManager, withAnimation: .fade)
         
         fillSelected()
     }
