@@ -43,6 +43,7 @@ extension Section {
 
     public func setup(inManager manager: TableViewManager) {
         items.callback = { change in
+            
             guard let sectionIndex = manager.sections.indexOf(self) else { return }
             let tableView = manager.tableView
 

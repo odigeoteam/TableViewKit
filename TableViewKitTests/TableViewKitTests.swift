@@ -72,26 +72,23 @@ class TableViewKitTests: XCTestCase {
         expect(tableViewManager.sections.count).to(equal(1))
     }
     
-    func testReloadRow() {
-        let tableViewManager = TableViewManager(tableView: UITableView())
+    func testUpdateRow() {
         
-        let item: Item = TestReloadItem()
-        (item as! TestReloadItem).title = "Before"
+        let item = TestReloadItem()
+        item.title = "Before"
         
-        let section = HeaderFooterTitleSection()
-        section.items.append(item)
+        let section = HeaderFooterTitleSection(items: [item])
+        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [section])
         
-        tableViewManager.sections.append(section)
+        guard let indexPath = item.indexPath(inManager: tableViewManager) else { return }
+        var cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
         
-        let indexPath = IndexPath(row: 0, section: 0)
-        let cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
+        expect(cell.textLabel?.text).to(equal(item.title))
         
-        expect(cell.textLabel?.text).to(equal("Before"))
+        item.title = "After"
+        cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
         
-        (item as! TestReloadItem).title = "After"
-        item.reload(inManager: tableViewManager, withAnimation: .automatic)
-        
-        expect(cell.textLabel?.text).to(equal("After"))
+        expect(cell.textLabel?.text).to(equal(item.title))
     }
 
     func testNoCrashOnNonAddedItem() {
