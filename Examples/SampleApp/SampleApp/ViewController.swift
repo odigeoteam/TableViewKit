@@ -38,9 +38,9 @@ class FirstSection: Section {
         let item3 = CustomItem(title: "Testing 2")
         let dateItem = CustomItem(title: "Birthday")
         let selectionItem = CustomItem(title: "Selection")
-        let textFieldItem = TextFieldItem(placeHolder: "Name", actionBarDelegate: vc)
+        let textFieldItem = TextFieldItem(placeHolder: "Name", actionBarDelegate: vc.actionBarManager)
         textFieldItem.validation.add(rule: ExistRule())
-        let textFieldItem2 = TextFieldItem(placeHolder: "Surname", actionBarDelegate: vc)
+        let textFieldItem2 = TextFieldItem(placeHolder: "Surname", actionBarDelegate: vc.actionBarManager)
         textFieldItem2.validation.add(rule: ExistRule())
         
         item.onSelection = { item in
@@ -83,7 +83,7 @@ class SecondSection: Section {
         let total: [Int] = Array(1...100)
         let items = total.map({ (index) -> Item in
             if (index % 2 == 0) {
-                let item = TextFieldItem(placeHolder: "Textfield \(index)", actionBarDelegate: vc)
+                let item = TextFieldItem(placeHolder: "Textfield \(index)", actionBarDelegate: vc.actionBarManager)
                 return item
             } else {
                 let item = CustomItem(title: "Label  \(index)")
@@ -97,11 +97,28 @@ class SecondSection: Section {
     }
 }
 
-class ViewController: UITableViewController, ActionBarDelegate {
+protocol TableViewManagerCompatible {
+    var tableViewManager: TableViewManager! { get }
+}
+
+class ViewController: UIViewController, TableViewManagerCompatible {
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableViewManager = TableViewManager(tableView: tableView)
+        }
+    }
     
-    var tableViewManager: TableViewManager!
+    var tableViewManager: TableViewManager! {
+        didSet {
+            actionBarManager = ActionBarManager(manager: tableViewManager)
+        }
+    }
+    var actionBarManager: ActionBarManager!
+    var validator: ValidatorManager<String?> = ValidatorManager()
+
+    
     var pickerControl: PickerControl?
-    
+
     var firstSection: FirstSection!
     
     override func viewDidLoad() {
@@ -115,8 +132,16 @@ class ViewController: UITableViewController, ActionBarDelegate {
         
         
         firstSection = FirstSection(vc: self)
-        tableViewManager = TableViewManager(tableView: self.tableView, with: [firstSection, SecondSection(vc: self)])
+        tableViewManager.sections.append(firstSection)
+        tableViewManager.sections.append(SecondSection(vc: self))
         
+        // TODO think about a better way to handle self registration
+        // In this way we do not take in consideration when the items changes
+        tableViewManager.sections
+            .flatMap { $0.items }
+            .flatMap { $0 as? Validationable }
+            .forEach { validator.add(validation: $0.validation) }
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .plain, target: self, action: #selector(validationAction))
     }
     
@@ -156,58 +181,12 @@ class ViewController: UITableViewController, ActionBarDelegate {
     
     @objc fileprivate func validationAction() {
         firstSection.swap(to: firstSection.currentState == .preParty ? .onParty : .afterParty)
-        guard let error = tableViewManager.errors.first else { return }
+        guard let error = validator.errors.first else {
+            print("No errors")
+            return
+        }
         print(error)
-        
     }
-    
-    fileprivate func indexPathForResponder(forDirection direction: Direction) -> IndexPath? {
-        
-        func isFirstResponder(item: Item) -> Bool {
-            if isResponder(item: item),
-                let indexPath = item.indexPath(in: tableViewManager),
-                tableViewManager.tableView.cellForRow(at: indexPath)?.isFirstResponder == true {
-                return true
-            }
-            return false
-        }
-        
-        func isResponder(item: Item) -> Bool {
-            if let responder = item as? UIResponder,
-                responder.canBecomeFirstResponder {
-                return true
-            }
-            return false
-        }
-        
-        let array = tableViewManager.sections.flatMap { $0.items }
-        
-        guard let currentItem = array.first(where: isFirstResponder),
-            let index = array.index(of: currentItem)
-            else { return nil }
-
-        let item: Item?
-        
-        switch direction {
-        case .next:
-            item = array.suffix(from: index).dropFirst().first(where: isResponder)
-        case .previous:
-            item = array.prefix(upTo: index).reversed().first(where: isResponder)
-        }
-        
-        return item?.indexPath(in: tableViewManager)
-        
-    }
-    
-    public func actionBar(_ actionBar: ActionBar, direction: Direction) -> IndexPath? {
-        guard let indexPath = indexPathForResponder(forDirection: direction) else { return nil }
-        
-        tableViewManager.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-        tableViewManager.tableView.cellForRow(at: indexPath)?.becomeFirstResponder()
-        return indexPath
-    }
-    
-    public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) { }
 
 }
 

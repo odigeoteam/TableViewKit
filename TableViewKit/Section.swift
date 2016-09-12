@@ -36,10 +36,6 @@ extension Section {
             manager.tableView.register(footer.drawer.type)
         }
         items.forEach {
-            if let item = $0 as? Validationable {
-                manager.validator.add(validation: item.validation)
-            }
-
             manager.tableView.register($0.drawer.type)
         }
     }

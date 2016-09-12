@@ -35,7 +35,7 @@ public class TextFieldCell: BaseCell, ActionBarDelegate {
     }
     
     public func actionBar(_ actionBar: ActionBar, direction: Direction) -> IndexPath? {
-        return textFieldItem.actionBar(actionBar, direction: direction)
+        return textFieldItem.actionBarDelegate.actionBar(actionBar, direction: direction)
     }
     public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {
         textField.resignFirstResponder()
@@ -98,14 +98,4 @@ public class TextFieldItem: UIResponder, Item, ContentValidatable, Validationabl
             return true
         }
     }
-}
-
-extension TextFieldItem: ActionBarDelegate {
-
-    public func actionBar(_ actionBar: ActionBar, direction: Direction) -> IndexPath? {
-        return actionBarDelegate.actionBar(actionBar, direction: direction)
-    }
-
-    public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) { }
-
 }

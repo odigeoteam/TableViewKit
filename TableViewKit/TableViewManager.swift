@@ -15,14 +15,6 @@ open class TableViewManager: NSObject {
     open let tableView: UITableView
     open var sections: ObservableArray<Section>
     
-    open var validator: ValidatorManager<String?> = ValidatorManager()
-    open var errors: [ValidationError] {
-        get {
-            return validator.errors
-        }
-    }
-    
-    
     // MARK: Inits
     
     public init(tableView: UITableView) {
