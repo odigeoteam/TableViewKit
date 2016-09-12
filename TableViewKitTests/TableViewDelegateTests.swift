@@ -164,46 +164,40 @@ class TableViewDelegateTests: XCTestCase {
     
     
     func testEstimatedHeightForRowAtIndexPath() {
-//        FIX THIS
+        var height: CGFloat
+        var indexPath: IndexPath
+        
+        indexPath = IndexPath(row: 0, section: 0)
+        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
+        expect(height).to(equal(44.0))
 
-//        var height: CGFloat
-//        var indexPath: IndexPath
-//        
-//        indexPath = IndexPath(row: 0, section: 0)
-//        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
-//        expect(height).to(equal(44.0))
-//
-//        indexPath = IndexPath(row: 0, section: 1)
-//        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
-//        expect(height).to(equal(tableViewManager.tableView.estimatedRowHeight))
-//
-//        indexPath = IndexPath(row: 1, section: 1)
-//        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
-//        expect(height).to(equal(0.0))
+        indexPath = IndexPath(row: 0, section: 1)
+        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
+        expect(height).to(equal(tableViewManager.tableView.estimatedRowHeight))
+
+        indexPath = IndexPath(row: 1, section: 1)
+        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
+        expect(height).to(equal(0.0))
 
 
     }
     
     
     func testHeightForRowAtIndexPath() {
-//        FIX THIS
-
-//        var height: CGFloat
-//        var indexPath: IndexPath
-//        
-//        indexPath = IndexPath(row: 0, section: 0)
-//        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAtIndexPath: indexPath)
-//        expect(height).to(equal(UITableViewAutomaticDimension))
-//        
-//        indexPath = IndexPath(row: 0, section: 1)
-//        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAtIndexPath: indexPath)
-//        expect(height).to(equal(tableViewManager.tableView.rowHeight))
-//        
-//        indexPath = IndexPath(row: 1, section: 1)
-//        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAtIndexPath: indexPath)
-//        expect(height).to(equal(StaticHeigthItem.testStaticHeightValue))
-
-
+        var height: CGFloat
+        var indexPath: IndexPath
+        
+        indexPath = IndexPath(row: 0, section: 0)
+        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
+        expect(height).to(equal(UITableViewAutomaticDimension))
+        
+        indexPath = IndexPath(row: 0, section: 1)
+        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
+        expect(height).to(equal(tableViewManager.tableView.rowHeight))
+        
+        indexPath = IndexPath(row: 1, section: 1)
+        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
+        expect(height).to(equal(StaticHeigthItem.testStaticHeightValue))
     }
     
     func testSelectRow() {
