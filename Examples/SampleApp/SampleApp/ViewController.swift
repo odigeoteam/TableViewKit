@@ -44,17 +44,17 @@ class FirstSection: Section {
         textFieldItem2.validation.add(rule: ExistRule())
         
         item.onSelection = { item in
-            item.deselect(inManager: self.vc.tableViewManager, animated: true)
+            item.deselect(in: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
         dateItem.accessoryType = .disclosureIndicator
         dateItem.onSelection = { item in
-            item.deselect(inManager: self.vc.tableViewManager, animated: true)
+            item.deselect(in: self.vc.tableViewManager, animated: true)
             self.vc.showDatePickerControl()
         }
         selectionItem.accessoryType = .disclosureIndicator
         selectionItem.onSelection = { item in
-            item.deselect(inManager: self.vc.tableViewManager, animated: true)
+            item.deselect(in: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
         
@@ -88,7 +88,7 @@ class SecondSection: Section {
             } else {
                 let item = CustomItem(title: "Label  \(index)")
                 item.onSelection = { item in
-                    item.deselect(inManager: self.vc.tableViewManager, animated: true)
+                    item.deselect(in: self.vc.tableViewManager, animated: true)
                 }
                 return item
             }
@@ -115,7 +115,7 @@ class ViewController: UITableViewController, ActionBarDelegate {
         
         
         firstSection = FirstSection(vc: self)
-        tableViewManager = TableViewManager(tableView: self.tableView, sections: [firstSection, SecondSection(vc: self)])
+        tableViewManager = TableViewManager(tableView: self.tableView, with: [firstSection, SecondSection(vc: self)])
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .plain, target: self, action: #selector(validationAction))
     }
@@ -165,7 +165,7 @@ class ViewController: UITableViewController, ActionBarDelegate {
         
         func isFirstResponder(item: Item) -> Bool {
             if isResponder(item: item),
-                let indexPath = item.indexPath(inManager: tableViewManager),
+                let indexPath = item.indexPath(in: tableViewManager),
                 tableViewManager.tableView.cellForRow(at: indexPath)?.isFirstResponder == true {
                 return true
             }
@@ -183,7 +183,7 @@ class ViewController: UITableViewController, ActionBarDelegate {
         let array = tableViewManager.sections.flatMap { $0.items }
         
         guard let currentItem = array.first(where: isFirstResponder),
-            let index = array.indexOf(currentItem)
+            let index = array.index(of: currentItem)
             else { return nil }
 
         let item: Item?
@@ -195,7 +195,7 @@ class ViewController: UITableViewController, ActionBarDelegate {
             item = array.prefix(upTo: index).reversed().first(where: isResponder)
         }
         
-        return item?.indexPath(inManager: tableViewManager)
+        return item?.indexPath(in: tableViewManager)
         
     }
     

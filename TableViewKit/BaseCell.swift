@@ -10,6 +10,6 @@ import Foundation
 import UIKit
 
 open class BaseCell: UITableViewCell {
-    weak open var tableViewManager: TableViewManager!
+    weak open var manager: TableViewManager!
     open var item: Item?
 }

@@ -15,36 +15,39 @@ public protocol Section: class {
     var header: HeaderFooterView { get }
     var footer: HeaderFooterView { get }
 
-    func index(inManager manager: TableViewManager) -> Int?
-    func setup(inManager manager: TableViewManager)
-    func register(inManager manager: TableViewManager)
+    func index(in manager: TableViewManager) -> Int?
+    func setup(in manager: TableViewManager)
+    func register(in manager: TableViewManager)
 }
 
 extension Section {
     public var header: HeaderFooterView { return nil }
     public var footer: HeaderFooterView { return nil }
 
-    public func index(inManager manager: TableViewManager) -> Int? { return manager.sections.indexOf(self) }
-    public func register(inManager manager: TableViewManager) {
+    public func index(in manager: TableViewManager) -> Int? {
+        return manager.sections.index(of: self)
+    }
+
+    public func register(in manager: TableViewManager) {
         if case .view(let header) = header {
-            manager.tableView.register(type: header.drawer.headerFooterType)
+            manager.tableView.register(header.drawer.type)
         }
         if case .view(let footer) = footer {
-            manager.tableView.register(type: footer.drawer.headerFooterType)
+            manager.tableView.register(footer.drawer.type)
         }
         items.forEach {
             if let item = $0 as? Validationable {
                 manager.validator.add(validation: item.validation)
             }
 
-            manager.tableView.register(type: $0.drawer.cellType)
+            manager.tableView.register($0.drawer.type)
         }
     }
 
-    public func setup(inManager manager: TableViewManager) {
+    public func setup(in manager: TableViewManager) {
         items.callback = { change in
             
-            guard let sectionIndex = manager.sections.indexOf(self) else { return }
+            guard let sectionIndex = manager.sections.index(of: self) else { return }
             let tableView = manager.tableView
 
             switch change {
@@ -72,7 +75,7 @@ extension Section {
 }
 
 public extension Collection where Iterator.Element == Section {
-    func indexOf(_ element: Iterator.Element) -> Index? {
+    func index(of element: Iterator.Element) -> Index? {
         return index(where: { $0 === element })
     }
 }

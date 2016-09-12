@@ -9,7 +9,7 @@
 import UIKit
 
 public extension UITableView {
-    public func register(type: CellType, bundle: Bundle? = nil) {
+    public func register(_ type: CellType) {
         switch type {
         case .class(let cellClass):
             self.register(cellClass, forCellReuseIdentifier: type.reusableIdentifier)
@@ -18,7 +18,7 @@ public extension UITableView {
         }
     }
 
-    public func register(type: HeaderFooterType, bundle: Bundle? = nil) {
+    public func register(_ type: HeaderFooterType) {
         switch type {
         case .class(let cellClass):
             self.register(cellClass, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)

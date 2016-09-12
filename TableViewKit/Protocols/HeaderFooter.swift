@@ -20,5 +20,5 @@ public enum HeaderFooterView: ExpressibleByNilLiteral {
 
 public protocol HeaderFooter: class {
     var drawer: HeaderFooterDrawer.Type { get }
-    var height: ImmutableMutableHeight? { get }
+    var height: Height? { get }
 }

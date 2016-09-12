@@ -34,9 +34,9 @@ public class CustomHeaderFooterView: UITableViewHeaderFooterView {
 
 public class CustomHeaderDrawer: HeaderFooterDrawer {
     
-    static public var headerFooterType = HeaderFooterType.class(CustomHeaderFooterView.self)
+    static public var type = HeaderFooterType.class(CustomHeaderFooterView.self)
     
-    static public func draw(_ view: UITableViewHeaderFooterView, withItem item: Any) {
+    static public func draw(_ view: UITableViewHeaderFooterView, with item: Any) {
         let item = item as! ViewHeaderFooter
         let view = view as! CustomHeaderFooterView
         view.label.text = item.title
@@ -47,7 +47,7 @@ public class CustomHeaderDrawer: HeaderFooterDrawer {
 public class ViewHeaderFooter: HeaderFooter {
     
     public var title: String?
-    public var height: ImmutableMutableHeight? = ImmutableMutableHeight.mutable(44.0)
+    public var height: Height? = .dynamic(44.0)
     public var drawer: HeaderFooterDrawer.Type = CustomHeaderDrawer.self
     
     public init() { }
@@ -73,7 +73,7 @@ class ViewHeaderFooterSection: Section {
 class NoHeigthItem: Item {
     internal var drawer: CellDrawer.Type = TestDrawer.self
     
-    internal var height: ImmutableMutableHeight? = nil
+    internal var height: Height? = nil
 }
 
 class StaticHeigthItem: Item {
@@ -81,7 +81,7 @@ class StaticHeigthItem: Item {
     
     internal var drawer: CellDrawer.Type = TestDrawer.self
     
-    internal var height: ImmutableMutableHeight? = .immutable(20.0)
+    internal var height: Height? = .static(20.0)
 }
 
 class SelectableItem: Selectable, Item {
@@ -218,10 +218,10 @@ class TableViewDelegateTests: XCTestCase {
         tableViewManager.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
         expect(check).to(equal(1))
 
-        item.select(inManager: tableViewManager, animated: true)
+        item.select(in: tableViewManager, animated: true)
         expect(check).to(equal(2))
         
-        item.deselect(inManager: tableViewManager, animated: true)
+        item.deselect(in: tableViewManager, animated: true)
         expect(check).to(equal(2))
     }
     

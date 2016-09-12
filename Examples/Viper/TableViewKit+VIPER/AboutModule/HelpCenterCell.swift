@@ -11,9 +11,9 @@ import TableViewKit
 
 class HelpCenterDrawer: CellDrawer {
     
-    static var cellType: CellType = CellType.nib(UINib(nibName: String(describing: HelpCenterCell.self), bundle: Bundle.main), HelpCenterCell.self)
+    static var type: CellType = CellType.nib(UINib(nibName: String(describing: HelpCenterCell.self), bundle: Bundle.main), HelpCenterCell.self)
     
-    static func draw(_ cell: BaseCell, withItem item: Any) {
+    static func draw(_ cell: BaseCell, with item: Any) {
         
         guard let helpCenterCell = cell as? HelpCenterCell else { return }
         guard let helpCenterItem = item as? HelpCenterItem else { return }

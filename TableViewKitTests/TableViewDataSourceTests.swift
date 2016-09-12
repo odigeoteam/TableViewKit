@@ -40,9 +40,9 @@ class HeaderFooterTitleSection: Section {
 
 class TestDrawer: CellDrawer {
     
-    static internal var cellType = CellType.class(BaseCell.self)
+    static internal var type = CellType.class(BaseCell.self)
     
-    static internal func draw(_ cell: BaseCell, withItem item: Any) {    }
+    static internal func draw(_ cell: BaseCell, with item: Any) {    }
 }
 
 class TestItem: Item {

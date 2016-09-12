@@ -56,10 +56,10 @@ public class TextFieldCell: BaseCell, ActionBarDelegate {
 public class TextFieldDrawer: CellDrawer {
     
     public static let nib = UINib(nibName: String(describing: TextFieldCell.self), bundle: nil)
-    public static let cellType = CellType.nib(TextFieldDrawer.nib, TextFieldCell.self)
+    public static let type = CellType.nib(TextFieldDrawer.nib, TextFieldCell.self)
     
     public static func
-        draw(_ cell: BaseCell, withItem item: Any) {
+        draw(_ cell: BaseCell, with item: Any) {
         
         let textCell = cell as! TextFieldCell
         let textItem = item as! TextFieldItem

@@ -33,9 +33,9 @@ enum MoreAboutItemType {
 
 class MoreAboutDrawer: CellDrawer {
     
-    static open var cellType = CellType.class(BaseCell.self)
+    static open var type = CellType.class(BaseCell.self)
     
-    static open func draw(_ cell: BaseCell, withItem item: Any) {
+    static open func draw(_ cell: BaseCell, with item: Any) {
         let item = item as! MoreAboutItem
         cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = item.title

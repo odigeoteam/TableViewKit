@@ -14,9 +14,9 @@ import Nimble
 
 class TestReloadDrawer: CellDrawer {
     
-    static internal var cellType = CellType.class(BaseCell.self)
+    static internal var type = CellType.class(BaseCell.self)
     
-    static internal func draw(_ cell: BaseCell, withItem item: Any) {
+    static internal func draw(_ cell: BaseCell, with item: Any) {
         cell.textLabel?.text = (item as! TestReloadItem).title
     }
 }
@@ -58,7 +58,7 @@ class TableViewKitTests: XCTestCase {
         tableViewManager.sections.insert(section, at: 0)
         
         expect(section.items.count).to(equal(1))
-        expect(item.section(inManager: tableViewManager)).notTo(beNil())
+        expect(item.section(in: tableViewManager)).notTo(beNil())
         
         section.items.remove(at: 0)
         section.items.append(item)
@@ -67,7 +67,7 @@ class TableViewKitTests: XCTestCase {
     }
     
     func testConvenienceInit() {
-        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
+        let tableViewManager = TableViewManager(tableView: UITableView(), with: [HeaderFooterTitleSection()])
         
         expect(tableViewManager.sections.count).to(equal(1))
     }
@@ -78,9 +78,9 @@ class TableViewKitTests: XCTestCase {
         item.title = "Before"
         
         let section = HeaderFooterTitleSection(items: [item])
-        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [section])
+        let tableViewManager = TableViewManager(tableView: UITableView(), with: [section])
         
-        guard let indexPath = item.indexPath(inManager: tableViewManager) else { return }
+        guard let indexPath = item.indexPath(in: tableViewManager) else { return }
         var cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
         
         expect(cell.textLabel?.text).to(equal(item.title))
@@ -92,12 +92,12 @@ class TableViewKitTests: XCTestCase {
     }
 
     func testNoCrashOnNonAddedItem() {
-        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
+        let tableViewManager = TableViewManager(tableView: UITableView(), with: [HeaderFooterTitleSection()])
 
         let item: Item = TestReloadItem()
-        item.reload(inManager: tableViewManager, withAnimation: .automatic)
+        item.reload(in: tableViewManager, with: .automatic)
         
-        let section = item.section(inManager: tableViewManager)
+        let section = item.section(in: tableViewManager)
         expect(section).to(beNil())
     }
 }

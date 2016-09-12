@@ -42,7 +42,7 @@ class MoreAboutSection: Section {
                 }
                 
                 guard let manager = self.manager else { return }
-                item.deselect(inManager: manager, animated: true)
+                item.deselect(in: manager, animated: true)
             }
             items.append(moreAboutItem)
         }

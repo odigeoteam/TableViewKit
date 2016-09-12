@@ -12,7 +12,7 @@ import TableViewKit
 class HelpCenterItem: Item {
     
     var drawer: CellDrawer.Type = HelpCenterDrawer.self
-    var height: ImmutableMutableHeight? = .mutable(44.0)
+    var height: Height? = .dynamic(44.0)
     
     var title: String?
     var subtitles: [String]?

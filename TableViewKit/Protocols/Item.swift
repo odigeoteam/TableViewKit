@@ -11,37 +11,37 @@ import Foundation
 public protocol Item: class {
     var drawer: CellDrawer.Type { get }
 
-    var height: ImmutableMutableHeight? { get }
+    var height: Height? { get }
 
-    func indexPath(inManager manager: TableViewManager) -> IndexPath?
-    func section(inManager manager: TableViewManager) -> Section?
+    func indexPath(in manager: TableViewManager) -> IndexPath?
+    func section(in manager: TableViewManager) -> Section?
 
-    func reload(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
+    func reload(in manager: TableViewManager, with animation: UITableViewRowAnimation)
 }
 
 extension Item {
 
-    public var height: ImmutableMutableHeight? {
-        return .mutable(44.0)
+    public var height: Height? {
+        return .dynamic(44.0)
     }
 
-    public func section(inManager manager: TableViewManager) -> Section? {
-        guard let indexPath = self.indexPath(inManager: manager) else { return nil }
+    public func section(in manager: TableViewManager) -> Section? {
+        guard let indexPath = self.indexPath(in: manager) else { return nil }
         return manager.sections[indexPath.section]
     }
 
-    public func indexPath(inManager manager: TableViewManager) -> IndexPath? {
+    public func indexPath(in manager: TableViewManager) -> IndexPath? {
         for section in manager.sections {
             guard
-                let sectionIndex = section.index(inManager: manager),
-                let rowIndex = section.items.indexOf(self) else { continue }
+                let sectionIndex = section.index(in: manager),
+                let rowIndex = section.items.index(of: self) else { continue }
             return IndexPath(row: rowIndex, section: sectionIndex)
         }
         return nil
     }
 
-    public func reload(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation) {
-        guard let indexPath = self.indexPath(inManager: manager) else { return }
+    public func reload(in manager: TableViewManager, with animation: UITableViewRowAnimation = .automatic) {
+        guard let indexPath = self.indexPath(in: manager) else { return }
         let section = manager.sections[indexPath.section]
         section.items.callback?(.updates([indexPath.row]))
     }
@@ -49,7 +49,7 @@ extension Item {
 }
 
 public extension Collection where Iterator.Element == Item {
-    func indexOf(_ element: Iterator.Element) -> Index? {
+    func index(of element: Iterator.Element) -> Index? {
         return index(where: { $0 === element })
     }
 }
