@@ -9,26 +9,40 @@
 import Foundation
 import UIKit
 
+/// A type that represent a section to be displayed
+/// containing `items`, a `header` and a `footer`
 public protocol Section: class {
+    
+    /// A array containing the `items` of the section
     var items: ObservableArray<Item> { get set }
 
+    /// The `header` of the section, none if not defined
+    /// - Default: none
     var header: HeaderFooterView { get }
+    /// The `footer` of the section, none if not defined
     var footer: HeaderFooterView { get }
-
-    func index(in manager: TableViewManager) -> Int?
-    func setup(in manager: TableViewManager)
-    func register(in manager: TableViewManager)
 }
 
 extension Section {
     public var header: HeaderFooterView { return nil }
     public var footer: HeaderFooterView { return nil }
+}
 
+extension Section {
+    
+    /// Returns the `index` of the `section` in the specified `manager`
+    ///
+    /// - parameter manager: A `manager` where the `section` may have been added
+    ///
+    /// - returns: The `index` of the `section` or `nil` if not present
     public func index(in manager: TableViewManager) -> Int? {
         return manager.sections.index(of: self)
     }
-
-    public func register(in manager: TableViewManager) {
+    
+    /// Register the section in the specified manager
+    ///
+    /// - parameter manager: A manager where the section may have been added
+    internal func register(in manager: TableViewManager) {
         if case .view(let header) = header {
             manager.tableView.register(header.drawer.type)
         }
@@ -40,7 +54,10 @@ extension Section {
         }
     }
 
-    public func setup(in manager: TableViewManager) {
+    /// Setup the section internals
+    ///
+    /// - parameter manager: A manager where the section may have been added
+    internal func setup(in manager: TableViewManager) {
         items.callback = { change in
             
             guard let sectionIndex = manager.sections.index(of: self) else { return }
