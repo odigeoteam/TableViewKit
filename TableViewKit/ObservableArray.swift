@@ -23,12 +23,12 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
     
     public typealias Element = T
     
-    private var _array: [T] {
+    private var array: [T] {
         willSet {
             callback?(.beginUpdates)
         }
         didSet {
-            let newArray =   _array as [AnyObject]
+            let newArray =   array as [AnyObject]
             let oldArray = oldValue as [AnyObject]
 
             let diff = Array.diff(between: oldArray, and: newArray, where: { lhs, rhs in
@@ -47,55 +47,55 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
     var callback: ((ArrayChanges) -> ())?
     
     public init() {
-        self._array = []
+        self.array = []
     }
     
     public init(array: [T]) {
-        self._array = array
+        self.array = array
     }
     
     public init(arrayLiteral elements: Element...) {
-        self._array = elements
+        self.array = elements
     }
     
     public func makeIterator() -> Array<T>.Iterator {
-        return _array.makeIterator()
+        return array.makeIterator()
     }
     
     public var startIndex: Int {
-        return _array.startIndex
+        return array.startIndex
     }
     
     public var endIndex: Int {
-        return _array.endIndex
+        return array.endIndex
     }
     
     public func index(after i: Int) -> Int {
-        return _array.index(after: i)
+        return array.index(after: i)
     }
     
     public var isEmpty: Bool {
-        return _array.isEmpty
+        return array.isEmpty
     }
     
     public var count: Int {
-        return _array.count
+        return array.count
     }
     
     public subscript(index: Int) -> T {
         get {
-            return _array[index]
+            return array[index]
         }
         set {
-            _array[index] = newValue
+            array[index] = newValue
         }
     }
     
     public mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, C.Iterator.Element == T {
-        _array.replaceSubrange(subrange, with: newElements)
+        array.replaceSubrange(subrange, with: newElements)
     }
     
     public mutating func replace(with array: [T]) {
-        _array = array
+        self.array = array
     }
 }

@@ -10,7 +10,7 @@
 		25F08BBD1D7427680033AD0E /* ValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F08BBC1D7427680033AD0E /* ValidatorTests.swift */; };
 		7892A1603117CFA582BFCAC3 /* Pods_TableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */; };
 		AD0E465917E1381DFF2E904B /* Pods_TableViewKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */; };
-		CC5CF11C1D839E71004DECB3 /* Diff.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5CF11B1D839E71004DECB3 /* Diff.swift */; };
+		CC5CF11C1D839E71004DECB3 /* ArrayDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */; };
 		CC97D76D1D741DC4009CDF9D /* Selectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC97D76C1D741DC4009CDF9D /* Selectable.swift */; };
 		CC9D50E11D8496180010FCA3 /* TableViewDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9D50E01D8496180010FCA3 /* TableViewDelegateTests.swift */; };
 		CCBE45601D72F69500414A64 /* TableViewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = CCBE455F1D72F69500414A64 /* TableViewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -53,7 +53,7 @@
 		5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C8E0D2A241295B7A143FE9 /* Pods-TableViewKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKitTests/Pods-TableViewKitTests.release.xcconfig"; sourceTree = "<group>"; };
-		CC5CF11B1D839E71004DECB3 /* Diff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diff.swift; sourceTree = "<group>"; };
+		CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDiff.swift; sourceTree = "<group>"; };
 		CC97D76C1D741DC4009CDF9D /* Selectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Selectable.swift; path = Protocols/Selectable.swift; sourceTree = "<group>"; };
 		CC9D50E01D8496180010FCA3 /* TableViewDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDelegateTests.swift; sourceTree = "<group>"; };
 		CCBE455C1D72F69400414A64 /* TableViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,7 +169,7 @@
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
 				CCBE45611D72F69500414A64 /* Info.plist */,
-				CC5CF11B1D839E71004DECB3 /* Diff.swift */,
+				CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */,
 			);
 			path = TableViewKit;
 			sourceTree = "<group>";
@@ -423,7 +423,7 @@
 				CCBE45971D72F79C00414A64 /* Rules.swift in Sources */,
 				CC97D76D1D741DC4009CDF9D /* Selectable.swift in Sources */,
 				CCCAC1281D7DA2D00001FC1D /* ImmutableMutableHeight.swift in Sources */,
-				CC5CF11C1D839E71004DECB3 /* Diff.swift in Sources */,
+				CC5CF11C1D839E71004DECB3 /* ArrayDiff.swift in Sources */,
 				CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */,
 				CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */,
 				CCDB8FAB1D83649B00E44A99 /* ObservableArray.swift in Sources */,

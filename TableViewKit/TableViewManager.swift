@@ -34,14 +34,9 @@ open class TableViewManager: NSObject {
         self.setupSections()
         
     }
-    
-    public init(tableView: UITableView, sections: [Section]) {
-        self.tableView = tableView
-        self.sections = []
-        super.init()
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.setupSections()
+
+    public convenience init(tableView: UITableView, sections: [Section]) {
+        self.init(tableView: tableView)
         self.sections.replace(with: sections)
     }
     
@@ -155,6 +150,10 @@ extension TableViewManager: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+<<<<<<< HEAD
+=======
+        
+>>>>>>> origin/swift3
         let currentItem = item(forIndexPath: indexPath)
         let drawer = currentItem.drawer
         
@@ -165,12 +164,20 @@ extension TableViewManager: UITableViewDataSource {
     }
     
     
+<<<<<<< HEAD
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+=======
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+>>>>>>> origin/swift3
         return title(forKey: {$0.header}, inSection: section)
     }
     
     
+<<<<<<< HEAD
     public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+=======
+    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+>>>>>>> origin/swift3
         return title(forKey: {$0.footer}, inSection: section)
     }
     
@@ -184,6 +191,7 @@ extension TableViewManager: UITableViewDelegate {
         currentItem.onSelection(currentItem)
     }
     
+<<<<<<< HEAD
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return height(atIndexPath: indexPath) ?? tableView.rowHeight
     }
@@ -213,6 +221,37 @@ extension TableViewManager: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+=======
+    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return height(atIndexPath: indexPath) ?? tableView.rowHeight
+    }
+    
+    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return height(forKey: {$0.header}, inSection: section) ?? tableView.sectionHeaderHeight
+    }
+    
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return height(forKey: {$0.footer}, inSection: section) ?? tableView.sectionFooterHeight
+    }
+    
+    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return estimatedHeight(atIndexPath: indexPath) ?? tableView.estimatedRowHeight
+    }
+    
+    public func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return estimatedHeight(forKey: {$0.header}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
+    }
+    
+    public func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+        return estimatedHeight(forKey: {$0.footer}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
+    }
+    
+    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return view(forKey: {$0.header}, inSection: section)
+    }
+    
+    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+>>>>>>> origin/swift3
         return view(forKey: {$0.footer}, inSection: section)
     }
     

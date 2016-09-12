@@ -14,7 +14,6 @@ struct Diff {
     public var moves: [(Int, Int)]
 }
 
-
 class DiffIterator : IteratorProtocol {
     struct Coordinates {
         var x: Int
@@ -63,8 +62,6 @@ class DiffSequence : Sequence {
     }
 }
 
-
-
 extension Array {
     
     static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff {
@@ -105,5 +102,4 @@ extension Array {
         
         return Diff(inserts: inserts, deletes: deletes, moves: moves)
     }
-    
 }
