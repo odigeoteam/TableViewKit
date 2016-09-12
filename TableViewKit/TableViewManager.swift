@@ -10,21 +10,21 @@ import Foundation
 import UIKit
 
 open class TableViewManager: NSObject {
-
+    
     // MARK: Properties
     open let tableView: UITableView
     open var sections: ObservableArray<Section>
-
+    
     open var validator: ValidatorManager<String?> = ValidatorManager()
     open var errors: [ValidationError] {
         get {
             return validator.errors
         }
     }
-
-
+    
+    
     // MARK: Inits
-
+    
     public init(tableView: UITableView) {
         self.tableView = tableView
         self.sections = []
@@ -34,14 +34,9 @@ open class TableViewManager: NSObject {
         self.setupSections()
         
     }
-
-    public init(tableView: UITableView, sections: [Section]) {
-        self.tableView = tableView
-        self.sections = []
-        super.init()
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.setupSections()
+    
+    public convenience init(tableView: UITableView, sections: [Section]) {
+        self.init(tableView: tableView)
         self.sections.replace(with: sections)
     }
     
@@ -71,7 +66,7 @@ open class TableViewManager: NSObject {
 }
 
 extension TableViewManager {
-
+    
     fileprivate func item(forIndexPath indexPath: IndexPath) -> Item {
         return sections[indexPath.section].items[indexPath.row]
     }
@@ -91,7 +86,7 @@ extension TableViewManager {
             return value
         }
         return nil
-
+        
     }
     
     fileprivate func estimatedHeight(forKey key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
@@ -106,12 +101,12 @@ extension TableViewManager {
             return nil
         }
     }
-
+    
     fileprivate func estimatedHeight(atIndexPath indexPath: IndexPath) -> CGFloat? {
         guard let height = item(forIndexPath: indexPath).height else { return nil }
         return estimatedHeight(height)
-}
-
+    }
+    
     fileprivate func estimatedHeight(_ height: ImmutableMutableHeight) -> CGFloat {
         switch height {
         case .immutable(_):
@@ -120,18 +115,18 @@ extension TableViewManager {
             return value
         }
     }
-
+    
     fileprivate func height(forKey key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
         guard case .view(let view) = key(sections[section]), let value = view.height
             else { return nil }
         return height(value)
     }
-
+    
     fileprivate func height(atIndexPath indexPath: IndexPath) -> CGFloat? {
         guard let value = item(forIndexPath: indexPath).height else { return nil }
         return height(value)
     }
-
+    
     fileprivate func height(_ height: ImmutableMutableHeight) -> CGFloat {
         switch height {
         case .immutable(let value):
@@ -140,81 +135,81 @@ extension TableViewManager {
             return UITableViewAutomaticDimension
         }
     }
-
+    
 }
 
 extension TableViewManager: UITableViewDataSource {
-
+    
     public func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
-
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection sectionIndex: Int) -> Int {
         let section = sections[sectionIndex]
         return section.items.count
     }
-
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let currentItem = item(forIndexPath: indexPath)
         let drawer = currentItem.drawer
-
+        
         let cell = drawer.cell(inManager: self, withItem: currentItem, forIndexPath: indexPath)
         drawer.draw(cell, withItem: currentItem)
-
+        
         return cell
     }
-
-
+    
+    
     public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return title(forKey: {$0.header}, inSection: section)
     }
-
-
+    
+    
     public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return title(forKey: {$0.footer}, inSection: section)
     }
-
-
+    
+    
 }
 
 extension TableViewManager: UITableViewDelegate {
-
+    
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentItem = item(forIndexPath: indexPath) as? Selectable else { return }
         currentItem.onSelection(currentItem)
     }
-
+    
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return height(atIndexPath: indexPath) ?? tableView.rowHeight
-        }
-
+    }
+    
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return height(forKey: {$0.header}, inSection: section) ?? tableView.sectionHeaderHeight
-        }
-
+    }
+    
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return height(forKey: {$0.footer}, inSection: section) ?? tableView.sectionFooterHeight
-        }
-
+    }
+    
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return estimatedHeight(atIndexPath: indexPath) ?? tableView.estimatedRowHeight
     }
-
+    
     public func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return estimatedHeight(forKey: {$0.header}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
-
+    
     public func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
         return estimatedHeight(forKey: {$0.footer}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
-
+    
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return view(forKey: {$0.header}, inSection: section)
     }
-
+    
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return view(forKey: {$0.footer}, inSection: section)
     }
-
+    
 }
