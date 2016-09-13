@@ -6,5 +6,5 @@ target :'TableViewKit' do
 end
 
 target :'TableViewKitTests' do
-  pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git', :branch => 'swift-3.0'
+  pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git'
 end
