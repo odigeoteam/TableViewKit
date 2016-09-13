@@ -13,6 +13,7 @@
 		25483FA11D7EFCFA002CF25E /* HelpCenterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25483FA01D7EFCFA002CF25E /* HelpCenterCell.xib */; };
 		2579BBA01D805C9E003B9CDD /* HelpCenterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2579BB9F1D805C9E003B9CDD /* HelpCenterSection.swift */; };
 		2579BBA21D805CC2003B9CDD /* MoreAboutSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2579BBA11D805CC2003B9CDD /* MoreAboutSection.swift */; };
+		25837C7A1D87FA39001EF4B8 /* MoreAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25837C791D87FA39001EF4B8 /* MoreAboutCell.swift */; };
 		25A741981D7ED45900473E02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A741971D7ED45900473E02 /* AppDelegate.swift */; };
 		25A7419F1D7ED45900473E02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25A7419E1D7ED45900473E02 /* Assets.xcassets */; };
 		25A741A21D7ED45900473E02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25A741A01D7ED45900473E02 /* LaunchScreen.storyboard */; };
@@ -30,6 +31,7 @@
 		25483FA01D7EFCFA002CF25E /* HelpCenterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpCenterCell.xib; path = AboutModule/HelpCenterCell.xib; sourceTree = "<group>"; };
 		2579BB9F1D805C9E003B9CDD /* HelpCenterSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpCenterSection.swift; path = AboutModule/HelpCenterSection.swift; sourceTree = "<group>"; };
 		2579BBA11D805CC2003B9CDD /* MoreAboutSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoreAboutSection.swift; path = AboutModule/MoreAboutSection.swift; sourceTree = "<group>"; };
+		25837C791D87FA39001EF4B8 /* MoreAboutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoreAboutCell.swift; path = AboutModule/MoreAboutCell.swift; sourceTree = "<group>"; };
 		25A741941D7ED45900473E02 /* TableViewKit+VIPER.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TableViewKit+VIPER.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A741971D7ED45900473E02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25A7419E1D7ED45900473E02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 		25483F981D7EDDBF002CF25E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				25837C791D87FA39001EF4B8 /* MoreAboutCell.swift */,
 				25483F9C1D7EDE45002CF25E /* HelpCenterCell.swift */,
 				25483FA01D7EFCFA002CF25E /* HelpCenterCell.xib */,
 			);
@@ -227,7 +230,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		87A11139382E8ED739E3CEEC /* [CP] Embed Pods Frameworks */ = {
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25A741AB1D7ED66600473E02 /* AboutModuleProtocols.swift in Sources */,
+				25837C7A1D87FA39001EF4B8 /* MoreAboutCell.swift in Sources */,
 				2579BBA01D805C9E003B9CDD /* HelpCenterSection.swift in Sources */,
 				25A741AD1D7ED6D700473E02 /* AboutViewController.swift in Sources */,
 				25483F9B1D7EDDE3002CF25E /* HelpCenterItem.swift in Sources */,

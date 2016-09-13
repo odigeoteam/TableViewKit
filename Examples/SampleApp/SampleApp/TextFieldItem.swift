@@ -9,7 +9,9 @@
 import Foundation
 import TableViewKit
 
-public class TextFieldCell: BaseCell, ActionBarDelegate {
+public class TextFieldCell: UITableViewCell, ItemCompatible, ActionBarDelegate {
+    
+    public var item: Item?
     
     public var textFieldItem: TextFieldItem {
         get {
@@ -34,8 +36,8 @@ public class TextFieldCell: BaseCell, ActionBarDelegate {
         textFieldItem.value = textField.text
     }
     
-    public func actionBar(_ actionBar: ActionBar, direction: Direction) -> IndexPath? {
-        return textFieldItem.actionBarDelegate.actionBar(actionBar, direction: direction)
+    public func actionBar(_ actionBar: ActionBar, direction: Direction)  {
+        textFieldItem.actionBarDelegate.actionBar(actionBar, direction: direction)
     }
     public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {
         textField.resignFirstResponder()
@@ -58,8 +60,7 @@ public class TextFieldDrawer: CellDrawer {
     public static let nib = UINib(nibName: String(describing: TextFieldCell.self), bundle: nil)
     public static let type = CellType.nib(TextFieldDrawer.nib, TextFieldCell.self)
     
-    public static func
-        draw(_ cell: BaseCell, with item: Any) {
+    public static func draw(_ cell: UITableViewCell, with item: Any) {
         
         let textCell = cell as! TextFieldCell
         let textItem = item as! TextFieldItem

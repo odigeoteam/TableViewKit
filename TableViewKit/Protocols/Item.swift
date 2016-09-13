@@ -9,8 +9,8 @@
 import Foundation
 
 public protocol Item: class {
+    
     var drawer: CellDrawer.Type { get }
-
     var height: Height? { get }
 
     func indexPath(in manager: TableViewManager) -> IndexPath?

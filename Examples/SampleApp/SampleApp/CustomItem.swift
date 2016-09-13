@@ -12,9 +12,9 @@ import TableViewKit
 
 public class CustomDrawer: CellDrawer {
     
-    static public var type = CellType.class(BaseCell.self)
+    static public var type = CellType.class(UITableViewCell.self)
     
-    static public func draw(_ cell: BaseCell, with item: Any) {
+    static public func draw(_ cell: UITableViewCell, with item: Any) {
         let item = item as! CustomItem
         cell.accessoryType = item.accessoryType
         cell.accessoryView = item.accessoryView

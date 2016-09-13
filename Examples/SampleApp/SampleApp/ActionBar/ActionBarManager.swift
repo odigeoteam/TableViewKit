@@ -17,12 +17,11 @@ class ActionBarManager: ActionBarDelegate {
         self.manager = manager
     }
     
-    public func actionBar(_ actionBar: ActionBar, direction: Direction) -> IndexPath? {
-        guard let indexPath = indexPathForResponder(forDirection: direction) else { return nil }
+    public func actionBar(_ actionBar: ActionBar, direction: Direction) {
+        guard let indexPath = indexPathForResponder(forDirection: direction) else { return }
         
         manager.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         manager.tableView.cellForRow(at: indexPath)?.becomeFirstResponder()
-        return indexPath
     }
     
     public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) { }

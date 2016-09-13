@@ -31,17 +31,6 @@ enum MoreAboutItemType {
     }
 }
 
-class MoreAboutDrawer: CellDrawer {
-    
-    static open var type = CellType.class(BaseCell.self)
-    
-    static open func draw(_ cell: BaseCell, with item: Any) {
-        let item = item as! MoreAboutItem
-        cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = item.title
-    }
-}
-
 class MoreAboutItem: Item, Selectable {
     
     var type: MoreAboutItemType
