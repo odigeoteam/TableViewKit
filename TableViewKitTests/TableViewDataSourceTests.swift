@@ -66,10 +66,8 @@ class TableViewDataSourceTests: XCTestCase {
         tableViewManager.sections.append(section)
         
         tableViewManager.sections.append(ViewHeaderFooterSection(items: [NoHeigthItem(), StaticHeigthItem()]))
-
     }
 
-    
     override func tearDown() {
         tableViewManager = nil
         item = nil
@@ -106,7 +104,6 @@ class TableViewDataSourceTests: XCTestCase {
         
         title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 1)
         expect(title).to(beNil())
-
     }
     
     func testViewForHeaderInSection() {
@@ -121,7 +118,5 @@ class TableViewDataSourceTests: XCTestCase {
     
         view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 1)
         expect(view).notTo(beNil())
-    
     }
-    
 }

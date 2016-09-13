@@ -26,6 +26,8 @@ class TestReloadItem: Item {
     internal var title: String?
 }
 
+class TestRegisterNibCell: UITableViewCell { }
+class TestRegisterHeaderFooterView: UITableViewHeaderFooterView { }
 
 class TableViewKitTests: XCTestCase {
 
@@ -99,5 +101,30 @@ class TableViewKitTests: XCTestCase {
         
         let section = item.section(in: tableViewManager)
         expect(section).to(beNil())
+    }
+    
+    func testRegisterNibCells() {
+        
+        let testBundle = Bundle(for: TableViewKitTests.self)
+        let cellType = CellType.nib(UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle), TestRegisterNibCell.self)
+        
+        let tableView = UITableView()
+        tableView.register(cellType)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellType.reusableIdentifier)
+        
+        expect(cell).toNot(equal(nil))
+    }
+    
+    func testRegisterNibHeaderFooter() {
+        
+        let testBundle = Bundle(for: TableViewKitTests.self)
+        let headerFooterType = HeaderFooterType.nib(UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle), TestRegisterHeaderFooterView.self)
+        
+        let tableView = UITableView()
+        tableView.register(headerFooterType)
+        
+        let headerFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerFooterType.reusableIdentifier)
+        expect(headerFooterView).toNot(equal(nil))
     }
 }

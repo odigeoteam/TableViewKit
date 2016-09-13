@@ -19,7 +19,7 @@ class NoHeaderFooterSection: Section {
     }
 }
 
-public class CustomHeaderFooterView: UITableViewHeaderFooterView {
+class CustomHeaderFooterView: UITableViewHeaderFooterView {
     var label: UILabel = UILabel()
     
     override init(reuseIdentifier: String?) {
@@ -32,7 +32,7 @@ public class CustomHeaderFooterView: UITableViewHeaderFooterView {
 }
 
 
-public class CustomHeaderDrawer: HeaderFooterDrawer {
+class CustomHeaderDrawer: HeaderFooterDrawer {
     
     static public var type = HeaderFooterType.class(CustomHeaderFooterView.self)
     
@@ -44,7 +44,7 @@ public class CustomHeaderDrawer: HeaderFooterDrawer {
 }
 
 
-public class ViewHeaderFooter: HeaderFooter {
+class ViewHeaderFooter: HeaderFooter {
     
     public var title: String?
     public var height: Height? = .dynamic(44.0)
@@ -109,7 +109,6 @@ class TableViewDelegateTests: XCTestCase {
         
     }
     
-    
     override func tearDown() {
         tableViewManager = nil
         super.tearDown()
@@ -123,7 +122,6 @@ class TableViewDelegateTests: XCTestCase {
         
         height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForHeaderInSection: 1)
         expect(height).to(equal(tableViewManager.tableView.estimatedSectionHeaderHeight))
-
     }
     
     
@@ -145,10 +143,7 @@ class TableViewDelegateTests: XCTestCase {
         
         height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForFooterInSection: 2)
         expect(height).to(equal(44.0))
-
-
     }
-    
     
     func testHeightForFooter() {
         var height: CGFloat
@@ -158,10 +153,7 @@ class TableViewDelegateTests: XCTestCase {
         
         height = tableViewManager.tableView(tableViewManager.tableView, heightForFooterInSection: 2)
         expect(height).to(equal(UITableViewAutomaticDimension))
-
     }
-
-    
     
     func testEstimatedHeightForRowAtIndexPath() {
         var height: CGFloat
@@ -178,10 +170,7 @@ class TableViewDelegateTests: XCTestCase {
         indexPath = IndexPath(row: 1, section: 1)
         height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
         expect(height).to(equal(0.0))
-
-
     }
-    
     
     func testHeightForRowAtIndexPath() {
         var height: CGFloat

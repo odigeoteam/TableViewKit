@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2564E61A1D88419B00A9DC3E /* TestRegisterNibCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2564E6191D88419B00A9DC3E /* TestRegisterNibCell.xib */; };
+		2564E61C1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2564E61B1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib */; };
 		25837C781D87F819001EF4B8 /* ItemCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25837C771D87F819001EF4B8 /* ItemCompatible.swift */; };
 		7892A1603117CFA582BFCAC3 /* Pods_TableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */; };
 		AD0E465917E1381DFF2E904B /* Pods_TableViewKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */; };
@@ -43,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		08A270D360D8629E318EBF6E /* Pods-TableViewKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKit/Pods-TableViewKit.debug.xcconfig"; sourceTree = "<group>"; };
+		2564E6191D88419B00A9DC3E /* TestRegisterNibCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestRegisterNibCell.xib; sourceTree = "<group>"; };
+		2564E61B1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestRegisterHeaderFooterView.xib; sourceTree = "<group>"; };
 		25837C771D87F819001EF4B8 /* ItemCompatible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemCompatible.swift; path = Protocols/ItemCompatible.swift; sourceTree = "<group>"; };
 		4B8E33116CC0B70461DC5ED6 /* Pods-TableViewKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKitTests/Pods-TableViewKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,6 +174,8 @@
 				CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */,
 				CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */,
 				CCBE456D1D72F69500414A64 /* Info.plist */,
+				2564E6191D88419B00A9DC3E /* TestRegisterNibCell.xib */,
+				2564E61B1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib */,
 			);
 			path = TableViewKitTests;
 			sourceTree = "<group>";
@@ -306,6 +312,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2564E61C1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib in Resources */,
+				2564E61A1D88419B00A9DC3E /* TestRegisterNibCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
