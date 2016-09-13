@@ -40,9 +40,9 @@ class HeaderFooterTitleSection: Section {
 
 class TestDrawer: CellDrawer {
     
-    static internal var type = CellType.class(BaseCell.self)
+    static internal var type = CellType.class(UITableViewCell.self)
     
-    static internal func draw(_ cell: BaseCell, with item: Any) {    }
+    static internal func draw(_ cell: UITableViewCell, with item: Any) {    }
 }
 
 class TestItem: Item {
@@ -80,7 +80,7 @@ class TableViewDataSourceTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         let cell = self.tableViewManager.tableView(self.tableViewManager.tableView, cellForRowAt: indexPath)
         
-        expect(cell).to(beAnInstanceOf(BaseCell.self))
+        expect(cell).to(beAnInstanceOf(UITableViewCell.self))
     }
     
     func testNumberOfSections() {

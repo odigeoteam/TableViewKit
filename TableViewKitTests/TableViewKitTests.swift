@@ -14,9 +14,9 @@ import Nimble
 
 class TestReloadDrawer: CellDrawer {
     
-    static internal var type = CellType.class(BaseCell.self)
+    static internal var type = CellType.class(UITableViewCell.self)
     
-    static internal func draw(_ cell: BaseCell, with item: Any) {
+    static internal func draw(_ cell: UITableViewCell, with item: Any) {
         cell.textLabel?.text = (item as! TestReloadItem).title
     }
 }
