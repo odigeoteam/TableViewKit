@@ -40,37 +40,33 @@ class HeaderFooterTitleSection: Section {
 
 class TestDrawer: CellDrawer {
     
-    static internal var type = CellType.class(UITableViewCell.self)
-    
-    static internal func draw(_ cell: UITableViewCell, with item: Any) {    }
+    static internal var type = CellType.class(TestCell.self)
+    static internal func draw(_ cell: UITableViewCell, with item: Any) { }
 }
 
 class TestItem: Item {
     internal var drawer: CellDrawer.Type = TestDrawer.self
 }
 
+class TestCell: UITableViewCell, ItemCompatible {
+    internal var item: Item?
+}
+
 class TableViewDataSourceTests: XCTestCase {
     
     fileprivate var tableViewManager: TableViewManager!
-    fileprivate var item: Item!
-    fileprivate var section: Section!
     
     override func setUp() {
         super.setUp()
-        tableViewManager = TableViewManager(tableView: UITableView())
-        item = TestItem()
         
-        section = HeaderFooterTitleSection()
-        section.items.append(item)
+        let section1 = HeaderFooterTitleSection(items: [TestItem()])
+        let section2 = ViewHeaderFooterSection(items: [NoHeigthItem(), StaticHeigthItem()])
         
-        tableViewManager.sections.append(section)
-        
-        tableViewManager.sections.append(ViewHeaderFooterSection(items: [NoHeigthItem(), StaticHeigthItem()]))
+        tableViewManager = TableViewManager(tableView: UITableView(), with: [section1, section2])
     }
 
     override func tearDown() {
         tableViewManager = nil
-        item = nil
         super.tearDown()
     }
     
@@ -78,7 +74,7 @@ class TableViewDataSourceTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         let cell = self.tableViewManager.tableView(self.tableViewManager.tableView, cellForRowAt: indexPath)
         
-        expect(cell).to(beAnInstanceOf(UITableViewCell.self))
+        expect(cell).to(beAnInstanceOf(TestCell.self))
     }
     
     func testNumberOfSections() {
@@ -93,6 +89,8 @@ class TableViewDataSourceTests: XCTestCase {
     
     func testTitleForHeaderInSection() {
         let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForHeaderInSection: 0)!
+        let section = tableViewManager.sections.first!
+        
         expect(HeaderFooterView.title(title)).to(equal(section.header))
     }
     
@@ -100,6 +98,8 @@ class TableViewDataSourceTests: XCTestCase {
         var title: String?
         
         title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)
+        
+        let section = tableViewManager.sections.first!
         expect(HeaderFooterView.title(title!)).to(equal(section.footer))
         
         title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 1)
