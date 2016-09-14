@@ -1,11 +1,11 @@
 # TableViewKit
 
-[![Build Status](https://travis-ci.org/JensRavens/Interstellar.svg)](https://travis-ci.org/odigeoteam/TableViewKit)
+[![Build Status](https://travis-ci.org/odigeoteam/TableViewKit.svg)](https://travis-ci.org/odigeoteam/TableViewKit) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![codecov.io](http://codecov.io/github/odigeoteam/TableViewKit/coverage.svg)](http://codecov.io/github/odigeoteam/TableViewKit)
 
-TableViewKit allows to manage the content of a `UITableView`. `Strategy` pattern for draw cells.
+Empowering `UITableView` with painless multi-type cell support and build-in automatic state transition animations
 
 ## Requirements
-- Xcode 7 or higher
+- Xcode 8 or higher
 - iOS 8.0 or higher
 
 ## Installation

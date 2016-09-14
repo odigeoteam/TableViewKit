@@ -3,4 +3,3 @@ osx_image: xcode8
 script: sh build.sh
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-install: pod install --repo-update
