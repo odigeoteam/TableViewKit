@@ -10,7 +10,22 @@ import XCTest
 import TableViewKit
 import Nimble
 
-class TestSection: Section {
+extension HeaderFooterView: Equatable {
+    public static func == (lhs: HeaderFooterView, rhs: HeaderFooterView) -> Bool {
+        switch (lhs, rhs) {
+        case (.none, .none):
+            return true
+        case (.view(let lhs), .view(let rhs)):
+            return lhs === rhs
+        case (.title(let lhs), .title(let rhs)):
+            return lhs == rhs
+        default:
+            return false
+        }
+    }
+}
+
+class HeaderFooterTitleSection: Section {
     var items: ObservableArray<Item> = []
     weak var tableViewManager: TableViewManager!
     
@@ -19,71 +34,76 @@ class TestSection: Section {
 
     convenience init(items: [Item]) {
         self.init()
-        self.items.insertContentsOf(items, at: 0)
+        self.items.insert(contentsOf: items, at: 0)
     }
 }
 
 class TestDrawer: CellDrawer {
     
-    static internal var cellType = CellType.Class(BaseCell.self)
-    
-    static internal func draw(cell: BaseCell, withItem item: Any) {    }
+    static internal var type = CellType.class(TestCell.self)
+    static internal func draw(_ cell: UITableViewCell, with item: Any) { }
 }
 
 class TestItem: Item {
     internal var drawer: CellDrawer.Type = TestDrawer.self
 }
 
+class TestCell: UITableViewCell, ItemCompatible {
+    internal var item: Item?
+}
+
 class TableViewDataSourceTests: XCTestCase {
     
-    private var tableViewManager: TableViewManager!
-    private var item: Item!
-    private var section: Section!
+    fileprivate var tableViewManager: TableViewManager!
     
     override func setUp() {
         super.setUp()
-        tableViewManager = TableViewManager(tableView: UITableView())
-        item = TestItem()
         
-        section = TestSection()
-        section.items.append(item)
+        let section1 = HeaderFooterTitleSection(items: [TestItem()])
+        let section2 = ViewHeaderFooterSection(items: [NoHeigthItem(), StaticHeigthItem()])
         
-        tableViewManager.sections.append(section)
-
+        tableViewManager = TableViewManager(tableView: UITableView(), with: [section1, section2])
     }
 
-    
     override func tearDown() {
         tableViewManager = nil
-        item = nil
         super.tearDown()
     }
     
     func testCellForRow() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        let cell = self.tableViewManager.tableView(self.tableViewManager.tableView, cellForRowAtIndexPath: indexPath)
+        let indexPath = IndexPath(row: 0, section: 0)
+        let cell = self.tableViewManager.tableView(self.tableViewManager.tableView, cellForRowAt: indexPath)
         
-        expect(cell).to(beAnInstanceOf(BaseCell))
+        expect(cell).to(beAnInstanceOf(TestCell.self))
     }
     
     func testNumberOfSections() {
-        let count = self.tableViewManager.numberOfSectionsInTableView(self.tableViewManager.tableView)
-        expect(count).to(be(1))
+        let count = self.tableViewManager.numberOfSections(in: self.tableViewManager.tableView)
+        expect(count).to(equal(2))
     }
     
     func testNumberOfRowsInSection() {
         let count = self.tableViewManager.tableView(self.tableViewManager.tableView, numberOfRowsInSection: 0)
-        expect(count).to(be(1))
+        expect(count) == 1
     }
     
     func testTitleForHeaderInSection() {
         let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForHeaderInSection: 0)!
+        let section = tableViewManager.sections.first!
+        
         expect(HeaderFooterView.title(title)).to(equal(section.header))
     }
     
     func testTitleForFooterInSection() {
-        let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)!
-        expect(HeaderFooterView.title(title)).to(equal(section.footer))
+        var title: String?
+        
+        title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)
+        
+        let section = tableViewManager.sections.first!
+        expect(HeaderFooterView.title(title!)).to(equal(section.footer))
+        
+        title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 1)
+        expect(title).to(beNil())
     }
     
     func testViewForHeaderInSection() {
@@ -92,21 +112,11 @@ class TableViewDataSourceTests: XCTestCase {
     }
     
     func testViewForFooterInSection() {
-        let view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 0)
+        var view: UIView?
+        view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 0)
         expect(view).to(beNil())
+    
+        view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 1)
+        expect(view).notTo(beNil())
     }
-    
-    func testEstimatedHeightForRowAtIndexPath() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        let height = self.tableViewManager.tableView(self.tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
-        expect(height).to(equal(44.0))
-    }
-    
-    
-    func testHeightForRowAtIndexPath() {
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        let height = self.tableViewManager.tableView(self.tableViewManager.tableView, heightForRowAtIndexPath: indexPath)
-        expect(height).to(equal(UITableViewAutomaticDimension))
-    }
-    
 }

@@ -7,34 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25F08BBD1D7427680033AD0E /* ValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F08BBC1D7427680033AD0E /* ValidatorTests.swift */; };
-		7892A1603117CFA582BFCAC3 /* Pods_TableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */; };
-		AD0E465917E1381DFF2E904B /* Pods_TableViewKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */; };
-		CC5CF11C1D839E71004DECB3 /* Diff.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5CF11B1D839E71004DECB3 /* Diff.swift */; };
+		2564E61A1D88419B00A9DC3E /* TestRegisterNibCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2564E6191D88419B00A9DC3E /* TestRegisterNibCell.xib */; };
+		2564E61C1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2564E61B1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib */; };
+		25837C781D87F819001EF4B8 /* ItemCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25837C771D87F819001EF4B8 /* ItemCompatible.swift */; };
+		CC5CF11C1D839E71004DECB3 /* ArrayDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */; };
 		CC97D76D1D741DC4009CDF9D /* Selectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC97D76C1D741DC4009CDF9D /* Selectable.swift */; };
+		CC9D50E11D8496180010FCA3 /* TableViewDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9D50E01D8496180010FCA3 /* TableViewDelegateTests.swift */; };
 		CCBE45601D72F69500414A64 /* TableViewKit.h in Headers */ = {isa = PBXBuildFile; fileRef = CCBE455F1D72F69500414A64 /* TableViewKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CCBE45671D72F69500414A64 /* TableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCBE455C1D72F69400414A64 /* TableViewKit.framework */; };
 		CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */; };
-		CCBE458F1D72F79C00414A64 /* ActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45771D72F79C00414A64 /* ActionBar.swift */; };
 		CCBE45921D72F79C00414A64 /* NSIndexSet+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE457B1D72F79C00414A64 /* NSIndexSet+Array.swift */; };
 		CCBE45931D72F79C00414A64 /* UITableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */; };
-		CCBE45971D72F79C00414A64 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45831D72F79C00414A64 /* Rules.swift */; };
-		CCBE45981D72F79C00414A64 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45841D72F79C00414A64 /* Validation.swift */; };
-		CCBE45991D72F79C00414A64 /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45851D72F79C00414A64 /* ValidationError.swift */; };
-		CCBE459A1D72F79C00414A64 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45861D72F79C00414A64 /* Validator.swift */; };
-		CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE45891D72F79C00414A64 /* BaseCell.swift */; };
 		CCBE459D1D72F79C00414A64 /* CellDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458A1D72F79C00414A64 /* CellDrawer.swift */; };
 		CCBE459F1D72F79C00414A64 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458C1D72F79C00414A64 /* Item.swift */; };
 		CCBE45A01D72F79C00414A64 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458D1D72F79C00414A64 /* Section.swift */; };
 		CCBE45A11D72F79C00414A64 /* TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458E1D72F79C00414A64 /* TableViewManager.swift */; };
+		CCC749411D89AAD00030F140 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC749401D89AAD00030F140 /* Nimble.framework */; };
 		CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC11F1D7D9E150001FC1D /* CellType.swift */; };
 		CCCAC1221D7D9E440001FC1D /* HeaderFooterDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */; };
 		CCCAC1241D7D9E6D0001FC1D /* HeaderFooterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */; };
 		CCCAC1261D7D9EE00001FC1D /* HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */; };
-		CCCAC1281D7DA2D00001FC1D /* ImmutableMutableHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */; };
+		CCCAC1281D7DA2D00001FC1D /* Height.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1271D7DA2CF0001FC1D /* Height.swift */; };
 		CCDB8FAB1D83649B00E44A99 /* ObservableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDB8FAA1D83649B00E44A99 /* ObservableArray.swift */; };
 		CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */; };
-		CCE400FA1D73321600537715 /* ActionBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F91D73321600537715 /* ActionBarTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,41 +43,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		08A270D360D8629E318EBF6E /* Pods-TableViewKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKit/Pods-TableViewKit.debug.xcconfig"; sourceTree = "<group>"; };
-		25F08BBC1D7427680033AD0E /* ValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidatorTests.swift; sourceTree = "<group>"; };
-		4B8E33116CC0B70461DC5ED6 /* Pods-TableViewKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKitTests/Pods-TableViewKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6C8E0D2A241295B7A143FE9 /* Pods-TableViewKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKitTests/Pods-TableViewKitTests.release.xcconfig"; sourceTree = "<group>"; };
-		CC5CF11B1D839E71004DECB3 /* Diff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diff.swift; sourceTree = "<group>"; };
+		2564E6191D88419B00A9DC3E /* TestRegisterNibCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestRegisterNibCell.xib; sourceTree = "<group>"; };
+		2564E61B1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestRegisterHeaderFooterView.xib; sourceTree = "<group>"; };
+		25837C771D87F819001EF4B8 /* ItemCompatible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemCompatible.swift; path = Protocols/ItemCompatible.swift; sourceTree = "<group>"; };
+		4BCAD51C1D89A704002F3420 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "External/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
+		CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDiff.swift; sourceTree = "<group>"; };
 		CC97D76C1D741DC4009CDF9D /* Selectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Selectable.swift; path = Protocols/Selectable.swift; sourceTree = "<group>"; };
+		CC9D50E01D8496180010FCA3 /* TableViewDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDelegateTests.swift; sourceTree = "<group>"; };
 		CCBE455C1D72F69400414A64 /* TableViewKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableViewKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCBE455F1D72F69500414A64 /* TableViewKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewKit.h; sourceTree = "<group>"; };
 		CCBE45611D72F69500414A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCBE45661D72F69500414A64 /* TableViewKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TableViewKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewKitTests.swift; sourceTree = "<group>"; };
 		CCBE456D1D72F69500414A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CCBE45771D72F79C00414A64 /* ActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBar.swift; sourceTree = "<group>"; };
 		CCBE457B1D72F79C00414A64 /* NSIndexSet+Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSIndexSet+Array.swift"; sourceTree = "<group>"; };
 		CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Register.swift"; sourceTree = "<group>"; };
-		CCBE45831D72F79C00414A64 /* Rules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
-		CCBE45841D72F79C00414A64 /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
-		CCBE45851D72F79C00414A64 /* ValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
-		CCBE45861D72F79C00414A64 /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
-		CCBE45891D72F79C00414A64 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		CCBE458A1D72F79C00414A64 /* CellDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellDrawer.swift; sourceTree = "<group>"; };
 		CCBE458C1D72F79C00414A64 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Protocols/Item.swift; sourceTree = "<group>"; };
 		CCBE458D1D72F79C00414A64 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		CCBE458E1D72F79C00414A64 /* TableViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
+		CCC749401D89AAD00030F140 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "External/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
 		CCCAC11F1D7D9E150001FC1D /* CellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
 		CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterDrawer.swift; sourceTree = "<group>"; };
 		CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterType.swift; sourceTree = "<group>"; };
 		CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderFooter.swift; path = Protocols/HeaderFooter.swift; sourceTree = "<group>"; };
-		CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmutableMutableHeight.swift; sourceTree = "<group>"; };
+		CCCAC1271D7DA2CF0001FC1D /* Height.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Height.swift; sourceTree = "<group>"; };
 		CCDB8FAA1D83649B00E44A99 /* ObservableArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableArray.swift; sourceTree = "<group>"; };
 		CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceTests.swift; sourceTree = "<group>"; };
-		CCE400F91D73321600537715 /* ActionBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBarTests.swift; sourceTree = "<group>"; };
-		D0E1FB244FF2B149DB428D40 /* Pods-TableViewKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewKit/Pods-TableViewKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +77,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7892A1603117CFA582BFCAC3 /* Pods_TableViewKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,22 +85,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCBE45671D72F69500414A64 /* TableViewKit.framework in Frameworks */,
-				AD0E465917E1381DFF2E904B /* Pods_TableViewKitTests.framework in Frameworks */,
+				CCC749411D89AAD00030F140 /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		02ECBACBF25021B67BCCF813 /* Pods */ = {
+		4BCAD51B1D89A703002F3420 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08A270D360D8629E318EBF6E /* Pods-TableViewKit.debug.xcconfig */,
-				D0E1FB244FF2B149DB428D40 /* Pods-TableViewKit.release.xcconfig */,
-				4B8E33116CC0B70461DC5ED6 /* Pods-TableViewKitTests.debug.xcconfig */,
-				C6C8E0D2A241295B7A143FE9 /* Pods-TableViewKitTests.release.xcconfig */,
+				CCC749401D89AAD00030F140 /* Nimble.framework */,
+				4BCAD51C1D89A704002F3420 /* Nimble.framework */,
 			);
-			name = Pods;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CC97D76B1D741D8E009CDF9D /* Protocols */ = {
@@ -124,17 +108,9 @@
 				CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */,
 				CCBE458C1D72F79C00414A64 /* Item.swift */,
 				CC97D76C1D741DC4009CDF9D /* Selectable.swift */,
+				25837C771D87F819001EF4B8 /* ItemCompatible.swift */,
 			);
 			name = Protocols;
-			sourceTree = "<group>";
-		};
-		CCAE56B0F1D6CA998E92E8A3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AA8FF610F26EA3E790F577BA /* Pods_TableViewKit.framework */,
-				5221BF34A600267BBA677E8E /* Pods_TableViewKitTests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CCBE45521D72F69400414A64 = {
@@ -143,8 +119,7 @@
 				CCBE455E1D72F69500414A64 /* TableViewKit */,
 				CCBE456A1D72F69500414A64 /* TableViewKitTests */,
 				CCBE455D1D72F69400414A64 /* Products */,
-				02ECBACBF25021B67BCCF813 /* Pods */,
-				CCAE56B0F1D6CA998E92E8A3 /* Frameworks */,
+				4BCAD51B1D89A703002F3420 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,15 +139,12 @@
 				CCCAC1291D7DA2DB0001FC1D /* Cell */,
 				CCCAC12A1D7DA2E90001FC1D /* HeaderFooter */,
 				CCBE45791D72F79C00414A64 /* Extensions */,
-				CCBE45821D72F79C00414A64 /* Validator */,
-				CCBE45761D72F79C00414A64 /* Controls */,
 				CCDB8FAA1D83649B00E44A99 /* ObservableArray.swift */,
-				CCBE45891D72F79C00414A64 /* BaseCell.swift */,
-				CCCAC1271D7DA2CF0001FC1D /* ImmutableMutableHeight.swift */,
+				CCCAC1271D7DA2CF0001FC1D /* Height.swift */,
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
 				CCBE45611D72F69500414A64 /* Info.plist */,
-				CC5CF11B1D839E71004DECB3 /* Diff.swift */,
+				CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */,
 			);
 			path = TableViewKit;
 			sourceTree = "<group>";
@@ -180,21 +152,14 @@
 		CCBE456A1D72F69500414A64 /* TableViewKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				CCE400F91D73321600537715 /* ActionBarTests.swift */,
+				CC9D50E01D8496180010FCA3 /* TableViewDelegateTests.swift */,
 				CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */,
 				CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */,
-				25F08BBC1D7427680033AD0E /* ValidatorTests.swift */,
 				CCBE456D1D72F69500414A64 /* Info.plist */,
+				2564E6191D88419B00A9DC3E /* TestRegisterNibCell.xib */,
+				2564E61B1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib */,
 			);
 			path = TableViewKitTests;
-			sourceTree = "<group>";
-		};
-		CCBE45761D72F79C00414A64 /* Controls */ = {
-			isa = PBXGroup;
-			children = (
-				CCBE45771D72F79C00414A64 /* ActionBar.swift */,
-			);
-			path = Controls;
 			sourceTree = "<group>";
 		};
 		CCBE45791D72F79C00414A64 /* Extensions */ = {
@@ -204,17 +169,6 @@
 				CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		CCBE45821D72F79C00414A64 /* Validator */ = {
-			isa = PBXGroup;
-			children = (
-				CCBE45831D72F79C00414A64 /* Rules.swift */,
-				CCBE45841D72F79C00414A64 /* Validation.swift */,
-				CCBE45851D72F79C00414A64 /* ValidationError.swift */,
-				CCBE45861D72F79C00414A64 /* Validator.swift */,
-			);
-			path = Validator;
 			sourceTree = "<group>";
 		};
 		CCCAC1291D7DA2DB0001FC1D /* Cell */ = {
@@ -253,12 +207,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CCBE45701D72F69500414A64 /* Build configuration list for PBXNativeTarget "TableViewKit" */;
 			buildPhases = (
-				78E805C3C2C195FFA08ABCC3 /* [CP] Check Pods Manifest.lock */,
 				CCBE45571D72F69400414A64 /* Sources */,
 				CCBE45581D72F69400414A64 /* Frameworks */,
 				CCBE45591D72F69400414A64 /* Headers */,
 				CCBE455A1D72F69400414A64 /* Resources */,
-				E222C0F57807B3353D60F61A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -273,12 +225,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CCBE45731D72F69500414A64 /* Build configuration list for PBXNativeTarget "TableViewKitTests" */;
 			buildPhases = (
-				411E4A5183CAC8492B42A7D7 /* [CP] Check Pods Manifest.lock */,
 				CCBE45621D72F69500414A64 /* Sources */,
 				CCBE45631D72F69500414A64 /* Frameworks */,
 				CCBE45641D72F69500414A64 /* Resources */,
-				E89F72306AD260BDE385DC1E /* [CP] Embed Pods Frameworks */,
-				29F95B15EB6BD79C0DD59BD2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -297,14 +246,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = odigeo;
 				TargetAttributes = {
 					CCBE455B1D72F69400414A64 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					CCBE45651D72F69500414A64 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -338,88 +289,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2564E61C1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib in Resources */,
+				2564E61A1D88419B00A9DC3E /* TestRegisterNibCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		29F95B15EB6BD79C0DD59BD2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TableViewKitTests/Pods-TableViewKitTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		411E4A5183CAC8492B42A7D7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		78E805C3C2C195FFA08ABCC3 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		E222C0F57807B3353D60F61A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TableViewKit/Pods-TableViewKit-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E89F72306AD260BDE385DC1E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TableViewKitTests/Pods-TableViewKitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CCBE45571D72F69400414A64 /* Sources */ = {
@@ -428,17 +303,12 @@
 			files = (
 				CCBE45A01D72F79C00414A64 /* Section.swift in Sources */,
 				CCBE45921D72F79C00414A64 /* NSIndexSet+Array.swift in Sources */,
-				CCBE45991D72F79C00414A64 /* ValidationError.swift in Sources */,
-				CCBE45971D72F79C00414A64 /* Rules.swift in Sources */,
 				CC97D76D1D741DC4009CDF9D /* Selectable.swift in Sources */,
-				CCCAC1281D7DA2D00001FC1D /* ImmutableMutableHeight.swift in Sources */,
-				CC5CF11C1D839E71004DECB3 /* Diff.swift in Sources */,
-				CCBE459C1D72F79C00414A64 /* BaseCell.swift in Sources */,
+				CCCAC1281D7DA2D00001FC1D /* Height.swift in Sources */,
+				CC5CF11C1D839E71004DECB3 /* ArrayDiff.swift in Sources */,
+				25837C781D87F819001EF4B8 /* ItemCompatible.swift in Sources */,
 				CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */,
 				CCDB8FAB1D83649B00E44A99 /* ObservableArray.swift in Sources */,
-				CCBE458F1D72F79C00414A64 /* ActionBar.swift in Sources */,
-				CCBE459A1D72F79C00414A64 /* Validator.swift in Sources */,
-				CCBE45981D72F79C00414A64 /* Validation.swift in Sources */,
 				CCCAC1261D7D9EE00001FC1D /* HeaderFooter.swift in Sources */,
 				CCCAC1241D7D9E6D0001FC1D /* HeaderFooterType.swift in Sources */,
 				CCBE45A11D72F79C00414A64 /* TableViewManager.swift in Sources */,
@@ -453,8 +323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25F08BBD1D7427680033AD0E /* ValidatorTests.swift in Sources */,
-				CCE400FA1D73321600537715 /* ActionBarTests.swift in Sources */,
+				CC9D50E11D8496180010FCA3 /* TableViewDelegateTests.swift in Sources */,
 				CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */,
 				CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */,
 			);
@@ -485,8 +354,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -514,6 +385,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -534,8 +406,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -555,6 +429,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -564,9 +440,9 @@
 		};
 		CCBE45711D72F69500414A64 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 08A270D360D8629E318EBF6E /* Pods-TableViewKit.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -578,15 +454,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
 		CCBE45721D72F69500414A64 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0E1FB244FF2B149DB428D40 /* Pods-TableViewKit.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -597,31 +472,26 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.TableViewKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
 		CCBE45741D72F69500414A64 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B8E33116CC0B70461DC5ED6 /* Pods-TableViewKitTests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = TableViewKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.TableViewKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
 		CCBE45751D72F69500414A64 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C6C8E0D2A241295B7A143FE9 /* Pods-TableViewKitTests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = TableViewKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.TableViewKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};

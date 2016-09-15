@@ -11,10 +11,10 @@ import Foundation
 struct Diff {
     public var inserts: [Int]
     public var deletes: [Int]
+    public var moves: [(Int, Int)]
 }
 
-
-class DiffIterator : GeneratorType {
+class DiffIterator : IteratorProtocol {
     struct Coordinates {
         var x: Int
         var y: Int
@@ -50,26 +50,35 @@ class DiffIterator : GeneratorType {
     }
 }
 
-class DiffSequence : SequenceType {
+class DiffSequence : Sequence {
     private let matrix: [[Int]]
     
     init(matrix: [[Int]]){
         self.matrix = matrix
     }
     
-    func generate() -> DiffIterator {
+    func makeIterator() -> DiffIterator {
         return DiffIterator(matrix: matrix)
     }
 }
 
-
-
 extension Array {
     
     static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff {
-        var matrix = [[Int]](count: x.count+1, repeatedValue: [Int](count: y.count+1, repeatedValue: 0))
-        for (i, xElem) in x.enumerate() {
-            for (j, yElem) in y.enumerate() {
+        var x = x
+        let moves = y.enumerated().flatMap { (toIndex, element) -> (Int, Int)? in
+            guard let fromIndex = x.index(where: { predicate($0, element) }),
+                fromIndex != toIndex else { return nil }
+            
+            x.remove(at: fromIndex)
+            x.insert(element, at: (toIndex >= x.count) ? x.count : toIndex)
+            
+            return (fromIndex, toIndex)
+        }
+        
+        var matrix = [[Int]](repeating: [Int](repeating: 0, count: y.count+1), count: x.count+1)
+        for (i, xElem) in x.enumerated() {
+            for (j, yElem) in y.enumerated() {
                 if predicate(xElem, yElem) {
                     matrix[i+1][j+1] = matrix[i][j] + 1
                 } else {
@@ -82,16 +91,15 @@ extension Array {
         let inserts: [Int] = changes.flatMap { change -> [Int] in
             guard case .inserts(let array) = change else { return [] }
             return array
-            }.sort { $0 > $1 }
+            }.sorted { $0 > $1 }
 
         
         let deletes: [Int] = changes.flatMap { change -> [Int] in
             guard case .deletes(let array) = change else { return [] }
             return array
-            }.sort { $0 < $1 }
+            }.sorted { $0 < $1 }
 
         
-        return Diff(inserts: inserts, deletes: deletes)
+        return Diff(inserts: inserts, deletes: deletes, moves: moves)
     }
-    
 }

@@ -35,24 +35,24 @@ public protocol PickerItemProtocol: class {
 }
 
 public enum PickerControlType {
-    case Single, MultiColumn, Date
+    case single, multiColumn, date
 }
 
 public enum PickerControlDismissType {
-    case None, Select, Cancel
+    case none, select, cancel
 }
 
-public class PickerItem: PickerItemProtocol, CustomStringConvertible {
+open class PickerItem: PickerItemProtocol, CustomStringConvertible {
     
-    public var title: String
-    public var value: Any
+    open var title: String
+    open var value: Any
     
     public required init(title: String, value: Any) {
         self.title = title
         self.value = value
     }
     
-    public var description: String {
+    open var description: String {
         return title
     }
 }
@@ -60,69 +60,69 @@ public class PickerItem: PickerItemProtocol, CustomStringConvertible {
 public typealias SelectCallBack = (PickerControl, Any) -> ()
 public typealias CancelCallBack = (PickerControl) -> ()
 
-public class PickerControl: NSObject {
+open class PickerControl: NSObject {
     
-    private var type: PickerControlType
-    private var dismissType: PickerControlDismissType
+    fileprivate var type: PickerControlType
+    fileprivate var dismissType: PickerControlDismissType
     
     // Single columns
-    private var items: [PickerItemProtocol]!
-    private var selection: PickerItemProtocol!
+    fileprivate var items: [PickerItemProtocol]!
+    fileprivate var selection: PickerItemProtocol!
     
     // Multicolumn
-    private var components: [[PickerItemProtocol]]!
-    private var selections: [PickerItemProtocol!]!
+    fileprivate var components: [[PickerItemProtocol]]!
+    fileprivate var selections: [PickerItemProtocol?]!
     
     // Date
-    private var dateSelection: NSDate?
+    fileprivate var dateSelection: Date?
     
-    private var pickerView: UIPickerView?
-    private var datePicker: UIDatePicker?
+    fileprivate var pickerView: UIPickerView?
+    fileprivate var datePicker: UIDatePicker?
     
-    private var overlayLayerView: UIView!
-    private var pickerContainerView: UIView!
-    private var navigationBar: UINavigationBar!
+    fileprivate var overlayLayerView: UIView!
+    fileprivate var pickerContainerView: UIView!
+    fileprivate var navigationBar: UINavigationBar!
     
-    public var headerView: UIView?
-    public var cancelButtonItem: UIBarButtonItem!
-    public var okButtonItem: UIBarButtonItem!
+    open var headerView: UIView?
+    open var cancelButtonItem: UIBarButtonItem!
+    open var okButtonItem: UIBarButtonItem!
     
-    public var title: String?
-    public var selectCallback: SelectCallBack?
-    public var cancelCallback: CancelCallBack?
+    open var title: String?
+    open var selectCallback: SelectCallBack?
+    open var cancelCallback: CancelCallBack?
     
     // MARK: Constructors
     
     public override init() {
         
-        type = .Single
-        dismissType = .Cancel
+        type = .single
+        dismissType = .cancel
         
         items = []
         components = []
         
         overlayLayerView = UIView()
-        overlayLayerView.userInteractionEnabled = true
+        overlayLayerView.isUserInteractionEnabled = true
         overlayLayerView.backgroundColor = UIColor(white: 0, alpha: 0.7)
         
         pickerContainerView = UIView()
-        pickerContainerView.backgroundColor = UIColor.whiteColor()
+        pickerContainerView.backgroundColor = UIColor.white
         
         super.init()
         
         pickerView = UIPickerView()
         pickerView?.dataSource = self
         pickerView?.delegate = self
-        pickerView?.autoresizingMask = .FlexibleWidth
+        pickerView?.autoresizingMask = .flexibleWidth
         
         datePicker = UIDatePicker()
-        datePicker?.autoresizingMask = .FlexibleWidth
-        datePicker?.addTarget(self, action: #selector(datePickerDidChangeValue), forControlEvents: .ValueChanged)
+        datePicker?.autoresizingMask = .flexibleWidth
+        datePicker?.addTarget(self, action: #selector(datePickerDidChangeValue), for: .valueChanged)
         
         navigationBar = UINavigationBar()
         
-        cancelButtonItem = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""), style: .Plain, target: self, action: #selector(cancelButtonPressed))
-        okButtonItem = UIBarButtonItem(title: NSLocalizedString("OK", comment: ""), style: .Plain, target: self, action: #selector(selectButtonPressed))
+        cancelButtonItem = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""), style: .plain, target: self, action: #selector(cancelButtonPressed))
+        okButtonItem = UIBarButtonItem(title: NSLocalizedString("OK", comment: ""), style: .plain, target: self, action: #selector(selectButtonPressed))
     }
     
     public convenience init(elements: [AnyObject], selectCallback: SelectCallBack? = nil, cancelCallback: CancelCallBack? = nil) {
@@ -138,7 +138,7 @@ public class PickerControl: NSObject {
             // We have a array
             else if let array = value as? [AnyObject] {
                 
-                type = .MultiColumn
+                type = .multiColumn
                 
                 // Column items
                 var components: [PickerItemProtocol] = []
@@ -149,18 +149,18 @@ public class PickerControl: NSObject {
                         components.append(element as! PickerItemProtocol)
                     }
                     else {
-                        let item = PickerItem(title: String(element), value: element)
+                        let item = PickerItem(title: String(describing: element), value: element)
                         components.append(item)
                     }
                 }
                 
                 if components.count != 0 {
                     self.components.append(components)
-                    self.selections = Array.init(count: self.components.count, repeatedValue: nil)
+                    self.selections = Array.init(repeating: nil, count: self.components.count)
                 }
             }
             else {
-                let item = PickerItem(title: String(value), value: value)
+                let item = PickerItem(title: String(describing: value), value: value)
                 items.append(item)
             }
         }
@@ -169,11 +169,11 @@ public class PickerControl: NSObject {
         self.cancelCallback = cancelCallback
     }
     
-    public convenience init(datePickerMode: UIDatePickerMode, fromDate: NSDate, toDate: NSDate, minuteInterval: Int, selectCallback: SelectCallBack? = nil, cancelCallback: CancelCallBack? = nil) {
+    public convenience init(datePickerMode: UIDatePickerMode, fromDate: Date, toDate: Date, minuteInterval: Int, selectCallback: SelectCallBack? = nil, cancelCallback: CancelCallBack? = nil) {
         
         self.init()
         
-        type = .Date
+        type = .date
         
         datePicker?.minimumDate = fromDate
         datePicker?.maximumDate = toDate
@@ -186,7 +186,7 @@ public class PickerControl: NSObject {
     
     // MARK: Public methods
     
-    public func presentPickerOnView(view: UIView) {
+    open func presentPickerOnView(_ view: UIView) {
         
         let hostFrame = view.window!.frame
         
@@ -198,64 +198,64 @@ public class PickerControl: NSObject {
         view.window?.addSubview(overlayLayerView)
         
         // Add gesture
-        if dismissType == .Select {
+        if dismissType == .select {
             let layerTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectButtonPressed))
             overlayLayerView.addGestureRecognizer(layerTapRecognizer)
         }
-        else if dismissType == .Cancel {
+        else if dismissType == .cancel {
             let layerTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(cancelButtonPressed))
             overlayLayerView.addGestureRecognizer(layerTapRecognizer)
         }
         
         let extraHeight = headerView != nil ? CGFloat(Constants.Frame.HeaderViewHeight) : 0
-        let pickerContainerSourceFrame = CGRectMake(0, CGRectGetHeight(hostFrame), CGRectGetWidth(hostFrame), CGFloat(Constants.Frame.PickerHeight) + extraHeight)
+        let pickerContainerSourceFrame = CGRect(x: 0, y: hostFrame.height, width: hostFrame.width, height: CGFloat(Constants.Frame.PickerHeight) + extraHeight)
         pickerContainerView.frame = pickerContainerSourceFrame
         view.window?.addSubview(pickerContainerView)
         
         // Add toolbar
-        navigationBar.frame = CGRectMake(0, 0, CGRectGetWidth(hostFrame), CGFloat(Constants.Frame.NavigationBarHeight))
+        navigationBar.frame = CGRect(x: 0, y: 0, width: hostFrame.width, height: CGFloat(Constants.Frame.NavigationBarHeight))
         pickerContainerView.addSubview(navigationBar)
         
-        let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+        let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         spacer.width = 15
         
         let navigationItem = UINavigationItem()
         navigationItem.title = title
         navigationItem.leftBarButtonItems = [spacer, cancelButtonItem]
         navigationItem.rightBarButtonItems = [spacer, okButtonItem]
-        navigationBar.pushNavigationItem(navigationItem, animated: false)
+        navigationBar.pushItem(navigationItem, animated: false)
         
         if let headerView = headerView {
             
-            headerView.frame = CGRectMake(0, CGRectGetMaxY(navigationBar.frame), CGRectGetWidth(hostFrame), CGFloat(Constants.Frame.NavigationBarHeight))
+            headerView.frame = CGRect(x: 0, y: navigationBar.frame.maxY, width: hostFrame.width, height: CGFloat(Constants.Frame.NavigationBarHeight))
             pickerContainerView.addSubview(headerView)
         }
         
-        let pickerViewFrame = CGRectMake(0, CGFloat(Constants.Frame.NavigationBarHeight) + extraHeight, CGRectGetWidth(hostFrame), CGFloat(Constants.Frame.PickerViewHeight))
-        if type == .Single || type == .MultiColumn {
+        let pickerViewFrame = CGRect(x: 0, y: CGFloat(Constants.Frame.NavigationBarHeight) + extraHeight, width: hostFrame.width, height: CGFloat(Constants.Frame.PickerViewHeight))
+        if type == .single || type == .multiColumn {
             pickerView?.frame = pickerViewFrame
             pickerContainerView.addSubview(pickerView!)
         }
-        else if type == .Date {
+        else if type == .date {
             datePicker?.frame = pickerViewFrame
             pickerContainerView.addSubview(datePicker!)
         }
         
-        UIView.animateWithDuration(Constants.Animation.Duration, animations: {
+        UIView.animate(withDuration: Constants.Animation.Duration, animations: {
             self.overlayLayerView.alpha = 1.0
         })
         
-        let pickerContainerDestinationFrame = CGRectMake(0, CGRectGetHeight(hostFrame) - CGFloat(Constants.Frame.PickerHeight) - extraHeight, CGRectGetWidth(hostFrame), CGFloat(Constants.Frame.PickerHeight) + extraHeight)
-        UIView.animateWithDuration(Constants.Animation.Duration, delay: 0, options: [.CurveEaseOut], animations: {
+        let pickerContainerDestinationFrame = CGRect(x: 0, y: hostFrame.height - CGFloat(Constants.Frame.PickerHeight) - extraHeight, width: hostFrame.width, height: CGFloat(Constants.Frame.PickerHeight) + extraHeight)
+        UIView.animate(withDuration: Constants.Animation.Duration, delay: 0, options: [.curveEaseOut], animations: {
             self.pickerContainerView.frame = pickerContainerDestinationFrame
         }, completion: nil)
     }
     
-    public func dismissPickerView() {
+    open func dismissPickerView() {
         
-        let pickerContainerDestinationFrame = CGRectMake(0, pickerContainerView.frame.origin.y + CGFloat(Constants.Frame.PickerHeight), pickerContainerView.frame.size.width, CGFloat(Constants.Frame.PickerHeight))
+        let pickerContainerDestinationFrame = CGRect(x: 0, y: pickerContainerView.frame.origin.y + CGFloat(Constants.Frame.PickerHeight), width: pickerContainerView.frame.size.width, height: CGFloat(Constants.Frame.PickerHeight))
         
-        UIView.animateWithDuration(Constants.Animation.Duration, animations: {
+        UIView.animate(withDuration: Constants.Animation.Duration, animations: {
             self.overlayLayerView.alpha = 0
         }, completion: { finished in
             self.overlayLayerView.removeFromSuperview()
@@ -264,16 +264,16 @@ public class PickerControl: NSObject {
             }
         })
         
-        UIView.animateWithDuration(Constants.Animation.Duration, delay: 0, options: [.CurveEaseIn], animations: {
+        UIView.animate(withDuration: Constants.Animation.Duration, delay: 0, options: [.curveEaseIn], animations: {
             self.pickerContainerView.frame = pickerContainerDestinationFrame
         }, completion: { finished in
             self.pickerContainerView.removeFromSuperview()
         })
     }
     
-    public func selectValue(value: PickerItemProtocol) {
+    open func selectValue(_ value: PickerItemProtocol) {
         
-        if type != .Single {
+        if type != .single {
             return
         }
         
@@ -286,9 +286,9 @@ public class PickerControl: NSObject {
         }
     }
     
-    public func selectValue(value: PickerItemProtocol, component: Int) {
+    open func selectValue(_ value: PickerItemProtocol, component: Int) {
         
-        if type != .MultiColumn {
+        if type != .multiColumn {
             return
         }
         
@@ -302,27 +302,27 @@ public class PickerControl: NSObject {
         }
     }
     
-    public func selectValue(index: Int) {
+    open func selectValue(_ index: Int) {
         
-        if type != .Single {
+        if type != .single {
             return
         }
         
         pickerView?.selectRow(index, inComponent: 0, animated: false)
     }
     
-    public func selectValue(index: Int, component: Int) {
+    open func selectValue(_ index: Int, component: Int) {
         
-        if type != .MultiColumn {
+        if type != .multiColumn {
             return
         }
         
         pickerView?.selectRow(index, inComponent: component, animated: false)
     }
     
-    public func selectDate(date: NSDate) {
+    open func selectDate(_ date: Date) {
         
-        if type != .Date {
+        if type != .date {
             return
         }
         
@@ -331,31 +331,31 @@ public class PickerControl: NSObject {
     
     // MARK: Private methods
     
-    private func updateSelection() {
+    fileprivate func updateSelection() {
         
-        if type == .Single {
+        if type == .single {
             
             if items.count == 0 {
                 return
             }
             
-            let index = pickerView!.selectedRowInComponent(0)
+            let index = pickerView!.selectedRow(inComponent: 0)
             let item = items[index]
             selection = item
         }
-        else if type == .MultiColumn {
+        else if type == .multiColumn {
             
             if components.count == 0 {
                 return
             }
             
             for columnIndex in 0 ..< pickerView!.numberOfComponents {
-                let rowIndex = pickerView!.selectedRowInComponent(columnIndex)
+                let rowIndex = pickerView!.selectedRow(inComponent: columnIndex)
                 let item = components[columnIndex][rowIndex]
                 selections[columnIndex] = item
             }
         }
-        else if type == .Date {
+        else if type == .date {
             
             dateSelection = datePicker?.date
         }
@@ -377,15 +377,15 @@ public class PickerControl: NSObject {
         
         updateSelection()
         
-        if type == .Single {
+        if type == .single {
             
             selectCallback?(self, selection)
         }
-        else if type == .MultiColumn {
+        else if type == .multiColumn {
             
             selectCallback?(self, selections)
         }
-        else if type == .Date {
+        else if type == .date {
             
             selectCallback?(self, dateSelection)
         }
@@ -396,24 +396,24 @@ public class PickerControl: NSObject {
 
 extension PickerControl: UIPickerViewDataSource {
     
-    @objc public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    @objc public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
-        if type == .Single {
+        if type == .single {
             return 1
         }
-        else if type == .MultiColumn {
+        else if type == .multiColumn {
             return components.count
         }
         
         return 0
     }
     
-    @objc public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    @objc public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        if type == .Single {
+        if type == .single {
             return items.count
         }
-        else if type == .MultiColumn {
+        else if type == .multiColumn {
             let column = components[component]
             return column.count
         }
@@ -421,14 +421,14 @@ extension PickerControl: UIPickerViewDataSource {
         return 0
     }
     
-    @objc public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    @objc public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        if type == .Single {
+        if type == .single {
             
             let item = items[row]
             return item.title
         }
-        else if type == .MultiColumn {
+        else if type == .multiColumn {
             
             let column = components[component]
             let item = column[row]
@@ -441,7 +441,7 @@ extension PickerControl: UIPickerViewDataSource {
 
 extension PickerControl: UIPickerViewDelegate {
     
-    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         updateSelection()
     }
@@ -449,9 +449,9 @@ extension PickerControl: UIPickerViewDelegate {
 
 extension PickerControl: UIToolbarDelegate {
     
-    public func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+    public func position(for bar: UIBarPositioning) -> UIBarPosition {
         
-        return .Top
+        return .top
     }
 }
 

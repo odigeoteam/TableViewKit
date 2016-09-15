@@ -9,55 +9,47 @@
 import Foundation
 
 public protocol Item: class {
+    
     var drawer: CellDrawer.Type { get }
+    var height: Height? { get }
 
-    var height: ImmutableMutableHeight? { get }
+    func indexPath(in manager: TableViewManager) -> IndexPath?
+    func section(in manager: TableViewManager) -> Section?
 
-    func indexPath(inManager manager: TableViewManager) -> NSIndexPath?
-    func section(inManager manager: TableViewManager) -> Section?
-
-    func reloadRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
-    func deleteRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation)
+    func reload(in manager: TableViewManager, with animation: UITableViewRowAnimation)
 }
 
 extension Item {
 
-    public var height: ImmutableMutableHeight? {
-        return .mutable(44.0)
+    public var height: Height? {
+        return .dynamic(44.0)
     }
 
-    public func section(inManager manager: TableViewManager) -> Section? {
-        guard let indexPath = self.indexPath(inManager: manager) else { return nil }
+    public func section(in manager: TableViewManager) -> Section? {
+        guard let indexPath = self.indexPath(in: manager) else { return nil }
         return manager.sections[indexPath.section]
     }
 
-    public func indexPath(inManager manager: TableViewManager) -> NSIndexPath? {
+    public func indexPath(in manager: TableViewManager) -> IndexPath? {
         for section in manager.sections {
             guard
-                let sectionIndex = section.index(inManager: manager),
-                let rowIndex = section.items.indexOf(self) else { continue }
-            return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+                let sectionIndex = section.index(in: manager),
+                let rowIndex = section.items.index(of: self) else { continue }
+            return IndexPath(row: rowIndex, section: sectionIndex)
         }
         return nil
     }
 
-    public func reloadRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation) {
-
-        if let itemIndexPath = indexPath(inManager: manager) {
-            manager.tableView.reloadRowsAtIndexPaths([itemIndexPath], withRowAnimation: animation)
-        }
+    public func reload(in manager: TableViewManager, with animation: UITableViewRowAnimation = .automatic) {
+        guard let indexPath = self.indexPath(in: manager) else { return }
+        let section = manager.sections[indexPath.section]
+        section.items.callback?(.updates([indexPath.row]))
     }
 
-    public func deleteRow(inManager manager: TableViewManager, withAnimation animation: UITableViewRowAnimation) {
-
-        if let itemIndexPath = indexPath(inManager: manager) {
-            manager.tableView.deleteRowsAtIndexPaths([itemIndexPath], withRowAnimation: animation)
-        }
-    }
 }
 
-extension CollectionType where Generator.Element == Item {
-    func indexOf(element: Generator.Element) -> Index? {
-        return indexOf({ $0 === element })
+public extension Collection where Iterator.Element == Item {
+    func index(of element: Iterator.Element) -> Index? {
+        return index(where: { $0 === element })
     }
 }

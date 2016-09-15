@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="247" id="FdI-MG-4Oz" customClass="HelpCenterCell" customModule="TableViewKit_VIPER" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="247"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FdI-MG-4Oz" id="a19-No-Ph5">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="246"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" image="help_Center_icon" translatesAutoresizingMaskIntoConstraints="NO" id="yuU-FT-6hG">
+                        <rect key="frame" x="15" y="15" width="44" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="Aun-3A-NjZ"/>
+                            <constraint firstAttribute="height" constant="44" id="Qhx-M6-iFT"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="jvU-kf-Sau"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="t3x-Kc-52k"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find the answers to your questions" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="rgT-Uk-1bd">
+                        <rect key="frame" x="72" y="16" width="221" height="41"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="41" id="bkK-gH-zye"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0w6-WP-JJh">
+                        <rect key="frame" x="40" y="170" width="240" height="50"/>
+                        <color key="backgroundColor" red="0.066144135181829711" green="0.29433277970387828" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="EQ5-ZC-ERU"/>
+                            <constraint firstAttribute="height" constant="50" id="Kcn-qu-RBu"/>
+                            <constraint firstAttribute="width" constant="240" id="jKM-Fm-eNq"/>
+                        </constraints>
+                        <state key="normal" title="Help Center">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="helpCenterButtonSelected" destination="FdI-MG-4Oz" eventType="touchUpInside" id="1wp-QO-vZC"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="ieZ-1c-rwC">
+                        <rect key="frame" x="66" y="78" width="189" height="71"/>
+                        <string key="text">Check my booking status Check my flights
+Check my baggage allowance</string>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="0w6-WP-JJh" secondAttribute="bottom" constant="18" id="4M5-8m-yNG"/>
+                    <constraint firstItem="0w6-WP-JJh" firstAttribute="centerX" secondItem="a19-No-Ph5" secondAttribute="centerX" id="8LJ-d0-L3E"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="rgT-Uk-1bd" secondAttribute="trailing" constant="19" id="A8X-QY-Znp"/>
+                    <constraint firstItem="rgT-Uk-1bd" firstAttribute="leading" secondItem="yuU-FT-6hG" secondAttribute="trailing" constant="13" id="G8h-Ah-LQy"/>
+                    <constraint firstItem="yuU-FT-6hG" firstAttribute="top" secondItem="a19-No-Ph5" secondAttribute="topMargin" constant="7" id="KsX-Pc-aad"/>
+                    <constraint firstItem="0w6-WP-JJh" firstAttribute="top" secondItem="ieZ-1c-rwC" secondAttribute="bottom" constant="21" id="bsj-uh-VWS"/>
+                    <constraint firstItem="yuU-FT-6hG" firstAttribute="leading" secondItem="a19-No-Ph5" secondAttribute="leadingMargin" constant="7" id="deR-ab-ftl"/>
+                    <constraint firstItem="ieZ-1c-rwC" firstAttribute="top" secondItem="rgT-Uk-1bd" secondAttribute="bottom" constant="20" id="faX-wG-Is0"/>
+                    <constraint firstItem="rgT-Uk-1bd" firstAttribute="top" secondItem="a19-No-Ph5" secondAttribute="topMargin" constant="8" id="ouV-Hg-zqZ"/>
+                    <constraint firstItem="ieZ-1c-rwC" firstAttribute="top" secondItem="yuU-FT-6hG" secondAttribute="bottom" constant="19" id="t0v-Qb-mrW"/>
+                    <constraint firstItem="ieZ-1c-rwC" firstAttribute="centerX" secondItem="a19-No-Ph5" secondAttribute="centerX" id="ueL-QW-JLG"/>
+                    <constraint firstItem="0w6-WP-JJh" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ieZ-1c-rwC" secondAttribute="bottom" constant="20" id="w0G-VV-Gmj"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="faX-wG-Is0"/>
+                        <exclude reference="w0G-VV-Gmj"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="detailLabel" destination="ieZ-1c-rwC" id="MZ3-j0-dUS"/>
+                <outlet property="helpCenterButton" destination="0w6-WP-JJh" id="zdc-n2-Guc"/>
+                <outlet property="titleLabel" destination="rgT-Uk-1bd" id="ohd-BA-FNV"/>
+            </connections>
+            <point key="canvasLocation" x="507" y="358.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="help_Center_icon" width="44" height="44"/>
+    </resources>
+</document>
