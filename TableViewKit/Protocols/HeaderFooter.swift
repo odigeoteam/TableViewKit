@@ -8,7 +8,13 @@
 
 import Foundation
 
-public enum HeaderFooterView: NilLiteralConvertible, Equatable {
+/// A type for a header or a footer that rapresent, if its' present,
+/// if it's a simple `title` or if it's a custom `view`
+///
+/// - title: A simple `title`
+/// - view:  A custom `view`
+/// - none:  A empty header/footer
+public enum HeaderFooterView: ExpressibleByNilLiteral {
     case title(String)
     case view(HeaderFooter)
     case none
@@ -17,20 +23,9 @@ public enum HeaderFooterView: NilLiteralConvertible, Equatable {
         self = .none
     }
 }
-public func == (lhs: HeaderFooterView, rhs: HeaderFooterView) -> Bool {
-    switch (lhs, rhs) {
-    case (.none, .none):
-        return true
-    case (.view(let lhs), .view(let rhs)):
-        return lhs === rhs
-    case (.title(let lhs), .title(let rhs)):
-        return lhs == rhs
-    default:
-        return false
-    }
-}
 
+/// A type that it's associated to header/footer drawer
 public protocol HeaderFooter: class {
     var drawer: HeaderFooterDrawer.Type { get }
-    var height: ImmutableMutableHeight? { get }
+    var height: Height? { get }
 }

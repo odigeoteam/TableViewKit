@@ -10,23 +10,18 @@ import Foundation
 
 public enum HeaderFooterType {
 
-    case Nib(UINib, UITableViewHeaderFooterView.Type)
-    case Class(UITableViewHeaderFooterView.Type)
+    case nib(UINib, UITableViewHeaderFooterView.Type)
+    case `class`(UITableViewHeaderFooterView.Type)
 
     public var reusableIdentifier: String {
-        switch self {
-        case .Class(let cellClass):
-            return String(cellClass)
-        case .Nib(_, let cellClass):
-            return String(cellClass)
-        }
+        return String(describing: cellClass)
     }
 
     public var cellClass: UITableViewHeaderFooterView.Type {
         switch self {
-        case .Class(let cellClass):
+        case .class(let cellClass):
             return cellClass
-        case .Nib(_, let cellClass):
+        case .nib(_, let cellClass):
             return cellClass
         }
     }

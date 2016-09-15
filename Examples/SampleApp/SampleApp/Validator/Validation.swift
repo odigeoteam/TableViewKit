@@ -13,19 +13,19 @@ struct AnyValidatable<Input>: Validatable {
     let rule: Any
     let error: NSError?
 
-    init<R: Validatable where R.Input == Input>(base: R) {
+    init<R: Validatable>(base: R) where R.Input == Input {
         self.testContainer = base.test
         self.rule = base
         self.error = base.error
     }
 
-    func test(validationContent: Input) -> Bool {
+    func test(_ validationContent: Input) -> Bool {
         return self.testContainer(validationContent)
     }
 
 }
 
-public class Validation<Input> {
+open class Validation<Input> {
     let forInput: () -> Input
     let identifier: Any?
     var rules: [AnyValidatable<Input>] = []
@@ -39,23 +39,23 @@ public class Validation<Input> {
         }
     }
 
-    public init(forInput: () -> Input, withIdentifier identifier: Any? = nil) {
+    public init(forInput: @escaping () -> Input, withIdentifier identifier: Any? = nil) {
         self.forInput = forInput
         self.identifier = identifier
     }
 
-    public init<C: ContentValidatable where C.Input == Input>(forInput input: C, withIdentifier identifier: Any? = nil) {
+    public init<C: ContentValidatable>(forInput input: C, withIdentifier identifier: Any? = nil) where C.Input == Input {
         self.forInput = { input.validationContent }
         self.identifier = identifier
     }
 
-    public init<R: Validatable where R.Input == Input>(forInput: () -> Input, withIdentifier identifier: Any? = nil, rule: R) {
+    public init<R: Validatable>(forInput: @escaping () -> Input, withIdentifier identifier: Any? = nil, rule: R) where R.Input == Input {
         self.forInput = forInput
         self.identifier = identifier
         self.rules.append(AnyValidatable.init(base: rule))
     }
 
-    public func add<R: Validatable where R.Input == Input>(rule rule: R) {
+    open func add<R: Validatable>(rule: R) where R.Input == Input {
         self.rules.append(AnyValidatable.init(base: rule))
     }
 }

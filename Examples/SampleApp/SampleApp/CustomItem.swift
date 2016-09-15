@@ -12,9 +12,9 @@ import TableViewKit
 
 public class CustomDrawer: CellDrawer {
     
-    static public var cellType = CellType.Class(BaseCell.self)
+    static public var type = CellType.class(UITableViewCell.self)
     
-    static public func draw(cell: BaseCell, withItem item: Any) {
+    static public func draw(_ cell: UITableViewCell, with item: Any) {
         let item = item as! CustomItem
         cell.accessoryType = item.accessoryType
         cell.accessoryView = item.accessoryView
@@ -29,8 +29,8 @@ public class CustomItem: Selectable, Item {
     
     public var onSelection: (Selectable) -> () = { _ in }
     
-    public var cellStyle: UITableViewCellStyle = .Default
-    public var accessoryType: UITableViewCellAccessoryType = .None
+    public var cellStyle: UITableViewCellStyle = .default
+    public var accessoryType: UITableViewCellAccessoryType = .none
     public var accessoryView: UIView?
     public var cellHeight: CGFloat? = UITableViewAutomaticDimension
     

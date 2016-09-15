@@ -11,22 +11,22 @@ import Foundation
 public protocol Selectable: Item {
     var onSelection: (Selectable) -> () { get set }
 
-    func selectRow(inManager manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition)
-    func deselectRow(inManager manager: TableViewManager, animated: Bool)
+    func select(in manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition)
+    func deselect(in manager: TableViewManager, animated: Bool)
 }
 
 extension Selectable {
 
-    public func selectRow(inManager manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) {
+    public func select(in manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
 
-        manager.tableView.selectRowAtIndexPath(indexPath(inManager: manager), animated: animated, scrollPosition: scrollPosition)
+        manager.tableView.selectRow(at: indexPath(in: manager), animated: animated, scrollPosition: scrollPosition)
+        manager.tableView(manager.tableView, didSelectRowAt: indexPath(in: manager)!)
     }
 
-    public func deselectRow(inManager manager: TableViewManager, animated: Bool) {
-
-        if let itemIndexPath = indexPath(inManager: manager) {
-            manager.tableView.deselectRowAtIndexPath(itemIndexPath, animated: animated)
-        }
+    public func deselect(in manager: TableViewManager, animated: Bool) {
+        guard let indexPath = indexPath(in: manager) else { return }
+        
+        manager.tableView.deselectRow(at: indexPath, animated: animated)
     }
 
 }

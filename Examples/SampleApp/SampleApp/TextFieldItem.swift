@@ -9,7 +9,9 @@
 import Foundation
 import TableViewKit
 
-public class TextFieldCell: BaseCell {
+public class TextFieldCell: UITableViewCell, ItemCompatible, ActionBarDelegate {
+    
+    public var item: Item?
     
     public var textFieldItem: TextFieldItem {
         get {
@@ -23,25 +25,42 @@ public class TextFieldCell: BaseCell {
         
         super.awakeFromNib()
         
-        selectionStyle = .None
-        responder = textField
+        selectionStyle = .none
         
-        textField.addTarget(self, action: #selector(onTextChange), forControlEvents: .EditingChanged)
-        textField.inputAccessoryView = actionBar
+        textField.addTarget(self, action: #selector(onTextChange), for: .editingChanged)
+        textField.inputAccessoryView = ActionBar(delegate: self)
+
     }
     
     public func onTextChange(textField: UITextField) {
         textFieldItem.value = textField.text
+    }
+    
+    public func actionBar(_ actionBar: ActionBar, direction: Direction)  {
+        textFieldItem.actionBarDelegate.actionBar(actionBar, direction: direction)
+    }
+    public func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem) {
+        textField.resignFirstResponder()
+    }
+    
+    override open var isFirstResponder: Bool {
+        get {
+            return textField.isFirstResponder
+        }
+    }
+    
+    override open func becomeFirstResponder() -> Bool {
+        return textField.becomeFirstResponder()
     }
 
 }
 
 public class TextFieldDrawer: CellDrawer {
     
-    public static let nib = UINib(nibName: String(TextFieldCell.self), bundle: nil)
-    public static let cellType = CellType.Nib(TextFieldDrawer.nib, TextFieldCell.self)
+    public static let nib = UINib(nibName: String(describing: TextFieldCell.self), bundle: nil)
+    public static let type = CellType.nib(TextFieldDrawer.nib, TextFieldCell.self)
     
-    public static func draw(cell: BaseCell, withItem item: Any) {
+    public static func draw(_ cell: UITableViewCell, with item: Any) {
         
         let textCell = cell as! TextFieldCell
         let textItem = item as! TextFieldItem
@@ -51,7 +70,7 @@ public class TextFieldDrawer: CellDrawer {
     }
 }
 
-public class TextFieldItem: Item, ContentValidatable, Validationable {
+public class TextFieldItem: UIResponder, Item, ContentValidatable, Validationable {
         
     public var drawer: CellDrawer.Type = TextFieldDrawer.self
     
@@ -62,13 +81,22 @@ public class TextFieldItem: Item, ContentValidatable, Validationable {
     public var placeHolder: String?
     public var value: String?
     
-    public init(placeHolder: String?) {
+    fileprivate let actionBarDelegate: ActionBarDelegate
+    
+    public init(placeHolder: String?, actionBarDelegate: ActionBarDelegate) {
         self.placeHolder = placeHolder
+        self.actionBarDelegate = actionBarDelegate
     }
     
     public var validationContent: String? {
         get {
             return value
+        }
+    }
+    
+    override open var canBecomeFirstResponder: Bool {
+        get {
+            return true
         }
     }
 }

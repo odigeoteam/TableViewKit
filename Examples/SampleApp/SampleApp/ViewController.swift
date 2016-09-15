@@ -24,12 +24,12 @@ class FirstSection: Section {
             items.replace(with: states[currentState.rawValue])
         }
     }
-
+    
     let vc: ViewController
     
     internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "First Section"))
     internal var footer: HeaderFooterView = .view(CustomHeaderItem(title: "Section Footer\nHola"))
-
+    
     required init(vc: ViewController) {
         self.vc = vc
         
@@ -38,72 +38,89 @@ class FirstSection: Section {
         let item3 = CustomItem(title: "Testing 2")
         let dateItem = CustomItem(title: "Birthday")
         let selectionItem = CustomItem(title: "Selection")
-        let textFieldItem = TextFieldItem(placeHolder: "Name")
+        let textFieldItem = TextFieldItem(placeHolder: "Name", actionBarDelegate: vc.actionBarManager)
         textFieldItem.validation.add(rule: ExistRule())
-        let textFieldItem2 = TextFieldItem(placeHolder: "Surname")
+        let textFieldItem2 = TextFieldItem(placeHolder: "Surname", actionBarDelegate: vc.actionBarManager)
         textFieldItem2.validation.add(rule: ExistRule())
         
         item.onSelection = { item in
-            item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+            item.deselect(in: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
-        dateItem.accessoryType = .DisclosureIndicator
+        dateItem.accessoryType = .disclosureIndicator
         dateItem.onSelection = { item in
-            item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+            item.deselect(in: self.vc.tableViewManager, animated: true)
             self.vc.showDatePickerControl()
         }
-        selectionItem.accessoryType = .DisclosureIndicator
+        selectionItem.accessoryType = .disclosureIndicator
         selectionItem.onSelection = { item in
-            item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+            item.deselect(in: self.vc.tableViewManager, animated: true)
             self.vc.showPickerControl()
         }
         
-        states.insert([item, dateItem, selectionItem, textFieldItem, textFieldItem2], atIndex: State.preParty.rawValue)
-        states.insert([item2, selectionItem, dateItem, item3, textFieldItem2, textFieldItem], atIndex: State.onParty.rawValue)
-        states.insert([item2], atIndex: State.afterParty.rawValue)
+        states.insert([item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: State.preParty.rawValue)
+        states.insert([item2, selectionItem, dateItem, item3, textFieldItem2, textFieldItem], at: State.onParty.rawValue)
+        states.insert([item2], at: State.afterParty.rawValue)
         swap(to: .preParty)
     }
     
     func swap(to newState: State) {
         currentState = newState
     }
-
+    
 }
 
 class SecondSection: Section {
     var items: ObservableArray<Item> = []
-
+    
     internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "Second Section"))
     
     let vc: ViewController
-
+    
     required init(vc: ViewController) {
         self.vc = vc
         
         let total: [Int] = Array(1...100)
         let items = total.map({ (index) -> Item in
             if (index % 2 == 0) {
-                let item = TextFieldItem(placeHolder: "Textfield \(index)")
+                let item = TextFieldItem(placeHolder: "Textfield \(index)", actionBarDelegate: vc.actionBarManager)
                 return item
             } else {
                 let item = CustomItem(title: "Label  \(index)")
                 item.onSelection = { item in
-                    item.deselectRow(inManager: self.vc.tableViewManager, animated: true)
+                    item.deselect(in: self.vc.tableViewManager, animated: true)
                 }
                 return item
             }
         })
-        self.items.insertContentsOf(items, at: 0)
+        self.items.insert(contentsOf: items, at: 0)
     }
 }
 
-class ViewController: UITableViewController {
-    
-    var tableViewManager: TableViewManager!
-    var pickerControl: PickerControl?
-    
-    var firstSection: FirstSection!
+protocol TableViewManagerCompatible {
+    var tableViewManager: TableViewManager! { get }
+}
 
+class ViewController: UIViewController, TableViewManagerCompatible {
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableViewManager = TableViewManager(tableView: tableView)
+        }
+    }
+    
+    var tableViewManager: TableViewManager! {
+        didSet {
+            actionBarManager = ActionBarManager(manager: tableViewManager)
+        }
+    }
+    var actionBarManager: ActionBarManager!
+    var validator: ValidatorManager<String?> = ValidatorManager()
+
+    
+    var pickerControl: PickerControl?
+
+    var firstSection: FirstSection!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -112,16 +129,24 @@ class ViewController: UITableViewController {
         self.tableView.sectionFooterHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedSectionHeaderHeight = 100;
         self.tableView.estimatedSectionFooterHeight = 100;
-
-
-        firstSection = FirstSection(vc: self)
-        tableViewManager = TableViewManager(tableView: self.tableView, sections: [firstSection, SecondSection(vc: self)])
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .Plain, target: self, action: #selector(validationAction))
-    }
+        
+        firstSection = FirstSection(vc: self)
+        tableViewManager.sections.append(firstSection)
+        tableViewManager.sections.append(SecondSection(vc: self))
+        
+        // TODO think about a better way to handle self registration
+        // In this way we do not take in consideration when the items changes
+        tableViewManager.sections
+            .flatMap { $0.items }
+            .flatMap { $0 as? Validationable }
+            .forEach { validator.add(validation: $0.validation) }
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Validate", style: .plain, target: self, action: #selector(validationAction))
+    }
     
-    private func showPickerControl() {
+    
+    fileprivate func showPickerControl() {
         
         var elements = [PickerItem]()
         
@@ -138,28 +163,31 @@ class ViewController: UITableViewController {
         self.pickerControl = pickerControl
     }
     
-    private func showDatePickerControl() {
+    fileprivate func showDatePickerControl() {
         
-        let toDate = NSCalendar.currentCalendar().dateByAddingUnit(.Year, value: 1, toDate: NSDate(), options: NSCalendarOptions.MatchNextTime)!
-        let pickerDateControl = PickerControl(datePickerMode: .Date, fromDate: NSDate(), toDate: toDate, minuteInterval: 0, selectCallback: { pickerControl, date in
+        let toDate = Calendar.current.date(byAdding: .year, value: 1, to: Date())!
+        let pickerDateControl = PickerControl(datePickerMode: .date, fromDate: Date(), toDate: toDate, minuteInterval: 0, selectCallback: { pickerControl, date in
             
             pickerControl.dismissPickerView()
             print(date)
             
             self.pickerControl = nil
             
-        }, cancelCallback: nil)
+            }, cancelCallback: nil)
         pickerDateControl.presentPickerOnView(view)
         
         pickerControl = pickerDateControl
     }
     
-    @objc private func validationAction() {
+    @objc fileprivate func validationAction() {
         firstSection.swap(to: firstSection.currentState == .preParty ? .onParty : .afterParty)
-        guard let error = tableViewManager.errors.first else { return }
+        guard let error = validator.errors.first else {
+            print("No errors")
+            return
+        }
         print(error)
-        
     }
+
 }
 
 

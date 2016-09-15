@@ -16,7 +16,13 @@
 		CC19AB271D7DAB7F00B8B196 /* PickerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC19AB261D7DAB7F00B8B196 /* PickerControl.swift */; };
 		CC28B4091D7D060B00B7CA97 /* CustomHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC28B4081D7D060B00B7CA97 /* CustomHeaderFooterView.xib */; };
 		CC28B40B1D7D064700B7CA97 /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC28B40A1D7D064700B7CA97 /* CustomHeader.swift */; };
+		CC2B23AE1D84DF4B0025CDF8 /* ActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B23AD1D84DF4B0025CDF8 /* ActionBar.swift */; };
 		CC5234581D730EF500F312E7 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5234571D730EF500F312E7 /* SelectionViewController.swift */; };
+		CCBD2FBC1D87344E00C61DCC /* ActionBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBD2FBB1D87344E00C61DCC /* ActionBarManager.swift */; };
+		CCBD2FC21D874BBA00C61DCC /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBD2FBE1D874BBA00C61DCC /* Rules.swift */; };
+		CCBD2FC31D874BBA00C61DCC /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBD2FBF1D874BBA00C61DCC /* Validation.swift */; };
+		CCBD2FC41D874BBA00C61DCC /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBD2FC01D874BBA00C61DCC /* ValidationError.swift */; };
+		CCBD2FC51D874BBA00C61DCC /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBD2FC11D874BBA00C61DCC /* Validator.swift */; };
 		CCDDB6971D7DA9CB006C0F9F /* CustomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDDB6951D7DA9CB006C0F9F /* CustomItem.swift */; };
 		CCDDB6981D7DA9CB006C0F9F /* TextFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDDB6961D7DA9CB006C0F9F /* TextFieldItem.swift */; };
 		CCDDB69A1D7DA9DE006C0F9F /* TextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCDDB6991D7DA9DE006C0F9F /* TextFieldCell.xib */; };
@@ -46,7 +52,13 @@
 		CC19AB261D7DAB7F00B8B196 /* PickerControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerControl.swift; sourceTree = "<group>"; };
 		CC28B4081D7D060B00B7CA97 /* CustomHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomHeaderFooterView.xib; sourceTree = "<group>"; };
 		CC28B40A1D7D064700B7CA97 /* CustomHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
+		CC2B23AD1D84DF4B0025CDF8 /* ActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionBar.swift; path = ActionBar/ActionBar.swift; sourceTree = "<group>"; };
 		CC5234571D730EF500F312E7 /* SelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
+		CCBD2FBB1D87344E00C61DCC /* ActionBarManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionBarManager.swift; path = ActionBar/ActionBarManager.swift; sourceTree = "<group>"; };
+		CCBD2FBE1D874BBA00C61DCC /* Rules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
+		CCBD2FBF1D874BBA00C61DCC /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
+		CCBD2FC01D874BBA00C61DCC /* ValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
+		CCBD2FC11D874BBA00C61DCC /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		CCDDB6951D7DA9CB006C0F9F /* CustomItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomItem.swift; sourceTree = "<group>"; };
 		CCDDB6961D7DA9CB006C0F9F /* TextFieldItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldItem.swift; sourceTree = "<group>"; };
 		CCDDB6991D7DA9DE006C0F9F /* TextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextFieldCell.xib; sourceTree = "<group>"; };
@@ -96,6 +108,8 @@
 		257F72C31D07204A00F7B954 /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				CCBD2FBD1D874BBA00C61DCC /* Validator */,
+				CCBD2FC61D874BFC00C61DCC /* ActionBar */,
 				257F72C41D07204A00F7B954 /* AppDelegate.swift */,
 				CC5234571D730EF500F312E7 /* SelectionViewController.swift */,
 				257F72C61D07204A00F7B954 /* ViewController.swift */,
@@ -130,6 +144,26 @@
 				7CDC0D41A114704CCBFC8E1C /* Pods_SampleApp_SampleAppTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CCBD2FBD1D874BBA00C61DCC /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				CCBD2FBE1D874BBA00C61DCC /* Rules.swift */,
+				CCBD2FBF1D874BBA00C61DCC /* Validation.swift */,
+				CCBD2FC01D874BBA00C61DCC /* ValidationError.swift */,
+				CCBD2FC11D874BBA00C61DCC /* Validator.swift */,
+			);
+			path = Validator;
+			sourceTree = "<group>";
+		};
+		CCBD2FC61D874BFC00C61DCC /* ActionBar */ = {
+			isa = PBXGroup;
+			children = (
+				CC2B23AD1D84DF4B0025CDF8 /* ActionBar.swift */,
+				CCBD2FBB1D87344E00C61DCC /* ActionBarManager.swift */,
+			);
+			name = ActionBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,11 +214,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = ODIGEO;
 				TargetAttributes = {
 					257F72C01D07204A00F7B954 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7M6E9TXYGF;
+						LastSwiftMigration = 0800;
 					};
 					25FA9E171D24123100E2C899 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -288,11 +324,17 @@
 			files = (
 				CCDDB6981D7DA9CB006C0F9F /* TextFieldItem.swift in Sources */,
 				257F72C71D07204A00F7B954 /* ViewController.swift in Sources */,
+				CCBD2FC31D874BBA00C61DCC /* Validation.swift in Sources */,
 				CC28B40B1D7D064700B7CA97 /* CustomHeader.swift in Sources */,
+				CCBD2FC51D874BBA00C61DCC /* Validator.swift in Sources */,
 				CC5234581D730EF500F312E7 /* SelectionViewController.swift in Sources */,
+				CCBD2FC41D874BBA00C61DCC /* ValidationError.swift in Sources */,
 				CC19AB271D7DAB7F00B8B196 /* PickerControl.swift in Sources */,
+				CCBD2FBC1D87344E00C61DCC /* ActionBarManager.swift in Sources */,
+				CC2B23AE1D84DF4B0025CDF8 /* ActionBar.swift in Sources */,
 				257F72C51D07204A00F7B954 /* AppDelegate.swift in Sources */,
 				CCDDB6971D7DA9CB006C0F9F /* CustomItem.swift in Sources */,
+				CCBD2FC21D874BBA00C61DCC /* Rules.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,8 +389,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -392,8 +436,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -412,6 +458,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -420,14 +467,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 224FEB30105CBE2EBFFC9EE9 /* Pods-SampleApp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 7M6E9TXYGF;
 				INFOPLIST_FILE = "$(SRCROOT)/SampleApp/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.tableviewkit.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -435,13 +484,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D368DEDD0DD5DD15CD2C3F65 /* Pods-SampleApp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 7M6E9TXYGF;
 				INFOPLIST_FILE = "$(SRCROOT)/SampleApp/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.odigeo.tableviewkit.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

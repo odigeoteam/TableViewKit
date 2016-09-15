@@ -37,7 +37,7 @@ public class SelectionItem: SelectionItemProtocol {
     
     public var onSelection: (Selectable) -> () = { _ in }
     
-    public var accessoryType: UITableViewCellAccessoryType = .None
+    public var accessoryType: UITableViewCellAccessoryType = .none
     public var accessoryView: UIView?
     public var cellHeight: CGFloat? = UITableViewAutomaticDimension
     
@@ -67,7 +67,7 @@ public class SelectionViewController: UITableViewController {
         selectedItems = []
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         commonInit()
     }
@@ -98,7 +98,7 @@ public class SelectionViewController: UITableViewController {
         setupTaleViewItems()
     }
     
-    public override func viewWillDisappear(animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
         
@@ -113,14 +113,14 @@ public class SelectionViewController: UITableViewController {
     private func setupTaleViewItems() {
         
         let section = SelectionSection()
-        tableViewManager.sections.append(section)
+        tableViewManager.sections.insert(section, at: 0)
         
         for element in items {
             
             element.onSelection = { item in
-                self.toogleItemCheck(item as! SelectionItem)
+                self.toogleItemCheck(item: item as! SelectionItem)
             }
-            element.accessoryType = element.selected ? .Checkmark : .None
+            element.accessoryType = element.selected ? .checkmark : .none
             section.items.append(element)
         }
         
@@ -133,14 +133,14 @@ public class SelectionViewController: UITableViewController {
             
             if let checkedItem = itemSelected() {
                 checkedItem.selected = false
-                checkedItem.accessoryType = .None
-                checkedItem.reloadRow(inManager: tableViewManager, withAnimation: .Fade)
+                checkedItem.accessoryType = .none
+                checkedItem.reload(in: tableViewManager, with: .fade)
             }
         }
         
         item.selected = !item.selected
-        item.accessoryType = item.accessoryType == .Checkmark ? .None : .Checkmark
-        item.reloadRow(inManager: tableViewManager, withAnimation: .Fade)
+        item.accessoryType = item.accessoryType == .checkmark ? .none : .checkmark
+        item.reload(in: tableViewManager, with: .fade)
         
         fillSelected()
     }

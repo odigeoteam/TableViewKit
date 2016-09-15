@@ -1,11 +1,18 @@
-# TableViewKit
+<p align="center">
+<img src="Assets/logo.png" alt="TableViewKit" title="TableViewKit" width="600"/>
+</p>
+<p align="center">
+<a href="https://travis-ci.org/odigeoteam/TableViewKit"><img src="https://travis-ci.org/odigeoteam/TableViewKit.svg"></a>
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
+<a href="http://codecov.io/github/odigeoteam/TableViewKit"><img src="http://codecov.io/github/odigeoteam/TableViewKit/coverage.svg"></a>
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat"></a>
+<a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat"></a>
+</p>
 
-[![Build Status](https://travis-ci.org/JensRavens/Interstellar.svg)](https://travis-ci.org/odigeoteam/TableViewKit)
-
-TableViewKit allows to manage the content of a `UITableView`. `Strategy` pattern for draw cells.
+Empowering `UITableView` with painless multi-type cell support and build-in automatic state transition animations
 
 ## Requirements
-- Xcode 7 or higher
+- Xcode 8 or higher
 - iOS 8.0 or higher
 
 ## Installation
@@ -32,9 +39,3 @@ $ pod install
 - If you **found a bug**, open an issue.
 - If you **have a feature request**, open an issue.
 - If you **want to contribute**, submit a pull request.
-
-## Contact
-iOS Mobile Team ios-dev@odigeo.com
-
-## License
-TableViewKit is licensed under the `MIT` license. Check out the `LICENSE` file to learn more.

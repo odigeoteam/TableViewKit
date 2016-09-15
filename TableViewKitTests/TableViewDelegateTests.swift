@@ -15,11 +15,11 @@ class NoHeaderFooterSection: Section {
     
     convenience init(items: [Item]) {
         self.init()
-        self.items.insertContentsOf(items, at: 0)
+        self.items.insert(contentsOf: items, at: 0)
     }
 }
 
-public class CustomHeaderFooterView: UITableViewHeaderFooterView {
+class CustomHeaderFooterView: UITableViewHeaderFooterView {
     var label: UILabel = UILabel()
     
     override init(reuseIdentifier: String?) {
@@ -32,11 +32,11 @@ public class CustomHeaderFooterView: UITableViewHeaderFooterView {
 }
 
 
-public class CustomHeaderDrawer: HeaderFooterDrawer {
+class CustomHeaderDrawer: HeaderFooterDrawer {
     
-    static public var headerFooterType = HeaderFooterType.Class(CustomHeaderFooterView.self)
+    static public var type = HeaderFooterType.class(CustomHeaderFooterView.self)
     
-    static public func draw(view: UITableViewHeaderFooterView, withItem item: Any) {
+    static public func draw(_ view: UITableViewHeaderFooterView, with item: Any) {
         let item = item as! ViewHeaderFooter
         let view = view as! CustomHeaderFooterView
         view.label.text = item.title
@@ -44,10 +44,10 @@ public class CustomHeaderDrawer: HeaderFooterDrawer {
 }
 
 
-public class ViewHeaderFooter: HeaderFooter {
+class ViewHeaderFooter: HeaderFooter {
     
     public var title: String?
-    public var height: ImmutableMutableHeight? = ImmutableMutableHeight.mutable(44.0)
+    public var height: Height? = .dynamic(44.0)
     public var drawer: HeaderFooterDrawer.Type = CustomHeaderDrawer.self
     
     public init() { }
@@ -66,14 +66,14 @@ class ViewHeaderFooterSection: Section {
 
     convenience init(items: [Item]) {
         self.init()
-        self.items.insertContentsOf(items, at: 0)
+        self.items.insert(contentsOf: items, at: 0)
     }
 }
 
 class NoHeigthItem: Item {
     internal var drawer: CellDrawer.Type = TestDrawer.self
     
-    internal var height: ImmutableMutableHeight? = nil
+    internal var height: Height? = nil
 }
 
 class StaticHeigthItem: Item {
@@ -81,7 +81,17 @@ class StaticHeigthItem: Item {
     
     internal var drawer: CellDrawer.Type = TestDrawer.self
     
-    internal var height: ImmutableMutableHeight? = .immutable(20.0)
+    internal var height: Height? = .static(20.0)
+}
+
+class SelectableItem: Selectable, Item {
+    public var onSelection: (Selectable) -> ()
+    
+    internal var drawer: CellDrawer.Type = TestDrawer.self
+    
+    public init(callback: @escaping (Selectable) -> ()) {
+        onSelection = callback
+    }
 }
 
 
@@ -99,7 +109,6 @@ class TableViewDelegateTests: XCTestCase {
         
     }
     
-    
     override func tearDown() {
         tableViewManager = nil
         super.tearDown()
@@ -113,7 +122,6 @@ class TableViewDelegateTests: XCTestCase {
         
         height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForHeaderInSection: 1)
         expect(height).to(equal(tableViewManager.tableView.estimatedSectionHeaderHeight))
-
     }
     
     
@@ -135,10 +143,7 @@ class TableViewDelegateTests: XCTestCase {
         
         height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForFooterInSection: 2)
         expect(height).to(equal(44.0))
-
-
     }
-    
     
     func testHeightForFooter() {
         var height: CGFloat
@@ -148,48 +153,65 @@ class TableViewDelegateTests: XCTestCase {
         
         height = tableViewManager.tableView(tableViewManager.tableView, heightForFooterInSection: 2)
         expect(height).to(equal(UITableViewAutomaticDimension))
-
     }
-
-    
     
     func testEstimatedHeightForRowAtIndexPath() {
         var height: CGFloat
-        var indexPath: NSIndexPath
+        var indexPath: IndexPath
         
-        indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
+        indexPath = IndexPath(row: 0, section: 0)
+        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
         expect(height).to(equal(44.0))
-        
-        indexPath = NSIndexPath(forRow: 0, inSection: 1)
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
+
+        indexPath = IndexPath(row: 0, section: 1)
+        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
         expect(height).to(equal(tableViewManager.tableView.estimatedRowHeight))
-        
-        indexPath = NSIndexPath(forRow: 1, inSection: 1)
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAtIndexPath: indexPath)
+
+        indexPath = IndexPath(row: 1, section: 1)
+        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
         expect(height).to(equal(0.0))
-
-
     }
-    
     
     func testHeightForRowAtIndexPath() {
         var height: CGFloat
-        var indexPath: NSIndexPath
+        var indexPath: IndexPath
         
-        indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAtIndexPath: indexPath)
+        indexPath = IndexPath(row: 0, section: 0)
+        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
         expect(height).to(equal(UITableViewAutomaticDimension))
         
-        indexPath = NSIndexPath(forRow: 0, inSection: 1)
-        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAtIndexPath: indexPath)
+        indexPath = IndexPath(row: 0, section: 1)
+        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
         expect(height).to(equal(tableViewManager.tableView.rowHeight))
         
-        indexPath = NSIndexPath(forRow: 1, inSection: 1)
-        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAtIndexPath: indexPath)
+        indexPath = IndexPath(row: 1, section: 1)
+        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
         expect(height).to(equal(StaticHeigthItem.testStaticHeightValue))
+    }
+    
+    func testSelectRow() {
+        var indexPath: IndexPath
+        
+        indexPath = IndexPath(row: 0, section: 0)
+        tableViewManager.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
+        
+        var check = 0;
 
+        let section = tableViewManager.sections[0]
+        indexPath = IndexPath(row: section.items.count, section: 0)
+        let item = SelectableItem(callback: { _ in
+            check += 1
+        })
+        section.items.append(item)
+        
+        tableViewManager.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
+        expect(check).to(equal(1))
 
+        item.select(in: tableViewManager, animated: true)
+        expect(check).to(equal(2))
+        
+        item.deselect(in: tableViewManager, animated: true)
+        expect(check).to(equal(2))
     }
     
 }

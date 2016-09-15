@@ -1,15 +1,13 @@
 Pod::Spec.new do |s|
   s.name                    = "TableViewKit"
   s.version                 = "0.5.0"
-  s.summary                 = "TableView Kit Layer"
-  s.description             = "TableView Kit Layer"
+  s.summary                 = "Empowering UITableView with painless multi-type cell support and build-in automatic state transition animations"
   s.homepage                = "http://www.edreamsodigeo.com/"
-  s.license                 = "Copyright (c) 2014 eDreams ODIGEO. All rights reserved"
+  s.license                 = "MIT"
   s.author                  = { "iOS Mobile Team" => "ios-dev@odigeo.com" }
   s.ios.deployment_target   = "8.0"
-  s.source 						      = { :path => '.' }
+  s.source                  = { :git => 'https://github.com/odigeoteam/TableViewKit.git', :tag => "v#{s.version}" }
   s.source_files  				  = "TableViewKit/**/*.swift"
-  s.resource_bundles	 			= { "TableViewKit" => "TableViewKit/Resources/*.*" }
   s.framework  							= "UIKit", "Foundation"
   s.requires_arc 						= true
 end
