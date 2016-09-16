@@ -17,20 +17,32 @@ Empowering `UITableView` with painless multi-type cell support and build-in auto
 
 ## Installation
 
-### CocoaPods
-[CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects.
+#### CocoaPods
+You can use [CocoaPods](http://cocoapods.org/) to install `TableViewKit` by adding it to your `Podfile`:
 
-Add this to your Podspec:
+```ruby
+platform :ios, '8.0'
+use_frameworks!
+pod 'TableViewKit'
+```
+
+To get the full benefits import `TableViewKit` wherever you import UIKit
+
+``` swift
+import UIKit
+import TableViewKit
+```
+
+#### Carthage
+Create a `Cartfile` that lists the framework and run `carthage bootstrap`. Follow the [instructions](https://github.com/Carthage/Carthage#if-youre-building-for-ios) to add `$(SRCROOT)/Carthage/Build/iOS/TableViewKit.framework` to an iOS project.
 
 ```
-pod 'TableViewKit', :git => 'https://github.com/odigeoteam/TableViewKit.git'
+github "odigeoteam/TableViewKit"
 ```
 
-Then, run the following command:
-
-```bash
-$ pod install
-```
+#### Manually
+1. Download and drop ```/TableViewKit``` folder in your project.  
+2. Congratulations!  
 
 ## Usage
 
