@@ -14,6 +14,8 @@
 		257F72CF1D07204A00F7B954 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 257F72CD1D07204A00F7B954 /* LaunchScreen.storyboard */; };
 		9D2329D631C4931DA7A8E3BB /* Pods_SampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5F5834D7FA0FFA2AB599361 /* Pods_SampleApp.framework */; };
 		CC19AB271D7DAB7F00B8B196 /* PickerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC19AB261D7DAB7F00B8B196 /* PickerControl.swift */; };
+		CC272B571D8DA7620077658A /* Example1.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC272B561D8DA7620077658A /* Example1.swift */; };
+		CC272B591D8DAAF70077658A /* Example1.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC272B581D8DAAF70077658A /* Example1.xib */; };
 		CC28B4091D7D060B00B7CA97 /* CustomHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC28B4081D7D060B00B7CA97 /* CustomHeaderFooterView.xib */; };
 		CC28B40B1D7D064700B7CA97 /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC28B40A1D7D064700B7CA97 /* CustomHeader.swift */; };
 		CC2B23AE1D84DF4B0025CDF8 /* ActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B23AD1D84DF4B0025CDF8 /* ActionBar.swift */; };
@@ -50,6 +52,8 @@
 		25FA9E181D24123100E2C899 /* SampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDC0D41A114704CCBFC8E1C /* Pods_SampleApp_SampleAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleApp_SampleAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC19AB261D7DAB7F00B8B196 /* PickerControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerControl.swift; sourceTree = "<group>"; };
+		CC272B561D8DA7620077658A /* Example1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example1.swift; sourceTree = "<group>"; };
+		CC272B581D8DAAF70077658A /* Example1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Example1.xib; sourceTree = "<group>"; };
 		CC28B4081D7D060B00B7CA97 /* CustomHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomHeaderFooterView.xib; sourceTree = "<group>"; };
 		CC28B40A1D7D064700B7CA97 /* CustomHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
 		CC2B23AD1D84DF4B0025CDF8 /* ActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionBar.swift; path = ActionBar/ActionBar.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 		257F72C31D07204A00F7B954 /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				CC272B551D8DA74A0077658A /* ViewControllers */,
 				CCBD2FBD1D874BBA00C61DCC /* Validator */,
 				CCBD2FC61D874BFC00C61DCC /* ActionBar */,
 				257F72C41D07204A00F7B954 /* AppDelegate.swift */,
@@ -144,6 +149,23 @@
 				7CDC0D41A114704CCBFC8E1C /* Pods_SampleApp_SampleAppTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CC272B551D8DA74A0077658A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CC272B5A1D8DAFF70077658A /* Example1 */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CC272B5A1D8DAFF70077658A /* Example1 */ = {
+			isa = PBXGroup;
+			children = (
+				CC272B581D8DAAF70077658A /* Example1.xib */,
+				CC272B561D8DA7620077658A /* Example1.swift */,
+			);
+			name = Example1;
 			sourceTree = "<group>";
 		};
 		CCBD2FBD1D874BBA00C61DCC /* Validator */ = {
@@ -254,6 +276,7 @@
 			files = (
 				CC28B4091D7D060B00B7CA97 /* CustomHeaderFooterView.xib in Resources */,
 				257F72CF1D07204A00F7B954 /* LaunchScreen.storyboard in Resources */,
+				CC272B591D8DAAF70077658A /* Example1.xib in Resources */,
 				CCDDB69A1D7DA9DE006C0F9F /* TextFieldCell.xib in Resources */,
 				257F72CC1D07204A00F7B954 /* Assets.xcassets in Resources */,
 				257F72CA1D07204A00F7B954 /* Main.storyboard in Resources */,
@@ -333,6 +356,7 @@
 				CCBD2FBC1D87344E00C61DCC /* ActionBarManager.swift in Sources */,
 				CC2B23AE1D84DF4B0025CDF8 /* ActionBar.swift in Sources */,
 				257F72C51D07204A00F7B954 /* AppDelegate.swift in Sources */,
+				CC272B571D8DA7620077658A /* Example1.swift in Sources */,
 				CCDDB6971D7DA9CB006C0F9F /* CustomItem.swift in Sources */,
 				CCBD2FC21D874BBA00C61DCC /* Rules.swift in Sources */,
 			);
