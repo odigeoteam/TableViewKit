@@ -4,7 +4,7 @@ import UIKit
 /// A type that represent a section to be displayed
 /// containing `items`, a `header` and a `footer`
 public protocol Section: class {
-    
+
     /// A array containing the `items` of the section
     var items: ObservableArray<Item> { get set }
 
@@ -16,12 +16,15 @@ public protocol Section: class {
 }
 
 extension Section {
+
+    /// Empty header
     public var header: HeaderFooterView { return nil }
+    /// Empty footer
     public var footer: HeaderFooterView { return nil }
 }
 
 extension Section {
-    
+
     /// Returns the `index` of the `section` in the specified `manager`
     ///
     /// - parameter manager: A `manager` where the `section` may have been added
@@ -30,7 +33,7 @@ extension Section {
     public func index(in manager: TableViewManager) -> Int? {
         return manager.sections.index(of: self)
     }
-    
+
     /// Register the section in the specified manager
     ///
     /// - parameter manager: A manager where the section may have been added
@@ -51,7 +54,7 @@ extension Section {
     /// - parameter manager: A manager where the section may have been added
     internal func setup(in manager: TableViewManager) {
         items.callback = { change in
-            
+
             guard let sectionIndex = manager.sections.index(of: self) else { return }
             let tableView = manager.tableView
 
