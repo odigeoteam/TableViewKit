@@ -1,21 +1,20 @@
 import Foundation
 
-/// The type of a cell (nib, class)
-public enum CellType {
-
-    /// If it must be loaded from a UINib
-    case nib(UINib, UITableViewCell.Type)
-    /// If it must be loaded from a Class
-    case `class`(UITableViewCell.Type)
-
+/// A Nib/Class loadable type
+public enum NibClassType<T> {
     
-    /// The reusable identifier for the cell
+    /// If it must be loaded from a UINib
+    case nib(UINib, T.Type)
+    /// If it must be loaded from a Class
+    case `class`(T.Type)
+    
+    /// The reusable identifier for the header/footer
     public var reusableIdentifier: String {
         return String(describing: cellClass)
     }
-
-    /// The cell class
-    public var cellClass: UITableViewCell.Type {
+    
+    /// The header/footer class
+    public var cellClass: T.Type {
         switch self {
         case .class(let cellClass):
             return cellClass
