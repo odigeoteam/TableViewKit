@@ -47,6 +47,7 @@ class YourItem: Item {
 
     public init() { }
 }
+```
 
 Create a custom `Section` with your items.
 
