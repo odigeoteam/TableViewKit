@@ -79,8 +79,9 @@ extension Section {
     }
 }
 
-public extension Collection where Iterator.Element == Section {
-    func index(of element: Iterator.Element) -> Index? {
+public extension Collection where Self.Iterator.Element == Section {
+    /// Return the index of the `element` inside a collection of sections
+    func index(of element: Section) -> Self.Index? {
         return index(where: { $0 === element })
     }
 }

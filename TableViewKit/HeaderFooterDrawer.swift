@@ -25,6 +25,8 @@ public protocol HeaderFooterDrawer {
 }
 
 public extension HeaderFooterDrawer {
+
+    /// Returns a dequeued header/footer
     static func view(in manager: TableViewManager, with item: HeaderFooter) -> UITableViewHeaderFooterView {
         return manager.tableView.dequeueReusableHeaderFooterView(withIdentifier: self.type.reusableIdentifier)!
     }
