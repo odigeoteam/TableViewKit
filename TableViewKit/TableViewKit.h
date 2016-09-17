@@ -1,11 +1,3 @@
-//
-//  TableViewKit.h
-//  TableViewKit
-//
-//  Created by Alfredo Delli Bovi on 28/08/16.
-//  Copyright © 2016 odigeo. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 
 //! Project version number for TableViewKit.

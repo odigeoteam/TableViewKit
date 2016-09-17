@@ -1,15 +1,10 @@
-//
-//  NSIndexSet+Array.swift
-//  Pods
-//
-//  Created by Alfredo Delli Bovi on 08/08/16.
-//
-//
-
 import Foundation
 
 extension IndexSet {
 
+    /// Initialize an `IndexSet` with a array of integers.
+    ///
+    /// - parameter array: An array of integers
     init(_ array: [Int]) {
         let mutable = NSMutableIndexSet()
         array.forEach {mutable.add($0)}

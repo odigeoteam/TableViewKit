@@ -1,11 +1,3 @@
-//
-//  TableViewSection.swift
-//  TableViewKit
-//
-//  Created by Nelson Dominguez Leon on 07/06/16.
-//  Copyright © 2016 ODIGEO. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
@@ -87,8 +79,9 @@ extension Section {
     }
 }
 
-public extension Collection where Iterator.Element == Section {
-    func index(of element: Iterator.Element) -> Index? {
+public extension Collection where Self.Iterator.Element == Section {
+    /// Return the index of the `element` inside a collection of sections
+    func index(of element: Section) -> Self.Index? {
         return index(where: { $0 === element })
     }
 }

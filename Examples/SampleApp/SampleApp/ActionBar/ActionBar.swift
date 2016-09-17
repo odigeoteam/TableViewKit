@@ -1,11 +1,3 @@
-//
-//  ActionBar.swift
-//  TableViewKit
-//
-//  Created by Nelson Dominguez Leon on 22/06/16.
-//  Copyright © 2016 ODIGEO. All rights reserved.
-//
-
 import Foundation
 import UIKit
 

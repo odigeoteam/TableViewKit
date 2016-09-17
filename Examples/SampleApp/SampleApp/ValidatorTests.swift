@@ -1,11 +1,3 @@
-//
-//  ValidatorTests.swift
-//  TableViewKit
-//
-//  Created by Nelson Dominguez Leon on 29/08/16.
-//  Copyright © 2016 odigeo. All rights reserved.
-//
-
 import XCTest
 import TableViewKit
 import Nimble

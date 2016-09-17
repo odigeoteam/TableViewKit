@@ -1,11 +1,3 @@
-//
-//  Diff.swift
-//  TableViewKit
-//
-//  Created by Alfredo Delli Bovi on 10/09/2016.
-//  Copyright © 2016 odigeo. All rights reserved.
-//
-
 import Foundation
 
 struct Diff {

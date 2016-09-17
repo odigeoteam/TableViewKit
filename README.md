@@ -11,6 +11,73 @@
 
 Empowering `UITableView` with painless multi-type cell support and build-in automatic state transition animations
 
+## Getting Started
+- [Download TableViewKit](https://github.com/odigeoteam/TableViewKit/releases) and play with our [examples](https://github.com/odigeoteam/TableViewKit/tree/develop/Examples)
+- First time with TableViewKit? Read the ["Overview"](#overview) section below
+
+## Overview
+
+TableViewKit is designed:
+- to easily develop custom sections with different headers, footers and multiple cell types
+- to support stateful sections
+- to enforce reusability and testability
+- and last but not least, to forget `UITableView`'s delegates
+
+### Quickstart
+
+Create an `Item` with a `UITableViewCell` and `CellDrawer`. An item may have a model of the data you want to display and may control the interaction if any.
+
+```swift
+
+class YourDrawer: CellDrawer {
+
+    // The type could be a custom UITableViewCell class, with or without a Nib
+    static public var type = CellType.class(UITableViewCell.self)
+
+    static public func draw(_ cell: UITableViewCell, with item: Any) {
+        // Draw by setting properties of your cell from the item
+    }
+}
+
+class YourItem: Item {
+
+    public var drawer: CellDrawer.Type = YourDrawer.self
+
+    // Your properties and methods
+
+    public init() { }
+}
+
+Create a custom `Section` with your items.
+
+```swift
+class YourSection: Section {
+    var items: ObservableArray<Item>
+
+    var header: HeaderFooterView = .title("Your section")
+
+    public init() {
+      items = [YourItem(), AnotherItem(), AndAnotherItem()]
+    }
+}
+```
+
+Ready to go, instantiate a `TableViewManager`, in your `UIViewController` with a `UITableView` and the array of custom sections
+
+```swift
+class ViewController: UIViewController {
+    var tableViewManager: TableViewManager!
+
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableViewManager = TableViewManager(tableView: tableView, sections: [CustomSection])
+        }
+    }
+}
+```
+
+## Examples
+
 ## Requirements
 - Xcode 8 or higher
 - iOS 8.0 or higher
@@ -43,8 +110,6 @@ github "odigeoteam/TableViewKit"
 #### Manually
 1. Download and drop ```/TableViewKit``` folder in your project.  
 2. Congratulations!  
-
-## Usage
 
 ## Communication
 

@@ -1,11 +1,3 @@
-//
-//  TextFieldCell.swift
-//  ExampleTableViewKit
-//
-//  Created by Alfredo Delli Bovi on 28/07/16.
-//  Copyright © 2016 ODIGEO. All rights reserved.
-//
-
 import Foundation
 import TableViewKit
 
