@@ -1,11 +1,3 @@
-//
-//  ObservableArray.swift
-//  TableViewKit
-//
-//  Created by Alfredo Delli Bovi on 09/09/2016.
-//
-//
-
 import Foundation
 
 typealias Predicate = (Any, Any) -> Bool

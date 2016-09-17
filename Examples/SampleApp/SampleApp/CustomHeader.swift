@@ -1,11 +1,3 @@
-//
-//  CustomHeader.swift
-//  Pods
-//
-//  Created by Alfredo Delli Bovi on 04/09/16.
-//
-//
-
 import UIKit
 import TableViewKit
 

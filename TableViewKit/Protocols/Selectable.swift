@@ -1,11 +1,3 @@
-//
-//  Selectable.swift
-//  TableViewKit
-//
-//  Created by Alfredo Delli Bovi on 29/08/16.
-//  Copyright © 2016 odigeo. All rights reserved.
-//
-
 import Foundation
 
 public protocol Selectable: Item {

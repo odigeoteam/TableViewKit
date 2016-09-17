@@ -1,11 +1,3 @@
-//
-//  Validator.swift
-//  ios-whitelabel
-//
-//  Created by Alfredo Delli Bovi on 07/07/16.
-//  Copyright © 2016 ODIGEO. All rights reserved.
-//
-
 import Foundation
 
 public protocol ContentValidatable {

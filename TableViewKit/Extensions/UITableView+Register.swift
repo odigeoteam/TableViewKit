@@ -1,11 +1,3 @@
-//
-//  UITableView+Register.swift
-//  Pods
-//
-//  Created by Alfredo Delli Bovi on 28/08/16.
-//
-//
-
 import UIKit
 
 public extension UITableView {

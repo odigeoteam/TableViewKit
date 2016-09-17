@@ -1,11 +1,3 @@
-//
-//  Item.swift
-//  Pods
-//
-//  Created by Alfredo Delli Bovi on 27/08/16.
-//
-//
-
 import Foundation
 
 public protocol Item: class {
