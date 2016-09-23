@@ -1,9 +1,21 @@
 import Foundation
 
 struct Diff {
-    public var inserts: [Int]
-    public var deletes: [Int]
-    public var moves: [(Int, Int)]
+    var inserts: [Int]
+    var deletes: [Int]
+    var moves: [(Int, Int)]
+    
+    var isEmpty: Bool {
+        return (inserts.count + deletes.count + moves.count) == 0
+    }
+    
+    init(inserts: [Int] = [], deletes: [Int] = [], moves: [(Int, Int)] = []) {
+        self.inserts = inserts
+        self.deletes = deletes
+        self.moves = moves
+    }
+    
+    
 }
 
 class DiffIterator : IteratorProtocol {
