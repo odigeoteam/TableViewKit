@@ -12,21 +12,17 @@ protocol ActionManagerCompatible {
 }
 
 class Example1: UIViewController, TableViewManagerCompatible {
-    fileprivate class FirstSection: Section {
+    fileprivate class FirstSection: Section, StaticStateful {
         var items: ObservableArray<Item> = []
-        var states: [[Item]] = []
+        var states: [State: [Item]] = [:]
         
-        enum State: Int, RawRepresentable {
+        enum State: Int {
             case preParty
             case onParty
             case afterParty
         }
         
-        var currentState: State = .preParty {
-            didSet {
-                items.replace(with: states[currentState.rawValue])
-            }
-        }
+        var currentState: State = .preParty
         
         let vc: Example1
         
@@ -60,20 +56,17 @@ class Example1: UIViewController, TableViewManagerCompatible {
                 item.deselect(in: self.vc.tableViewManager, animated: true)
                 self.vc.showPickerControl()
             }
-            
-            states.insert([item, dateItem, selectionItem, textFieldItem, textFieldItem2], at: State.preParty.rawValue)
-            states.insert([item2, selectionItem, dateItem, item3, textFieldItem2, textFieldItem], at: State.onParty.rawValue)
-            states.insert([item2], at: State.afterParty.rawValue)
-            swap(to: .preParty)
+            states[State.preParty] = [item, dateItem, selectionItem, textFieldItem, textFieldItem2]
+            states[State.onParty] = [item2, selectionItem, dateItem, item3, textFieldItem2, textFieldItem]
+            states[State.afterParty] = [item2]
+            transition(to: currentState)
         }
         
-        func swap(to newState: State) {
-            currentState = newState
-        }
         
     }
     
     fileprivate class SecondSection: Section {
+        
         var items: ObservableArray<Item> = []
         
         internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "Second Section"))
@@ -99,6 +92,50 @@ class Example1: UIViewController, TableViewManagerCompatible {
             self.items.insert(contentsOf: items, at: 0)
         }
     }
+    
+    fileprivate class ThirdSection: Section, Stateful {
+
+        enum State {
+            case all
+            case selected(Item)
+        }
+        
+        var items: ObservableArray<Item> = []
+        var allItems: [Item] = []
+        var currentState: State = .all
+        
+        let vc: TableViewManagerCompatible
+        
+        required init(vc: TableViewManagerCompatible) {
+            self.vc = vc
+            
+            let total: [Int] = Array(1...10)
+            self.allItems = total.map { (index) -> Item in
+                let item = CustomItem(title: "Label  \(index)")
+                item.onSelection = { item in
+                    switch self.currentState {
+                    case .all:
+                        self.transition(to: .selected(item))
+                    default:
+                        self.transition(to: .all)
+                    }
+                    item.deselect(in: self.vc.tableViewManager, animated: true)
+                }
+                return item
+            }
+            self.transition(to: currentState)
+        }
+        
+        func items(for state: State) -> [Item] {
+            switch state {
+            case .all:
+                return allItems
+            case .selected(let item):
+                return [item]
+            }
+        }
+    }
+
 
     
     
@@ -134,6 +171,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
         
         firstSection = FirstSection(vc: self)
         tableViewManager.sections.append(firstSection)
+        tableViewManager.sections.append(ThirdSection(vc: self))
         tableViewManager.sections.append(SecondSection(vc: self))
         
         // TODO think about a better way to handle self registration
@@ -182,7 +220,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
     }
     
     @objc fileprivate func validationAction() {
-        firstSection.swap(to: firstSection.currentState == .preParty ? .onParty : .afterParty)
+        firstSection.transition(to: firstSection.currentState == .preParty ? .onParty : .afterParty)
         guard let error = validator.errors.first else {
             print("No errors")
             return
