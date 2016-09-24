@@ -10,4 +10,5 @@ Pod::Spec.new do |s|
   s.source_files  				  = "TableViewKit/**/*.swift"
   s.framework  							= "UIKit", "Foundation"
   s.requires_arc 						= true
+  s.pod_target_xcconfig 		= { 'SWIFT_VERSION' => '3.0' }
 end
