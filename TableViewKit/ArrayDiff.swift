@@ -68,6 +68,8 @@ class DiffSequence : Sequence {
 
 extension Array {
     
+    typealias Predicate = (Element, Element) -> Bool
+
     static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff {
         
         var matrix = [[Int]](repeating: [Int](repeating: 0, count: y.count+1), count: x.count+1)

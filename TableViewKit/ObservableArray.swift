@@ -1,7 +1,5 @@
 import Foundation
 
-typealias Predicate = (Any, Any) -> Bool
-
 enum ArrayChanges {
     case inserts([Int])
     case deletes([Int])
@@ -21,11 +19,9 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
     
     private var array: [T] {
         willSet {
-            diff = Array.diff(between: array, and: newValue, where: { lhs, rhs in
-                let lhs = lhs as AnyObject
-                let rhs = rhs as AnyObject
-                return lhs === rhs
-                })
+            diff = Array.diff(between: array as [AnyObject],
+                              and: newValue as [AnyObject],
+                              where: ===)
             guard !diff.isEmpty else { return }
 
             callback?(.beginUpdates)
