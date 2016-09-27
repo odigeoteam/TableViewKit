@@ -61,13 +61,13 @@ extension Section {
             switch change {
             case .inserts(let array):
                 let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-                tableView.insertRows(at: indexPaths, with: .automatic)
+                tableView.insertRows(at: indexPaths, with: manager.animation)
             case .deletes(let array):
                 let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-                tableView.deleteRows(at: indexPaths, with: .automatic)
+                tableView.deleteRows(at: indexPaths, with: manager.animation)
             case .updates(let array):
                 let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-                tableView.reloadRows(at: indexPaths, with: .automatic)
+                tableView.reloadRows(at: indexPaths, with: manager.animation)
             case .moves(let array):
                 let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
                 let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }

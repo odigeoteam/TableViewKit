@@ -13,6 +13,8 @@ open class TableViewManager: NSObject {
     /// An array of sections
     open var sections: ObservableArray<Section>
     
+    open var animation: UITableViewRowAnimation = .automatic
+    
     
     /// Initialize a `TableViewManager` with a `tableView`.
     ///
@@ -46,15 +48,21 @@ open class TableViewManager: NSObject {
                     weakSelf.sections[index].setup(in: weakSelf)
                     weakSelf.sections[index].register(in: weakSelf)
                 }
-                weakSelf.tableView.insertSections(IndexSet(array), with: .automatic)
+                weakSelf.tableView.insertSections(IndexSet(array), with: weakSelf.animation)
             case .deletes(let array):
-                weakSelf.tableView.deleteSections(IndexSet(array), with: .automatic)
+                weakSelf.tableView.deleteSections(IndexSet(array), with: weakSelf.animation)
             case .updates(let array):
-                weakSelf.tableView.reloadSections(IndexSet(array), with: .automatic)
+                weakSelf.tableView.reloadSections(IndexSet(array), with: weakSelf.animation)
             case .moves(_): break
             case .beginUpdates:
+                if (weakSelf.animation == .none) {
+                    UIView.setAnimationsEnabled(false)
+                }
                 weakSelf.tableView.beginUpdates()
             case .endUpdates:
+                if (weakSelf.animation == .none) {
+                    UIView.setAnimationsEnabled(true)
+                }
                 weakSelf.tableView.endUpdates()
             }
         }
