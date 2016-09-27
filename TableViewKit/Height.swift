@@ -13,8 +13,8 @@ public enum Height {
     /// Returns the estimated value of the height
     internal func estimated() -> CGFloat {
         switch self {
-        case .static(_):
-            return 0.0
+        case .static(let value):
+            return value
         case .dynamic(let value):
             return value
         }

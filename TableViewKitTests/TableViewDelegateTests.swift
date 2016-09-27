@@ -161,7 +161,7 @@ class TableViewDelegateTests: XCTestCase {
 
         indexPath = IndexPath(row: 1, section: 1)
         height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
-        expect(height).to(equal(0.0))
+        expect(height).to(equal(20.0))
     }
     
     func testHeightForRowAtIndexPath() {
