@@ -1,9 +1,21 @@
 import Foundation
 
 struct Diff {
-    public var inserts: [Int]
-    public var deletes: [Int]
-    public var moves: [(Int, Int)]
+    var inserts: [Int]
+    var deletes: [Int]
+    var moves: [(Int, Int)]
+    
+    var isEmpty: Bool {
+        return (inserts.count + deletes.count + moves.count) == 0
+    }
+    
+    init(inserts: [Int] = [], deletes: [Int] = [], moves: [(Int, Int)] = []) {
+        self.inserts = inserts
+        self.deletes = deletes
+        self.moves = moves
+    }
+    
+    
 }
 
 class DiffIterator : IteratorProtocol {
@@ -56,17 +68,9 @@ class DiffSequence : Sequence {
 
 extension Array {
     
+    typealias Predicate = (Element, Element) -> Bool
+
     static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff {
-        var x = x
-        let moves = y.enumerated().flatMap { (toIndex, element) -> (Int, Int)? in
-            guard let fromIndex = x.index(where: { predicate($0, element) }),
-                fromIndex != toIndex else { return nil }
-            
-            x.remove(at: fromIndex)
-            x.insert(element, at: (toIndex >= x.count) ? x.count : toIndex)
-            
-            return (fromIndex, toIndex)
-        }
         
         var matrix = [[Int]](repeating: [Int](repeating: 0, count: y.count+1), count: x.count+1)
         for (i, xElem) in x.enumerated() {
@@ -80,18 +84,35 @@ extension Array {
         }
         
         let changes = [ArrayChanges](DiffSequence(matrix: matrix))
-        let inserts: [Int] = changes.flatMap { change -> [Int] in
+        var inserts: [Int] = changes.flatMap { change -> [Int] in
             guard case .inserts(let array) = change else { return [] }
             return array
             }.sorted { $0 > $1 }
 
         
-        let deletes: [Int] = changes.flatMap { change -> [Int] in
+        var deletes: [Int] = changes.flatMap { change -> [Int] in
             guard case .deletes(let array) = change else { return [] }
             return array
             }.sorted { $0 < $1 }
 
+        var moves: [(Int, Int)] = []
+
+        var deleted: Int = 0
+        for (deleteIndex, deleteAtIndex) in deletes.enumerated() {
+            let elem = x[deleteAtIndex]
+            let temp = inserts.index { predicate(y[$0], elem) }
+            guard let insertIndex = temp else { continue }
+            
+            let insertAtIndex = inserts[insertIndex]
+            deletes.remove(at: deleteIndex - deleted)
+            inserts.remove(at: insertIndex)
+            let movement = (deleteAtIndex, insertAtIndex)
+            moves.append(movement)
+            deleted += 1
+        }
+
         
         return Diff(inserts: inserts, deletes: deletes, moves: moves)
     }
+
 }
