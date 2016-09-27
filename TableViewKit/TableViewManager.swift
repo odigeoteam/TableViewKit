@@ -60,10 +60,10 @@ open class TableViewManager: NSObject {
                 }
                 weakSelf.tableView.beginUpdates()
             case .endUpdates:
+                weakSelf.tableView.endUpdates()
                 if (weakSelf.animation == .none) {
                     UIView.setAnimationsEnabled(true)
                 }
-                weakSelf.tableView.endUpdates()
             }
         }
     }
