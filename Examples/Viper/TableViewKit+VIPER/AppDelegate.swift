@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  TableViewKit+VIPER
-//
-//  Created by Nelson Dominguez Leon on 06/09/16.
-//  Copyright © 2016 eDreams Odigeo. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain

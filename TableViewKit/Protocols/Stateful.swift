@@ -1,0 +1,60 @@
+//
+//  Stateful.swift
+//  TableViewKit
+//
+//  Created by Alfredo Delli Bovi on 23/09/2016.
+//  Copyright © 2016 odigeo. All rights reserved.
+//
+
+import Foundation
+
+/// A section that supports states.
+///
+/// A stateful section keep the `currentState`
+/// and has a default implementation for `transition(to:)`
+/// needed to perform a transition from the `currentState` to a `newState`.
+/// You must implement `items(for:)`, that will be used to know
+/// which items belong to which `State`.
+public protocol Stateful: Section {
+    
+    /// A type that represent a state, such as an enum.
+    associatedtype State
+    
+    /// The current state
+    var currentState: State { get set }
+    
+    
+    /// Returns the `items` belonging to a `state`
+    ///
+    /// - parameter state: A concrete `state`
+    ///
+    /// - returns: The `items` belonging to a `state`
+    func items(for state: State) -> [Item]
+    
+    
+    /// Performs a transition from the `currentState` to a `newState`
+    ///
+    /// - parameter newState: The `newState`
+    func transition(to newState: State)
+}
+
+public extension Stateful {
+    func transition(to newState: State) {
+        items.replace(with: items(for: newState))
+        currentState = newState
+    }
+}
+
+public protocol StaticStateful: Stateful {
+    associatedtype State: Hashable
+    
+    var states: [State: [Item]] { get }
+}
+
+public extension StaticStateful {
+    
+    func items(for state: State) -> [Item] {
+        return states[state]!
+    }
+
+}

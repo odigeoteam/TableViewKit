@@ -1,14 +1,11 @@
-//
-//  Cell.swift
-//  TableViewKit
-//
-//  Created by Nelson Dominguez Leon on 13/09/16.
-//  Copyright © 2016 odigeo. All rights reserved.
-//
-
 import Foundation
 
+/// A type that has an `item`.
+/// When a UITableViewCell conforms to this protocol and
+/// if the cell is initialiated by the TableViewManager,
+/// the item will be setted automatically.
 public protocol ItemCompatible: class {
     
+    /// The associated item
     var item: Item? { get set }
 }

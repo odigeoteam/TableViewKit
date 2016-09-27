@@ -1,18 +1,12 @@
-//
-//  HeaderFooterDrawer.swift
-//  TableViewKit
-//
-//  Created by Alfredo Delli Bovi on 05/09/16.
-//  Copyright © 2016 odigeo. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
+/// The type of a header/footer (nib, class)
+public typealias HeaderFooterType = NibClassType<UITableViewHeaderFooterView>
 
 /// A type that can draw either a header or a footer
 public protocol HeaderFooterDrawer {
-
+    
     /// Define the `type` of the header/footer
     static var type: HeaderFooterType { get }
     
@@ -21,7 +15,7 @@ public protocol HeaderFooterDrawer {
     /// - parameter view: The header/footer `view` that must be drawn
     /// - parameter item: The header/footer `item` that generated the drawer
     static func draw(_ view: UITableViewHeaderFooterView, with item: Any)
-
+    
     
     /// Returns the header/footer view from the `manager`
     ///
@@ -33,6 +27,8 @@ public protocol HeaderFooterDrawer {
 }
 
 public extension HeaderFooterDrawer {
+    
+    /// Returns a dequeued header/footer
     static func view(in manager: TableViewManager, with item: HeaderFooter) -> UITableViewHeaderFooterView {
         return manager.tableView.dequeueReusableHeaderFooterView(withIdentifier: self.type.reusableIdentifier)!
     }

@@ -1,22 +1,22 @@
-//
-//  TableViewManager.swift
-//  TableViewKit
-//
-//  Created by Nelson Dominguez Leon on 07/06/16.
-//  Copyright © 2016 ODIGEO. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
+/// An object that controls a `tableView`.
+/// It controls how to display an array of sections, from the header, to its items, to the footer.
+/// It automatically registers any related initial or new views/cells for reusability.
+/// Any changes of the sections will be automatically animated and reflected.
 open class TableViewManager: NSObject {
     
-    // MARK: Properties
+    /// The `tableView` linked to this manager
     open let tableView: UITableView
+    
+    /// An array of sections
     open var sections: ObservableArray<Section>
     
-    // MARK: Inits
     
+    /// Initialize a `TableViewManager` with a `tableView`.
+    ///
+    /// - parameter tableView: A `tableView` that will be controlled by the `TableViewManager`
     public init(tableView: UITableView) {
         self.tableView = tableView
         self.sections = []
@@ -27,6 +27,10 @@ open class TableViewManager: NSObject {
         
     }
 
+    /// Initialize a `TableViewManager` with a `tableView` and an initial array of sections
+    ///
+    /// - parameter tableView: A `tableView` that will be controlled by the `TableViewManager`
+    /// - parameter sections: An array of sections
     public convenience init(tableView: UITableView, with sections: [Section]) {
         self.init(tableView: tableView)
         self.sections.replace(with: sections)
@@ -116,15 +120,18 @@ extension TableViewManager {
 
 extension TableViewManager: UITableViewDataSource {
     
+    /// Implementation of UITableViewDataSource
     public func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
+    /// Implementation of UITableViewDataSource
     public func tableView(_ tableView: UITableView, numberOfRowsInSection sectionIndex: Int) -> Int {
         let section = sections[sectionIndex]
         return section.items.count
     }
     
+    /// Implementation of UITableViewDataSource
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentItem = item(at: indexPath)
         let drawer = currentItem.drawer
@@ -135,12 +142,12 @@ extension TableViewManager: UITableViewDataSource {
         return cell
     }
     
-    
+    /// Implementation of UITableViewDataSource
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return title(for: {$0.header}, inSection: section)
     }
     
-    
+    /// Implementation of UITableViewDataSource
     public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return title(for: {$0.footer}, inSection: section)
     }
@@ -150,39 +157,48 @@ extension TableViewManager: UITableViewDataSource {
 
 extension TableViewManager: UITableViewDelegate {
     
+    /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentItem = item(at: indexPath) as? Selectable else { return }
         currentItem.onSelection(currentItem)
     }
     
+    /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return height(at: indexPath) ?? tableView.rowHeight
     }
     
+    /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return height(for: {$0.header}, inSection: section) ?? tableView.sectionHeaderHeight
     }
     
+    /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return height(for: {$0.footer}, inSection: section) ?? tableView.sectionFooterHeight
     }
     
+    /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return estimatedHeight(at: indexPath) ?? tableView.estimatedRowHeight
     }
     
+    /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return estimatedHeight(for: {$0.header}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
     
+    /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
         return estimatedHeight(for: {$0.footer}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
     
+    /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return view(for: {$0.header}, inSection: section)
     }
     
+    /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return view(for: {$0.footer}, inSection: section)
     }

@@ -1,11 +1,3 @@
-//
-//  ActionBarManager.swift
-//  SampleApp
-//
-//  Created by Alfredo Delli Bovi on 12/09/2016.
-//  Copyright © 2016 ODIGEO. All rights reserved.
-//
-
 import Foundation
 import TableViewKit
 

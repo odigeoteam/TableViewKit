@@ -23,13 +23,14 @@
 		CCBE45A01D72F79C00414A64 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458D1D72F79C00414A64 /* Section.swift */; };
 		CCBE45A11D72F79C00414A64 /* TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBE458E1D72F79C00414A64 /* TableViewManager.swift */; };
 		CCC749411D89AAD00030F140 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC749401D89AAD00030F140 /* Nimble.framework */; };
-		CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC11F1D7D9E150001FC1D /* CellType.swift */; };
-		CCCAC1221D7D9E440001FC1D /* HeaderFooterDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */; };
-		CCCAC1241D7D9E6D0001FC1D /* HeaderFooterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */; };
+		CCCAC1221D7D9E440001FC1D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		CCCAC1261D7D9EE00001FC1D /* HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */; };
 		CCCAC1281D7DA2D00001FC1D /* Height.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCAC1271D7DA2CF0001FC1D /* Height.swift */; };
 		CCDB8FAB1D83649B00E44A99 /* ObservableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDB8FAA1D83649B00E44A99 /* ObservableArray.swift */; };
 		CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */; };
+		CCEF387E1D8D59C000F5893F /* NibClassType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEF387D1D8D59C000F5893F /* NibClassType.swift */; };
+		CCEF38801D8D5A7A00F5893F /* HeaderFooterDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEF387F1D8D5A7A00F5893F /* HeaderFooterDrawer.swift */; };
+		CCFD05CC1D95BD3C0063A002 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFD05CB1D95BD3C0063A002 /* Stateful.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,18 +59,18 @@
 		CCBE456D1D72F69500414A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCBE457B1D72F79C00414A64 /* NSIndexSet+Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSIndexSet+Array.swift"; sourceTree = "<group>"; };
 		CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Register.swift"; sourceTree = "<group>"; };
-		CCBE458A1D72F79C00414A64 /* CellDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellDrawer.swift; sourceTree = "<group>"; };
+		CCBE458A1D72F79C00414A64 /* CellDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CellDrawer.swift; path = Protocols/CellDrawer.swift; sourceTree = "<group>"; };
 		CCBE458C1D72F79C00414A64 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Protocols/Item.swift; sourceTree = "<group>"; };
 		CCBE458D1D72F79C00414A64 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		CCBE458E1D72F79C00414A64 /* TableViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
 		CCC749401D89AAD00030F140 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "External/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
-		CCCAC11F1D7D9E150001FC1D /* CellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
-		CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterDrawer.swift; sourceTree = "<group>"; };
-		CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterType.swift; sourceTree = "<group>"; };
 		CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderFooter.swift; path = Protocols/HeaderFooter.swift; sourceTree = "<group>"; };
 		CCCAC1271D7DA2CF0001FC1D /* Height.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Height.swift; sourceTree = "<group>"; };
 		CCDB8FAA1D83649B00E44A99 /* ObservableArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableArray.swift; sourceTree = "<group>"; };
 		CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceTests.swift; sourceTree = "<group>"; };
+		CCEF387D1D8D59C000F5893F /* NibClassType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibClassType.swift; sourceTree = "<group>"; };
+		CCEF387F1D8D5A7A00F5893F /* HeaderFooterDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderFooterDrawer.swift; path = Protocols/HeaderFooterDrawer.swift; sourceTree = "<group>"; };
+		CCFD05CB1D95BD3C0063A002 /* Stateful.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stateful.swift; path = Protocols/Stateful.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,10 +106,13 @@
 			isa = PBXGroup;
 			children = (
 				CCBE458D1D72F79C00414A64 /* Section.swift */,
+				CCFD05CB1D95BD3C0063A002 /* Stateful.swift */,
 				CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */,
+				CCEF387F1D8D5A7A00F5893F /* HeaderFooterDrawer.swift */,
 				CCBE458C1D72F79C00414A64 /* Item.swift */,
 				CC97D76C1D741DC4009CDF9D /* Selectable.swift */,
 				25837C771D87F819001EF4B8 /* ItemCompatible.swift */,
+				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -136,11 +140,10 @@
 			isa = PBXGroup;
 			children = (
 				CC97D76B1D741D8E009CDF9D /* Protocols */,
-				CCCAC1291D7DA2DB0001FC1D /* Cell */,
-				CCCAC12A1D7DA2E90001FC1D /* HeaderFooter */,
 				CCBE45791D72F79C00414A64 /* Extensions */,
 				CCDB8FAA1D83649B00E44A99 /* ObservableArray.swift */,
 				CCCAC1271D7DA2CF0001FC1D /* Height.swift */,
+				CCEF387D1D8D59C000F5893F /* NibClassType.swift */,
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
 				CCBE45611D72F69500414A64 /* Info.plist */,
@@ -169,24 +172,6 @@
 				CCBE457C1D72F79C00414A64 /* UITableView+Register.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		CCCAC1291D7DA2DB0001FC1D /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				CCCAC11F1D7D9E150001FC1D /* CellType.swift */,
-				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
-			);
-			name = Cell;
-			sourceTree = "<group>";
-		};
-		CCCAC12A1D7DA2E90001FC1D /* HeaderFooter */ = {
-			isa = PBXGroup;
-			children = (
-				CCCAC1231D7D9E6D0001FC1D /* HeaderFooterType.swift */,
-				CCCAC1211D7D9E440001FC1D /* HeaderFooterDrawer.swift */,
-			);
-			name = HeaderFooter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,20 +287,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCBE45A01D72F79C00414A64 /* Section.swift in Sources */,
+				CCFD05CC1D95BD3C0063A002 /* Stateful.swift in Sources */,
 				CCBE45921D72F79C00414A64 /* NSIndexSet+Array.swift in Sources */,
 				CC97D76D1D741DC4009CDF9D /* Selectable.swift in Sources */,
 				CCCAC1281D7DA2D00001FC1D /* Height.swift in Sources */,
 				CC5CF11C1D839E71004DECB3 /* ArrayDiff.swift in Sources */,
 				25837C781D87F819001EF4B8 /* ItemCompatible.swift in Sources */,
-				CCCAC1201D7D9E150001FC1D /* CellType.swift in Sources */,
+				CCEF38801D8D5A7A00F5893F /* HeaderFooterDrawer.swift in Sources */,
+				CCEF387E1D8D59C000F5893F /* NibClassType.swift in Sources */,
 				CCDB8FAB1D83649B00E44A99 /* ObservableArray.swift in Sources */,
 				CCCAC1261D7D9EE00001FC1D /* HeaderFooter.swift in Sources */,
-				CCCAC1241D7D9E6D0001FC1D /* HeaderFooterType.swift in Sources */,
 				CCBE45A11D72F79C00414A64 /* TableViewManager.swift in Sources */,
 				CCBE45931D72F79C00414A64 /* UITableView+Register.swift in Sources */,
-				CCCAC1221D7D9E440001FC1D /* HeaderFooterDrawer.swift in Sources */,
 				CCBE459D1D72F79C00414A64 /* CellDrawer.swift in Sources */,
 				CCBE459F1D72F79C00414A64 /* Item.swift in Sources */,
+				CCCAC1221D7D9E440001FC1D /* (null) in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
