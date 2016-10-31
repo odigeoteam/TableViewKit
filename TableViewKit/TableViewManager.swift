@@ -160,7 +160,22 @@ extension TableViewManager: UITableViewDataSource {
         return title(for: {$0.footer}, inSection: section)
     }
     
+    /// Implementation of UITableViewDataSource
+    public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        guard let item = item(at: indexPath) as? Editable else { return false }
+        
+        switch item.editingStyle {
+        case .none:
+            return false
+        default:
+            return true
+        }
+    }
     
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        guard let item = item(at: indexPath) as? Editable else { return }
+        item.editingStyle.completion?()
+    }
 }
 
 extension TableViewManager: UITableViewDelegate {
@@ -211,4 +226,21 @@ extension TableViewManager: UITableViewDelegate {
         return view(for: {$0.footer}, inSection: section)
     }
     
+    /// Implementation of UITableViewDelegate
+    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        guard let item = item(at: indexPath) as? Editable else { return .none }
+        return item.editingStyle.style()
+    }
+    
+    /// Implementation of UITableViewDelegate
+    public func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        guard let item = item(at: indexPath) as? Editable else { return nil }
+        return item.editingStyle.title()
+    }
+    
+    /// Implementation of UITableViewDelegate
+    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        guard let item = item(at: indexPath) as? Editable else { return nil }
+        return item.rowActions
+    }
 }

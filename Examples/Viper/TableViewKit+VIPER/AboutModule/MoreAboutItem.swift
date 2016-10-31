@@ -23,14 +23,20 @@ enum MoreAboutItemType {
     }
 }
 
-class MoreAboutItem: Item, Selectable {
-    
+class MoreAboutItem: Item, Selectable, Editable {
+
     var type: MoreAboutItemType
     var title: String?
     
     var drawer: CellDrawer.Type = MoreAboutDrawer.self
     var onSelection: (Selectable) -> () = { _ in }
-
+    
+    var editingStyle: TableViewCellEditingStyle = .delete("Remove", { 
+        print("Delete Cell")
+    })
+    
+    var rowActions: [UITableViewRowAction]?
+    
     init(type: MoreAboutItemType) {
         
         self.type = type
