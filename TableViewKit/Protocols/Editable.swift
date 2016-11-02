@@ -25,23 +25,27 @@ public enum TableViewCellEditingStyle {
         }
     }
     
-    func style() -> UITableViewCellEditingStyle {
-        switch self {
-        case .delete:
-            return UITableViewCellEditingStyle.delete
-        case .insert:
-            return UITableViewCellEditingStyle.insert
-        default:
-            return UITableViewCellEditingStyle.none
+    var style: UITableViewCellEditingStyle {
+        get {
+            switch self {
+            case .delete:
+                return UITableViewCellEditingStyle.delete
+            case .insert:
+                return UITableViewCellEditingStyle.insert
+            default:
+                return UITableViewCellEditingStyle.none
+            }
         }
     }
     
-    func title() -> String? {
-        switch self {
-        case .delete(let title, _):
-            return title
-        default:
-            return nil
+    var title: String? {
+        get {
+            switch self {
+            case .delete(let title, _):
+                return title
+            default:
+                return nil
+            }
         }
     }
 }

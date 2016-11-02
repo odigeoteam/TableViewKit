@@ -229,13 +229,13 @@ extension TableViewManager: UITableViewDelegate {
     /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         guard let item = item(at: indexPath) as? Editable else { return .none }
-        return item.editingStyle.style()
+        return item.editingStyle.style
     }
     
     /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         guard let item = item(at: indexPath) as? Editable else { return nil }
-        return item.editingStyle.title()
+        return item.editingStyle.title
     }
     
     /// Implementation of UITableViewDelegate
