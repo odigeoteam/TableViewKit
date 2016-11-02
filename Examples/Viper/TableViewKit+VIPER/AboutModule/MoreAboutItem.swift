@@ -31,11 +31,7 @@ class MoreAboutItem: Item, Selectable, Editable {
     var drawer: CellDrawer.Type = MoreAboutDrawer.self
     var onSelection: (Selectable) -> () = { _ in }
     
-    var editingStyle: TableViewCellEditingStyle = .delete("Remove", { 
-        print("Delete Cell")
-    })
-    
-    var rowActions: [UITableViewRowAction]?
+    var actions: [UITableViewRowAction]?
     
     init(type: MoreAboutItemType) {
         
