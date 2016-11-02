@@ -175,6 +175,9 @@ extension TableViewManager: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         guard let item = item(at: indexPath) as? Editable else { return }
         item.editingStyle.completion?()
+        
+        let section = sections[indexPath.section]
+        section.items.remove(at: indexPath.row)
     }
 }
 
