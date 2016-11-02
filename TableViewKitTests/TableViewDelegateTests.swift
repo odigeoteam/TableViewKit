@@ -87,9 +87,7 @@ class SelectableItem: Selectable, Item {
 }
 
 class EditableItem: SelectableItem, Editable {
-    
-    public var editingStyle: TableViewCellEditingStyle = .delete(nil, nil)
-    public var rowActions: [UITableViewRowAction]?
+    public var actions: [UITableViewRowAction]?
 }
 
 
@@ -213,21 +211,21 @@ class TableViewDelegateTests: XCTestCase {
     }
     
     func testEditableRows() {
-        
         let section = tableViewManager.sections.first!
+        let deleteAction = UITableViewRowAction(style: .normal, title: "Delete", handler: { action, indexPath in
+            print("DeleteAction")
+        })
         let editableItem = EditableItem { _ in }
+        editableItem.actions = [deleteAction]
         section.items.append(editableItem)
         
         let sectionIndex = section.index(in: tableViewManager)!
-        var rows = tableViewManager.tableView(tableViewManager.tableView, numberOfRowsInSection: sectionIndex)
+        let rows = tableViewManager.tableView(tableViewManager.tableView, numberOfRowsInSection: sectionIndex)
         XCTAssert(rows == 2)
         
         let indexPath = editableItem.indexPath(in: tableViewManager)!
-        let canEditRow = tableViewManager.tableView(tableViewManager.tableView, canEditRowAt: indexPath)
-        XCTAssert(canEditRow == true)
-        
-        tableViewManager.tableView(tableViewManager.tableView, commit: .delete, forRowAt: indexPath)
-        rows = tableViewManager.tableView(tableViewManager.tableView, numberOfRowsInSection: sectionIndex)
-        XCTAssert(rows == 1)
+        let actions = tableViewManager.tableView(tableViewManager.tableView, editActionsForRowAt: indexPath)
+        XCTAssertNotNil(actions)
+        XCTAssert(actions!.count == 1)
     }
 }
