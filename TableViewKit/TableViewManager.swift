@@ -160,7 +160,10 @@ extension TableViewManager: UITableViewDataSource {
         return title(for: {$0.footer}, inSection: section)
     }
     
-    
+    /// Implementation of UITableViewDataSource
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        // Intentionally blank. Required to use UITableViewRowActions
+    }
 }
 
 extension TableViewManager: UITableViewDelegate {
@@ -211,4 +214,9 @@ extension TableViewManager: UITableViewDelegate {
         return view(for: {$0.footer}, inSection: section)
     }
     
+    /// Implementation of UITableViewDelegate
+    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        guard let item = item(at: indexPath) as? Editable else { return nil }
+        return item.actions
+    }
 }

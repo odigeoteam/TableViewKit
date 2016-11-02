@@ -1,11 +1,3 @@
-//
-//  Stateful.swift
-//  TableViewKit
-//
-//  Created by Alfredo Delli Bovi on 23/09/2016.
-//  Copyright © 2016 odigeo. All rights reserved.
-//
-
 import Foundation
 
 /// A section that supports states.

@@ -13,6 +13,13 @@ class MoreAboutSection: Section {
         self.presenter = presenter
         self.manager = manager
         
+        let moreAction = UITableViewRowAction(style: .normal, title: "More", handler: { action, indexPath in
+            print("MoreAction executed")
+        })
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexPath in
+            self.items.remove(at: indexPath.row)
+        })
+        
         let types: [MoreAboutItemType] = [.faq, .contact, .terms, .feedback, .share, .rate]
         for type in types {
             let moreAboutItem = MoreAboutItem(type: type)
@@ -36,6 +43,7 @@ class MoreAboutSection: Section {
                 guard let manager = self.manager else { return }
                 item.deselect(in: manager, animated: true)
             }
+            moreAboutItem.actions = [deleteAction, moreAction]
             items.append(moreAboutItem)
         }
     }
