@@ -176,8 +176,9 @@ extension TableViewManager: UITableViewDataSource {
         guard let item = item(at: indexPath) as? Editable else { return }
         item.editingStyle.completion?()
         
-        let section = sections[indexPath.section]
-        section.items.remove(at: indexPath.row)
+        if editingStyle == .delete {
+            sections[indexPath.section].items.remove(at: indexPath.row)
+        }
     }
 }
 

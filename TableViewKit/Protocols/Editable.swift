@@ -1,11 +1,3 @@
-//
-//  Editable.swift
-//  TableViewKit
-//
-//  Created by Nelson Dominguez Leon on 31/10/2016.
-//  Copyright © 2016 odigeo. All rights reserved.
-//
-
 import Foundation
 
 public typealias TableViewCellEditingStyleCompletion = () -> Void
