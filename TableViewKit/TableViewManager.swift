@@ -172,6 +172,7 @@ extension TableViewManager: UITableViewDataSource {
         }
     }
     
+    /// Implementation of UITableViewDataSource
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         guard let item = item(at: indexPath) as? Editable else { return }
         item.editingStyle.completion?()

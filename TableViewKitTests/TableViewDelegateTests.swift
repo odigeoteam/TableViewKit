@@ -86,6 +86,12 @@ class SelectableItem: Selectable, Item {
     }
 }
 
+class EditableItem: SelectableItem, Editable {
+    
+    public var editingStyle: TableViewCellEditingStyle = .delete(nil, nil)
+    public var rowActions: [UITableViewRowAction]?
+}
+
 
 class TableViewDelegateTests: XCTestCase {
     
@@ -206,4 +212,22 @@ class TableViewDelegateTests: XCTestCase {
         expect(check).to(equal(2))
     }
     
+    func testEditableRows() {
+        
+        let section = tableViewManager.sections.first!
+        let editableItem = EditableItem { _ in }
+        section.items.append(editableItem)
+        
+        let sectionIndex = section.index(in: tableViewManager)!
+        var rows = tableViewManager.tableView(tableViewManager.tableView, numberOfRowsInSection: sectionIndex)
+        XCTAssert(rows == 2)
+        
+        let indexPath = editableItem.indexPath(in: tableViewManager)!
+        let canEditRow = tableViewManager.tableView(tableViewManager.tableView, canEditRowAt: indexPath)
+        XCTAssert(canEditRow == true)
+        
+        tableViewManager.tableView(tableViewManager.tableView, commit: .delete, forRowAt: indexPath)
+        rows = tableViewManager.tableView(tableViewManager.tableView, numberOfRowsInSection: sectionIndex)
+        XCTAssert(rows == 1)
+    }
 }
