@@ -86,6 +86,10 @@ class SelectableItem: Selectable, Item {
     }
 }
 
+class EditableItem: SelectableItem, Editable {
+    public var actions: [UITableViewRowAction]?
+}
+
 
 class TableViewDelegateTests: XCTestCase {
     
@@ -206,4 +210,22 @@ class TableViewDelegateTests: XCTestCase {
         expect(check).to(equal(2))
     }
     
+    func testEditableRows() {
+        let section = tableViewManager.sections.first!
+        let deleteAction = UITableViewRowAction(style: .normal, title: "Delete", handler: { action, indexPath in
+            print("DeleteAction")
+        })
+        let editableItem = EditableItem { _ in }
+        editableItem.actions = [deleteAction]
+        section.items.append(editableItem)
+        
+        let sectionIndex = section.index(in: tableViewManager)!
+        let rows = tableViewManager.tableView(tableViewManager.tableView, numberOfRowsInSection: sectionIndex)
+        XCTAssert(rows == 2)
+        
+        let indexPath = editableItem.indexPath(in: tableViewManager)!
+        let actions = tableViewManager.tableView(tableViewManager.tableView, editActionsForRowAt: indexPath)
+        XCTAssertNotNil(actions)
+        XCTAssert(actions!.count == 1)
+    }
 }
