@@ -34,7 +34,7 @@ class ViewController: UIViewController, TableViewManagerCompatible {
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableViewManager = TableViewManager(tableView: tableView, with: [CustomSection(vc: self)])
+            tableViewManager = TableViewManager(tableView: tableView, sections: [CustomSection(vc: self)])
         }
     }
     
