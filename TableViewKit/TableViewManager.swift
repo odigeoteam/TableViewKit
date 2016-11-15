@@ -33,7 +33,7 @@ open class TableViewManager: NSObject {
     ///
     /// - parameter tableView: A `tableView` that will be controlled by the `TableViewManager`
     /// - parameter sections: An array of sections
-    public convenience init(tableView: UITableView, with sections: [Section]) {
+    public convenience init(tableView: UITableView, sections: [Section]) {
         self.init(tableView: tableView)
         self.sections.replace(with: sections)
     }
@@ -98,7 +98,7 @@ extension TableViewManager {
         switch item {
         case .view(let view):
             guard let height = view.height else { return nil }
-            return height.estimated()
+            return height.estimated
         case .title(_):
             return 1.0
         default:
@@ -108,7 +108,7 @@ extension TableViewManager {
     
     fileprivate func estimatedHeight(at indexPath: IndexPath) -> CGFloat? {
         guard let height = item(at: indexPath).height else { return nil }
-        return height.estimated()
+        return height.estimated
     }
     
 
@@ -116,12 +116,12 @@ extension TableViewManager {
     fileprivate func height(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
         guard case .view(let view) = key(sections[section]), let value = view.height
             else { return nil }
-        return value.height()
+        return value.height
     }
     
     fileprivate func height(at indexPath: IndexPath) -> CGFloat? {
         guard let value = item(at: indexPath).height else { return nil }
-        return value.height()
+        return value.height
     }
     
 }
