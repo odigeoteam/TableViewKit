@@ -3,9 +3,8 @@ import Foundation
 /// A type that represent an item that can be selected
 public protocol Selectable: Item {
     
-    /// Closure called once an item is selected from a selectRow.
-    /// It will receive as parameter itself
-    var onSelection: (Selectable) -> () { get set }
+    /// Method called once an item is selected by a selectRow.
+    func didSelect()
 }
 
 extension Selectable {

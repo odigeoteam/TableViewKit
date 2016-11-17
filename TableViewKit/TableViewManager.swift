@@ -171,7 +171,7 @@ extension TableViewManager: UITableViewDelegate {
     /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentItem = item(at: indexPath) as? Selectable else { return }
-        currentItem.onSelection(currentItem)
+        currentItem.didSelect()
     }
     
     /// Implementation of UITableViewDelegate

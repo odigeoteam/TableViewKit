@@ -19,7 +19,7 @@ class ViewController: UIViewController, TableViewManagerCompatible {
 
                 let navigationController = UINavigationController.init(rootViewController: viewController)
 
-                let item: Selectable = CustomItem(title: "Example 1")
+                let item = CustomItem(title: "Example 1")
                 item.onSelection = { _ in
                     self.vc.present(navigationController, animated: true, completion: {
                         item.deselect(in: self.vc.tableViewManager, animated: false)
