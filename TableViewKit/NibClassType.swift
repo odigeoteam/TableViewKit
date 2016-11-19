@@ -8,13 +8,13 @@ public enum NibClassType<T> {
     /// If it must be loaded from a Class
     case `class`(T.Type)
     
-    /// The reusable identifier for the header/footer
+    /// The reusable identifier for the type
     public var reusableIdentifier: String {
-        return String(describing: cellClass)
+        return String(describing: typeClass)
     }
     
-    /// The header/footer class
-    public var cellClass: T.Type {
+    /// The type class
+    public var typeClass: T.Type {
         switch self {
         case .class(let cellClass):
             return cellClass
