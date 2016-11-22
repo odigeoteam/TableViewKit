@@ -3,7 +3,7 @@ import Foundation
 
 /// A type that represent an item to be displayed
 /// defining the `drawer` and the `height`
-public protocol Item: class {
+public protocol Item: class, AnyEquatable {
     
     /// The `drawer` of the item
     var drawer: CellDrawer.Type { get }
@@ -12,7 +12,23 @@ public protocol Item: class {
     var height: Height? { get }
 }
 
+public extension Item where Self: Equatable {
+    func equals(_ other: Any?) -> Bool {
+        if let other = other as? Self {
+            return other == self
+        }
+        return false
+    }
+}
+
 extension Item {
+    
+    public func equals(_ other: Any?) -> Bool {
+        if let other = other as AnyObject? {
+            return other === self
+        }
+        return false
+    }
 
     /// Dynamic height with an estimate value of 44.0
     public var height: Height? {
