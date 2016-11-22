@@ -32,10 +32,34 @@ class MoreAboutItem: Item, Selectable, Editable {
     var onSelection: (Selectable) -> () = { _ in }
     
     var actions: [UITableViewRowAction]?
-    
-    init(type: MoreAboutItemType) {
-        
+    weak var manager: TableViewManager?
+    let presenter: AboutPresenterProtocol?
+
+    init(type: MoreAboutItemType, presenter: AboutPresenterProtocol?, manager: TableViewManager?) {
+        self.presenter = presenter
+        self.manager = manager
         self.type = type
         self.title = type.title()
+    }
+    
+    func didSelect() {
+        switch type {
+        case .faq:
+            presenter?.showFaq()
+        case .contact:
+            presenter?.showContactUs()
+        case .terms:
+            presenter?.showTermsAndConditions()
+        case .feedback:
+            presenter?.showFeedback()
+        case .share:
+            presenter?.showShareApp()
+        case .rate:
+            presenter?.showRateApp()
+        }
+        
+        if let manager = manager {
+            deselect(in: manager, animated: true)
+        }
     }
 }

@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode8
-script: sh build.sh
+osx_image: xcode8.1
+script: travis_retry sh build.sh
 after_success:
   - bash <(curl -s https://codecov.io/bash)

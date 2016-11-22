@@ -60,8 +60,22 @@ class TableViewKitTests: XCTestCase {
         section.items.replace(with: [TestItem(), item])
     }
     
+    
+    func testRetainCycle() {
+        let tableViewManager = TableViewManager(tableView: UITableView())
+        tableViewManager.sections.insert(HeaderFooterTitleSection(items: [TestItem()]), at: 0)
+
+        weak var section: Section? = tableViewManager.sections.first
+        weak var item: Item? = section!.items.first
+        expect(section).toNot(beNil())
+        expect(item).toNot(beNil())
+        tableViewManager.sections.replace(with: [HeaderFooterTitleSection()])
+        expect(section).to(beNil())
+        expect(item).to(beNil())
+    }
+    
     func testConvenienceInit() {
-        let tableViewManager = TableViewManager(tableView: UITableView(), with: [HeaderFooterTitleSection()])
+        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
         
         expect(tableViewManager.sections.count).to(equal(1))
     }
@@ -72,7 +86,7 @@ class TableViewKitTests: XCTestCase {
         item.title = "Before"
         
         let section = HeaderFooterTitleSection(items: [item])
-        let tableViewManager = TableViewManager(tableView: UITableView(), with: [section])
+        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [section])
         
         guard let indexPath = item.indexPath(in: tableViewManager) else { return }
         var cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
@@ -86,7 +100,7 @@ class TableViewKitTests: XCTestCase {
     }
 
     func testNoCrashOnNonAddedItem() {
-        let tableViewManager = TableViewManager(tableView: UITableView(), with: [HeaderFooterTitleSection()])
+        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
 
         let item: Item = TestReloadItem()
         item.reload(in: tableViewManager, with: .automatic)

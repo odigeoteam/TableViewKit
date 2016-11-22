@@ -3,8 +3,11 @@
 </p>
 <p align="center">
 <a href="https://travis-ci.org/odigeoteam/TableViewKit"><img src="https://travis-ci.org/odigeoteam/TableViewKit.svg"></a>
+<a href="https://cocoapods.org/pods/TableViewKit"><img src="https://img.shields.io/cocoapods/v/TableViewKit.svg"></a>
 <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
+<br>
 <a href="http://codecov.io/github/odigeoteam/TableViewKit"><img src="http://codecov.io/github/odigeoteam/TableViewKit/coverage.svg"></a>
+<a href="http://cocoadocs.org/docsets/TableViewKit"><img src="https://img.shields.io/cocoapods/metrics/doc-percent/TableViewKit.svg"></a>
 <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat"></a>
 <a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat"></a>
 </p>

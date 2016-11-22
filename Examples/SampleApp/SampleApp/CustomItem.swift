@@ -34,4 +34,8 @@ public class CustomItem: Selectable, Item {
         self.init()
         self.title = title
     }
+    
+    public func didSelect() {
+        onSelection(self)
+    }
 }

@@ -11,6 +11,7 @@
 		2564E61C1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2564E61B1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib */; };
 		25837C781D87F819001EF4B8 /* ItemCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25837C771D87F819001EF4B8 /* ItemCompatible.swift */; };
 		25B0B7541DC74F6C00591467 /* Editable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B0B7531DC74F6C00591467 /* Editable.swift */; };
+		CC0DE2C81DE33B9C00E2EDE5 /* AnyEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DE2C71DE33B9C00E2EDE5 /* AnyEquatable.swift */; };
 		CC5CF11C1D839E71004DECB3 /* ArrayDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */; };
 		CC97D76D1D741DC4009CDF9D /* Selectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC97D76C1D741DC4009CDF9D /* Selectable.swift */; };
 		CC9D50E11D8496180010FCA3 /* TableViewDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9D50E01D8496180010FCA3 /* TableViewDelegateTests.swift */; };
@@ -50,6 +51,7 @@
 		25837C771D87F819001EF4B8 /* ItemCompatible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemCompatible.swift; path = Protocols/ItemCompatible.swift; sourceTree = "<group>"; };
 		25B0B7531DC74F6C00591467 /* Editable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Editable.swift; path = Protocols/Editable.swift; sourceTree = "<group>"; };
 		4BCAD51C1D89A704002F3420 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "External/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
+		CC0DE2C71DE33B9C00E2EDE5 /* AnyEquatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnyEquatable.swift; path = Protocols/AnyEquatable.swift; sourceTree = "<group>"; };
 		CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDiff.swift; sourceTree = "<group>"; };
 		CC97D76C1D741DC4009CDF9D /* Selectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Selectable.swift; path = Protocols/Selectable.swift; sourceTree = "<group>"; };
 		CC9D50E01D8496180010FCA3 /* TableViewDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDelegateTests.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				25B0B7531DC74F6C00591467 /* Editable.swift */,
 				25837C771D87F819001EF4B8 /* ItemCompatible.swift */,
 				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
+				CC0DE2C71DE33B9C00E2EDE5 /* AnyEquatable.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCBE45A01D72F79C00414A64 /* Section.swift in Sources */,
+				CC0DE2C81DE33B9C00E2EDE5 /* AnyEquatable.swift in Sources */,
 				CCFD05CC1D95BD3C0063A002 /* Stateful.swift in Sources */,
 				CCBE45921D72F79C00414A64 /* NSIndexSet+Array.swift in Sources */,
 				CC97D76D1D741DC4009CDF9D /* Selectable.swift in Sources */,

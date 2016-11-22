@@ -19,9 +19,7 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
     
     private var array: [T] {
         willSet {
-            diff = Array.diff(between: array as [AnyObject],
-                              and: newValue as [AnyObject],
-                              where: ===)
+            diff = Array.diff(between: array, and: newValue, where: compare)
             guard !diff.isEmpty else { return }
 
             callback?(.beginUpdates)
@@ -118,4 +116,12 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
     public mutating func replace(with array: [T]) {
         self.array = array
     }
+    
+    private func compare(lhs: T, rhs: T) -> Bool {
+        if let lhs = lhs as? AnyEquatable {
+            return lhs.equals(rhs)
+        }
+        return false
+    }
+
 }

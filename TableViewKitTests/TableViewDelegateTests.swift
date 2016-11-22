@@ -77,12 +77,14 @@ class StaticHeigthItem: Item {
 }
 
 class SelectableItem: Selectable, Item {
-    public var onSelection: (Selectable) -> ()
+    public var check: Int = 0
     
     internal var drawer: CellDrawer.Type = TestDrawer.self
     
-    public init(callback: @escaping (Selectable) -> ()) {
-        onSelection = callback
+    public init() {}
+    
+    func didSelect() {
+        check += 1
     }
 }
 
@@ -191,23 +193,20 @@ class TableViewDelegateTests: XCTestCase {
         indexPath = IndexPath(row: 0, section: 0)
         tableViewManager.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
         
-        var check = 0;
 
         let section = tableViewManager.sections[0]
         indexPath = IndexPath(row: section.items.count, section: 0)
-        let item = SelectableItem(callback: { _ in
-            check += 1
-        })
+        let item = SelectableItem()
         section.items.append(item)
         
         tableViewManager.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
-        expect(check).to(equal(1))
+        expect(item.check).to(equal(1))
 
         item.select(in: tableViewManager, animated: true)
-        expect(check).to(equal(2))
+        expect(item.check).to(equal(2))
         
         item.deselect(in: tableViewManager, animated: true)
-        expect(check).to(equal(2))
+        expect(item.check).to(equal(2))
     }
     
     func testEditableRows() {
@@ -215,7 +214,7 @@ class TableViewDelegateTests: XCTestCase {
         let deleteAction = UITableViewRowAction(style: .normal, title: "Delete", handler: { action, indexPath in
             print("DeleteAction")
         })
-        let editableItem = EditableItem { _ in }
+        let editableItem = EditableItem()
         editableItem.actions = [deleteAction]
         section.items.append(editableItem)
         

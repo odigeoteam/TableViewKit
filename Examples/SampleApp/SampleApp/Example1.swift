@@ -3,7 +3,7 @@ import UIKit
 import TableViewKit
 
 
-protocol TableViewManagerCompatible {
+public protocol TableViewManagerCompatible {
     var tableViewManager: TableViewManager! { get }
 }
 

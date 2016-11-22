@@ -54,7 +54,7 @@ class TableViewDataSourceTests: XCTestCase {
         let section1 = HeaderFooterTitleSection(items: [TestItem()])
         let section2 = ViewHeaderFooterSection(items: [NoHeigthItem(), StaticHeigthItem()])
         
-        tableViewManager = TableViewManager(tableView: UITableView(), with: [section1, section2])
+        tableViewManager = TableViewManager(tableView: UITableView(), sections: [section1, section2])
     }
 
     override func tearDown() {

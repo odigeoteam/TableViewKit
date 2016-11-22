@@ -11,7 +11,7 @@ public enum Height {
     case `static`(CGFloat)
     
     /// Returns the estimated value of the height
-    internal func estimated() -> CGFloat {
+    internal var estimated: CGFloat {
         switch self {
         case .static(let value):
             return value
@@ -21,7 +21,7 @@ public enum Height {
     }
     
     /// Returns the height value
-    internal func height() -> CGFloat {
+    internal var height: CGFloat {
         switch self {
         case .static(let value):
             return value

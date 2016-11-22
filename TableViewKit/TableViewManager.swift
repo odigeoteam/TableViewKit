@@ -33,37 +33,45 @@ open class TableViewManager: NSObject {
     ///
     /// - parameter tableView: A `tableView` that will be controlled by the `TableViewManager`
     /// - parameter sections: An array of sections
-    public convenience init(tableView: UITableView, with sections: [Section]) {
-        self.init(tableView: tableView)
-        self.sections.replace(with: sections)
+    public init(tableView: UITableView, with sections: [Section]) {
+        self.tableView = tableView
+        self.sections = ObservableArray(array: sections)
+        super.init()
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.setupSections()
     }
     
     private func setupSections() {
-        sections.callback = { [weak self] change in
-            guard let weakSelf = self else { return }
-            
-            switch change {
-            case .inserts(let array):
-                array.forEach { index in
-                    weakSelf.sections[index].setup(in: weakSelf)
-                    weakSelf.sections[index].register(in: weakSelf)
-                }
-                weakSelf.tableView.insertSections(IndexSet(array), with: weakSelf.animation)
-            case .deletes(let array):
-                weakSelf.tableView.deleteSections(IndexSet(array), with: weakSelf.animation)
-            case .updates(let array):
-                weakSelf.tableView.reloadSections(IndexSet(array), with: weakSelf.animation)
-            case .moves(_): break
-            case .beginUpdates:
-                if (weakSelf.animation == .none) {
-                    UIView.setAnimationsEnabled(false)
-                }
-                weakSelf.tableView.beginUpdates()
-            case .endUpdates:
-                weakSelf.tableView.endUpdates()
-                if (weakSelf.animation == .none) {
-                    UIView.setAnimationsEnabled(true)
-                }
+        sections.forEach { section in
+            section.setup(in: self)
+            section.register(in: self)
+        }
+        sections.callback = { [weak self] in self?.onSectionsUpdate(withChanges: $0) }
+    }
+    
+    private func onSectionsUpdate(withChanges changes: ArrayChanges){
+        switch changes {
+        case .inserts(let array):
+            array.forEach { index in
+                sections[index].setup(in: self)
+                sections[index].register(in: self)
+            }
+            tableView.insertSections(IndexSet(array), with: animation)
+        case .deletes(let array):
+            tableView.deleteSections(IndexSet(array), with: animation)
+        case .updates(let array):
+            tableView.reloadSections(IndexSet(array), with: animation)
+        case .moves(_): break
+        case .beginUpdates:
+            if (animation == .none) {
+                UIView.setAnimationsEnabled(false)
+            }
+            tableView.beginUpdates()
+        case .endUpdates:
+            tableView.endUpdates()
+            if (animation == .none) {
+                UIView.setAnimationsEnabled(true)
             }
         }
     }
@@ -98,7 +106,7 @@ extension TableViewManager {
         switch item {
         case .view(let view):
             guard let height = view.height else { return nil }
-            return height.estimated()
+            return height.estimated
         case .title(_):
             return 1.0
         default:
@@ -108,7 +116,7 @@ extension TableViewManager {
     
     fileprivate func estimatedHeight(at indexPath: IndexPath) -> CGFloat? {
         guard let height = item(at: indexPath).height else { return nil }
-        return height.estimated()
+        return height.estimated
     }
     
 
@@ -116,12 +124,12 @@ extension TableViewManager {
     fileprivate func height(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
         guard case .view(let view) = key(sections[section]), let value = view.height
             else { return nil }
-        return value.height()
+        return value.height
     }
     
     fileprivate func height(at indexPath: IndexPath) -> CGFloat? {
         guard let value = item(at: indexPath).height else { return nil }
-        return value.height()
+        return value.height
     }
     
 }
@@ -171,7 +179,7 @@ extension TableViewManager: UITableViewDelegate {
     /// Implementation of UITableViewDelegate
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentItem = item(at: indexPath) as? Selectable else { return }
-        currentItem.onSelection(currentItem)
+        currentItem.didSelect()
     }
     
     /// Implementation of UITableViewDelegate
