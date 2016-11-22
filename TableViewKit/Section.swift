@@ -13,6 +13,8 @@ public protocol Section: class {
     var header: HeaderFooterView { get }
     /// The `footer` of the section, none if not defined
     var footer: HeaderFooterView { get }
+    
+    func index(in manager: TableViewManager) -> Int?
 }
 
 extension Section {
