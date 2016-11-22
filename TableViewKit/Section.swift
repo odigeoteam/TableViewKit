@@ -53,35 +53,35 @@ extension Section {
     ///
     /// - parameter manager: A manager where the section may have been added
     internal func setup(in manager: TableViewManager) {
-        weak var manager = manager
-        items.callback = { [weak self] change in
-            
-            guard let weakSelf = self,
-                let weakManager = manager,
-                let sectionIndex = weakManager.sections.index(of: weakSelf)  else { return }
-            
-            let tableView = weakManager.tableView
-
-            switch change {
-            case .inserts(let array):
-                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-                tableView.insertRows(at: indexPaths, with: weakManager.animation)
-            case .deletes(let array):
-                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-                tableView.deleteRows(at: indexPaths, with: weakManager.animation)
-            case .updates(let array):
-                let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-                tableView.reloadRows(at: indexPaths, with: weakManager.animation)
-            case .moves(let array):
-                let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
-                let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
-                tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
-            case .beginUpdates:
-                tableView.beginUpdates()
-            case .endUpdates:
-                tableView.endUpdates()
+        items.callback = { [weak self, weak manager] change in
+            if let manager = manager {
+                self?.onItemsUpdate(withChanges: change, in: manager)
             }
-
+        }
+    }
+    
+    private func onItemsUpdate(withChanges changes: ArrayChanges, in manager: TableViewManager){
+        guard let sectionIndex = index(in: manager) else { return }
+        let tableView = manager.tableView
+        
+        switch changes {
+        case .inserts(let array):
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            tableView.insertRows(at: indexPaths, with: manager.animation)
+        case .deletes(let array):
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            tableView.deleteRows(at: indexPaths, with: manager.animation)
+        case .updates(let array):
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            tableView.reloadRows(at: indexPaths, with: manager.animation)
+        case .moves(let array):
+            let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
+            let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
+            tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
+        case .beginUpdates:
+            tableView.beginUpdates()
+        case .endUpdates:
+            tableView.endUpdates()
         }
     }
 }
