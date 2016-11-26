@@ -41,13 +41,13 @@ extension Section {
     /// - parameter manager: A manager where the section may have been added
     internal func register(in manager: TableViewManager) {
         if case .view(let header) = header {
-            manager.tableView.register(header.drawer.type)
+            manager.register(header.drawer.type)
         }
         if case .view(let footer) = footer {
-            manager.tableView.register(footer.drawer.type)
+            manager.register(footer.drawer.type)
         }
         items.forEach {
-            manager.tableView.register($0.drawer.type)
+            manager.register($0.drawer.type)
         }
     }
 
