@@ -36,7 +36,7 @@ class TestDrawer: CellDrawer {
 }
 
 class TestItem: Item {
-    static internal var drawer = CellDrawerOf(TestDrawer.self)
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
 }
 
 class TestCell: UITableViewCell, ItemCompatible {

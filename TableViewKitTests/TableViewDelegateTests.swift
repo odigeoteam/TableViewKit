@@ -38,7 +38,7 @@ class ViewHeaderFooter: HeaderFooter {
     
     public var title: String?
     public var height: Height? = .dynamic(44.0)
-    static public var drawer = HeaderFooterDrawerOf(CustomHeaderDrawer.self)
+    static public var drawer = AnyHeaderFooterDrawer(CustomHeaderDrawer.self)
     
     public init() { }
     
@@ -61,20 +61,20 @@ class ViewHeaderFooterSection: Section {
 }
 
 class NoHeigthItem: Item {
-    static internal var drawer = CellDrawerOf(TestDrawer.self)
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
     
     internal var height: Height? = nil
 }
 
 class StaticHeigthItem: Item {
     static let testStaticHeightValue: CGFloat = 20.0
-    static internal var drawer = CellDrawerOf(TestDrawer.self)
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
     
     internal var height: Height? = .static(20.0)
 }
 
 class SelectableItem: Selectable, Item {
-    static internal var drawer = CellDrawerOf(TestDrawer.self)
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     public var check: Int = 0    
     

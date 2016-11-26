@@ -14,7 +14,7 @@ class TestReloadDrawer: CellDrawer {
 }
 
 class TestReloadItem: Item {
-    static internal var drawer = CellDrawerOf(TestReloadDrawer.self)
+    static internal var drawer = AnyCellDrawer(TestReloadDrawer.self)
 
     internal var title: String?
 }
