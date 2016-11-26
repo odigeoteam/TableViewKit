@@ -60,7 +60,7 @@ public class TextFieldDrawer: CellDrawer {
 
 public class TextFieldItem: UIResponder, Item, ContentValidatable, Validationable {
     
-    public static var drawer = CellDrawerOf(TextFieldDrawer.self)
+    public static var drawer = AnyCellDrawer(TextFieldDrawer.self)
     
     public lazy var validation: Validation<String?> = {
         return Validation<String?>(forInput: self, withIdentifier: self)

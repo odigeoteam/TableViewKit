@@ -19,7 +19,7 @@ public class CustomHeaderDrawer: HeaderFooterDrawer {
 
 
 public class CustomHeaderItem: HeaderFooter {
-    public static var drawer = HeaderFooterDrawerOf(CustomHeaderDrawer.self)
+    public static var drawer = AnyHeaderFooterDrawer(CustomHeaderDrawer.self)
 
     public var title: String?
     public var height: Height? = .dynamic(44.0)

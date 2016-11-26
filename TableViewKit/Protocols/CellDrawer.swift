@@ -45,31 +45,23 @@ public extension CellDrawer {
     }
 }
 
-public struct CellDrawerOf {
-    
-    let _cell: (TableViewManager, Item, IndexPath) -> UITableViewCell
-    let _draw: (UITableViewCell, Item) -> ()
+public struct AnyCellDrawer {
+    let type: CellType<UITableViewCell>
+    let cell: (TableViewManager, Item, IndexPath) -> UITableViewCell
+    let draw: (UITableViewCell, Item) -> ()
     
     public init<Drawer: CellDrawer, GenericItem, Cell: UITableViewCell>(_ drawer: Drawer.Type) where Drawer.GenericItem == GenericItem, Drawer.Cell == Cell {
-        switch drawer.type {
-        case .class(let type):
-            self.type = NibClassType<UITableViewCell>.class(type)
-        case .nib(let nib, let type):
-            self.type = NibClassType<UITableViewCell>.nib(nib, type)
-        }
-        self._cell = { manager, item, indexPath in drawer.cell(in: manager, with: item as! GenericItem, for: indexPath) }
-        self._draw = { cell, item in drawer.draw(cell as! Cell, with: item as! GenericItem) }
+        self.type = drawer.type.cellType
+        self.cell = { manager, item, indexPath in drawer.cell(in: manager, with: item as! GenericItem, for: indexPath) }
+        self.draw = { cell, item in drawer.draw(cell as! Cell, with: item as! GenericItem) }
     }
     
-    public let type: CellType<UITableViewCell>
-    
-    public func cell(in manager: TableViewManager, with item: Item, for indexPath: IndexPath) -> UITableViewCell {
-        return _cell(manager, item, indexPath)
+    func cell(in manager: TableViewManager, with item: Item, for indexPath: IndexPath) -> UITableViewCell {
+        return cell(manager, item, indexPath)
     }
     
-    
-    public func draw(_ cell: UITableViewCell, with item: Item) {
-        _draw(cell, item)
+    func draw(_ cell: UITableViewCell, with item: Item) {
+        draw(cell, item)
     }
     
 }

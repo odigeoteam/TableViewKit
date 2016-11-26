@@ -24,7 +24,7 @@ enum MoreAboutItemType {
 }
 
 class MoreAboutItem: Item, Selectable, Editable {
-    public static var drawer = CellDrawerOf(MoreAboutDrawer.self)
+    public static var drawer = AnyCellDrawer(MoreAboutDrawer.self)
 
     var type: MoreAboutItemType
     var title: String?

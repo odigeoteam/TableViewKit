@@ -2,7 +2,7 @@ import Foundation
 import TableViewKit
 
 class HelpCenterItem: Item {
-    static var drawer = CellDrawerOf(HelpCenterDrawer.self)
+    static var drawer = AnyCellDrawer(HelpCenterDrawer.self)
 
     var height: Height? = .dynamic(44.0)
     

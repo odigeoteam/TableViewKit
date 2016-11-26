@@ -15,7 +15,7 @@ public class CustomDrawer: CellDrawer {
 
 
 public class CustomItem: Selectable, Item {
-    public static var drawer = CellDrawerOf(CustomDrawer.self)
+    public static var drawer = AnyCellDrawer(CustomDrawer.self)
 
     public var title: String?
     

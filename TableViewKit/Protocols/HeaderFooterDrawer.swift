@@ -37,31 +37,23 @@ public extension HeaderFooterDrawer {
     }
 }
 
-public struct HeaderFooterDrawerOf {
-    
-    let _view: (TableViewManager, HeaderFooter) -> UITableViewHeaderFooterView
-    let _draw: (UITableViewHeaderFooterView, HeaderFooter) -> ()
+public struct AnyHeaderFooterDrawer {
+    let type: HeaderFooterType<UITableViewHeaderFooterView>
+    let view: (TableViewManager, HeaderFooter) -> UITableViewHeaderFooterView
+    let draw: (UITableViewHeaderFooterView, HeaderFooter) -> ()
     
     public init<Drawer: HeaderFooterDrawer, GenericItem, View: UITableViewHeaderFooterView>(_ drawer: Drawer.Type) where Drawer.GenericItem == GenericItem, Drawer.View == View {
-        switch drawer.type {
-        case .class(let type):
-            self.type = NibClassType<UITableViewHeaderFooterView>.class(type)
-        case .nib(let nib, let type):
-            self.type = NibClassType<UITableViewHeaderFooterView>.nib(nib, type)
-        }
-        self._view = { manager, item in drawer.view(in: manager, with: item as! GenericItem) }
-        self._draw = { cell, item in drawer.draw(cell as! View, with: item as! GenericItem) }
+        self.type = drawer.type.headerFooterType
+        self.view = { manager, item in drawer.view(in: manager, with: item as! GenericItem) }
+        self.draw = { cell, item in drawer.draw(cell as! View, with: item as! GenericItem) }
     }
     
-    public let type: HeaderFooterType<UITableViewHeaderFooterView>
-    
-    public func view(in manager: TableViewManager, with item: HeaderFooter) -> UITableViewHeaderFooterView {
-        return _view(manager, item)
+    func view(in manager: TableViewManager, with item: HeaderFooter) -> UITableViewHeaderFooterView {
+        return view(manager, item)
     }
     
-    
-    public func draw(_ view: UITableViewHeaderFooterView, with item: HeaderFooter) {
-        _draw(view, item)
+    func draw(_ view: UITableViewHeaderFooterView, with item: HeaderFooter) {
+        draw(view, item)
     }
     
 }
