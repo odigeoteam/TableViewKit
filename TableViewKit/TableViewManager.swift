@@ -86,7 +86,7 @@ extension TableViewManager {
     fileprivate func view(for key: (Section) -> HeaderFooterView, inSection section: Int) -> UIView? {
         guard case .view(let item) = key(sections[section]) else { return nil }
         
-        let drawer = item.drawer
+        let drawer = type(of: item).drawer
         let view = drawer.view(in: self, with: item)
         drawer.draw(view, with: item)
         
@@ -150,7 +150,7 @@ extension TableViewManager: UITableViewDataSource {
     /// Implementation of UITableViewDataSource
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentItem = item(at: indexPath)
-        let drawer = currentItem.drawer
+        let drawer = type(of: currentItem).drawer
         
         let cell = drawer.cell(in: self, with: currentItem, for: indexPath)
         drawer.draw(cell, with: currentItem)

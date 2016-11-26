@@ -6,7 +6,7 @@ import Foundation
 public protocol Item: class, AnyEquatable {
     
     /// The `drawer` of the item
-    var drawer: CellDrawer.Type { get }
+    static var drawer: CellDrawerOf { get }
     
     /// The `height` of the item
     var height: Height? { get }

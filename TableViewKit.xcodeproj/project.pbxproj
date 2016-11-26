@@ -113,11 +113,11 @@
 				CCFD05CB1D95BD3C0063A002 /* Stateful.swift */,
 				CCCAC1251D7D9EE00001FC1D /* HeaderFooter.swift */,
 				CCEF387F1D8D5A7A00F5893F /* HeaderFooterDrawer.swift */,
+				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
 				CCBE458C1D72F79C00414A64 /* Item.swift */,
 				CC97D76C1D741DC4009CDF9D /* Selectable.swift */,
 				25B0B7531DC74F6C00591467 /* Editable.swift */,
 				25837C771D87F819001EF4B8 /* ItemCompatible.swift */,
-				CCBE458A1D72F79C00414A64 /* CellDrawer.swift */,
 				CC0DE2C71DE33B9C00E2EDE5 /* AnyEquatable.swift */,
 			);
 			name = Protocols;

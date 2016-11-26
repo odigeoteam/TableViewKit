@@ -52,19 +52,15 @@ public class TextFieldDrawer: CellDrawer {
     public static let nib = UINib(nibName: String(describing: TextFieldCell.self), bundle: nil)
     public static let type = CellType.nib(TextFieldDrawer.nib, TextFieldCell.self)
     
-    public static func draw(_ cell: UITableViewCell, with item: Any) {
-        
-        let textCell = cell as! TextFieldCell
-        let textItem = item as! TextFieldItem
-        
-        textCell.textField.placeholder = textItem.placeHolder
-        textCell.textField.text = textItem.value
+    public static func draw(_ cell: TextFieldCell, with item: TextFieldItem) {
+        cell.textField.placeholder = item.placeHolder
+        cell.textField.text = item.value
     }
 }
 
 public class TextFieldItem: UIResponder, Item, ContentValidatable, Validationable {
-        
-    public var drawer: CellDrawer.Type = TextFieldDrawer.self
+    
+    public static var drawer = CellDrawerOf(TextFieldDrawer.self)
     
     public lazy var validation: Validation<String?> = {
         return Validation<String?>(forInput: self, withIdentifier: self)

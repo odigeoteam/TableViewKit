@@ -5,7 +5,7 @@ extension UITableView {
     /// Register a cell type for reuse
     ///
     /// - parameter type: The type of cell that must be registered
-    public func register(_ type: CellType) {
+    public func register(_ type: NibClassType<UITableViewCell>) {
         switch type {
         case .class(let cellClass):
             self.register(cellClass, forCellReuseIdentifier: type.reusableIdentifier)
@@ -17,7 +17,7 @@ extension UITableView {
     /// Register a header/footer type for reuse
     ///
     /// - parameter type: The type of header/footer that must be registered
-    public func register(_ type: HeaderFooterType) {
+    public func register(_ type: NibClassType<UITableViewHeaderFooterView>) {
         switch type {
         case .class(let cellClass):
             self.register(cellClass, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)

@@ -20,7 +20,7 @@ public enum HeaderFooterView: ExpressibleByNilLiteral {
 public protocol HeaderFooter: class {
 
     /// The `drawer` of the header/footer
-    var drawer: HeaderFooterDrawer.Type { get }
+    static var drawer: HeaderFooterDrawerOf { get }
 
     /// The `height` of the header/footer
     var height: Height? { get }

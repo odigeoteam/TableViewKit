@@ -31,13 +31,12 @@ class HeaderFooterTitleSection: Section {
 }
 
 class TestDrawer: CellDrawer {
-    
     static internal var type = CellType.class(TestCell.self)
-    static internal func draw(_ cell: UITableViewCell, with item: Any) { }
+    static internal func draw(_ cell: TestCell, with item: Item) { }
 }
 
 class TestItem: Item {
-    internal var drawer: CellDrawer.Type = TestDrawer.self
+    static internal var drawer = CellDrawerOf(TestDrawer.self)
 }
 
 class TestCell: UITableViewCell, ItemCompatible {
