@@ -24,11 +24,11 @@ class DiffIterator : IteratorProtocol {
         var y: Int
     }
     var last: Coordinates
-    private let matrix: [[Int]]
+    private let matrix: Matrix<Int>
     
-    init(matrix: [[Int]]){
+    init(matrix: Matrix<Int>){
         self.matrix = matrix
-        self.last = Coordinates(x: matrix.count-1, y: matrix.first!.count-1)
+        self.last = Coordinates(x: matrix.rows-1, y: matrix.columns-1)
     }
     
     func next() -> ArrayChanges? {
@@ -39,10 +39,10 @@ class DiffIterator : IteratorProtocol {
             } else if last.y == 0 {
                 last.x -= 1
                 return .deletes([last.x])
-            } else if matrix[last.x][last.y] == matrix[last.x][last.y - 1] {
+            } else if matrix[last.x, last.y] == matrix[last.x, last.y - 1] {
                 last.y -= 1
                 return .inserts([last.y])
-            } else if matrix[last.x][last.y] == matrix[last.x - 1][last.y] {
+            } else if matrix[last.x, last.y] == matrix[last.x - 1, last.y] {
                 last.x -= 1
                 return .deletes([last.x])
             } else {
@@ -55,14 +55,36 @@ class DiffIterator : IteratorProtocol {
 }
 
 class DiffSequence : Sequence {
-    private let matrix: [[Int]]
+    private let matrix: Matrix<Int>
     
-    init(matrix: [[Int]]){
+    init(matrix: Matrix<Int>){
         self.matrix = matrix
     }
     
     func makeIterator() -> DiffIterator {
         return DiffIterator(matrix: matrix)
+    }
+}
+
+struct Matrix<Element> {
+    
+    let rows: Int
+    let columns: Int
+    var grid: [Element]
+    
+    init(rows: Int, columns: Int, repeatedValue: Element) {
+        self.rows = rows
+        self.columns = columns
+        self.grid = [Element](repeating: repeatedValue, count: rows * columns)
+    }
+    
+    subscript(row: Int, column: Int) -> Element {
+        get {
+            return grid[(row * columns) + column]
+        }
+        set {
+            grid[(row * columns) + column] = newValue
+        }
     }
 }
 
@@ -72,13 +94,13 @@ extension Array {
 
     static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff {
         
-        var matrix = [[Int]](repeating: [Int](repeating: 0, count: y.count+1), count: x.count+1)
+        var matrix = Matrix(rows: x.count+1, columns: y.count+1, repeatedValue: 0)
         for (i, xElem) in x.enumerated() {
             for (j, yElem) in y.enumerated() {
                 if predicate(xElem, yElem) {
-                    matrix[i+1][j+1] = matrix[i][j] + 1
+                    matrix[i+1, j+1] = matrix[i, j] + 1
                 } else {
-                    matrix[i+1][j+1] = Swift.max(matrix[i][j+1], matrix[i+1][j])
+                    matrix[i+1, j+1] = Swift.max(matrix[i, j+1], matrix[i+1, j])
                 }
             }
         }
