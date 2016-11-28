@@ -15,7 +15,7 @@ open class TableViewManager: NSObject {
     
     open var animation: UITableViewRowAnimation = .automatic
     
-    open var reusableIdentifiers: Set<String> = []
+    var reusableIdentifiers: Set<String> = []
     
     /// Initialize a `TableViewManager` with a `tableView`.
     ///
@@ -81,13 +81,13 @@ open class TableViewManager: NSObject {
 
 extension TableViewManager {
     
-    public func register(_ type: CellType) {
+    func register(_ type: CellType) {
         if !reusableIdentifiers.contains(type.reusableIdentifier) {
             tableView.register(type)
             reusableIdentifiers.insert(type.reusableIdentifier)
         }
     }
-    public func register(_ type: HeaderFooterType) {
+    func register(_ type: HeaderFooterType) {
         if !reusableIdentifiers.contains(type.reusableIdentifier) {
             tableView.register(type)
             reusableIdentifiers.insert(type.reusableIdentifier)
