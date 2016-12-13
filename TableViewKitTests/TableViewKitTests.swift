@@ -18,6 +18,30 @@ class TestReloadItem: Item {
     internal var title: String?
 }
 
+class StatefulSection: HeaderFooterTitleSection, StaticStateful {
+    
+    enum State {
+        case login, register
+    }
+    
+    var currentState: StatefulSection.State = .login
+    var states: [StatefulSection.State : [Item]] = [:]
+    
+    override init() {
+        super.init()
+        
+        let loginItem = TestReloadItem()
+        loginItem.title = "Login"
+        states[.login] = [loginItem]
+        
+        let registerItem = TestReloadItem()
+        registerItem.title = "Register"
+        states[.register] = [registerItem]
+        
+        transition(to: currentState)
+    }
+}
+
 class TestRegisterNibCell: UITableViewCell { }
 class TestRegisterHeaderFooterView: UITableViewHeaderFooterView { }
 
@@ -139,5 +163,25 @@ class TableViewKitTests: XCTestCase {
         
         let headerFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerFooterType.reusableIdentifier)
         expect(headerFooterView).toNot(equal(nil))
+    }
+    
+    func testLoginState() {
+        
+        let section = StatefulSection()
+        XCTAssert(section.items.count == 1)
+        
+        let loginItem = section.items.first as? TestReloadItem
+        XCTAssert(loginItem?.title == "Login")
+    }
+    
+    func testRegisterState() {
+        
+        let section = StatefulSection()
+        section.transition(to: .register)
+        
+        XCTAssert(section.items.count == 1)
+        
+        let registerItem = section.items.first as? TestReloadItem
+        XCTAssert(registerItem?.title == "Register")
     }
 }
