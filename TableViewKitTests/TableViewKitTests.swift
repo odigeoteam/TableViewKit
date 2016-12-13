@@ -60,6 +60,13 @@ class TableViewKitTests: XCTestCase {
         section.items.replace(with: [TestItem(), item])
     }
     
+    func testNotEqualItem() {
+        
+        let item1 = TestItem()
+        let item2 = TestItem()
+        
+        XCTAssert(item1.equals(item2) == false)
+    }
     
     func testRetainCycle() {
         let tableViewManager = TableViewManager(tableView: UITableView())
