@@ -18,6 +18,18 @@ class TestReloadItem: Item {
     internal var title: String?
 }
 
+class EqualableItem: TestReloadItem, Equatable {
+    
+    init(title: String) {
+        super.init()
+        self.title = title
+    }
+    
+    public static func ==(lhs: EqualableItem, rhs: EqualableItem) -> Bool {
+        return lhs.title == rhs.title
+    }
+}
+
 class StatefulSection: HeaderFooterTitleSection, StaticStateful {
     
     enum State {
@@ -86,10 +98,18 @@ class TableViewKitTests: XCTestCase {
     
     func testNotEqualItem() {
         
-        let item1 = TestItem()
-        let item2 = TestItem()
+        let item1 = EqualableItem(title: "Item1")
+        let item2 = EqualableItem(title: "Item2")
         
         XCTAssert(item1.equals(item2) == false)
+    }
+    
+    func testEqualItem() {
+        
+        let item1 = EqualableItem(title: "Item1")
+        let item2 = EqualableItem(title: "Item1")
+        
+        XCTAssert(item1.equals(item2))
     }
     
     func testRetainCycle() {
@@ -125,6 +145,8 @@ class TableViewKitTests: XCTestCase {
         expect(cell.textLabel?.text).to(equal(item.title))
         
         item.title = "After"
+        item.reload(in: tableViewManager)
+        
         cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
         
         expect(cell.textLabel?.text).to(equal(item.title))
