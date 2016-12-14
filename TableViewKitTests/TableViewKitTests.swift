@@ -153,6 +153,31 @@ class TableViewKitTests: XCTestCase {
         
         expect(cell.textLabel?.text).to(equal(item.title))
     }
+    
+    func testMoveRows() {
+        
+        let tableView = UITableView()
+        
+        let item1 = TestItem()
+        let item2 = TestItem()
+        
+        let section = NoHeaderFooterSection(items: [item1, item2])
+        let tableViewManager = TableViewManager(tableView: tableView, sections: [section])
+        
+        var indexPathItem1 = item1.indexPath(in: tableViewManager)
+        var indexPathItem2 = item2.indexPath(in: tableViewManager)
+        
+        XCTAssertNotNil(indexPathItem1)
+        XCTAssertNotNil(indexPathItem2)
+        
+        section.items.replace(with: [item2, item1])
+        
+        indexPathItem1 = item1.indexPath(in: tableViewManager)
+        indexPathItem2 = item2.indexPath(in: tableViewManager)
+        
+        XCTAssert(indexPathItem2?.item == 0)
+        XCTAssert(indexPathItem1?.item == 1)
+    }
 
     func testNoCrashOnNonAddedItem() {
         let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
