@@ -21,10 +21,12 @@ class MoreAboutSection: Section {
         })
         
         let types: [MoreAboutItemType] = [.faq, .contact, .terms, .feedback, .share, .rate]
-        for type in types {
-            let moreAboutItem = MoreAboutItem(type: type, presenter: presenter, manager: manager)
+        let items: [Item] = types.map {
+            let moreAboutItem = MoreAboutItem(type: $0, presenter: presenter, manager: manager)
             moreAboutItem.actions = [deleteAction, moreAction]
-            items.append(moreAboutItem)
+            return moreAboutItem
         }
+        
+        self.items.replace(with: items)
     }
 }

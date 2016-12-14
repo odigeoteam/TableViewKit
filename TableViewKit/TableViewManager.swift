@@ -15,6 +15,7 @@ open class TableViewManager: NSObject {
     
     open var animation: UITableViewRowAnimation = .automatic
     
+    var reusableIdentifiers: Set<String> = []
     
     /// Initialize a `TableViewManager` with a `tableView`.
     ///
@@ -62,7 +63,10 @@ open class TableViewManager: NSObject {
             tableView.deleteSections(IndexSet(array), with: animation)
         case .updates(let array):
             tableView.reloadSections(IndexSet(array), with: animation)
-        case .moves(_): break
+        case .moves(let array):
+            let fromIndex = array.map { $0.0 }
+            let toIndex = array.map { $0.1 }
+            tableView.moveSections(from: fromIndex, to: toIndex)
         case .beginUpdates:
             if (animation == .none) {
                 UIView.setAnimationsEnabled(false)
@@ -73,6 +77,23 @@ open class TableViewManager: NSObject {
             if (animation == .none) {
                 UIView.setAnimationsEnabled(true)
             }
+        }
+    }
+    
+}
+
+extension TableViewManager {
+    
+    func register(_ type: CellType) {
+        if !reusableIdentifiers.contains(type.reusableIdentifier) {
+            tableView.register(type)
+            reusableIdentifiers.insert(type.reusableIdentifier)
+        }
+    }
+    func register(_ type: HeaderFooterType) {
+        if !reusableIdentifiers.contains(type.reusableIdentifier) {
+            tableView.register(type)
+            reusableIdentifiers.insert(type.reusableIdentifier)
         }
     }
 }
