@@ -79,7 +79,8 @@ extension Section {
         }
     }
     
-    private func onItemsUpdate(withChanges changes: ArrayChanges, in manager: TableViewManager){
+    private func onItemsUpdate(withChanges changes: ArrayChanges, in manager: TableViewManager) {
+        
         guard let sectionIndex = index(in: manager) else { return }
         let tableView = manager.tableView
         

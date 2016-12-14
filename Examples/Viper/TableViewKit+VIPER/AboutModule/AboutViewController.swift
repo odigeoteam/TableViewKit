@@ -18,9 +18,11 @@ class AboutViewController: UITableViewController, AboutViewControllerProtocol {
         insertSectionButtonItem = UIBarButtonItem(title: "Insert", style: .plain, target: self, action: #selector(insertSection))
         moveSectionButtonItem = UIBarButtonItem(title: "Move", style: .plain, target: self, action: #selector(moveSection))
         
+        let helpSection = HelpCenterSection(presenter: presenter)
+        let moreAboutSection = MoreAboutSection(presenter: presenter, manager: tableViewManager)
+        
         tableViewManager = TableViewManager(tableView: self.tableView)
-        tableViewManager?.sections.append(HelpCenterSection(presenter: presenter))
-        tableViewManager?.sections.append(MoreAboutSection(presenter: presenter, manager: tableViewManager))
+        tableViewManager?.sections.replace(with: [helpSection, moreAboutSection])
         
         navigationItem.rightBarButtonItem = insertSectionButtonItem
     }
@@ -46,7 +48,7 @@ class AboutViewController: UITableViewController, AboutViewControllerProtocol {
             let section2 = tableViewManager?.sections[1],
             let section3 = tableViewManager?.sections[2] else { return }
         
-        tableViewManager?.sections.replace(with: [section2, section1, section3])
+        tableViewManager?.sections.replace(with: [section2, section3, section1])
         
         navigationItem.rightBarButtonItem = nil
     }
