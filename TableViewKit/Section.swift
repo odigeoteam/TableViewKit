@@ -3,7 +3,7 @@ import UIKit
 
 /// A type that represent a section to be displayed
 /// containing `items`, a `header` and a `footer`
-public protocol Section: class {
+public protocol Section: class, AnyEquatable {
 
     /// A array containing the `items` of the section
     var items: ObservableArray<Item> { get set }
@@ -17,6 +17,16 @@ public protocol Section: class {
     func index(in manager: TableViewManager) -> Int?
 }
 
+public extension Section where Self: Equatable {
+    
+    func equals(_ other: Any?) -> Bool {
+        if let other = other as? Self {
+            return other == self
+        }
+        return false
+    }
+}
+
 extension Section {
 
     /// Empty header
@@ -26,6 +36,13 @@ extension Section {
 }
 
 extension Section {
+    
+    public func equals(_ other: Any?) -> Bool {
+        if let other = other as AnyObject? {
+            return other === self
+        }
+        return false
+    }
 
     /// Returns the `index` of the `section` in the specified `manager`
     ///

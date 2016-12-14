@@ -20,17 +20,23 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
     private var array: [T] {
         willSet {
             diff = Array.diff(between: array, and: newValue, where: compare)
-            guard !diff.isEmpty else { return }
-
-            callback?(.beginUpdates)
         }
         didSet {
             guard !diff.isEmpty else { return }
             
             if (!diff.moves.isEmpty) { callback?(.moves(diff.moves)) }
-            if (!diff.deletes.isEmpty) { callback?(.deletes(diff.deletes)) }
-            if (!diff.inserts.isEmpty) { callback?(.inserts(diff.inserts)) }
-            callback?(.endUpdates)
+            
+            if (!diff.deletes.isEmpty) {
+                callback?(.beginUpdates)
+                callback?(.deletes(diff.deletes))
+                callback?(.endUpdates)
+            }
+            
+            if (!diff.inserts.isEmpty) {
+                callback?(.beginUpdates)
+                callback?(.inserts(diff.inserts))
+                callback?(.endUpdates)
+            }
         }
     }
     
