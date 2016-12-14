@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2519E1CB1E0147350021E06E /* OtherSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519E1CA1E0147350021E06E /* OtherSection.swift */; };
 		25483F9B1D7EDDE3002CF25E /* HelpCenterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25483F9A1D7EDDE3002CF25E /* HelpCenterItem.swift */; };
 		25483F9D1D7EDE45002CF25E /* HelpCenterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25483F9C1D7EDE45002CF25E /* HelpCenterCell.swift */; };
 		25483F9F1D7EE0EF002CF25E /* MoreAboutItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25483F9E1D7EE0EF002CF25E /* MoreAboutItem.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2519E1CA1E0147350021E06E /* OtherSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OtherSection.swift; path = AboutModule/OtherSection.swift; sourceTree = "<group>"; };
 		25483F9A1D7EDDE3002CF25E /* HelpCenterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpCenterItem.swift; path = AboutModule/HelpCenterItem.swift; sourceTree = "<group>"; };
 		25483F9C1D7EDE45002CF25E /* HelpCenterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpCenterCell.swift; path = AboutModule/HelpCenterCell.swift; sourceTree = "<group>"; };
 		25483F9E1D7EE0EF002CF25E /* MoreAboutItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoreAboutItem.swift; path = AboutModule/MoreAboutItem.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			children = (
 				2579BB9F1D805C9E003B9CDD /* HelpCenterSection.swift */,
 				2579BBA11D805CC2003B9CDD /* MoreAboutSection.swift */,
+				2519E1CA1E0147350021E06E /* OtherSection.swift */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				25483F9F1D7EE0EF002CF25E /* MoreAboutItem.swift in Sources */,
 				25D201691D7EDA410058C8A9 /* AboutPresenter.swift in Sources */,
 				25D2016B1D7EDA680058C8A9 /* AboutWireFrame.swift in Sources */,
+				2519E1CB1E0147350021E06E /* OtherSection.swift in Sources */,
 				2579BBA21D805CC2003B9CDD /* MoreAboutSection.swift in Sources */,
 				25483F9D1D7EDE45002CF25E /* HelpCenterCell.swift in Sources */,
 				25A741981D7ED45900473E02 /* AppDelegate.swift in Sources */,

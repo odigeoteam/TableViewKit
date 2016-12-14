@@ -25,11 +25,4 @@ extension UITableView {
             self.register(nib, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
         }
     }
-    
-    func moveRows(at indexPaths: [IndexPath], to newIndexPaths: [IndexPath]) {
-        for (index, _) in indexPaths.enumerated() {
-            moveRow(at: indexPaths[index], to: newIndexPaths[index])
-        }
-    }
-
 }

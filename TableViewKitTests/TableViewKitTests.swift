@@ -30,6 +30,13 @@ class EqualableItem: TestReloadItem, Equatable {
     }
 }
 
+class EquatableSection: NoHeaderFooterSection, Equatable {
+
+    public static func ==(lhs: EquatableSection, rhs: EquatableSection) -> Bool {
+        return lhs === rhs
+    }
+}
+
 class StatefulSection: HeaderFooterTitleSection, StaticStateful {
     
     enum State {
@@ -105,6 +112,16 @@ class TableViewKitTests: XCTestCase {
         XCTAssert(item1.equals("Item3") == false)
     }
     
+    func testEqualableSection() {
+        
+        let section1 = EquatableSection()
+        let section2 = EquatableSection()
+        
+        XCTAssert(section1.equals(section1))
+        XCTAssert(section1.equals(section2) == false)
+        XCTAssert(section2.equals(nil) == false)
+    }
+    
     func testEqualItem() {
         
         let item1 = TestItem()
@@ -112,6 +129,15 @@ class TableViewKitTests: XCTestCase {
         
         XCTAssert(item1.equals(item2) == false)
         XCTAssert(item1.equals(nil) == false)
+    }
+    
+    func testEqualSection() {
+        
+        let section1 = NoHeaderFooterSection()
+        let section2 = NoHeaderFooterSection()
+        
+        XCTAssert(section1.equals(section2) == false)
+        XCTAssert(section1.equals(nil) == false)
     }
     
     func testRetainCycle() {
@@ -177,6 +203,24 @@ class TableViewKitTests: XCTestCase {
         
         XCTAssert(indexPathItem2?.item == 0)
         XCTAssert(indexPathItem1?.item == 1)
+    }
+    
+    func testMoveSections() {
+        
+        let tableView = UITableView()
+        
+        let section1 = NoHeaderFooterSection()
+        let section2 = NoHeaderFooterSection()
+        
+        let tableViewManager = TableViewManager(tableView: tableView, sections: [section1, section2])
+        
+        XCTAssert(section1.index(in: tableViewManager) == 0)
+        XCTAssert(section2.index(in: tableViewManager) == 1)
+        
+        tableViewManager.sections.replace(with: [section2, section1])
+        
+        XCTAssert(section1.index(in: tableViewManager) == 1)
+        XCTAssert(section2.index(in: tableViewManager) == 0)
     }
 
     func testNoCrashOnNonAddedItem() {

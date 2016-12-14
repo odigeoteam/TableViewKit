@@ -63,7 +63,10 @@ open class TableViewManager: NSObject {
             tableView.deleteSections(IndexSet(array), with: animation)
         case .updates(let array):
             tableView.reloadSections(IndexSet(array), with: animation)
-        case .moves(_): break
+        case .moves(let array):
+            let fromIndex = array.map { $0.0 }
+            let toIndex = array.map { $0.1 }
+            tableView.moveSections(from: fromIndex, to: toIndex)
         case .beginUpdates:
             if (animation == .none) {
                 UIView.setAnimationsEnabled(false)
