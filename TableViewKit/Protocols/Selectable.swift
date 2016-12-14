@@ -25,9 +25,9 @@ extension Selectable {
     /// - parameter manager: A `manager` where the `item` may have been added
     /// - parameter animated:       If the selection should be animated
     public func deselect(in manager: TableViewManager, animated: Bool) {
-        guard let indexPath = indexPath(in: manager) else { return }
-        
-        manager.tableView.deselectRow(at: indexPath, animated: animated)
+        if let indexPath = indexPath(in: manager) {
+            manager.tableView.deselectRow(at: indexPath, animated: animated)
+        }
     }
 
 }

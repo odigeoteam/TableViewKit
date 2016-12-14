@@ -36,7 +36,12 @@ class TestDrawer: CellDrawer {
     static internal func draw(_ cell: UITableViewCell, with item: Any) { }
 }
 
-class TestItem: Item {
+class TestItem: Item, Selectable {
+
+    public func didSelect() {
+        print("didSelect called")
+    }
+
     internal var drawer: CellDrawer.Type = TestDrawer.self
 }
 

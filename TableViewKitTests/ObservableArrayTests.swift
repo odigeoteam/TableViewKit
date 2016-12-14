@@ -1,11 +1,3 @@
-//
-//  TestObservableArray.swift
-//  TableViewKit
-//
-//  Created by Nelson Dominguez Leon on 14/12/2016.
-//  Copyright © 2016 odigeo. All rights reserved.
-//
-
 import XCTest
 import TableViewKit
 
