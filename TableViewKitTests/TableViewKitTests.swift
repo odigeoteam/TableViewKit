@@ -96,20 +96,22 @@ class TableViewKitTests: XCTestCase {
         section.items.replace(with: [TestItem(), item])
     }
     
-    func testNotEqualItem() {
-        
-        let item1 = EqualableItem(title: "Item1")
-        let item2 = EqualableItem(title: "Item2")
-        
-        XCTAssert(item1.equals(item2) == false)
-    }
-    
-    func testEqualItem() {
+    func testEqualableItem() {
         
         let item1 = EqualableItem(title: "Item1")
         let item2 = EqualableItem(title: "Item1")
         
         XCTAssert(item1.equals(item2))
+        XCTAssert(item1.equals("Item3") == false)
+    }
+    
+    func testEqualItem() {
+        
+        let item1 = TestItem()
+        let item2 = TestItem()
+        
+        XCTAssert(item1.equals(item2) == false)
+        XCTAssert(item1.equals(nil) == false)
     }
     
     func testRetainCycle() {
