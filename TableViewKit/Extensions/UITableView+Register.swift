@@ -5,7 +5,7 @@ extension UITableView {
     /// Register a cell type for reuse
     ///
     /// - parameter type: The type of cell that must be registered
-    public func register(_ type: NibClassType<UITableViewCell>) {
+   func register<Cell: UITableViewCell>(_ type: CellType<Cell>) {
         switch type {
         case .class(let cellClass):
             self.register(cellClass, forCellReuseIdentifier: type.reusableIdentifier)
@@ -17,7 +17,7 @@ extension UITableView {
     /// Register a header/footer type for reuse
     ///
     /// - parameter type: The type of header/footer that must be registered
-    public func register(_ type: NibClassType<UITableViewHeaderFooterView>) {
+   func register<View: UITableViewHeaderFooterView>(_ type: HeaderFooterType<View>) {
         switch type {
         case .class(let cellClass):
             self.register(cellClass, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
@@ -25,11 +25,4 @@ extension UITableView {
             self.register(nib, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
         }
     }
-    
-    public func moveRows(at indexPaths: [IndexPath], to newIndexPaths: [IndexPath]) {
-        for (index, _) in indexPaths.enumerated() {
-            moveRow(at: indexPaths[index], to: newIndexPaths[index])
-        }
-    }
-
 }

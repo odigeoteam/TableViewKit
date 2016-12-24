@@ -19,6 +19,49 @@ class TestReloadItem: Item {
     internal var title: String?
 }
 
+class EqualableItem: TestReloadItem, Equatable {
+    
+    init(title: String) {
+        super.init()
+        self.title = title
+    }
+    
+    public static func ==(lhs: EqualableItem, rhs: EqualableItem) -> Bool {
+        return lhs.title == rhs.title
+    }
+}
+
+class EquatableSection: NoHeaderFooterSection, Equatable {
+
+    public static func ==(lhs: EquatableSection, rhs: EquatableSection) -> Bool {
+        return lhs === rhs
+    }
+}
+
+class StatefulSection: HeaderFooterTitleSection, StaticStateful {
+    
+    enum State {
+        case login, register
+    }
+    
+    var currentState: StatefulSection.State = .login
+    var states: [StatefulSection.State : [Item]] = [:]
+    
+    override init() {
+        super.init()
+        
+        let loginItem = TestReloadItem()
+        loginItem.title = "Login"
+        states[.login] = [loginItem]
+        
+        let registerItem = TestReloadItem()
+        registerItem.title = "Register"
+        states[.register] = [registerItem]
+        
+        transition(to: currentState)
+    }
+}
+
 class TestRegisterNibCell: UITableViewCell { }
 class TestRegisterHeaderFooterView: UITableViewHeaderFooterView { }
 
@@ -61,6 +104,42 @@ class TableViewKitTests: XCTestCase {
         section.items.replace(with: [TestItem(), item])
     }
     
+    func testEqualableItem() {
+        
+        let item1 = EqualableItem(title: "Item1")
+        let item2 = EqualableItem(title: "Item1")
+        
+        XCTAssert(item1.equals(item2))
+        XCTAssert(item1.equals("Item3") == false)
+    }
+    
+    func testEqualableSection() {
+        
+        let section1 = EquatableSection()
+        let section2 = EquatableSection()
+        
+        XCTAssert(section1.equals(section1))
+        XCTAssert(section1.equals(section2) == false)
+        XCTAssert(section2.equals(nil) == false)
+    }
+    
+    func testEqualItem() {
+        
+        let item1 = TestItem()
+        let item2 = TestItem()
+        
+        XCTAssert(item1.equals(item2) == false)
+        XCTAssert(item1.equals(nil) == false)
+    }
+    
+    func testEqualSection() {
+        
+        let section1 = NoHeaderFooterSection()
+        let section2 = NoHeaderFooterSection()
+        
+        XCTAssert(section1.equals(section2) == false)
+        XCTAssert(section1.equals(nil) == false)
+    }
     
     func testRetainCycle() {
         let tableViewManager = TableViewManager(tableView: UITableView())
@@ -95,9 +174,54 @@ class TableViewKitTests: XCTestCase {
         expect(cell.textLabel?.text).to(equal(item.title))
         
         item.title = "After"
+        item.reload(in: tableViewManager)
+        
         cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
         
         expect(cell.textLabel?.text).to(equal(item.title))
+    }
+    
+    func testMoveRows() {
+        
+        let tableView = UITableView()
+        
+        let item1 = TestItem()
+        let item2 = TestItem()
+        
+        let section = NoHeaderFooterSection(items: [item1, item2])
+        let tableViewManager = TableViewManager(tableView: tableView, sections: [section])
+        
+        var indexPathItem1 = item1.indexPath(in: tableViewManager)
+        var indexPathItem2 = item2.indexPath(in: tableViewManager)
+        
+        XCTAssertNotNil(indexPathItem1)
+        XCTAssertNotNil(indexPathItem2)
+        
+        section.items.replace(with: [item2, item1])
+        
+        indexPathItem1 = item1.indexPath(in: tableViewManager)
+        indexPathItem2 = item2.indexPath(in: tableViewManager)
+        
+        XCTAssert(indexPathItem2?.item == 0)
+        XCTAssert(indexPathItem1?.item == 1)
+    }
+    
+    func testMoveSections() {
+        
+        let tableView = UITableView()
+        
+        let section1 = NoHeaderFooterSection()
+        let section2 = NoHeaderFooterSection()
+        
+        let tableViewManager = TableViewManager(tableView: tableView, sections: [section1, section2])
+        
+        XCTAssert(section1.index(in: tableViewManager) == 0)
+        XCTAssert(section2.index(in: tableViewManager) == 1)
+        
+        tableViewManager.sections.replace(with: [section2, section1])
+        
+        XCTAssert(section1.index(in: tableViewManager) == 1)
+        XCTAssert(section2.index(in: tableViewManager) == 0)
     }
 
     func testNoCrashOnNonAddedItem() {
@@ -133,5 +257,25 @@ class TableViewKitTests: XCTestCase {
         
         let headerFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerFooterType.reusableIdentifier)
         expect(headerFooterView).toNot(equal(nil))
+    }
+    
+    func testLoginState() {
+        
+        let section = StatefulSection()
+        XCTAssert(section.items.count == 1)
+        
+        let loginItem = section.items.first as? TestReloadItem
+        XCTAssert(loginItem?.title == "Login")
+    }
+    
+    func testRegisterState() {
+        
+        let section = StatefulSection()
+        section.transition(to: .register)
+        
+        XCTAssert(section.items.count == 1)
+        
+        let registerItem = section.items.first as? TestReloadItem
+        XCTAssert(registerItem?.title == "Register")
     }
 }
