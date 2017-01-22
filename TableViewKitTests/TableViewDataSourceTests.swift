@@ -56,7 +56,7 @@ class DifferentItem: Item {
 
 class DifferentDrawer: CellDrawer {
     
-    static var type: CellType = .class(DifferentCell.self)
+    static var type: CellType = CellType.class(DifferentCell.self)
     static func draw(_ cell: UITableViewCell, with item: Any) {}
 }
 
