@@ -86,7 +86,10 @@ extension Section {
         
         switch changes {
         case .inserts(let array):
-            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            let indexPaths = array.map { row -> IndexPath in
+                manager.register(items[row].drawer.type)
+                return IndexPath(item: row, section: sectionIndex)
+            }
             tableView.insertRows(at: indexPaths, with: manager.animation)
         case .deletes(let array):
             let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
