@@ -48,6 +48,18 @@ class TestCell: UITableViewCell, ItemCompatible {
     internal var item: Item?
 }
 
+class DifferentItem: Item {
+    
+    static var drawer = AnyCellDrawer(DifferentDrawer.self)
+}
+
+class DifferentDrawer: CellDrawer {
+    static var type: NibClassType<DifferentCell> = CellType.class(DifferentCell.self)
+    static func draw(_ cell: DifferentCell, with item: DifferentItem) {}
+}
+
+class DifferentCell: UITableViewCell { }
+
 class TableViewDataSourceTests: XCTestCase {
     
     fileprivate var tableViewManager: TableViewManager!
@@ -71,6 +83,22 @@ class TableViewDataSourceTests: XCTestCase {
         let cell = self.tableViewManager.tableView(self.tableViewManager.tableView, cellForRowAt: indexPath)
         
         expect(cell).to(beAnInstanceOf(TestCell.self))
+    }
+    
+    func testDequeueCellAfterRegisterSection() {
+        
+        guard let section = tableViewManager.sections.first else {
+            fatalError("Couldn't get the first section")
+        }
+        
+        let otherItem = DifferentItem()
+        section.items.append(otherItem)
+        
+        let indexPath = otherItem.indexPath(in: tableViewManager)!
+		let drawer = type(of: otherItem).drawer
+		let cell = drawer.cell(in: tableViewManager, with: otherItem as Item, for: indexPath)
+        
+        XCTAssertTrue(cell is DifferentCell)
     }
     
     func testNumberOfSections() {

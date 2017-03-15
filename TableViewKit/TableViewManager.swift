@@ -158,18 +158,18 @@ extension TableViewManager {
 extension TableViewManager: UITableViewDataSource {
     
     /// Implementation of UITableViewDataSource
-    public func numberOfSections(in tableView: UITableView) -> Int {
+    open func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
     /// Implementation of UITableViewDataSource
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection sectionIndex: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection sectionIndex: Int) -> Int {
         let section = sections[sectionIndex]
         return section.items.count
     }
     
     /// Implementation of UITableViewDataSource
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentItem = item(at: indexPath)
         let drawer = type(of: currentItem).drawer
         
@@ -180,17 +180,17 @@ extension TableViewManager: UITableViewDataSource {
     }
     
     /// Implementation of UITableViewDataSource
-    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return title(for: {$0.header}, inSection: section)
     }
     
     /// Implementation of UITableViewDataSource
-    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return title(for: {$0.footer}, inSection: section)
     }
     
     /// Implementation of UITableViewDataSource
-    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Intentionally blank. Required to use UITableViewRowActions
     }
 }
@@ -198,53 +198,53 @@ extension TableViewManager: UITableViewDataSource {
 extension TableViewManager: UITableViewDelegate {
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentItem = item(at: indexPath) as? Selectable else { return }
         currentItem.didSelect()
     }
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return height(at: indexPath) ?? tableView.rowHeight
     }
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return height(for: {$0.header}, inSection: section) ?? tableView.sectionHeaderHeight
     }
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return height(for: {$0.footer}, inSection: section) ?? tableView.sectionFooterHeight
     }
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return estimatedHeight(at: indexPath) ?? tableView.estimatedRowHeight
     }
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return estimatedHeight(for: {$0.header}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
         return estimatedHeight(for: {$0.footer}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return view(for: {$0.header}, inSection: section)
     }
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return view(for: {$0.footer}, inSection: section)
     }
     
     /// Implementation of UITableViewDelegate
-    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         guard let item = item(at: indexPath) as? Editable else { return nil }
         return item.actions
     }

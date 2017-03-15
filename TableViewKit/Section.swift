@@ -83,10 +83,14 @@ extension Section {
         
         guard let sectionIndex = index(in: manager) else { return }
         let tableView = manager.tableView
-        
+
+		if case .inserts(let array) = changes {
+			array.forEach { manager.register(type(of: items[$0]).drawer.type) }
+		}
+
         switch changes {
         case .inserts(let array):
-            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+			let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
             tableView.insertRows(at: indexPaths, with: manager.animation)
         case .deletes(let array):
             let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
