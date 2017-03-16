@@ -242,6 +242,10 @@ extension TableViewManager: UITableViewDelegate {
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return view(for: {$0.footer}, inSection: section)
     }
+
+	open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return item(at: indexPath) is Editable
+	}
     
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
