@@ -14,7 +14,8 @@ class TestReloadDrawer: CellDrawer {
 }
 
 class TestReloadItem: Item {
-    internal var drawer: CellDrawer.Type = TestReloadDrawer.self
+    static internal var drawer = AnyCellDrawer(TestReloadDrawer.self)
+
     internal var title: String?
 }
 
@@ -236,7 +237,7 @@ class TableViewKitTests: XCTestCase {
     func testRegisterNibCells() {
         
         let testBundle = Bundle(for: TableViewKitTests.self)
-        let cellType = CellType.nib(UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle), TestRegisterNibCell.self)
+        let cellType = CellType<UITableViewCell>.nib(UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle), TestRegisterNibCell.self)
         
         let tableView = UITableView()
         tableView.register(cellType)
@@ -249,7 +250,7 @@ class TableViewKitTests: XCTestCase {
     func testRegisterNibHeaderFooter() {
         
         let testBundle = Bundle(for: TableViewKitTests.self)
-        let headerFooterType = HeaderFooterType.nib(UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle), TestRegisterHeaderFooterView.self)
+        let headerFooterType = HeaderFooterType<UITableViewHeaderFooterView>.nib(UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle), TestRegisterHeaderFooterView.self)
         
         let tableView = UITableView()
         tableView.register(headerFooterType)
@@ -257,7 +258,20 @@ class TableViewKitTests: XCTestCase {
         let headerFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerFooterType.reusableIdentifier)
         expect(headerFooterView).toNot(equal(nil))
     }
-    
+
+	func testNibClassTypeCells() {
+		let testBundle = Bundle(for: TableViewKitTests.self)
+		let type = CellType<TestRegisterNibCell>.nib(UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle), TestRegisterNibCell.self)
+		_ = type.cellType
+	}
+
+	func testNibClassTypeHeaderFooter() {
+		let testBundle = Bundle(for: TableViewKitTests.self)
+		let type = HeaderFooterType<TestRegisterHeaderFooterView>.nib(UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle), TestRegisterHeaderFooterView.self)
+		_ = type.headerFooterType
+	}
+
+
     func testLoginState() {
         
         let section = StatefulSection()

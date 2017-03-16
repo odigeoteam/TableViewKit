@@ -21,7 +21,10 @@ public enum SelectionType {
     case Single, Multiple
 }
 
-public class SelectionItem: SelectionItemProtocol {    
+public class SelectionItem: SelectionItemProtocol {
+    public static var drawer = AnyCellDrawer(CustomDrawer.self)
+
+    
     public var title: String?
     
     public var value: Any
@@ -33,8 +36,6 @@ public class SelectionItem: SelectionItemProtocol {
     public var accessoryView: UIView?
     public var cellHeight: CGFloat? = UITableViewAutomaticDimension
     
-    public var drawer: CellDrawer.Type = CustomDrawer.self
-
     
     public required init(title: String, value: Any, selected: Bool = false) {
         self.value = value

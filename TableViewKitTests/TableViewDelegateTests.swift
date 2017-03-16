@@ -28,9 +28,7 @@ class CustomHeaderDrawer: HeaderFooterDrawer {
     
     static public var type = HeaderFooterType.class(CustomHeaderFooterView.self)
     
-    static public func draw(_ view: UITableViewHeaderFooterView, with item: Any) {
-        let item = item as! ViewHeaderFooter
-        let view = view as! CustomHeaderFooterView
+    static public func draw(_ view: CustomHeaderFooterView, with item: ViewHeaderFooter) {
         view.label.text = item.title
     }
 }
@@ -40,7 +38,7 @@ class ViewHeaderFooter: HeaderFooter {
     
     public var title: String?
     public var height: Height? = .dynamic(44.0)
-    public var drawer: HeaderFooterDrawer.Type = CustomHeaderDrawer.self
+    static public var drawer = AnyHeaderFooterDrawer(CustomHeaderDrawer.self)
     
     public init() { }
     
@@ -63,23 +61,22 @@ class ViewHeaderFooterSection: Section {
 }
 
 class NoHeigthItem: Item {
-    internal var drawer: CellDrawer.Type = TestDrawer.self
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
     
     internal var height: Height? = nil
 }
 
 class StaticHeigthItem: Item {
     static let testStaticHeightValue: CGFloat = 20.0
-    
-    internal var drawer: CellDrawer.Type = TestDrawer.self
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
     
     internal var height: Height? = .static(20.0)
 }
 
 class SelectableItem: Selectable, Item {
-    public var check: Int = 0
-    
-    internal var drawer: CellDrawer.Type = TestDrawer.self
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
+
+    public var check: Int = 0    
     
     public init() {}
     

@@ -1,5 +1,5 @@
 import XCTest
-import TableViewKit
+@testable import TableViewKit
 import Nimble
 
 extension HeaderFooterView: Equatable {
@@ -31,18 +31,17 @@ class HeaderFooterTitleSection: Section {
 }
 
 class TestDrawer: CellDrawer {
-    
     static internal var type = CellType.class(TestCell.self)
-    static internal func draw(_ cell: UITableViewCell, with item: Any) { }
+    static internal func draw(_ cell: TestCell, with item: Item) { }
 }
 
 class TestItem: Item, Selectable {
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     public func didSelect() {
         print("didSelect called")
     }
 
-    internal var drawer: CellDrawer.Type = TestDrawer.self
 }
 
 class TestCell: UITableViewCell, ItemCompatible {
@@ -51,13 +50,12 @@ class TestCell: UITableViewCell, ItemCompatible {
 
 class DifferentItem: Item {
     
-    var drawer: CellDrawer.Type = DifferentDrawer.self
+    static var drawer = AnyCellDrawer(DifferentDrawer.self)
 }
 
 class DifferentDrawer: CellDrawer {
-    
-    static var type: CellType = CellType.class(DifferentCell.self)
-    static func draw(_ cell: UITableViewCell, with item: Any) {}
+    static var type: NibClassType<DifferentCell> = CellType.class(DifferentCell.self)
+    static func draw(_ cell: DifferentCell, with item: DifferentItem) {}
 }
 
 class DifferentCell: UITableViewCell { }
@@ -97,7 +95,8 @@ class TableViewDataSourceTests: XCTestCase {
         section.items.append(otherItem)
         
         let indexPath = otherItem.indexPath(in: tableViewManager)!
-        let cell = otherItem.drawer.cell(in: tableViewManager, with: otherItem, for: indexPath)
+		let drawer = type(of: otherItem).drawer
+		let cell = drawer.cell(in: tableViewManager, with: otherItem as Item, for: indexPath)
         
         XCTAssertTrue(cell is DifferentCell)
     }

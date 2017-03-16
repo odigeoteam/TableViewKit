@@ -24,11 +24,11 @@ enum MoreAboutItemType {
 }
 
 class MoreAboutItem: Item, Selectable, Editable {
+    public static var drawer = AnyCellDrawer(MoreAboutDrawer.self)
 
     var type: MoreAboutItemType
     var title: String?
     
-    var drawer: CellDrawer.Type = MoreAboutDrawer.self
     var onSelection: (Selectable) -> () = { _ in }
     
     var actions: [UITableViewRowAction]?

@@ -24,7 +24,7 @@ public extension Section where Self: Equatable {
             return other == self
         }
         return false
-    }
+}
 }
 
 extension Section {
@@ -58,13 +58,13 @@ extension Section {
     /// - parameter manager: A manager where the section may have been added
     internal func register(in manager: TableViewManager) {
         if case .view(let header) = header {
-            manager.register(header.drawer.type)
+            manager.tableView.register(type(of: header).drawer.type)
         }
         if case .view(let footer) = footer {
-            manager.register(footer.drawer.type)
+            manager.tableView.register(type(of: footer).drawer.type)
         }
         items.forEach {
-            manager.register($0.drawer.type)
+            manager.tableView.register(type(of: $0).drawer.type)
         }
     }
 
@@ -85,7 +85,7 @@ extension Section {
         let tableView = manager.tableView
 
 		if case .inserts(let array) = changes {
-			array.forEach { manager.register(items[$0].drawer.type) }
+			array.forEach { manager.register(type(of: items[$0]).drawer.type) }
 		}
 
         switch changes {

@@ -3,16 +3,11 @@ import TableViewKit
 
 class HelpCenterDrawer: CellDrawer {
     
-    static var type: CellType = CellType.nib(UINib(nibName: String(describing: HelpCenterCell.self), bundle: Bundle.main), HelpCenterCell.self)
+    static var type = CellType.nib(UINib(nibName: String(describing: HelpCenterCell.self), bundle: Bundle.main), HelpCenterCell.self)
     
-    static func draw(_ cell: UITableViewCell, with item: Any) {
-        
-        guard let helpCenterCell = cell as? HelpCenterCell,
-              let helpCenterItem = item as? HelpCenterItem
-        else { return }
-        
-        helpCenterCell.selectionStyle = .none
-        helpCenterCell.titleLabel.text = helpCenterItem.title
+    static func draw(_ cell: HelpCenterCell, with item: HelpCenterItem) {
+        cell.selectionStyle = .none
+        cell.titleLabel.text = item.title
     }
 }
 
