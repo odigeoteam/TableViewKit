@@ -1,20 +1,19 @@
 import UIKit
 import TableViewKit
 
-
 class ViewController: UIViewController, TableViewManagerCompatible {
-    
+
     fileprivate class CustomSection: Section {
         var items: ObservableArray<Item>
 
         let vc: ViewController
-        
+
         required init(vc: ViewController) {
             self.vc = vc
             self.items = []
-            
+
             let array: [UIViewController.Type] = [Example1.self]
-            let mappedItems = array.map({ (className) -> Item in                
+            let mappedItems = array.map({ (className) -> Item in
                 let viewController = className.init(nibName: String(describing: className), bundle: nil)
 
                 let navigationController = UINavigationController.init(rootViewController: viewController)
@@ -27,7 +26,7 @@ class ViewController: UIViewController, TableViewManagerCompatible {
                 }
                 return item
             })
-            
+
             self.items.insert(contentsOf: mappedItems, at: 0)
         }
     }
@@ -37,13 +36,11 @@ class ViewController: UIViewController, TableViewManagerCompatible {
             tableViewManager = TableViewManager(tableView: tableView, sections: [CustomSection(vc: self)])
         }
     }
-    
+
     var tableViewManager: TableViewManager!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
     }
 }
-
-

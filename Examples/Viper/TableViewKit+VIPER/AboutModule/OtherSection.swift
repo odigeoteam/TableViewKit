@@ -10,9 +10,9 @@ import Foundation
 import TableViewKit
 
 class OtherSection: Section {
-    
+
     var items: ObservableArray<Item> = []
-    
+
     init() {
         let item1 = MoreAboutItem(type: .contact, presenter: nil, manager: nil)
         items.append(item1)

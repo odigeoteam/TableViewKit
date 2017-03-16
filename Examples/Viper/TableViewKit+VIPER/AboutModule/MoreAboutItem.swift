@@ -2,9 +2,9 @@ import Foundation
 import TableViewKit
 
 enum MoreAboutItemType {
-    
+
     case faq, contact, terms, feedback, share, rate
-    
+
     func title() -> String {
         switch self {
         case .faq:
@@ -24,13 +24,13 @@ enum MoreAboutItemType {
 }
 
 class MoreAboutItem: Item, Selectable, Editable {
+    public static var drawer = AnyCellDrawer(MoreAboutDrawer.self)
 
     var type: MoreAboutItemType
     var title: String?
-    
-    var drawer: CellDrawer.Type = MoreAboutDrawer.self
-    var onSelection: (Selectable) -> () = { _ in }
-    
+
+    var onSelection: (Selectable) -> Void = { _ in }
+
     var actions: [UITableViewRowAction]?
     weak var manager: TableViewManager?
     let presenter: AboutPresenterProtocol?
@@ -41,7 +41,7 @@ class MoreAboutItem: Item, Selectable, Editable {
         self.type = type
         self.title = type.title()
     }
-    
+
     func didSelect() {
         switch type {
         case .faq:
@@ -57,7 +57,7 @@ class MoreAboutItem: Item, Selectable, Editable {
         case .rate:
             presenter?.showRateApp()
         }
-        
+
         if let manager = manager {
             deselect(in: manager, animated: true)
         }

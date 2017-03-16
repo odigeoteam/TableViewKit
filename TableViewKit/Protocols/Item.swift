@@ -1,13 +1,12 @@
 import Foundation
 
-
 /// A type that represent an item to be displayed
 /// defining the `drawer` and the `height`
 public protocol Item: class, AnyEquatable {
-    
+
     /// The `drawer` of the item
-    var drawer: CellDrawer.Type { get }
-    
+    static var drawer: AnyCellDrawer { get }
+
     /// The `height` of the item
     var height: Height? { get }
 }
@@ -22,7 +21,7 @@ public extension Item where Self: Equatable {
 }
 
 extension Item {
-    
+
     public func equals(_ other: Any?) -> Bool {
         if let other = other as AnyObject? {
             return other === self

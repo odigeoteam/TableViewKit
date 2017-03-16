@@ -16,7 +16,6 @@ public protocol Validatable {
     func test(_ validationContent: Input) -> Bool
 }
 
-
 public protocol Regexable {
     var regex: String { get }
 }

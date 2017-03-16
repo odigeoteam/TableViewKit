@@ -8,22 +8,20 @@ import Foundation
 /// You must implement `items(for:)`, that will be used to know
 /// which items belong to which `State`.
 public protocol Stateful: Section {
-    
+
     /// A type that represent a state, such as an enum.
     associatedtype State
-    
+
     /// The current state
     var currentState: State { get set }
-    
-    
+
     /// Returns the `items` belonging to a `state`
     ///
     /// - parameter state: A concrete `state`
     ///
     /// - returns: The `items` belonging to a `state`
     func items(for state: State) -> [Item]
-    
-    
+
     /// Performs a transition from the `currentState` to a `newState`
     ///
     /// - parameter newState: The `newState`
@@ -39,12 +37,12 @@ public extension Stateful {
 
 public protocol StaticStateful: Stateful {
     associatedtype State: Hashable
-    
+
     var states: [State: [Item]] { get }
 }
 
 public extension StaticStateful {
-    
+
     func items(for state: State) -> [Item] {
         return states[state]!
     }
