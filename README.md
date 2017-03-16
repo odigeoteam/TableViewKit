@@ -35,16 +35,16 @@ Create an `Item` with a `UITableViewCell` and `CellDrawer`. An item may have a m
 class YourDrawer: CellDrawer {
 
     // The type could be a custom UITableViewCell class, with or without a Nib
-    static public var type = CellType.class(UITableViewCell.self)
+    static var type = CellType.class(YourCustomCell.self)
 
-    static public func draw(_ cell: UITableViewCell, with item: Any) {
+    static func draw(_ cell: YourCustomCell, with item: YourItem) {
         // Draw by setting properties of your cell from the item
     }
 }
 
 class YourItem: Item {
 
-    public var drawer: CellDrawer.Type = YourDrawer.self
+    var drawer = AnyCellDrawer(YourDrawer.self)
 
     // Your properties and methods
 

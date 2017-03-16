@@ -1,5 +1,5 @@
 import XCTest
-import TableViewKit
+@testable import TableViewKit
 import Nimble
 
 extension HeaderFooterView: Equatable {

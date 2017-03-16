@@ -37,11 +37,13 @@ public extension HeaderFooterDrawer {
     }
 }
 
+/// A type-erased wrapper over any header or footer drawer
 public struct AnyHeaderFooterDrawer {
     let type: HeaderFooterType<UITableViewHeaderFooterView>
     let view: (TableViewManager, HeaderFooter) -> UITableViewHeaderFooterView
     let draw: (UITableViewHeaderFooterView, HeaderFooter) -> ()
-    
+
+	/// Creates a type-erased drawer that wraps the given header or footer drawer
     public init<Drawer: HeaderFooterDrawer, GenericItem, View: UITableViewHeaderFooterView>(_ drawer: Drawer.Type) where Drawer.GenericItem == GenericItem, Drawer.View == View {
         self.type = drawer.type.headerFooterType
         self.view = { manager, item in drawer.view(in: manager, with: item as! GenericItem) }
