@@ -13,12 +13,12 @@ public protocol Section: class, AnyEquatable {
     var header: HeaderFooterView { get }
     /// The `footer` of the section, none if not defined
     var footer: HeaderFooterView { get }
-    
+
     func index(in manager: TableViewManager) -> Int?
 }
 
 public extension Section where Self: Equatable {
-    
+
     func equals(_ other: Any?) -> Bool {
         if let other = other as? Self {
             return other == self
@@ -36,7 +36,7 @@ extension Section {
 }
 
 extension Section {
-    
+
     public func equals(_ other: Any?) -> Bool {
         if let other = other as AnyObject? {
             return other === self
@@ -78,9 +78,9 @@ extension Section {
             }
         }
     }
-    
+
     private func onItemsUpdate(withChanges changes: ArrayChanges, in manager: TableViewManager) {
-        
+
         guard let sectionIndex = index(in: manager) else { return }
         let tableView = manager.tableView
 

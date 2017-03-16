@@ -5,7 +5,7 @@ import Foundation
 /// if the cell is initialiated by the TableViewManager,
 /// the item will be setted automatically.
 public protocol ItemCompatible: class {
-    
+
     /// The associated item
     var item: Item? { get set }
 }

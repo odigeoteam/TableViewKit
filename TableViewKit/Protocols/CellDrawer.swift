@@ -11,7 +11,7 @@ public protocol CellDrawer {
 
     /// Define the `type` of the cell
     static var type: CellType<Cell> { get }
-    
+
     /// Returns the cell from the `manager`
     ///
     /// - parameter manager: The `manager` where the cell came from
@@ -20,7 +20,7 @@ public protocol CellDrawer {
     ///
     /// - returns: The the cell
     static func cell(in manager: TableViewManager, with item: GenericItem, for indexPath: IndexPath) -> Cell
-    
+
     /// Draw the `cell` using the `item`
     ///
     /// - parameter cell: The `cell` that must be drawn
@@ -30,17 +30,17 @@ public protocol CellDrawer {
 }
 
 public extension CellDrawer {
-    
+
     /// Returns a dequeued cell and set the item property if the cell conforms to ItemCompatible
     static func cell(in manager: TableViewManager, with item: GenericItem, for indexPath: IndexPath) -> Cell {
-        
+
         let cell = manager.tableView.dequeueReusableCell(withIdentifier: self.type.reusableIdentifier, for: indexPath)
         cell.selectionStyle = item is Selectable ? .default : .none
-        
+
         if let cell = cell as? ItemCompatible {
             cell.item = item as? Item
         }
-        
+
         return cell as! Cell
     }
 }
@@ -49,7 +49,7 @@ public extension CellDrawer {
 public struct AnyCellDrawer {
     let type: CellType<UITableViewCell>
     let cell: (TableViewManager, Item, IndexPath) -> UITableViewCell
-    let draw: (UITableViewCell, Item) -> ()
+    let draw: (UITableViewCell, Item) -> Void
 
 	/// Creates a type-erased drawer that wraps the given cell drawer
     public init<Drawer: CellDrawer, GenericItem, Cell: UITableViewCell>(_ drawer: Drawer.Type) where Drawer.GenericItem == GenericItem, Drawer.Cell == Cell {
@@ -57,13 +57,13 @@ public struct AnyCellDrawer {
         self.cell = { manager, item, indexPath in drawer.cell(in: manager, with: item as! GenericItem, for: indexPath) }
         self.draw = { cell, item in drawer.draw(cell as! Cell, with: item as! GenericItem) }
     }
-    
+
 	func cell(in manager: TableViewManager, with item: Item, for indexPath: IndexPath) -> UITableViewCell {
         return cell(manager, item, indexPath)
     }
-    
+
 	func draw(_ cell: UITableViewCell, with item: Item) {
         draw(cell, item)
     }
-    
+
 }

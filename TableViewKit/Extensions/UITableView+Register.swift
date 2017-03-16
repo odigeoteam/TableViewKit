@@ -1,7 +1,7 @@
 import UIKit
 
 extension UITableView {
-    
+
     /// Register a cell type for reuse
     ///
     /// - parameter type: The type of cell that must be registered
