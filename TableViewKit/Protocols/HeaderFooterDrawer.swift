@@ -48,11 +48,11 @@ public struct AnyHeaderFooterDrawer {
         self.draw = { cell, item in drawer.draw(cell as! View, with: item as! GenericItem) }
     }
 
-    func view(in manager: TableViewManager, with item: HeaderFooter) -> UITableViewHeaderFooterView {
+    public func view(in manager: TableViewManager, with item: HeaderFooter) -> UITableViewHeaderFooterView {
         return view(manager, item)
     }
 
-    func draw(_ view: UITableViewHeaderFooterView, with item: HeaderFooter) {
+    public func draw(_ view: UITableViewHeaderFooterView, with item: HeaderFooter) {
         draw(view, item)
     }
 

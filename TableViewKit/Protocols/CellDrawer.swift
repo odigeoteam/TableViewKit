@@ -58,11 +58,11 @@ public struct AnyCellDrawer {
         self.draw = { cell, item in drawer.draw(cell as! Cell, with: item as! GenericItem) }
     }
 
-	func cell(in manager: TableViewManager, with item: Item, for indexPath: IndexPath) -> UITableViewCell {
+	public func cell(in manager: TableViewManager, with item: Item, for indexPath: IndexPath) -> UITableViewCell {
         return cell(manager, item, indexPath)
     }
 
-	func draw(_ cell: UITableViewCell, with item: Item) {
+	public func draw(_ cell: UITableViewCell, with item: Item) {
         draw(cell, item)
     }
 
