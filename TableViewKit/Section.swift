@@ -13,18 +13,18 @@ public protocol Section: class, AnyEquatable {
     var header: HeaderFooterView { get }
     /// The `footer` of the section, none if not defined
     var footer: HeaderFooterView { get }
-    
+
     func index(in manager: TableViewManager) -> Int?
 }
 
 public extension Section where Self: Equatable {
-    
+
     func equals(_ other: Any?) -> Bool {
         if let other = other as? Self {
             return other == self
         }
         return false
-    }
+}
 }
 
 extension Section {
@@ -36,7 +36,7 @@ extension Section {
 }
 
 extension Section {
-    
+
     public func equals(_ other: Any?) -> Bool {
         if let other = other as AnyObject? {
             return other === self
@@ -58,13 +58,13 @@ extension Section {
     /// - parameter manager: A manager where the section may have been added
     internal func register(in manager: TableViewManager) {
         if case .view(let header) = header {
-            manager.register(header.drawer.type)
+            manager.tableView.register(type(of: header).drawer.type)
         }
         if case .view(let footer) = footer {
-            manager.register(footer.drawer.type)
+            manager.tableView.register(type(of: footer).drawer.type)
         }
         items.forEach {
-            manager.register($0.drawer.type)
+            manager.tableView.register(type(of: $0).drawer.type)
         }
     }
 
@@ -78,14 +78,14 @@ extension Section {
             }
         }
     }
-    
+
     private func onItemsUpdate(withChanges changes: ArrayChanges, in manager: TableViewManager) {
-        
+
         guard let sectionIndex = index(in: manager) else { return }
         let tableView = manager.tableView
 
 		if case .inserts(let array) = changes {
-			array.forEach { manager.register(items[$0].drawer.type) }
+			array.forEach { manager.register(type(of: items[$0]).drawer.type) }
 		}
 
         switch changes {
