@@ -18,8 +18,8 @@ open class TableViewManager {
 
     open var animation: UITableViewRowAnimation = .automatic
 
-    open var dataSource: TableViewKitDataSourceType?
-    open var delegate: TableViewKitDelegateType?
+    open var dataSource: TableViewKitDataSourceType? { didSet { tableView.dataSource = dataSource } }
+    open var delegate: TableViewKitDelegateType? { didSet { tableView.delegate = delegate } }
 
     var reusableIdentifiers: Set<String> = []
 
