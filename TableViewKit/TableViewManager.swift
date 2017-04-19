@@ -5,13 +5,17 @@ import UIKit
 /// It controls how to display an array of sections, from the header, to its items, to the footer.
 /// It automatically registers any related initial or new views/cells for reusability.
 /// Any changes of the sections will be automatically animated and reflected.
-open class TableViewManager: NSObject {
+open class TableViewManager {
 
     /// The `tableView` linked to this manager
     open let tableView: UITableView
 
     /// An array of sections
     open var sections: ObservableArray<Section>
+
+	open var dataSource: TableViewKitDataSource?
+
+	open var delegate: TableViewKitDelegate?
 
     open var animation: UITableViewRowAnimation = .automatic
 
@@ -23,9 +27,10 @@ open class TableViewManager: NSObject {
     public init(tableView: UITableView) {
         self.tableView = tableView
         self.sections = []
-        super.init()
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
+		self.dataSource = TableViewKitDataSource(manager: self)
+		self.delegate = TableViewKitDelegate(manager: self)
+        self.tableView.dataSource = self.dataSource
+        self.tableView.delegate = self.delegate
         self.setupSections()
 
     }
@@ -37,9 +42,10 @@ open class TableViewManager: NSObject {
     public init(tableView: UITableView, sections: [Section]) {
         self.tableView = tableView
         self.sections = ObservableArray(array: sections)
-        super.init()
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
+		self.dataSource = TableViewKitDataSource(manager: self)
+		self.delegate = TableViewKitDelegate(manager: self)
+		self.tableView.dataSource = self.dataSource
+		self.tableView.delegate = self.delegate
         self.setupSections()
     }
 
@@ -68,13 +74,13 @@ open class TableViewManager: NSObject {
             let toIndex = array.map { $0.1 }
             tableView.moveSections(from: fromIndex, to: toIndex)
         case .beginUpdates:
-            if animation == .none {
+            if (animation == .none) {
                 UIView.setAnimationsEnabled(false)
             }
             tableView.beginUpdates()
         case .endUpdates:
             tableView.endUpdates()
-            if animation == .none {
+            if (animation == .none) {
                 UIView.setAnimationsEnabled(true)
             }
         }
@@ -98,62 +104,15 @@ extension TableViewManager {
     }
 }
 
-extension TableViewManager {
+open class TableViewKitDataSource: NSObject, UITableViewDataSource {
 
-    fileprivate func item(at indexPath: IndexPath) -> Item {
-        return sections[indexPath.section].items[indexPath.row]
-    }
+	open unowned var manager: TableViewManager
+	open var sections: ObservableArray<Section> { return manager.sections }
 
-    fileprivate func view(for key: (Section) -> HeaderFooterView, inSection section: Int) -> UIView? {
-        guard case .view(let item) = key(sections[section]) else { return nil }
+	public init(manager: TableViewManager) {
+		self.manager = manager
+	}
 
-        let drawer = type(of: item).drawer
-        let view = drawer.view(in: self, with: item)
-        drawer.draw(view, with: item)
-
-        return view
-    }
-
-    fileprivate func title(for key: (Section) -> HeaderFooterView, inSection section: Int) -> String? {
-        if case .title(let value) = key(sections[section]) {
-            return value
-        }
-        return nil
-
-    }
-
-    fileprivate func estimatedHeight(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
-        let item = key(sections[section])
-        switch item {
-        case .view(let view):
-            guard let height = view.height else { return nil }
-            return height.estimated
-        case .title:
-            return 1.0
-        default:
-            return nil
-        }
-    }
-
-    fileprivate func estimatedHeight(at indexPath: IndexPath) -> CGFloat? {
-        guard let height = item(at: indexPath).height else { return nil }
-        return height.estimated
-    }
-
-    fileprivate func height(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
-        guard case .view(let view) = key(sections[section]), let value = view.height
-            else { return nil }
-        return value.height
-    }
-
-    fileprivate func height(at indexPath: IndexPath) -> CGFloat? {
-        guard let value = item(at: indexPath).height else { return nil }
-        return value.height
-    }
-
-}
-
-extension TableViewManager: UITableViewDataSource {
 
     /// Implementation of UITableViewDataSource
     open func numberOfSections(in tableView: UITableView) -> Int {
@@ -171,7 +130,7 @@ extension TableViewManager: UITableViewDataSource {
         let currentItem = item(at: indexPath)
         let drawer = type(of: currentItem).drawer
 
-        let cell = drawer.cell(in: self, with: currentItem, for: indexPath)
+        let cell = drawer.cell(in: manager, with: currentItem, for: indexPath)
         drawer.draw(cell, with: currentItem)
 
         return cell
@@ -179,22 +138,44 @@ extension TableViewManager: UITableViewDataSource {
 
     /// Implementation of UITableViewDataSource
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return title(for: { $0.header }, inSection: section)
+        return title(for: {$0.header}, inSection: section)
     }
 
     /// Implementation of UITableViewDataSource
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return title(for: { $0.footer }, inSection: section)
+        return title(for: {$0.footer}, inSection: section)
     }
 
     /// Implementation of UITableViewDataSource
-    // swiftlint:disable:next line_length
     open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Intentionally blank. Required to use UITableViewRowActions
     }
+
+	/// Implementation of UITableViewDataSource
+	open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return item(at: indexPath) is Editable
+	}
+
+	fileprivate func title(for key: (Section) -> HeaderFooterView, inSection section: Int) -> String? {
+		if case .title(let value) = key(sections[section]) {
+			return value
+		}
+		return nil
+	}
+
+	fileprivate func item(at indexPath: IndexPath) -> Item {
+		return sections[indexPath.section].items[indexPath.row]
+	}
 }
 
-extension TableViewManager: UITableViewDelegate {
+open class TableViewKitDelegate: NSObject, UITableViewDelegate {
+
+	open unowned var manager: TableViewManager
+	open var sections: ObservableArray<Section> { return manager.sections }
+
+	public init(manager: TableViewManager) {
+		self.manager = manager
+	}
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -209,12 +190,12 @@ extension TableViewManager: UITableViewDelegate {
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return height(for: { $0.header }, inSection: section) ?? tableView.sectionHeaderHeight
+        return height(for: {$0.header}, inSection: section) ?? tableView.sectionHeaderHeight
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return height(for: { $0.footer }, inSection: section) ?? tableView.sectionFooterHeight
+        return height(for: {$0.footer}, inSection: section) ?? tableView.sectionFooterHeight
     }
 
     /// Implementation of UITableViewDelegate
@@ -224,31 +205,72 @@ extension TableViewManager: UITableViewDelegate {
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        return estimatedHeight(for: { $0.header }, inSection: section) ?? tableView.estimatedSectionHeaderHeight
+        return estimatedHeight(for: {$0.header}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        return estimatedHeight(for: { $0.footer }, inSection: section) ?? tableView.estimatedSectionHeaderHeight
+        return estimatedHeight(for: {$0.footer}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return view(for: { $0.header }, inSection: section)
+        return view(for: {$0.header}, inSection: section)
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return view(for: { $0.footer }, inSection: section)
+        return view(for: {$0.footer}, inSection: section)
     }
-
-	open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return item(at: indexPath) is Editable
-	}
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         guard let item = item(at: indexPath) as? Editable else { return nil }
         return item.actions
     }
+
+	fileprivate func item(at indexPath: IndexPath) -> Item {
+		return sections[indexPath.section].items[indexPath.row]
+	}
+
+	fileprivate func view(for key: (Section) -> HeaderFooterView, inSection section: Int) -> UIView? {
+		guard case .view(let item) = key(sections[section]) else { return nil }
+
+		let drawer = type(of: item).drawer
+		let view = drawer.view(in: manager, with: item)
+		drawer.draw(view, with: item)
+
+		return view
+	}
+
+	fileprivate func estimatedHeight(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
+		let item = key(sections[section])
+		switch item {
+		case .view(let view):
+			guard let height = view.height else { return nil }
+			return height.estimated
+		case .title(_):
+			return 1.0
+		default:
+			return nil
+		}
+	}
+
+	fileprivate func estimatedHeight(at indexPath: IndexPath) -> CGFloat? {
+		guard let height = item(at: indexPath).height else { return nil }
+		return height.estimated
+	}
+
+	fileprivate func height(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
+		guard case .view(let view) = key(sections[section]), let value = view.height
+			else { return nil }
+		return value.height
+	}
+
+	fileprivate func height(at indexPath: IndexPath) -> CGFloat? {
+		guard let value = item(at: indexPath).height else { return nil }
+		return value.height
+	}
+
 }
+

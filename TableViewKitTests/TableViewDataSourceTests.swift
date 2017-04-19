@@ -63,6 +63,8 @@ class DifferentCell: UITableViewCell { }
 class TableViewDataSourceTests: XCTestCase {
 
     fileprivate var tableViewManager: TableViewManager!
+	fileprivate var dataSource: TableViewKitDataSource { return tableViewManager.tableView.dataSource as! TableViewKitDataSource }
+
 
     override func setUp() {
         super.setUp()
@@ -80,7 +82,7 @@ class TableViewDataSourceTests: XCTestCase {
 
     func testCellForRow() {
         let indexPath = IndexPath(row: 0, section: 0)
-        let cell = self.tableViewManager.tableView(self.tableViewManager.tableView, cellForRowAt: indexPath)
+        let cell = dataSource.tableView(self.tableViewManager.tableView, cellForRowAt: indexPath)
 
         expect(cell).to(beAnInstanceOf(TestCell.self))
     }
@@ -102,45 +104,32 @@ class TableViewDataSourceTests: XCTestCase {
     }
 
     func testNumberOfSections() {
-        let count = self.tableViewManager.numberOfSections(in: self.tableViewManager.tableView)
-        expect(count) == 2
+        let count = dataSource.numberOfSections(in: self.tableViewManager.tableView)
+        expect(count).to(equal(2))
     }
 
     func testNumberOfRowsInSection() {
-        let count = self.tableViewManager.tableView(self.tableViewManager.tableView, numberOfRowsInSection: 0)
+        let count = dataSource.tableView(self.tableViewManager.tableView, numberOfRowsInSection: 0)
         expect(count) == 1
     }
 
     func testTitleForHeaderInSection() {
-        let title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForHeaderInSection: 0)!
+        let title = dataSource.tableView(self.tableViewManager.tableView, titleForHeaderInSection: 0)!
         let section = tableViewManager.sections.first!
 
-        expect(HeaderFooterView.title(title)) == section.header
+        expect(HeaderFooterView.title(title)).to(equal(section.header))
     }
 
     func testTitleForFooterInSection() {
         var title: String?
 
-        title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)
+        title = dataSource.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)
 
         let section = tableViewManager.sections.first!
-        expect(HeaderFooterView.title(title!)) == section.footer
+        expect(HeaderFooterView.title(title!)).to(equal(section.footer))
 
-        title = self.tableViewManager.tableView(self.tableViewManager.tableView, titleForFooterInSection: 1)
+        title = dataSource.tableView(self.tableViewManager.tableView, titleForFooterInSection: 1)
         expect(title).to(beNil())
     }
 
-    func testViewForHeaderInSection() {
-        let view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForHeaderInSection: 0)
-        expect(view).to(beNil())
-    }
-
-    func testViewForFooterInSection() {
-        var view: UIView?
-        view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 0)
-        expect(view).to(beNil())
-
-        view = self.tableViewManager.tableView(self.tableViewManager.tableView, viewForFooterInSection: 1)
-        expect(view).notTo(beNil())
-    }
 }
