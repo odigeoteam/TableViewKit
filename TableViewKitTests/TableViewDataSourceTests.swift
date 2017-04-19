@@ -63,7 +63,7 @@ class DifferentCell: UITableViewCell { }
 class TableViewDataSourceTests: XCTestCase {
 
     fileprivate var tableViewManager: TableViewManager!
-	fileprivate var dataSource: TableViewKitDataSource { return tableViewManager.dataSource as! TableViewKitDataSource }
+    fileprivate var dataSource: TableViewKitDataSource { return tableViewManager.dataSource as! TableViewKitDataSource }
 
 
     override func setUp() {
@@ -97,8 +97,8 @@ class TableViewDataSourceTests: XCTestCase {
         section.items.append(otherItem)
 
         let indexPath = otherItem.indexPath(in: tableViewManager)!
-		let drawer = type(of: otherItem).drawer
-		let cell = drawer.cell(in: tableViewManager, with: otherItem as Item, for: indexPath)
+        let drawer = type(of: otherItem).drawer
+        let cell = drawer.cell(in: tableViewManager, with: otherItem as Item, for: indexPath)
 
         XCTAssertTrue(cell is DifferentCell)
     }
@@ -127,9 +127,9 @@ class TableViewDataSourceTests: XCTestCase {
 
         let section = tableViewManager.sections.first!
         expect(HeaderFooterView.title(title!)).to(equal(section.footer))
-
+        
         title = dataSource.tableView(self.tableViewManager.tableView, titleForFooterInSection: 1)
         expect(title).to(beNil())
     }
-
+    
 }

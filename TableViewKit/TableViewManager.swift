@@ -11,15 +11,15 @@ open class TableViewManager {
     open let tableView: UITableView
 
     /// An array of sections
-	open var sections: ObservableArray<Section>
+    open var sections: ObservableArray<Section>
 
-	open var dataSourceClass: TableViewKitDataSourceType.Type { return TableViewKitDataSource.self }
-	open var delegateClass: TableViewKitDelegateType.Type { return TableViewKitDelegate.self }
+    open var dataSourceClass: TableViewKitDataSourceType.Type { return TableViewKitDataSource.self }
+    open var delegateClass: TableViewKitDelegateType.Type { return TableViewKitDelegate.self }
 
     open var animation: UITableViewRowAnimation = .automatic
 
-	public var dataSource: TableViewKitDataSourceType?
-	public var delegate: TableViewKitDelegateType?
+    public var dataSource: TableViewKitDataSourceType?
+    public var delegate: TableViewKitDelegateType?
 
     var reusableIdentifiers: Set<String> = []
 
@@ -30,20 +30,20 @@ open class TableViewManager {
     public init(tableView: UITableView, sections: [Section] = []) {
         self.tableView = tableView
         self.sections = ObservableArray(array: sections)
-		self.setupDelegate()
-		self.setupDataSource()
+        self.setupDelegate()
+        self.setupDataSource()
         self.setupSections()
     }
 
-	private func setupDelegate() {
-		self.delegate = delegateClass.init(manager: self)
-		self.tableView.delegate = self.delegate
-	}
+    private func setupDelegate() {
+        self.delegate = delegateClass.init(manager: self)
+        self.tableView.delegate = self.delegate
+    }
 
-	private func setupDataSource() {
-		self.dataSource = dataSourceClass.init(manager: self)
-		self.tableView.dataSource = self.dataSource
-	}
+    private func setupDataSource() {
+        self.dataSource = dataSourceClass.init(manager: self)
+        self.tableView.dataSource = self.dataSource
+    }
 
     private func setupSections() {
         sections.forEach { section in
@@ -98,8 +98,8 @@ extension TableViewManager {
             reusableIdentifiers.insert(type.reusableIdentifier)
         }
     }
-
-	func item(at indexPath: IndexPath) -> Item {
-		return sections[indexPath.section].items[indexPath.row]
-	}
+    
+    func item(at indexPath: IndexPath) -> Item {
+        return sections[indexPath.section].items[indexPath.row]
+    }
 }

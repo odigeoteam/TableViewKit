@@ -90,7 +90,7 @@ class EditableItem: SelectableItem, Editable {
 class TableViewDelegateTests: XCTestCase {
 
     fileprivate var tableViewManager: TableViewManager!
-	fileprivate var delegate: TableViewKitDelegate { return tableViewManager.delegate as! TableViewKitDelegate }
+    fileprivate var delegate: TableViewKitDelegate { return tableViewManager.delegate as! TableViewKitDelegate }
 
     override func setUp() {
         super.setUp()
@@ -217,21 +217,21 @@ class TableViewDelegateTests: XCTestCase {
         XCTAssert(actions!.count == 1)
     }
 
-	func testViewForHeaderInSection() {
-		let view = delegate.tableView(self.tableViewManager.tableView, viewForHeaderInSection: 0)
-		expect(view).to(beNil())
-	}
+    func testViewForHeaderInSection() {
+        let view = delegate.tableView(self.tableViewManager.tableView, viewForHeaderInSection: 0)
+        expect(view).to(beNil())
+    }
 
-	func testViewForFooterInSection() {
-		var view: UIView?
-		view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 0)
-		expect(view).to(beNil())
-
-		view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 1)
-		expect(view).to(beNil())
-
-		view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 2)
-		expect(view).toNot(beNil())
-
-	}
+    func testViewForFooterInSection() {
+        var view: UIView?
+        view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 0)
+        expect(view).to(beNil())
+        
+        view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 1)
+        expect(view).to(beNil())
+        
+        view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 2)
+        expect(view).toNot(beNil())
+        
+    }
 }
