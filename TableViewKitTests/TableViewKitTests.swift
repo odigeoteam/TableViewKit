@@ -170,7 +170,7 @@ class TableViewKitTests: XCTestCase {
         let tableViewManager = TableViewManager(tableView: UITableView(), sections: [section])
 
         guard let indexPath = item.indexPath(in: tableViewManager) else { return }
-		let dataSource = tableViewManager.tableView.dataSource as! TableViewKitDataSource
+		let dataSource = tableViewManager.dataSource!
         var cell = dataSource.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
 
         expect(cell.textLabel?.text) == item.title
