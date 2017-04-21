@@ -296,4 +296,25 @@ class TableViewKitTests: XCTestCase {
         let registerItem = section.items.first as? TestReloadItem
         XCTAssert(registerItem?.title == "Register")
     }
+
+    func testManagerProperty() {
+        let tableView = UITableView()
+
+        let item1 = TestItem()
+        XCTAssertNil(item1.manager)
+        let section = NoHeaderFooterSection(items: [item1])
+        XCTAssertNil(section.manager)
+
+        let tableViewManager = TableViewManager(tableView: tableView, sections: [section])
+        XCTAssert(item1.manager == tableViewManager)
+        XCTAssert(section.manager == tableViewManager)
+
+        let section2 = NoHeaderFooterSection(items: [item1])
+        tableViewManager.sections.append(section2)
+        XCTAssert(section2.manager == tableViewManager)
+
+        let item2 = TestItem()
+        section.items.append(item2)
+        XCTAssert(item2.manager == tableViewManager)
+    }
 }

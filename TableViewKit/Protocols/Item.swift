@@ -20,6 +20,20 @@ public extension Item where Self: Equatable {
     }
 }
 
+private var ItemTableViewManagerKey: UInt8 = 0
+
+extension Item {
+
+    public internal(set) var manager: TableViewManager? {
+        get {
+            return objc_getAssociatedObject(self, &ItemTableViewManagerKey) as? TableViewManager
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &ItemTableViewManagerKey, newValue as AnyObject, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        }
+    }
+}
+
 extension Item {
 
     public func equals(_ other: Any?) -> Bool {

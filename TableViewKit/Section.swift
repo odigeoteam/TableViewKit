@@ -35,6 +35,20 @@ extension Section {
     public var footer: HeaderFooterView { return nil }
 }
 
+private var SectionTableViewManagerKey: UInt8 = 0
+
+extension Section {
+
+    public internal(set) var manager: TableViewManager? {
+        get {
+            return objc_getAssociatedObject(self, &SectionTableViewManagerKey) as? TableViewManager
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &SectionTableViewManagerKey, newValue as AnyObject, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        }
+    }
+}
+
 extension Section {
 
     public func equals(_ other: Any?) -> Bool {
@@ -63,8 +77,9 @@ extension Section {
         if case .view(let footer) = footer {
             manager.tableView.register(type(of: footer).drawer.type)
         }
-        items.forEach {
-            manager.tableView.register(type(of: $0).drawer.type)
+        items.forEach { item in
+            item.manager = manager
+            manager.tableView.register(type(of: item).drawer.type)
         }
     }
 
@@ -72,9 +87,11 @@ extension Section {
     ///
     /// - parameter manager: A manager where the section may have been added
     internal func setup(in manager: TableViewManager) {
-        items.callback = { [weak self, weak manager] change in
-            if let manager = manager {
-                self?.onItemsUpdate(withChanges: change, in: manager)
+        self.manager = manager
+
+        items.callback = { [weak self] change in
+            if let weakSelf = self, let manager = weakSelf.manager {
+                weakSelf.onItemsUpdate(withChanges: change, in: manager)
             }
         }
     }
@@ -84,13 +101,17 @@ extension Section {
         guard let sectionIndex = index(in: manager) else { return }
         let tableView = manager.tableView
 
-		if case .inserts(let array) = changes {
-			array.forEach { manager.register(type(of: items[$0]).drawer.type) }
-		}
+        if case .inserts(let array) = changes {
+            array.forEach {
+                let item = items[$0]
+                item.manager = manager
+                manager.register(type(of: items[$0]).drawer.type)
+            }
+        }
 
         switch changes {
         case .inserts(let array):
-			let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
             tableView.insertRows(at: indexPaths, with: manager.animation)
         case .deletes(let array):
             let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
