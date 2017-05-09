@@ -90,7 +90,7 @@ class EditableItem: SelectableItem, Editable {
 class TableViewDelegateTests: XCTestCase {
 
     fileprivate var tableViewManager: TableViewManager!
-    fileprivate var delegate: TableViewKitDelegate { return tableViewManager.delegate as! TableViewKitDelegate }
+    fileprivate var delegate: TableViewKitDelegate { return tableViewManager.delegate! }
 
     override func setUp() {
         super.setUp()

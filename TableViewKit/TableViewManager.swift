@@ -13,13 +13,11 @@ open class TableViewManager {
     /// An array of sections
     open var sections: ObservableArray<Section>
 
-    open var dataSourceClass: TableViewKitDataSourceType.Type { return TableViewKitDataSource.self }
-    open var delegateClass: TableViewKitDelegateType.Type { return TableViewKitDelegate.self }
-
     open var animation: UITableViewRowAnimation = .automatic
 
-    open var dataSource: TableViewKitDataSourceType? { didSet { tableView.dataSource = dataSource } }
-    open var delegate: TableViewKitDelegateType? { didSet { tableView.delegate = delegate } }
+    open var dataSource: TableViewKitDataSource? { didSet { tableView.dataSource = dataSource } }
+    open var delegate: TableViewKitDelegate? { didSet { tableView.delegate = delegate } }
+    open var scrollDelegate: UIScrollViewDelegate? { didSet { delegate?.scrollDelegate = scrollDelegate } }
 
     var reusableIdentifiers: Set<String> = []
 
@@ -36,12 +34,12 @@ open class TableViewManager {
     }
 
     private func setupDelegate() {
-        self.delegate = delegateClass.init(manager: self)
+        self.delegate = TableViewKitDelegate.init(manager: self)
         self.tableView.delegate = self.delegate
     }
 
     private func setupDataSource() {
-        self.dataSource = dataSourceClass.init(manager: self)
+        self.dataSource = TableViewKitDataSource.init(manager: self)
         self.tableView.dataSource = self.dataSource
     }
 

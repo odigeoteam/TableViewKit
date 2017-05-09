@@ -63,7 +63,7 @@ class DifferentCell: UITableViewCell { }
 class TableViewDataSourceTests: XCTestCase {
 
     fileprivate var tableViewManager: TableViewManager!
-    fileprivate var dataSource: TableViewKitDataSource { return tableViewManager.dataSource as! TableViewKitDataSource }
+    fileprivate var dataSource: TableViewKitDataSource { return tableViewManager.dataSource! }
 
 
     override func setUp() {

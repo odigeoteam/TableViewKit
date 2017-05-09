@@ -1,12 +1,9 @@
 import UIKit
 
-public protocol TableViewKitDelegateType: class, UITableViewDelegate {
-    init(manager: TableViewManager)
-}
-
-open class TableViewKitDelegate: NSObject, TableViewKitDelegateType {
+open class TableViewKitDelegate: NSObject, UITableViewDelegate {
 
     open unowned var manager: TableViewManager
+    open weak var scrollDelegate: UIScrollViewDelegate?
     open var sections: ObservableArray<Section> { return manager.sections }
 
     public required init(manager: TableViewManager) {
@@ -63,6 +60,21 @@ open class TableViewKitDelegate: NSObject, TableViewKitDelegateType {
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         guard let item = manager.item(at: indexPath) as? Editable else { return nil }
         return item.actions
+    }
+
+    /// Implementation of UIScrollViewDelegate
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollDelegate?.scrollViewDidScroll?(scrollView)
+    }
+
+    /// Implementation of UIScrollViewDelegate
+    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        scrollDelegate?.scrollViewWillBeginDragging?(scrollView)
+    }
+
+    /// Implementation of UIScrollViewDelegate
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        scrollDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
 
     fileprivate func view(for key: (Section) -> HeaderFooterView, inSection section: Int) -> UIView? {

@@ -1,10 +1,6 @@
 import UIKit
 
-public protocol TableViewKitDataSourceType: class, UITableViewDataSource {
-    init(manager: TableViewManager)
-}
-
-open class TableViewKitDataSource: NSObject, TableViewKitDataSourceType {
+open class TableViewKitDataSource: NSObject, UITableViewDataSource {
 
     open unowned var manager: TableViewManager
     open var sections: ObservableArray<Section> { return manager.sections }
