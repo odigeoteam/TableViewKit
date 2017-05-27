@@ -316,5 +316,12 @@ class TableViewKitTests: XCTestCase {
         let item2 = TestItem()
         section.items.append(item2)
         XCTAssert(item2.manager == tableViewManager)
+
+        let removedSection = tableViewManager.sections.removeFirst()
+
+        XCTAssert(removedSection === section)
+        XCTAssertNil(removedSection.manager)
+        XCTAssertNil(removedSection.items[0].manager)
+
     }
 }

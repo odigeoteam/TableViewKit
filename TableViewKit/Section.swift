@@ -71,6 +71,8 @@ extension Section {
     ///
     /// - parameter manager: A manager where the section may have been added
     internal func register(in manager: TableViewManager) {
+        setup(in: manager)
+
         if case .view(let header) = header {
             manager.tableView.register(type(of: header).drawer.type)
         }
@@ -83,10 +85,16 @@ extension Section {
         }
     }
 
+    /// Unregister the section
+    internal func unregister() {
+        self.manager = nil
+        items.forEach { $0.manager = nil }
+    }
+
     /// Setup the section internals
     ///
     /// - parameter manager: A manager where the section may have been added
-    internal func setup(in manager: TableViewManager) {
+    private func setup(in manager: TableViewManager) {
         self.manager = manager
 
         items.callback = { [weak self] change in
@@ -96,24 +104,23 @@ extension Section {
         }
     }
 
-    private func onItemsUpdate(withChanges changes: ArrayChanges, in manager: TableViewManager) {
+    private func onItemsUpdate(withChanges changes: ArrayChanges<Item>, in manager: TableViewManager) {
 
         guard let sectionIndex = index(in: manager) else { return }
         let tableView = manager.tableView
 
-        if case .inserts(let array) = changes {
-            array.forEach {
-                let item = items[$0]
+        if case .inserts(_, let items) = changes {
+            items.forEach { item in
                 item.manager = manager
-                manager.register(type(of: items[$0]).drawer.type)
+                manager.register(type(of: item).drawer.type)
             }
         }
 
         switch changes {
-        case .inserts(let array):
+        case .inserts(let array, _):
             let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
             tableView.insertRows(at: indexPaths, with: manager.animation)
-        case .deletes(let array):
+        case .deletes(let array, _):
             let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
             tableView.deleteRows(at: indexPaths, with: manager.animation)
         case .updates(let array):

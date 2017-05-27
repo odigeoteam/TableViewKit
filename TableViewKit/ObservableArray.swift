@@ -1,21 +1,20 @@
 import Foundation
 
-enum ArrayChanges {
-    case inserts([Int])
-    case deletes([Int])
+enum ArrayChanges<Element> {
+    case inserts([Int], [Element])
+    case deletes([Int], [Element])
     case updates([Int])
     case moves([(Int, Int)])
     case beginUpdates
     case endUpdates
 }
-
 /// An observable array. It will notify any kind of changes.
 public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, MutableCollection, RangeReplaceableCollection {
 
     /// The type of the elements of an array literal.
     public typealias Element = T
 
-    private var diff = Diff()
+    private var diff: Diff<T>!
 
     private var array: [T] {
         willSet {
@@ -24,13 +23,14 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
         didSet {
             callback?(.beginUpdates)
             if !diff.moves.isEmpty { callback?(.moves(diff.moves)) }
-            if !diff.deletes.isEmpty { callback?(.deletes(diff.deletes)) }
-            if !diff.inserts.isEmpty { callback?(.inserts(diff.inserts)) }
+            if !diff.deletes.isEmpty { callback?(.deletes(diff.deletes, diff.deletesElement)) }
+            if !diff.inserts.isEmpty { callback?(.inserts(diff.inserts, diff.insertsElement)) }
             callback?(.endUpdates)
+            diff = nil
         }
     }
 
-    var callback: ((ArrayChanges) -> Void)?
+    var callback: ((ArrayChanges<T>) -> Void)?
 
     /// Creates an empty `ObservableArray`
     public init() {
