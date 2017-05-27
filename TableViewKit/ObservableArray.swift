@@ -23,9 +23,9 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
         }
         didSet {
             callback?(.beginUpdates)
-            if (!diff.moves.isEmpty) { callback?(.moves(diff.moves)) }
-            if (!diff.deletes.isEmpty) { callback?(.deletes(diff.deletes)) }
-            if (!diff.inserts.isEmpty) { callback?(.inserts(diff.inserts)) }
+            if !diff.moves.isEmpty { callback?(.moves(diff.moves)) }
+            if !diff.deletes.isEmpty { callback?(.deletes(diff.deletes)) }
+            if !diff.inserts.isEmpty { callback?(.inserts(diff.inserts)) }
             callback?(.endUpdates)
         }
     }
@@ -71,8 +71,8 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
     /// - parameter i: A valid index of the collection. i must be less than endIndex.
     ///
     /// - returns:  The index value immediately after i.
-    public func index(after i: Int) -> Int {
-        return array.index(after: i)
+    public func index(after index: Int) -> Int {
+        return array.index(after: index)
     }
 
     /// A Boolean value indicating whether the collection is empty.
@@ -101,6 +101,7 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
     ///
     /// - parameter subrange: The subrange that must be replaced
     /// - parameter newElements: The new elements that must be replaced
+    // swiftlint:disable:next line_length
     public mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, C.Iterator.Element == T {
         array.replaceSubrange(subrange, with: newElements)
     }

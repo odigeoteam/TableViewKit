@@ -9,6 +9,7 @@ class TestReloadDrawer: CellDrawer {
     static internal var type = CellType.class(UITableViewCell.self)
 
     static internal func draw(_ cell: UITableViewCell, with item: Any) {
+        // swiftlint:disable:next force_cast
         cell.textLabel?.text = (item as! TestReloadItem).title
     }
 }
@@ -26,14 +27,14 @@ class EqualableItem: TestReloadItem, Equatable {
         self.title = title
     }
 
-    public static func ==(lhs: EqualableItem, rhs: EqualableItem) -> Bool {
+    public static func == (lhs: EqualableItem, rhs: EqualableItem) -> Bool {
         return lhs.title == rhs.title
     }
 }
 
 class EquatableSection: NoHeaderFooterSection, Equatable {
 
-    public static func ==(lhs: EquatableSection, rhs: EquatableSection) -> Bool {
+    public static func == (lhs: EquatableSection, rhs: EquatableSection) -> Bool {
         return lhs === rhs
     }
 }
@@ -81,7 +82,7 @@ class TableViewKitTests: XCTestCase {
         let section = HeaderFooterTitleSection()
         tableViewManager.sections.append(section)
 
-        expect(tableViewManager.sections.count).to(equal(1))
+        expect(tableViewManager.sections.count) == 1
     }
 
     func testAddItem() {
@@ -95,7 +96,7 @@ class TableViewKitTests: XCTestCase {
 
         tableViewManager.sections.insert(section, at: 0)
 
-        expect(section.items.count).to(equal(1))
+        expect(section.items.count) == 1
         expect(item.section(in: tableViewManager)).notTo(beNil())
 
         section.items.remove(at: 0)
@@ -157,7 +158,7 @@ class TableViewKitTests: XCTestCase {
     func testConvenienceInit() {
         let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
 
-        expect(tableViewManager.sections.count).to(equal(1))
+        expect(tableViewManager.sections.count) == 1
     }
 
     func testUpdateRow() {
@@ -171,14 +172,14 @@ class TableViewKitTests: XCTestCase {
         guard let indexPath = item.indexPath(in: tableViewManager) else { return }
         var cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
 
-        expect(cell.textLabel?.text).to(equal(item.title))
+        expect(cell.textLabel?.text) == item.title
 
         item.title = "After"
         item.reload(in: tableViewManager)
 
         cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
 
-        expect(cell.textLabel?.text).to(equal(item.title))
+        expect(cell.textLabel?.text) == item.title
     }
 
     func testMoveRows() {
@@ -237,6 +238,7 @@ class TableViewKitTests: XCTestCase {
     func testRegisterNibCells() {
 
         let testBundle = Bundle(for: TableViewKitTests.self)
+        // swiftlint:disable:next line_length
         let cellType = CellType<UITableViewCell>.nib(UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle), TestRegisterNibCell.self)
 
         let tableView = UITableView()
@@ -250,24 +252,28 @@ class TableViewKitTests: XCTestCase {
     func testRegisterNibHeaderFooter() {
 
         let testBundle = Bundle(for: TableViewKitTests.self)
-        let headerFooterType = HeaderFooterType<UITableViewHeaderFooterView>.nib(UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle), TestRegisterHeaderFooterView.self)
+        let nib = UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle)
+        let headerFooterType = HeaderFooterType<UITableViewHeaderFooterView>.nib(nib, TestRegisterHeaderFooterView.self)
 
         let tableView = UITableView()
         tableView.register(headerFooterType)
 
+        // swiftlint:disable:next line_length
         let headerFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerFooterType.reusableIdentifier)
         expect(headerFooterView).toNot(beNil())
     }
 
 	func testNibClassTypeCells() {
 		let testBundle = Bundle(for: TableViewKitTests.self)
-		let type = CellType<TestRegisterNibCell>.nib(UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle), TestRegisterNibCell.self)
+        let nib = UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle)
+		let type = CellType<TestRegisterNibCell>.nib(nib, TestRegisterNibCell.self)
 		_ = type.cellType
 	}
 
 	func testNibClassTypeHeaderFooter() {
 		let testBundle = Bundle(for: TableViewKitTests.self)
-		let type = HeaderFooterType<TestRegisterHeaderFooterView>.nib(UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle), TestRegisterHeaderFooterView.self)
+        let nib = UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle)
+		let type = HeaderFooterType<TestRegisterHeaderFooterView>.nib(nib, TestRegisterHeaderFooterView.self)
 		_ = type.headerFooterType
 	}
 

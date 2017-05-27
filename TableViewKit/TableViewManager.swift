@@ -68,13 +68,13 @@ open class TableViewManager: NSObject {
             let toIndex = array.map { $0.1 }
             tableView.moveSections(from: fromIndex, to: toIndex)
         case .beginUpdates:
-            if (animation == .none) {
+            if animation == .none {
                 UIView.setAnimationsEnabled(false)
             }
             tableView.beginUpdates()
         case .endUpdates:
             tableView.endUpdates()
-            if (animation == .none) {
+            if animation == .none {
                 UIView.setAnimationsEnabled(true)
             }
         }
@@ -128,7 +128,7 @@ extension TableViewManager {
         case .view(let view):
             guard let height = view.height else { return nil }
             return height.estimated
-        case .title(_):
+        case .title:
             return 1.0
         default:
             return nil
@@ -179,15 +179,16 @@ extension TableViewManager: UITableViewDataSource {
 
     /// Implementation of UITableViewDataSource
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return title(for: {$0.header}, inSection: section)
+        return title(for: { $0.header }, inSection: section)
     }
 
     /// Implementation of UITableViewDataSource
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return title(for: {$0.footer}, inSection: section)
+        return title(for: { $0.footer }, inSection: section)
     }
 
     /// Implementation of UITableViewDataSource
+    // swiftlint:disable:next line_length
     open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Intentionally blank. Required to use UITableViewRowActions
     }
@@ -208,12 +209,12 @@ extension TableViewManager: UITableViewDelegate {
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return height(for: {$0.header}, inSection: section) ?? tableView.sectionHeaderHeight
+        return height(for: { $0.header }, inSection: section) ?? tableView.sectionHeaderHeight
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return height(for: {$0.footer}, inSection: section) ?? tableView.sectionFooterHeight
+        return height(for: { $0.footer }, inSection: section) ?? tableView.sectionFooterHeight
     }
 
     /// Implementation of UITableViewDelegate
@@ -223,22 +224,22 @@ extension TableViewManager: UITableViewDelegate {
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        return estimatedHeight(for: {$0.header}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
+        return estimatedHeight(for: { $0.header }, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        return estimatedHeight(for: {$0.footer}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
+        return estimatedHeight(for: { $0.footer }, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return view(for: {$0.header}, inSection: section)
+        return view(for: { $0.header }, inSection: section)
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return view(for: {$0.footer}, inSection: section)
+        return view(for: { $0.footer }, inSection: section)
     }
 
 	open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

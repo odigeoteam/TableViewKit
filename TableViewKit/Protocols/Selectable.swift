@@ -14,6 +14,7 @@ extension Selectable {
     /// - parameter manager: A `manager` where the `item` may have been added
     /// - parameter animated:       If the selection should be animated
     /// - parameter scrollPosition: The scrolling position
+    // swiftlint:disable:next line_length
     public func select(in manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
 
         manager.tableView.selectRow(at: indexPath(in: manager), animated: animated, scrollPosition: scrollPosition)

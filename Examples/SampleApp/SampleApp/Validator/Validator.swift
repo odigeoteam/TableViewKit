@@ -36,7 +36,7 @@ public struct ValidatorManager<Input> {
     internal var validations: [Validation<Input>] = []
 
     public mutating func add<R: Validatable>(_ getInput: @escaping () -> Input, withRule rule: R) where R.Input == Input {
-        validations.append(Validation.init(forInput: getInput, rule: rule))
+        validations.append(Validation(forInput: getInput, rule: rule))
     }
 
     public mutating func add(validation: Validation<Input>) {

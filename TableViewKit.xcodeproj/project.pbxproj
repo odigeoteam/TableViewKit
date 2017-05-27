@@ -205,6 +205,7 @@
 			buildConfigurationList = CCBE45701D72F69500414A64 /* Build configuration list for PBXNativeTarget "TableViewKit" */;
 			buildPhases = (
 				CCBE45571D72F69400414A64 /* Sources */,
+				CCC87B4A1ED9E7160008968D /* SwiftLint */,
 				CCBE45581D72F69400414A64 /* Frameworks */,
 				CCBE45591D72F69400414A64 /* Headers */,
 				CCBE455A1D72F69400414A64 /* Resources */,
@@ -292,6 +293,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CCC87B4A1ED9E7160008968D /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CCBE45571D72F69400414A64 /* Sources */ = {

@@ -16,7 +16,7 @@ class ViewController: UIViewController, TableViewManagerCompatible {
             let mappedItems = array.map({ (className) -> Item in
                 let viewController = className.init(nibName: String(describing: className), bundle: nil)
 
-                let navigationController = UINavigationController.init(rootViewController: viewController)
+                let navigationController = UINavigationController(rootViewController: viewController)
 
                 let item = CustomItem(title: "Example 1")
                 item.onSelection = { _ in
