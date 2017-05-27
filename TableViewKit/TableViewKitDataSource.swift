@@ -33,15 +33,16 @@ open class TableViewKitDataSource: NSObject, UITableViewDataSource {
 
     /// Implementation of UITableViewDataSource
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return title(for: {$0.header}, inSection: section)
+        return title(for: { $0.header }, inSection: section)
     }
 
     /// Implementation of UITableViewDataSource
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return title(for: {$0.footer}, inSection: section)
+        return title(for: { $0.footer }, inSection: section)
     }
 
     /// Implementation of UITableViewDataSource
+    // swiftlint:disable:next line_length
     open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Intentionally blank. Required to use UITableViewRowActions
     }
@@ -50,12 +51,12 @@ open class TableViewKitDataSource: NSObject, UITableViewDataSource {
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return manager.item(at: indexPath) is Editable
     }
-    
+
     fileprivate func title(for key: (Section) -> HeaderFooterView, inSection section: Int) -> String? {
         if case .title(let value) = key(sections[section]) {
             return value
         }
         return nil
     }
-    
+
 }

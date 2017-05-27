@@ -34,12 +34,12 @@ open class TableViewManager {
     }
 
     private func setupDelegate() {
-        self.delegate = TableViewKitDelegate.init(manager: self)
+        self.delegate = TableViewKitDelegate(manager: self)
         self.tableView.delegate = self.delegate
     }
 
     private func setupDataSource() {
-        self.dataSource = TableViewKitDataSource.init(manager: self)
+        self.dataSource = TableViewKitDataSource(manager: self)
         self.tableView.dataSource = self.dataSource
     }
 
@@ -68,13 +68,13 @@ open class TableViewManager {
             let toIndex = array.map { $0.1 }
             tableView.moveSections(from: fromIndex, to: toIndex)
         case .beginUpdates:
-            if (animation == .none) {
+            if animation == .none {
                 UIView.setAnimationsEnabled(false)
             }
             tableView.beginUpdates()
         case .endUpdates:
             tableView.endUpdates()
-            if (animation == .none) {
+            if animation == .none {
                 UIView.setAnimationsEnabled(true)
             }
         }
@@ -96,7 +96,7 @@ extension TableViewManager {
             reusableIdentifiers.insert(type.reusableIdentifier)
         }
     }
-    
+
     func item(at indexPath: IndexPath) -> Item {
         return sections[indexPath.section].items[indexPath.row]
     }

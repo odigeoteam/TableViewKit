@@ -65,7 +65,6 @@ class TableViewDataSourceTests: XCTestCase {
     fileprivate var tableViewManager: TableViewManager!
     fileprivate var dataSource: TableViewKitDataSource { return tableViewManager.dataSource! }
 
-
     override func setUp() {
         super.setUp()
 
@@ -105,7 +104,7 @@ class TableViewDataSourceTests: XCTestCase {
 
     func testNumberOfSections() {
         let count = dataSource.numberOfSections(in: self.tableViewManager.tableView)
-        expect(count).to(equal(2))
+        expect(count) == 2
     }
 
     func testNumberOfRowsInSection() {
@@ -117,7 +116,7 @@ class TableViewDataSourceTests: XCTestCase {
         let title = dataSource.tableView(self.tableViewManager.tableView, titleForHeaderInSection: 0)!
         let section = tableViewManager.sections.first!
 
-        expect(HeaderFooterView.title(title)).to(equal(section.header))
+        expect(HeaderFooterView.title(title)) == section.header
     }
 
     func testTitleForFooterInSection() {
@@ -126,10 +125,10 @@ class TableViewDataSourceTests: XCTestCase {
         title = dataSource.tableView(self.tableViewManager.tableView, titleForFooterInSection: 0)
 
         let section = tableViewManager.sections.first!
-        expect(HeaderFooterView.title(title!)).to(equal(section.footer))
-        
+        expect(HeaderFooterView.title(title!)) == section.footer
+
         title = dataSource.tableView(self.tableViewManager.tableView, titleForFooterInSection: 1)
         expect(title).to(beNil())
     }
-    
+
 }

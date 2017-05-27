@@ -23,12 +23,12 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return height(for: {$0.header}, inSection: section) ?? tableView.sectionHeaderHeight
+        return height(for: { $0.header }, inSection: section) ?? tableView.sectionHeaderHeight
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return height(for: {$0.footer}, inSection: section) ?? tableView.sectionFooterHeight
+        return height(for: { $0.footer }, inSection: section) ?? tableView.sectionFooterHeight
     }
 
     /// Implementation of UITableViewDelegate
@@ -38,22 +38,22 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        return estimatedHeight(for: {$0.header}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
+        return estimatedHeight(for: { $0.header }, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        return estimatedHeight(for: {$0.footer}, inSection: section) ?? tableView.estimatedSectionHeaderHeight
+        return estimatedHeight(for: { $0.footer }, inSection: section) ?? tableView.estimatedSectionHeaderHeight
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return view(for: {$0.header}, inSection: section)
+        return view(for: { $0.header }, inSection: section)
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return view(for: {$0.footer}, inSection: section)
+        return view(for: { $0.footer }, inSection: section)
     }
 
     /// Implementation of UITableViewDelegate
@@ -93,7 +93,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
         case .view(let view):
             guard let height = view.height else { return nil }
             return height.estimated
-        case .title(_):
+        case .title:
             return 1.0
         default:
             return nil
@@ -110,10 +110,10 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
             else { return nil }
         return value.height
     }
-    
+
     fileprivate func height(at indexPath: IndexPath) -> CGFloat? {
         guard let value = manager.item(at: indexPath).height else { return nil }
         return value.height
     }
-    
+
 }
