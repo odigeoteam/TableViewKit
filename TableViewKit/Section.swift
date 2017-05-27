@@ -35,6 +35,7 @@ extension Section {
     public var footer: HeaderFooterView { return nil }
 }
 
+// swiftlint:disable:next identifier_name
 private var SectionTableViewManagerKey: UInt8 = 0
 
 extension Section {
@@ -44,7 +45,10 @@ extension Section {
             return objc_getAssociatedObject(self, &SectionTableViewManagerKey) as? TableViewManager
         }
         set(newValue) {
-            objc_setAssociatedObject(self, &SectionTableViewManagerKey, newValue as AnyObject, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+            objc_setAssociatedObject(self,
+                                     &SectionTableViewManagerKey,
+                                     newValue as AnyObject,
+                                     objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
         }
     }
 }

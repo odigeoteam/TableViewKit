@@ -20,6 +20,7 @@ public extension Item where Self: Equatable {
     }
 }
 
+// swiftlint:disable:next identifier_name
 private var ItemTableViewManagerKey: UInt8 = 0
 
 extension Item {
@@ -29,7 +30,10 @@ extension Item {
             return objc_getAssociatedObject(self, &ItemTableViewManagerKey) as? TableViewManager
         }
         set(newValue) {
-            objc_setAssociatedObject(self, &ItemTableViewManagerKey, newValue as AnyObject, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+            objc_setAssociatedObject(self,
+                                     &ItemTableViewManagerKey,
+                                     newValue as AnyObject,
+                                     objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
         }
     }
 }
