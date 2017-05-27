@@ -244,7 +244,7 @@ class TableViewKitTests: XCTestCase {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: cellType.reusableIdentifier)
 
-        expect(cell).toNot(equal(nil))
+        expect(cell).toNot(beNil())
     }
 
     func testRegisterNibHeaderFooter() {
@@ -256,7 +256,7 @@ class TableViewKitTests: XCTestCase {
         tableView.register(headerFooterType)
 
         let headerFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerFooterType.reusableIdentifier)
-        expect(headerFooterView).toNot(equal(nil))
+        expect(headerFooterView).toNot(beNil())
     }
 
 	func testNibClassTypeCells() {
