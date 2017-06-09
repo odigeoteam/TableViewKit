@@ -17,24 +17,11 @@ open class TableViewManager: NSObject {
 
     var reusableIdentifiers: Set<String> = []
 
-    /// Initialize a `TableViewManager` with a `tableView`.
-    ///
-    /// - parameter tableView: A `tableView` that will be controlled by the `TableViewManager`
-    public init(tableView: UITableView) {
-        self.tableView = tableView
-        self.sections = []
-        super.init()
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.setupSections()
-
-    }
-
     /// Initialize a `TableViewManager` with a `tableView` and an initial array of sections
     ///
     /// - parameter tableView: A `tableView` that will be controlled by the `TableViewManager`
     /// - parameter sections: An array of sections
-    public init(tableView: UITableView, sections: [Section]) {
+    public init(tableView: UITableView, sections: [Section] = []) {
         self.tableView = tableView
         self.sections = ObservableArray(array: sections)
         super.init()
