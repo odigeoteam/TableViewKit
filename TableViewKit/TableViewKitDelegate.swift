@@ -4,7 +4,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
 
     open unowned var manager: TableViewManager
     open weak var scrollDelegate: UIScrollViewDelegate?
-    open var sections: ObservableArray<Section> { return manager.sections }
+    private var sections: ObservableArray<Section> { return manager.sections }
 
     public required init(manager: TableViewManager) {
         self.manager = manager

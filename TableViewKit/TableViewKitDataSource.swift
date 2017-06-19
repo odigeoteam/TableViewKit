@@ -3,7 +3,7 @@ import UIKit
 open class TableViewKitDataSource: NSObject, UITableViewDataSource {
 
     open unowned var manager: TableViewManager
-    open var sections: ObservableArray<Section> { return manager.sections }
+    private var sections: ObservableArray<Section> { return manager.sections }
 
     public required init(manager: TableViewManager) {
         self.manager = manager
