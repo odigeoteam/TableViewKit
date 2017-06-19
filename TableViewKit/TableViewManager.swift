@@ -28,19 +28,13 @@ open class TableViewManager {
     public init(tableView: UITableView, sections: [Section] = []) {
         self.tableView = tableView
         self.sections = ObservableArray(array: sections)
-        self.setupDelegate()
-        self.setupDataSource()
+        self.setupDelegates()
         self.setupSections()
     }
 
-    private func setupDelegate() {
+    private func setupDelegates() {
         self.delegate = TableViewKitDelegate(manager: self)
-        self.tableView.delegate = self.delegate
-    }
-
-    private func setupDataSource() {
         self.dataSource = TableViewKitDataSource(manager: self)
-        self.tableView.dataSource = self.dataSource
     }
 
     private func setupSections() {
