@@ -170,14 +170,15 @@ class TableViewKitTests: XCTestCase {
         let tableViewManager = TableViewManager(tableView: UITableView(), sections: [section])
 
         guard let indexPath = item.indexPath(in: tableViewManager) else { return }
-        var cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
+		let dataSource = tableViewManager.dataSource!
+        var cell = dataSource.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
 
         expect(cell.textLabel?.text) == item.title
 
         item.title = "After"
         item.reload(in: tableViewManager)
 
-        cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
+        cell = dataSource.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
 
         expect(cell.textLabel?.text) == item.title
     }

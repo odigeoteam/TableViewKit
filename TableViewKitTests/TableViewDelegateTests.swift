@@ -89,7 +89,8 @@ class EditableItem: SelectableItem, Editable {
 
 class TableViewDelegateTests: XCTestCase {
 
-    private var tableViewManager: TableViewManager!
+    fileprivate var tableViewManager: TableViewManager!
+    fileprivate var delegate: TableViewKitDelegate { return tableViewManager.delegate! }
 
     override func setUp() {
         super.setUp()
@@ -109,40 +110,40 @@ class TableViewDelegateTests: XCTestCase {
     func testEstimatedHeightForHeader() {
         var height: CGFloat
 
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForHeaderInSection: 0)
+        height = delegate.tableView(tableViewManager.tableView, estimatedHeightForHeaderInSection: 0)
         expect(height) > 0.0
 
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForHeaderInSection: 1)
+        height = delegate.tableView(tableViewManager.tableView, estimatedHeightForHeaderInSection: 1)
         expect(height) == tableViewManager.tableView.estimatedSectionHeaderHeight
     }
 
     func testHeightForHeader() {
         var height: CGFloat
 
-        height = tableViewManager.tableView(tableViewManager.tableView, heightForHeaderInSection: 0)
+        height = delegate.tableView(tableViewManager.tableView, heightForHeaderInSection: 0)
         expect(height) == UITableViewAutomaticDimension
     }
 
     func testEstimatedHeightForFooter() {
         var height: CGFloat
 
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForFooterInSection: 0)
+        height = delegate.tableView(tableViewManager.tableView, estimatedHeightForFooterInSection: 0)
         expect(height) > 0.0
 
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForFooterInSection: 1)
+        height = delegate.tableView(tableViewManager.tableView, estimatedHeightForFooterInSection: 1)
         expect(height) == tableViewManager.tableView.estimatedSectionFooterHeight
 
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForFooterInSection: 2)
+        height = delegate.tableView(tableViewManager.tableView, estimatedHeightForFooterInSection: 2)
         expect(height) == 44.0
     }
 
     func testHeightForFooter() {
         var height: CGFloat
 
-        height = tableViewManager.tableView(tableViewManager.tableView, heightForFooterInSection: 0)
+        height = delegate.tableView(tableViewManager.tableView, heightForFooterInSection: 0)
         expect(height) == UITableViewAutomaticDimension
 
-        height = tableViewManager.tableView(tableViewManager.tableView, heightForFooterInSection: 2)
+        height = delegate.tableView(tableViewManager.tableView, heightForFooterInSection: 2)
         expect(height) == UITableViewAutomaticDimension
     }
 
@@ -151,15 +152,15 @@ class TableViewDelegateTests: XCTestCase {
         var indexPath: IndexPath
 
         indexPath = IndexPath(row: 0, section: 0)
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
+        height = delegate.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
         expect(height) == 44.0
 
         indexPath = IndexPath(row: 0, section: 1)
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
+        height = delegate.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
         expect(height) == tableViewManager.tableView.estimatedRowHeight
 
         indexPath = IndexPath(row: 1, section: 1)
-        height = tableViewManager.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
+        height = delegate.tableView(tableViewManager.tableView, estimatedHeightForRowAt: indexPath)
         expect(height) == 20.0
     }
 
@@ -168,15 +169,15 @@ class TableViewDelegateTests: XCTestCase {
         var indexPath: IndexPath
 
         indexPath = IndexPath(row: 0, section: 0)
-        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
+        height = delegate.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
         expect(height) == UITableViewAutomaticDimension
 
         indexPath = IndexPath(row: 0, section: 1)
-        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
+        height = delegate.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
         expect(height) == tableViewManager.tableView.rowHeight
 
         indexPath = IndexPath(row: 1, section: 1)
-        height = tableViewManager.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
+        height = delegate.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
         expect(height) == StaticHeigthItem.testStaticHeightValue
     }
 
@@ -184,14 +185,14 @@ class TableViewDelegateTests: XCTestCase {
         var indexPath: IndexPath
 
         indexPath = IndexPath(row: 0, section: 0)
-        tableViewManager.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
+        delegate.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
 
         let section = tableViewManager.sections[0]
         indexPath = IndexPath(row: section.items.count, section: 0)
         let item = SelectableItem()
         section.items.append(item)
 
-        tableViewManager.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
+        delegate.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
         expect(item.check) == 1
 
         item.select(in: tableViewManager, animated: true)
@@ -210,13 +211,27 @@ class TableViewDelegateTests: XCTestCase {
         editableItem.actions = [deleteAction]
         section.items.append(editableItem)
 
-        let sectionIndex = section.index(in: tableViewManager)!
-        let rows = tableViewManager.tableView(tableViewManager.tableView, numberOfRowsInSection: sectionIndex)
-        XCTAssert(rows == 2)
-
         let indexPath = editableItem.indexPath(in: tableViewManager)!
-        let actions = tableViewManager.tableView(tableViewManager.tableView, editActionsForRowAt: indexPath)
+        let actions = delegate.tableView(tableViewManager.tableView, editActionsForRowAt: indexPath)
         XCTAssertNotNil(actions)
         XCTAssert(actions!.count == 1)
+    }
+
+    func testViewForHeaderInSection() {
+        let view = delegate.tableView(self.tableViewManager.tableView, viewForHeaderInSection: 0)
+        expect(view).to(beNil())
+    }
+
+    func testViewForFooterInSection() {
+        var view: UIView?
+        view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 0)
+        expect(view).to(beNil())
+
+        view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 1)
+        expect(view).to(beNil())
+
+        view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 2)
+        expect(view).toNot(beNil())
+
     }
 }
