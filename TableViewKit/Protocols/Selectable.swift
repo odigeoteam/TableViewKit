@@ -18,7 +18,7 @@ extension Selectable {
     public func select(in manager: TableViewManager, animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
 
         manager.tableView.selectRow(at: indexPath(in: manager), animated: animated, scrollPosition: scrollPosition)
-        manager.tableView(manager.tableView, didSelectRowAt: indexPath(in: manager)!)
+        manager.tableView.delegate?.tableView?(manager.tableView, didSelectRowAt: indexPath(in: manager)!)
     }
 
     /// Deselect the `item`

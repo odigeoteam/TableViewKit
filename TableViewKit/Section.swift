@@ -78,14 +78,14 @@ extension Section {
         setup(in: manager)
 
         if case .view(let header) = header {
-            manager.tableView.register(type(of: header).drawer.type)
+            manager.register(type(of: header).drawer.type)
         }
         if case .view(let footer) = footer {
-            manager.tableView.register(type(of: footer).drawer.type)
+            manager.register(type(of: footer).drawer.type)
         }
         items.forEach { item in
             item.manager = manager
-            manager.tableView.register(type(of: item).drawer.type)
+            manager.register(type(of: item).drawer.type)
         }
     }
 
