@@ -307,16 +307,16 @@ class TableViewKitTests: XCTestCase {
         XCTAssertNil(section.manager)
 
         let tableViewManager = TableViewManager(tableView: tableView, sections: [section])
-        XCTAssert(item1.manager == tableViewManager)
-        XCTAssert(section.manager == tableViewManager)
+        XCTAssert(item1.manager === tableViewManager)
+        XCTAssert(section.manager === tableViewManager)
 
         let section2 = NoHeaderFooterSection(items: [item1])
         tableViewManager.sections.append(section2)
-        XCTAssert(section2.manager == tableViewManager)
+        XCTAssert(section2.manager === tableViewManager)
 
         let item2 = TestItem()
         section.items.append(item2)
-        XCTAssert(item2.manager == tableViewManager)
+        XCTAssert(item2.manager === tableViewManager)
 
         let removedSection = tableViewManager.sections.removeFirst()
 
