@@ -38,28 +38,23 @@ open class TableViewManager {
     }
 
     private func setupSections() {
-        sections.forEach { section in
-            section.setup(in: self)
-            section.register(in: self)
-        }
+        sections.forEach { $0.register(in: self) }
         sections.callback = { [weak self] in self?.onSectionsUpdate(withChanges: $0) }
     }
 
-    private func onSectionsUpdate(withChanges changes: ArrayChanges) {
+    private func onSectionsUpdate(withChanges changes: ArrayChanges<Section>) {
         switch changes {
-        case .inserts(let array):
-            array.forEach { index in
-                sections[index].setup(in: self)
-                sections[index].register(in: self)
-            }
-            tableView.insertSections(IndexSet(array), with: animation)
-        case .deletes(let array):
-            tableView.deleteSections(IndexSet(array), with: animation)
-        case .updates(let array):
-            tableView.reloadSections(IndexSet(array), with: animation)
-        case .moves(let array):
-            let fromIndex = array.map { $0.0 }
-            let toIndex = array.map { $0.1 }
+        case .inserts(let indexes, let insertedSections):
+            insertedSections.forEach { $0.register(in: self) }
+            tableView.insertSections(IndexSet(indexes), with: animation)
+        case .deletes(let indexes, let removedSections):
+            removedSections.forEach { $0.unregister() }
+            tableView.deleteSections(IndexSet(indexes), with: animation)
+        case .updates(let indexes):
+            tableView.reloadSections(IndexSet(indexes), with: animation)
+        case .moves(let indexes):
+            let fromIndex = indexes.map { $0.0 }
+            let toIndex = indexes.map { $0.1 }
             tableView.moveSections(from: fromIndex, to: toIndex)
         case .beginUpdates:
             if animation == .none {

@@ -35,6 +35,24 @@ extension Section {
     public var footer: HeaderFooterView { return nil }
 }
 
+// swiftlint:disable:next identifier_name
+private var SectionTableViewManagerKey: UInt8 = 0
+
+extension Section {
+
+    public internal(set) var manager: TableViewManager? {
+        get {
+            return objc_getAssociatedObject(self, &SectionTableViewManagerKey) as? TableViewManager
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self,
+                                     &SectionTableViewManagerKey,
+                                     newValue as AnyObject,
+                                     objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        }
+    }
+}
+
 extension Section {
 
     public func equals(_ other: Any?) -> Bool {
@@ -57,42 +75,56 @@ extension Section {
     ///
     /// - parameter manager: A manager where the section may have been added
     internal func register(in manager: TableViewManager) {
+        setup(in: manager)
+
         if case .view(let header) = header {
             manager.register(type(of: header).drawer.type)
         }
         if case .view(let footer) = footer {
             manager.register(type(of: footer).drawer.type)
         }
-        items.forEach {
-            manager.register(type(of: $0).drawer.type)
+        items.forEach { item in
+            item.manager = manager
+            manager.register(type(of: item).drawer.type)
         }
+    }
+
+    /// Unregister the section
+    internal func unregister() {
+        self.manager = nil
+        items.forEach { $0.manager = nil }
     }
 
     /// Setup the section internals
     ///
     /// - parameter manager: A manager where the section may have been added
-    internal func setup(in manager: TableViewManager) {
-        items.callback = { [weak self, weak manager] change in
-            if let manager = manager {
-                self?.onItemsUpdate(withChanges: change, in: manager)
+    private func setup(in manager: TableViewManager) {
+        self.manager = manager
+
+        items.callback = { [weak self] change in
+            if let weakSelf = self, let manager = weakSelf.manager {
+                weakSelf.onItemsUpdate(withChanges: change, in: manager)
             }
         }
     }
 
-    private func onItemsUpdate(withChanges changes: ArrayChanges, in manager: TableViewManager) {
+    private func onItemsUpdate(withChanges changes: ArrayChanges<Item>, in manager: TableViewManager) {
 
         guard let sectionIndex = index(in: manager) else { return }
         let tableView = manager.tableView
 
-		if case .inserts(let array) = changes {
-			array.forEach { manager.register(type(of: items[$0]).drawer.type) }
-		}
+        if case .inserts(_, let items) = changes {
+            items.forEach { item in
+                item.manager = manager
+                manager.register(type(of: item).drawer.type)
+            }
+        }
 
         switch changes {
-        case .inserts(let array):
-			let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+        case .inserts(let array, _):
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
             tableView.insertRows(at: indexPaths, with: manager.animation)
-        case .deletes(let array):
+        case .deletes(let array, _):
             let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
             tableView.deleteRows(at: indexPaths, with: manager.animation)
         case .updates(let array):

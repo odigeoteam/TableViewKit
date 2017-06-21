@@ -1,20 +1,34 @@
 import Foundation
 
-struct Diff {
+struct Diff<Element> {
     var inserts: [Int]
     var deletes: [Int]
     var moves: [(Int, Int)]
+
+    var insertsElement: [Element]
+    var deletesElement: [Element]
 
     var isEmpty: Bool {
         return (inserts.count + deletes.count + moves.count) == 0
     }
 
-    init(inserts: [Int] = [], deletes: [Int] = [], moves: [(Int, Int)] = []) {
+    init(inserts: [Int] = [], deletes: [Int] = [], moves: [(Int, Int)] = [],
+         insertsElement: [Element] = [], deletesElement: [Element] = []) {
         self.inserts = inserts
         self.deletes = deletes
         self.moves = moves
+        self.insertsElement = insertsElement
+        self.deletesElement = deletesElement
+    }
     }
 
+enum ArrayIndexesChanges {
+    case inserts(Int)
+    case deletes(Int)
+    case updates(Int)
+    case moves(Int, Int)
+    case beginUpdates
+    case endUpdates
 }
 
 class DiffIterator: IteratorProtocol {
@@ -30,20 +44,20 @@ class DiffIterator: IteratorProtocol {
         self.last = Coordinates(x: matrix.rows - 1, y: matrix.columns - 1)
     }
 
-    func next() -> ArrayChanges? {
+    func next() -> ArrayIndexesChanges? {
         while last.x > 0 || last.y > 0 {
             if last.x == 0 {
                 last.y -= 1
-                return .inserts([last.y])
+                return .inserts(last.y)
             } else if last.y == 0 {
                 last.x -= 1
-                return .deletes([last.x])
+                return .deletes(last.x)
             } else if matrix[last.x, last.y] == matrix[last.x, last.y - 1] {
                 last.y -= 1
-                return .inserts([last.y])
+                return .inserts(last.y)
             } else if matrix[last.x, last.y] == matrix[last.x - 1, last.y] {
                 last.x -= 1
-                return .deletes([last.x])
+                return .deletes(last.x)
             } else {
                 last.x -= 1
                 last.y -= 1
@@ -91,7 +105,7 @@ extension Array {
 
     typealias Predicate = (Element, Element) -> Bool
 
-    static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff {
+    static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff<Element> {
 
         var matrix = Matrix(rows: x.count + 1, columns: y.count + 1, repeatedValue: 0)
         for (i, xElem) in x.enumerated() {
@@ -104,15 +118,15 @@ extension Array {
             }
         }
 
-        let changes = [ArrayChanges](DiffSequence(matrix: matrix))
-        var inserts: [Int] = changes.flatMap { change -> [Int] in
-            guard case .inserts(let array) = change else { return [] }
-            return array
+        let changes = [ArrayIndexesChanges](DiffSequence(matrix: matrix))
+        var inserts: [Int] = changes.flatMap { change -> Int? in
+            guard case .inserts(let index) = change else { return nil }
+            return index
         }.sorted { $0 > $1 }
 
-        var deletes: [Int] = changes.flatMap { change -> [Int] in
-            guard case .deletes(let array) = change else { return [] }
-            return array
+        var deletes: [Int] = changes.flatMap { change -> Int? in
+            guard case .deletes(let index) = change else { return nil }
+            return index
         }.sorted { $0 < $1 }
 
         var moves: [(Int, Int)] = []
@@ -131,7 +145,13 @@ extension Array {
             deleted += 1
         }
 
-        return Diff(inserts: inserts, deletes: deletes, moves: moves)
+        let diff = Diff(inserts: inserts,
+                        deletes: deletes,
+                        moves: moves,
+                        insertsElement: inserts.flatMap { y[$0] },
+                        deletesElement: deletes.flatMap { x[$0] })
+
+        return diff
     }
 
 }
