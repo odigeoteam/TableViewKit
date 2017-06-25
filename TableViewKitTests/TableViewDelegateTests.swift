@@ -195,10 +195,10 @@ class TableViewDelegateTests: XCTestCase {
         delegate.tableView(tableViewManager.tableView, didSelectRowAt: indexPath)
         expect(item.check) == 1
 
-        item.select(in: tableViewManager, animated: true)
+        item.select(animated: true)
         expect(item.check) == 2
 
-        item.deselect(in: tableViewManager, animated: true)
+        item.deselect(animated: true)
         expect(item.check) == 2
     }
 
@@ -211,7 +211,7 @@ class TableViewDelegateTests: XCTestCase {
         editableItem.actions = [deleteAction]
         section.items.append(editableItem)
 
-        let indexPath = editableItem.indexPath(in: tableViewManager)!
+        let indexPath = editableItem.indexPath!
         let actions = delegate.tableView(tableViewManager.tableView, editActionsForRowAt: indexPath)
         XCTAssertNotNil(actions)
         XCTAssert(actions!.count == 1)
