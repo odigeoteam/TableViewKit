@@ -31,6 +31,7 @@ public extension HeaderFooterDrawer {
 
     /// Returns a dequeued header/footer
     static func view(in manager: TableViewManager, with item: GenericItem) -> View {
+        // swiftlint:disable:next force_cast
         return manager.tableView.dequeueReusableHeaderFooterView(withIdentifier: self.type.reusableIdentifier) as! View
     }
 }
@@ -42,9 +43,12 @@ public struct AnyHeaderFooterDrawer {
     let draw: (UITableViewHeaderFooterView, HeaderFooter) -> Void
 
 	/// Creates a type-erased drawer that wraps the given header or footer drawer
-    public init<Drawer: HeaderFooterDrawer, GenericItem, View: UITableViewHeaderFooterView>(_ drawer: Drawer.Type) where Drawer.GenericItem == GenericItem, Drawer.View == View {
+    public init<Drawer: HeaderFooterDrawer, GenericItem, View: UITableViewHeaderFooterView>(_ drawer: Drawer.Type)
+        where Drawer.GenericItem == GenericItem, Drawer.View == View {
         self.type = drawer.type.headerFooterType
+        // swiftlint:disable:next force_cast
         self.view = { manager, item in drawer.view(in: manager, with: item as! GenericItem) }
+        // swiftlint:disable:next force_cast
         self.draw = { cell, item in drawer.draw(cell as! View, with: item as! GenericItem) }
     }
 

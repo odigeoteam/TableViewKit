@@ -40,7 +40,7 @@ class ValidatorTests: XCTestCase {
         var validator = ValidatorManager<String?>()
         validator.add(validation: validation)
 
-        expect(validator.errors.count).to(equal(0))
+        expect(validator.errors.count) == 0
     }
 
     func testCharactersLengthRule() {
@@ -53,7 +53,7 @@ class ValidatorTests: XCTestCase {
         var validator = ValidatorManager<String?>()
         validator.add(validation: validation)
 
-        expect(validator.errors.count).to(equal(0))
+        expect(validator.errors.count) == 0
     }
 
     func testNumberBetweenRule() {
@@ -66,6 +66,6 @@ class ValidatorTests: XCTestCase {
         var validator = ValidatorManager<Int>()
         validator.add(validation: validation)
 
-        expect(validator.errors.count).to(equal(0))
+        expect(validator.errors.count) == 0
     }
 }

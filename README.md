@@ -12,7 +12,7 @@
 <a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat"></a>
 </p>
 
-Empowering `UITableView` with painless multi-type cell support and build-in automatic state transition animations
+Empowering `UITableView` with painless multi-type cell support and built-in automatic state transition animations
 
 ## Getting Started
 - [Download TableViewKit](https://github.com/odigeoteam/TableViewKit/releases) and play with our [examples](https://github.com/odigeoteam/TableViewKit/tree/develop/Examples)

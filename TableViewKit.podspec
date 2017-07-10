@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name                    = "TableViewKit"
-  s.version                 = "1.0.0"
-  s.summary                 = "Empowering UITableView with painless multi-type cell support and build-in automatic state transition animations"
+  s.version                 = "1.1.0"
+  s.summary                 = "Empowering UITableView with painless multi-type cell support and built-in automatic state transition animations"
   s.homepage                = "http://github.com/odigeoteam/TableViewKit/"
   s.license                 = "MIT"
   s.author                  = "TableViewKit Contributors"

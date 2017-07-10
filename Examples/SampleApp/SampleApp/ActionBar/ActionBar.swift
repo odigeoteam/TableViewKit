@@ -34,8 +34,8 @@ open class ActionBar: UIToolbar {
 
     fileprivate func setup() {
 
-        let previousButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.init(rawValue: 105)!, target: self, action: #selector(previousHandler))
-        let nextButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.init(rawValue: 106)!, target: self, action: #selector(nextHandler))
+        let previousButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem(rawValue: 105)!, target: self, action: #selector(previousHandler))
+        let nextButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem(rawValue: 106)!, target: self, action: #selector(nextHandler))
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleActionBarDone))
 
         let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)

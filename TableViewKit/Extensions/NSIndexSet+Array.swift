@@ -7,7 +7,7 @@ extension IndexSet {
     /// - parameter array: An array of integers
     init(_ array: [Int]) {
         let mutable = NSMutableIndexSet()
-        array.forEach {mutable.add($0)}
+        array.forEach { mutable.add($0) }
         self.init(mutable)
     }
 }

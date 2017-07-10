@@ -41,6 +41,7 @@ public extension CellDrawer {
             cell.item = item as? Item
         }
 
+        // swiftlint:disable:next force_cast
         return cell as! Cell
     }
 }
@@ -52,9 +53,12 @@ public struct AnyCellDrawer {
     let draw: (UITableViewCell, Item) -> Void
 
 	/// Creates a type-erased drawer that wraps the given cell drawer
-    public init<Drawer: CellDrawer, GenericItem, Cell: UITableViewCell>(_ drawer: Drawer.Type) where Drawer.GenericItem == GenericItem, Drawer.Cell == Cell {
+    public init<Drawer: CellDrawer, GenericItem, Cell: UITableViewCell>(_ drawer: Drawer.Type)
+        where Drawer.GenericItem == GenericItem, Drawer.Cell == Cell {
         self.type = drawer.type.cellType
+        // swiftlint:disable:next force_cast
         self.cell = { manager, item, indexPath in drawer.cell(in: manager, with: item as! GenericItem, for: indexPath) }
+        // swiftlint:disable:next force_cast
         self.draw = { cell, item in drawer.draw(cell as! Cell, with: item as! GenericItem) }
     }
 

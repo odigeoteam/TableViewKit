@@ -1,0 +1,25 @@
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - External
+  - Examples
+opt_in_rules:
+  - empty_count
+  - explicit_init
+  - closure_spacing
+  - overridden_super_call
+  - redundant_nil_coalescing
+  - private_outlet
+  - nimble_operator
+  - attributes
+  - operator_usage_whitespace
+  - closure_end_indentation
+  - first_where
+  - number_separator
+  - prohibited_super_call
+  - fatal_error_message
+identifier_name:
+  excluded:
+    - x
+    - y
+    - id
+    - from
+    - to

@@ -42,17 +42,17 @@ class Example1: UIViewController, TableViewManagerCompatible {
             textFieldItem2.validation.add(rule: ExistRule())
 
             item.onSelection = { item in
-                item.deselect(in: self.vc.tableViewManager, animated: true)
+                item.deselect(animated: true)
                 self.vc.showPickerControl()
             }
             dateItem.accessoryType = .disclosureIndicator
             dateItem.onSelection = { item in
-                item.deselect(in: self.vc.tableViewManager, animated: true)
+                item.deselect(animated: true)
                 self.vc.showDatePickerControl()
             }
             selectionItem.accessoryType = .disclosureIndicator
             selectionItem.onSelection = { item in
-                item.deselect(in: self.vc.tableViewManager, animated: true)
+                item.deselect(animated: true)
                 self.vc.showPickerControl()
             }
             states[State.preParty] = [item, dateItem, selectionItem, textFieldItem, textFieldItem2]
@@ -82,7 +82,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
                 } else {
                     let item = CustomItem(title: "Label  \(index)")
                     item.onSelection = { item in
-                        item.deselect(in: self.vc.tableViewManager, animated: true)
+                        item.deselect(animated: true)
                     }
                     return item
                 }
@@ -117,7 +117,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
                     default:
                         self.transition(to: .all)
                     }
-                    item.deselect(in: self.vc.tableViewManager, animated: true)
+                    item.deselect(animated: true)
                 }
                 return item
             }

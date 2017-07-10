@@ -44,10 +44,10 @@ open class Validation<Input> {
     public init<R: Validatable>(forInput: @escaping () -> Input, withIdentifier identifier: Any? = nil, rule: R) where R.Input == Input {
         self.forInput = forInput
         self.identifier = identifier
-        self.rules.append(AnyValidatable.init(base: rule))
+        self.rules.append(AnyValidatable(base: rule))
     }
 
     open func add<R: Validatable>(rule: R) where R.Input == Input {
-        self.rules.append(AnyValidatable.init(base: rule))
+        self.rules.append(AnyValidatable(base: rule))
     }
 }

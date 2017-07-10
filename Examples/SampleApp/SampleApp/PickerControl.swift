@@ -145,9 +145,9 @@ open class PickerControl: NSObject {
                     }
                 }
 
-                if components.count != 0 {
+                if components.isEmpty {
                     self.components.append(components)
-                    self.selections = Array.init(repeating: nil, count: self.components.count)
+                    self.selections = Array(repeating: nil, count: self.components.count)
                 }
             } else {
                 let item = PickerItem(title: String(describing: value), value: value)
@@ -323,7 +323,7 @@ open class PickerControl: NSObject {
 
         if type == .single {
 
-            if items.count == 0 {
+            if items.isEmpty {
                 return
             }
 
@@ -332,7 +332,7 @@ open class PickerControl: NSObject {
             selection = item
         } else if type == .multiColumn {
 
-            if components.count == 0 {
+            if components.isEmpty {
                 return
             }
 

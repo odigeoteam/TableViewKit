@@ -9,6 +9,7 @@ class TestReloadDrawer: CellDrawer {
     static internal var type = CellType.class(UITableViewCell.self)
 
     static internal func draw(_ cell: UITableViewCell, with item: Any) {
+        // swiftlint:disable:next force_cast
         cell.textLabel?.text = (item as! TestReloadItem).title
     }
 }
@@ -26,14 +27,14 @@ class EqualableItem: TestReloadItem, Equatable {
         self.title = title
     }
 
-    public static func ==(lhs: EqualableItem, rhs: EqualableItem) -> Bool {
+    public static func == (lhs: EqualableItem, rhs: EqualableItem) -> Bool {
         return lhs.title == rhs.title
     }
 }
 
 class EquatableSection: NoHeaderFooterSection, Equatable {
 
-    public static func ==(lhs: EquatableSection, rhs: EquatableSection) -> Bool {
+    public static func == (lhs: EquatableSection, rhs: EquatableSection) -> Bool {
         return lhs === rhs
     }
 }
@@ -67,36 +68,39 @@ class TestRegisterHeaderFooterView: UITableViewHeaderFooterView { }
 
 class TableViewKitTests: XCTestCase {
 
+    var manager: TableViewManager!
+
     override func setUp() {
         super.setUp()
     }
 
     override func tearDown() {
         super.tearDown()
+        manager = nil
     }
 
     func testAddSection() {
-        let tableViewManager = TableViewManager(tableView: UITableView())
+        manager = TableViewManager(tableView: UITableView())
 
         let section = HeaderFooterTitleSection()
-        tableViewManager.sections.append(section)
+        manager.sections.append(section)
 
-        expect(tableViewManager.sections.count).to(equal(1))
+        expect(self.manager.sections.count) == 1
     }
 
     func testAddItem() {
 
-        let tableViewManager = TableViewManager(tableView: UITableView())
+        manager = TableViewManager(tableView: UITableView())
 
         let item: Item = TestItem()
 
         let section = HeaderFooterTitleSection()
         section.items.append(item)
 
-        tableViewManager.sections.insert(section, at: 0)
+        manager.sections.insert(section, at: 0)
 
-        expect(section.items.count).to(equal(1))
-        expect(item.section(in: tableViewManager)).notTo(beNil())
+        expect(section.items.count) == 1
+        expect(item.section).notTo(beNil())
 
         section.items.remove(at: 0)
         section.items.append(item)
@@ -142,22 +146,22 @@ class TableViewKitTests: XCTestCase {
     }
 
     func testRetainCycle() {
-        let tableViewManager = TableViewManager(tableView: UITableView())
-        tableViewManager.sections.insert(HeaderFooterTitleSection(items: [TestItem()]), at: 0)
+        manager = TableViewManager(tableView: UITableView())
+        manager.sections.insert(HeaderFooterTitleSection(items: [TestItem()]), at: 0)
 
-        weak var section: Section? = tableViewManager.sections.first
+        weak var section: Section? = manager.sections.first
         weak var item: Item? = section!.items.first
         expect(section).toNot(beNil())
         expect(item).toNot(beNil())
-        tableViewManager.sections.replace(with: [HeaderFooterTitleSection()])
+        manager.sections.replace(with: [HeaderFooterTitleSection()])
         expect(section).to(beNil())
         expect(item).to(beNil())
     }
 
     func testConvenienceInit() {
-        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
+        manager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
 
-        expect(tableViewManager.sections.count).to(equal(1))
+        expect(self.manager.sections.count) == 1
     }
 
     func testUpdateRow() {
@@ -166,19 +170,20 @@ class TableViewKitTests: XCTestCase {
         item.title = "Before"
 
         let section = HeaderFooterTitleSection(items: [item])
-        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [section])
+        manager = TableViewManager(tableView: UITableView(), sections: [section])
 
-        guard let indexPath = item.indexPath(in: tableViewManager) else { return }
-        var cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
+        guard let indexPath = item.indexPath else { return }
+		let dataSource = manager.dataSource!
+        var cell = dataSource.tableView(manager.tableView, cellForRowAt: indexPath)
 
-        expect(cell.textLabel?.text).to(equal(item.title))
+        expect(cell.textLabel?.text) == item.title
 
         item.title = "After"
-        item.reload(in: tableViewManager)
+        item.reload()
 
-        cell = tableViewManager.tableView(tableViewManager.tableView, cellForRowAt: indexPath)
+        cell = dataSource.tableView(manager.tableView, cellForRowAt: indexPath)
 
-        expect(cell.textLabel?.text).to(equal(item.title))
+        expect(cell.textLabel?.text) == item.title
     }
 
     func testMoveRows() {
@@ -189,18 +194,18 @@ class TableViewKitTests: XCTestCase {
         let item2 = TestItem()
 
         let section = NoHeaderFooterSection(items: [item1, item2])
-        let tableViewManager = TableViewManager(tableView: tableView, sections: [section])
+        manager = TableViewManager(tableView: tableView, sections: [section])
 
-        var indexPathItem1 = item1.indexPath(in: tableViewManager)
-        var indexPathItem2 = item2.indexPath(in: tableViewManager)
+        var indexPathItem1 = item1.indexPath
+        var indexPathItem2 = item2.indexPath
 
         XCTAssertNotNil(indexPathItem1)
         XCTAssertNotNil(indexPathItem2)
 
         section.items.replace(with: [item2, item1])
 
-        indexPathItem1 = item1.indexPath(in: tableViewManager)
-        indexPathItem2 = item2.indexPath(in: tableViewManager)
+        indexPathItem1 = item1.indexPath
+        indexPathItem2 = item2.indexPath
 
         XCTAssert(indexPathItem2?.item == 0)
         XCTAssert(indexPathItem1?.item == 1)
@@ -213,30 +218,31 @@ class TableViewKitTests: XCTestCase {
         let section1 = NoHeaderFooterSection()
         let section2 = NoHeaderFooterSection()
 
-        let tableViewManager = TableViewManager(tableView: tableView, sections: [section1, section2])
+        manager = TableViewManager(tableView: tableView, sections: [section1, section2])
 
-        XCTAssert(section1.index(in: tableViewManager) == 0)
-        XCTAssert(section2.index(in: tableViewManager) == 1)
+        XCTAssert(section1.index == 0)
+        XCTAssert(section2.index == 1)
 
-        tableViewManager.sections.replace(with: [section2, section1])
+        manager.sections.replace(with: [section2, section1])
 
-        XCTAssert(section1.index(in: tableViewManager) == 1)
-        XCTAssert(section2.index(in: tableViewManager) == 0)
+        XCTAssert(section1.index == 1)
+        XCTAssert(section2.index == 0)
     }
 
     func testNoCrashOnNonAddedItem() {
-        let tableViewManager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
+        manager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
 
         let item: Item = TestReloadItem()
-        item.reload(in: tableViewManager, with: .automatic)
+        item.reload(with: .automatic)
 
-        let section = item.section(in: tableViewManager)
+        let section = item.section
         expect(section).to(beNil())
     }
 
     func testRegisterNibCells() {
 
         let testBundle = Bundle(for: TableViewKitTests.self)
+        // swiftlint:disable:next line_length
         let cellType = CellType<UITableViewCell>.nib(UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle), TestRegisterNibCell.self)
 
         let tableView = UITableView()
@@ -244,30 +250,34 @@ class TableViewKitTests: XCTestCase {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: cellType.reusableIdentifier)
 
-        expect(cell).toNot(equal(nil))
+        expect(cell).toNot(beNil())
     }
 
     func testRegisterNibHeaderFooter() {
 
         let testBundle = Bundle(for: TableViewKitTests.self)
-        let headerFooterType = HeaderFooterType<UITableViewHeaderFooterView>.nib(UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle), TestRegisterHeaderFooterView.self)
+        let nib = UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle)
+        let headerFooterType = HeaderFooterType<UITableViewHeaderFooterView>.nib(nib, TestRegisterHeaderFooterView.self)
 
         let tableView = UITableView()
         tableView.register(headerFooterType)
 
+        // swiftlint:disable:next line_length
         let headerFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerFooterType.reusableIdentifier)
-        expect(headerFooterView).toNot(equal(nil))
+        expect(headerFooterView).toNot(beNil())
     }
 
 	func testNibClassTypeCells() {
 		let testBundle = Bundle(for: TableViewKitTests.self)
-		let type = CellType<TestRegisterNibCell>.nib(UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle), TestRegisterNibCell.self)
+        let nib = UINib(nibName: String(describing: TestRegisterNibCell.self), bundle: testBundle)
+		let type = CellType<TestRegisterNibCell>.nib(nib, TestRegisterNibCell.self)
 		_ = type.cellType
 	}
 
 	func testNibClassTypeHeaderFooter() {
 		let testBundle = Bundle(for: TableViewKitTests.self)
-		let type = HeaderFooterType<TestRegisterHeaderFooterView>.nib(UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle), TestRegisterHeaderFooterView.self)
+        let nib = UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: testBundle)
+		let type = HeaderFooterType<TestRegisterHeaderFooterView>.nib(nib, TestRegisterHeaderFooterView.self)
 		_ = type.headerFooterType
 	}
 
@@ -289,5 +299,33 @@ class TableViewKitTests: XCTestCase {
 
         let registerItem = section.items.first as? TestReloadItem
         XCTAssert(registerItem?.title == "Register")
+    }
+
+    func testManagerProperty() {
+        let tableView = UITableView()
+
+        let item1 = TestItem()
+        XCTAssertNil(item1.manager)
+        let section = NoHeaderFooterSection(items: [item1])
+        XCTAssertNil(section.manager)
+
+        manager = TableViewManager(tableView: tableView, sections: [section])
+        XCTAssert(item1.manager === manager)
+        XCTAssert(section.manager === manager)
+
+        let section2 = NoHeaderFooterSection(items: [item1])
+        manager.sections.append(section2)
+        XCTAssert(section2.manager === manager)
+
+        let item2 = TestItem()
+        section.items.append(item2)
+        XCTAssert(item2.manager === manager)
+
+        let removedSection = manager.sections.removeFirst()
+
+        XCTAssert(removedSection === section)
+        XCTAssertNil(removedSection.manager)
+        XCTAssertNil(removedSection.items[0].manager)
+
     }
 }
