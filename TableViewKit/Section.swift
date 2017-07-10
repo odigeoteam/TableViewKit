@@ -14,7 +14,7 @@ public protocol Section: class, AnyEquatable {
     /// The `footer` of the section, none if not defined
     var footer: HeaderFooterView { get }
 
-    func index(in manager: TableViewManager) -> Int?
+    var index: Int? { get }
 }
 
 public extension Section where Self: Equatable {
@@ -62,13 +62,11 @@ extension Section {
         return false
     }
 
-    /// Returns the `index` of the `section` in the specified `manager`
-    ///
-    /// - parameter manager: A `manager` where the `section` may have been added
+    /// Returns the `index` of the `section`
     ///
     /// - returns: The `index` of the `section` or `nil` if not present
-    public func index(in manager: TableViewManager) -> Int? {
-        return manager.sections.index(of: self)
+    public var index: Int? {
+        return manager?.sections.index(of: self)
     }
 
     /// Register the section in the specified manager
@@ -110,7 +108,7 @@ extension Section {
 
     private func onItemsUpdate(withChanges changes: ArrayChanges<Item>, in manager: TableViewManager) {
 
-        guard let sectionIndex = index(in: manager) else { return }
+        guard let sectionIndex = index else { return }
         let tableView = manager.tableView
 
         if case .inserts(_, let items) = changes {

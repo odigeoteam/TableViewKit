@@ -58,8 +58,6 @@ class MoreAboutItem: Item, Selectable, Editable {
             presenter?.showRateApp()
         }
 
-        if let manager = manager {
-            deselect(in: manager, animated: true)
-        }
+        deselect(animated: true)
     }
 }

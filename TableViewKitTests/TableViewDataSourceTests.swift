@@ -95,7 +95,7 @@ class TableViewDataSourceTests: XCTestCase {
         let otherItem = DifferentItem()
         section.items.append(otherItem)
 
-        let indexPath = otherItem.indexPath(in: tableViewManager)!
+        let indexPath = otherItem.indexPath!
         let drawer = type(of: otherItem).drawer
         let cell = drawer.cell(in: tableViewManager, with: otherItem as Item, for: indexPath)
 

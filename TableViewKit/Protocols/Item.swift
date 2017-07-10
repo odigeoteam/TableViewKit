@@ -52,41 +52,37 @@ extension Item {
         return .dynamic(44.0)
     }
 
-    /// Returns the `section` of the `item` in the specified `manager`
-    ///
-    /// - parameter manager: A `manager` where the `item` may have been added
+    /// Returns the `section` of the `item`
     ///
     /// - returns: The `section` of the `item` or `nil` if not present
-    public func section(in manager: TableViewManager) -> Section? {
-        guard let indexPath = self.indexPath(in: manager) else { return nil }
-        return manager.sections[indexPath.section]
+    public var section: Section? {
+        guard let indexPath = indexPath else { return nil }
+        return manager?.sections[indexPath.section]
     }
 
-    /// Returns the `indexPath` of the `item` in the specified `manager`
-    ///
-    /// - parameter manager: A `manager` where the `item` may have been added
+    /// Returns the `indexPath` of the `item`
     ///
     /// - returns: The `indexPath` of the `item` or `nil` if not present
-    public func indexPath(in manager: TableViewManager) -> IndexPath? {
+    public var indexPath: IndexPath? {
+        guard let manager = manager else { return nil }
         for section in manager.sections {
             guard
-                let sectionIndex = section.index(in: manager),
+                let sectionIndex = section.index,
                 let rowIndex = section.items.index(of: self) else { continue }
             return IndexPath(row: rowIndex, section: sectionIndex)
         }
         return nil
     }
 
-    /// Reload the `item` in the specified `manager` with an `animation`
+    /// Reload the `item` with an `animation`
     ///
-    /// - parameter manager: A `manager` where the `item` may have been added
     /// - parameter animation: A constant that indicates how the reloading is to be animated
     ///
     /// - returns: The `section` of the `item` or `nil` if not present
-    public func reload(in manager: TableViewManager, with animation: UITableViewRowAnimation = .automatic) {
-        guard let indexPath = self.indexPath(in: manager) else { return }
-        let section = manager.sections[indexPath.section]
-        section.items.callback?(.updates([indexPath.row]))
+    public func reload(with animation: UITableViewRowAnimation = .automatic) {
+        guard let indexPath = indexPath else { return }
+        let section = manager?.sections[indexPath.section]
+        section?.items.callback?(.updates([indexPath.row]))
     }
 
 }
