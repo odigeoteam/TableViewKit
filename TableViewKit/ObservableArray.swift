@@ -8,32 +8,20 @@ enum ArrayChanges<Element> {
     case beginUpdates
     case endUpdates
 }
+
 /// An observable array. It will notify any kind of changes.
-public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, MutableCollection, RangeReplaceableCollection {
+public class ObservableArray<T>: MutableCollection, RandomAccessCollection, RangeReplaceableCollection,
+    ExpressibleByArrayLiteral {
 
     /// The type of the elements of an array literal.
     public typealias Element = T
 
-    private var diff: Diff<T>!
-
-    private var array: [T] {
-        willSet {
-            diff = Array.diff(between: array, and: newValue, where: compare)
-        }
-        didSet {
-            callback?(.beginUpdates)
-            if !diff.moves.isEmpty { callback?(.moves(diff.moves)) }
-            if !diff.deletes.isEmpty { callback?(.deletes(diff.deletes, diff.deletesElement)) }
-            if !diff.inserts.isEmpty { callback?(.inserts(diff.inserts, diff.insertsElement)) }
-            callback?(.endUpdates)
-            diff = nil
-        }
-    }
+    var array: [T]
 
     var callback: ((ArrayChanges<T>) -> Void)?
 
     /// Creates an empty `ObservableArray`
-    public init() {
+    public required init() {
         self.array = []
     }
 
@@ -47,7 +35,7 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
     /// Creates an instance initialized with the given elements.
     ///
     /// - parameter elements: An array of elements
-    public init(arrayLiteral elements: Element...) {
+    public required init(arrayLiteral elements: Element...) {
         self.array = elements
     }
 
@@ -97,20 +85,57 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
         }
     }
 
+    /// Replace its content with a new array
+    ///
+    /// - parameter array: The new array
+    public func replace(with array: [T], shouldPerformDiff: Bool = true) {
+        guard shouldPerformDiff else {
+            self.array = array
+            return
+        }
+
+        let diff = Array.diff(between: self.array,
+                              and: array,
+                              subrange: 0..<self.array.count,
+                              where: compare)
+        self.array = array
+        notifyChanges(with: diff)
+    }
+
     /// Replaces the specified subrange of elements with the given collection.
     ///
     /// - parameter subrange: The subrange that must be replaced
     /// - parameter newElements: The new elements that must be replaced
     // swiftlint:disable:next line_length
-    public mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, C.Iterator.Element == T {
-        array.replaceSubrange(subrange, with: newElements)
+    public func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, C.Iterator.Element == T {
+        let temp = Array(newElements)
+        let diff = Array.diff(between: self.array,
+                              and: temp,
+                              subrange: subrange,
+                              where: compare)
+        self.array.replaceSubrange(subrange, with: newElements)
+        notifyChanges(with: diff)
     }
 
-    /// Replace its content with a new array
-    ///
-    /// - parameter array: The new array
-    public mutating func replace(with array: [T]) {
-        self.array = array
+    public func insert(contentsOf newElements: [T], at index: Int) {
+        array.insert(contentsOf: newElements, at: index)
+
+        let diff = Diff(inserts: Array(index..<index + newElements.count), insertsElement: newElements)
+        notifyChanges(with: diff)
+
+    }
+
+    /// Append `newElement` to the array.
+    public func append(contentsOf newElements: [T]) {
+        insert(contentsOf: newElements, at: array.count)
+    }
+
+    /// Remove all elements from the array.
+    public func removeAll() {
+        let temp = array
+        array.removeAll()
+        let diff = Diff(deletes: Array(0..<temp.count), deletesElement: temp)
+        notifyChanges(with: diff)
     }
 
     private func compare(lhs: T, rhs: T) -> Bool {
@@ -118,6 +143,14 @@ public struct ObservableArray<T>: ExpressibleByArrayLiteral, Collection, Mutable
             return lhs.equals(rhs)
         }
         return false
+    }
+
+    private func notifyChanges(with diff: Diff<T>) {
+        callback?(.beginUpdates)
+        if !diff.moves.isEmpty { callback?(.moves(diff.moves)) }
+        if !diff.deletes.isEmpty { callback?(.deletes(diff.deletes, diff.deletesElement)) }
+        if !diff.inserts.isEmpty { callback?(.inserts(diff.inserts, diff.insertsElement)) }
+        callback?(.endUpdates)
     }
 
 }
