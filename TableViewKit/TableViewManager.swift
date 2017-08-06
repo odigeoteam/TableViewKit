@@ -39,10 +39,10 @@ open class TableViewManager {
 
     private func setupSections() {
         sections.forEach { $0.register(in: self) }
-        sections.callback = { [weak self] in self?.onSectionsUpdate(withChanges: $0) }
+        sections.callback = { [weak self] in self?.onSectionsUpdate(with: $0) }
     }
 
-    private func onSectionsUpdate(withChanges changes: ArrayChanges<Section>) {
+    func onSectionsUpdate(with changes: ArrayChanges<Section>) {
         switch changes {
         case .inserts(let indexes, let insertedSections):
             insertedSections.forEach { $0.register(in: self) }
@@ -66,6 +66,31 @@ open class TableViewManager {
             if animation == .none {
                 UIView.setAnimationsEnabled(true)
             }
+        }
+    }
+
+    func onItemsUpdate(with changes: ArrayChanges<Item>, forSectionIndex sectionIndex: Int) {
+        sections[sectionIndex].items.forEach { $0.manager = self }
+
+        switch changes {
+        case .inserts(let array, let insertedItems):
+            insertedItems.forEach { register(type(of: $0).drawer.type) }
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            tableView.insertRows(at: indexPaths, with: animation)
+        case .deletes(let array, _):
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            tableView.deleteRows(at: indexPaths, with: animation)
+        case .updates(let array):
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            tableView.reloadRows(at: indexPaths, with: animation)
+        case .moves(let array):
+            let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
+            let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
+            tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
+        case .beginUpdates:
+            tableView.beginUpdates()
+        case .endUpdates:
+            tableView.endUpdates()
         }
     }
 

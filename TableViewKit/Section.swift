@@ -99,45 +99,13 @@ extension Section {
     private func setup(in manager: TableViewManager) {
         self.manager = manager
 
-        items.callback = { [weak self] change in
-            if let weakSelf = self, let manager = weakSelf.manager {
-                weakSelf.onItemsUpdate(withChanges: change, in: manager)
+        items.callback = { [weak self] changes in
+            if let manager = self?.manager, let sectionIndex = self?.index {
+                manager.onItemsUpdate(with: changes, forSectionIndex: sectionIndex)
             }
         }
     }
 
-    private func onItemsUpdate(withChanges changes: ArrayChanges<Item>, in manager: TableViewManager) {
-
-        guard let sectionIndex = index else { return }
-        let tableView = manager.tableView
-
-        if case .inserts(_, let items) = changes {
-            items.forEach { item in
-                item.manager = manager
-                manager.register(type(of: item).drawer.type)
-            }
-        }
-
-        switch changes {
-        case .inserts(let array, _):
-            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-            tableView.insertRows(at: indexPaths, with: manager.animation)
-        case .deletes(let array, _):
-            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-            tableView.deleteRows(at: indexPaths, with: manager.animation)
-        case .updates(let array):
-            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-            tableView.reloadRows(at: indexPaths, with: manager.animation)
-        case .moves(let array):
-            let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
-            let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
-            tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
-        case .beginUpdates:
-            tableView.beginUpdates()
-        case .endUpdates:
-            tableView.endUpdates()
-        }
-    }
 }
 
 public extension Collection where Self.Iterator.Element == Section {
