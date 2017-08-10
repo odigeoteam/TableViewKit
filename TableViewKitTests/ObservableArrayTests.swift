@@ -40,17 +40,17 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.removeFirst()
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .deletes([0], [0]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
 
         reset()
         numbers.removeFirst(3)
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .deletes([0, 1, 2], [0, 1, 2]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -58,17 +58,17 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.removeLast()
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .deletes([9], [9]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
 
         reset()
         numbers.removeLast(3)
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .deletes([7, 8, 9], [7, 8, 9]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -76,9 +76,9 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.remove(at: 5)
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .deletes([5], [5]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -86,9 +86,9 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.removeSubrange(1..<5)
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .deletes([1, 2, 3, 4], [1, 2, 3, 4]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -96,10 +96,10 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.removeAll()
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .deletes([0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                                  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -107,9 +107,9 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.append(10)
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .inserts([10], [10]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -117,9 +117,9 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.append(contentsOf: [10, 11])
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .inserts([10, 11], [10, 11]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -127,17 +127,17 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.insert(-1, at: 0)
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .inserts([0], [-1]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
 
         reset()
         numbers.insert(-1, at: 5)
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .inserts([5], [-1]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -145,17 +145,17 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.insert(contentsOf: [-1, -2], at: 0)
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .inserts([0, 1], [-1, -2]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
 
         reset()
         numbers.insert(contentsOf: [-1, -2], at: 5)
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .inserts([5, 6], [-1, -2]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -163,9 +163,9 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.replace(with: [0, 1, 2, 4, 5, 6, 7, 3, 8, 9])
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .moves([(3, 7)]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 
@@ -173,11 +173,11 @@ class ObservableArrayTests: XCTestCase {
         reset()
         numbers.replace(with: [11, 0, 7, 2, 1, 3, 12, 13, 4, 6, 14, 8, 9])
         expectedResults = [
-            .beginUpdates,
+            .beginUpdates(from: [], to: []),
             .moves([(1, 4), (7, 2)]),
             .deletes([5], [5]),
             .inserts([10, 7, 6, 0], [14, 13, 12, 11]),
-            .endUpdates]
+            .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
 }

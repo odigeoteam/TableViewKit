@@ -56,7 +56,9 @@ open class TableViewManager {
             let fromIndex = indexes.map { $0.0 }
             let toIndex = indexes.map { $0.1 }
             tableView.moveSections(from: fromIndex, to: toIndex)
-        case .beginUpdates:
+        case .beginUpdates(let from, let to):
+            from.forEach { $0.manager = nil }
+            to.forEach { $0.manager = self }
             if animation == .none {
                 UIView.setAnimationsEnabled(false)
             }
@@ -70,7 +72,6 @@ open class TableViewManager {
     }
 
     func onItemsUpdate(with changes: ArrayChanges<Item>, forSectionIndex sectionIndex: Int) {
-        sections[sectionIndex].items.forEach { $0.manager = self }
 
         switch changes {
         case .inserts(let array, let insertedItems):
@@ -87,7 +88,9 @@ open class TableViewManager {
             let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
             let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
             tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
-        case .beginUpdates:
+        case .beginUpdates(let from, let to):
+            from.forEach { $0.manager = nil }
+            to.forEach { $0.manager = self }
             tableView.beginUpdates()
         case .endUpdates:
             tableView.endUpdates()

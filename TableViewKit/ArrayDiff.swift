@@ -7,18 +7,23 @@ struct Diff<Element> {
 
     var insertsElement: [Element]
     var deletesElement: [Element]
+    var fromElements: [Element]
+    var toElements: [Element]
 
     var isEmpty: Bool {
         return (inserts.count + deletes.count + moves.count) == 0
     }
 
     init(inserts: [Int] = [], deletes: [Int] = [], moves: [(Int, Int)] = [],
-         insertsElement: [Element] = [], deletesElement: [Element] = []) {
+         insertsElement: [Element] = [], deletesElement: [Element] = [],
+         fromElements: [Element] = [], toElements: [Element] = []) {
         self.inserts = inserts
         self.deletes = deletes
         self.moves = moves
         self.insertsElement = insertsElement
         self.deletesElement = deletesElement
+        self.fromElements = fromElements
+        self.toElements = toElements
     }
 }
 
@@ -156,7 +161,9 @@ extension Array {
                         deletes: deletes,
                         moves: moves,
                         insertsElement: inserts.flatMap { y[$0 - lowerBond] },
-                        deletesElement: deletes.flatMap { x[$0] })
+                        deletesElement: deletes.flatMap { x[$0] },
+                        fromElements: x,
+                        toElements: y)
 
         return diff
     }

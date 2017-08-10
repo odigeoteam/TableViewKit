@@ -5,8 +5,8 @@ enum ArrayChanges<Element> {
     case deletes([Int], [Element])
     case updates([Int])
     case moves([(Int, Int)])
-    case beginUpdates
-    case endUpdates
+    case beginUpdates(from: [Element], to: [Element])
+    case endUpdates(from: [Element], to: [Element])
 }
 
 /// An observable array. It will notify any kind of changes.
@@ -109,11 +109,12 @@ public class ObservableArray<T>: MutableCollection, RandomAccessCollection, Rang
     // swiftlint:disable:next line_length
     public func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, C.Iterator.Element == T {
         let temp = Array(newElements)
-        let diff = Array.diff(between: self.array,
+        var diff = Array.diff(between: self.array,
                               and: temp,
                               subrange: subrange,
                               where: compare)
         self.array.replaceSubrange(subrange, with: newElements)
+        diff.toElements = self.array
         notifyChanges(with: diff)
     }
 
@@ -146,11 +147,11 @@ public class ObservableArray<T>: MutableCollection, RandomAccessCollection, Rang
     }
 
     private func notifyChanges(with diff: Diff<T>) {
-        callback?(.beginUpdates)
+        callback?(.beginUpdates(from: diff.fromElements, to: diff.toElements))
         if !diff.moves.isEmpty { callback?(.moves(diff.moves)) }
         if !diff.deletes.isEmpty { callback?(.deletes(diff.deletes, diff.deletesElement)) }
         if !diff.inserts.isEmpty { callback?(.inserts(diff.inserts, diff.insertsElement)) }
-        callback?(.endUpdates)
+        callback?(.endUpdates(from: diff.fromElements, to: diff.toElements))
     }
 
 }
