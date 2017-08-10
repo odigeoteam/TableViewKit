@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ---
 
 ## [Unreleased]
+
+## [1.1.0]
 ### Added
 - Support `TableViewManager` as `manager` property of `Item` and `Section`
 - Support `UIScrollViewDelegate` from `TableViewManager` via `scrollDelegate`
