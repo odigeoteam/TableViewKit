@@ -10,8 +10,7 @@ enum ArrayChanges<Element> {
 }
 
 /// An observable array. It will notify any kind of changes.
-public class ObservableArray<T>: MutableCollection, RandomAccessCollection, RangeReplaceableCollection,
-    ExpressibleByArrayLiteral {
+public class ObservableArray<T>: RandomAccessCollection, ExpressibleByArrayLiteral {
 
     /// The type of the elements of an array literal.
     public typealias Element = T
@@ -118,25 +117,63 @@ public class ObservableArray<T>: MutableCollection, RandomAccessCollection, Rang
         notifyChanges(with: diff)
     }
 
-    public func insert(contentsOf newElements: [T], at index: Int) {
-        array.insert(contentsOf: newElements, at: index)
-
-        let diff = Diff(inserts: Array(index..<index + newElements.count), insertsElement: newElements)
-        notifyChanges(with: diff)
-
-    }
-
     /// Append `newElement` to the array.
     public func append(contentsOf newElements: [T]) {
         insert(contentsOf: newElements, at: array.count)
     }
 
+    /// Append `newElement` to the array.
+    public func append(_ newElement: T) {
+        replaceSubrange(array.count..<array.count, with: [newElement])
+    }
+
+    /// Insert `newElement` at index `i`.
+    public func insert(_ newElement: T, at index: Int) {
+        replaceSubrange(index..<index, with: [newElement])
+    }
+
+    /// Insert elements `newElements` at index `i`.
+    public func insert(contentsOf newElements: [T], at index: Int) {
+        replaceSubrange(index..<index, with: newElements)
+    }
+
+    /// Remove and return the element at index i.
+    @discardableResult
+    public func remove(at index: Int) -> T {
+        let element = array[index]
+        replaceSubrange(index..<index + 1, with: [])
+        return element
+    }
+
+    /// Removes the specified number of elements from the beginning of the collection.
+    public func removeFirst(_ n: Int) {
+        replaceSubrange(0..<n, with: [])
+    }
+
+    /// Remove an element from the end of the array in O(1).
+    @discardableResult
+    public func removeFirst() -> T {
+        let element = array[0]
+        replaceSubrange(0..<1, with: [])
+        return element
+    }
+
+    /// Removes the specified number of elements from the end of the collection.
+    public func removeLast(_ n: Int) {
+        replaceSubrange((array.count - n)..<array.count, with: [])
+    }
+
+    /// Remove an element from the end of the array in O(1).
+    @discardableResult
+    public func removeLast() -> T {
+        let element = array[array.count - 1]
+        replaceSubrange(array.count - 1..<array.count, with: [])
+        return element
+    }
+
     /// Remove all elements from the array.
     public func removeAll() {
-        let temp = array
-        array.removeAll()
-        let diff = Diff(deletes: Array(0..<temp.count), deletesElement: temp)
-        notifyChanges(with: diff)
+        replaceSubrange(0..<array.count, with: [])
     }
 
     private func compare(lhs: T, rhs: T) -> Bool {

@@ -82,16 +82,6 @@ class ObservableArrayTests: XCTestCase {
         expect(self.results) == expectedResults
     }
 
-    func testRemoveSubrage() {
-        reset()
-        numbers.removeSubrange(1..<5)
-        expectedResults = [
-            .beginUpdates(from: [], to: []),
-            .deletes([1, 2, 3, 4], [1, 2, 3, 4]),
-            .endUpdates(from: [], to: [])]
-        expect(self.results) == expectedResults
-    }
-
     func testRemoveAll() {
         reset()
         numbers.removeAll()
@@ -118,7 +108,7 @@ class ObservableArrayTests: XCTestCase {
         numbers.append(contentsOf: [10, 11])
         expectedResults = [
             .beginUpdates(from: [], to: []),
-            .inserts([10, 11], [10, 11]),
+            .inserts([11, 10], [11, 10]),
             .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
@@ -146,7 +136,7 @@ class ObservableArrayTests: XCTestCase {
         numbers.insert(contentsOf: [-1, -2], at: 0)
         expectedResults = [
             .beginUpdates(from: [], to: []),
-            .inserts([0, 1], [-1, -2]),
+            .inserts([1, 0], [-2, -1]),
             .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
 
@@ -154,7 +144,7 @@ class ObservableArrayTests: XCTestCase {
         numbers.insert(contentsOf: [-1, -2], at: 5)
         expectedResults = [
             .beginUpdates(from: [], to: []),
-            .inserts([5, 6], [-1, -2]),
+            .inserts([6, 5], [-2, -1]),
             .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
