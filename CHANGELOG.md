@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 ---
 
 ## [Unreleased]
+### Changed
+- Optimize diff algorithm used by `ObservableArray` for common methods such as `insert(at:)`, `remove(at:)` etc...
+- Fix a bug where `manager` was not set correctly on `Item` or `Section`
+- Fix memory ownership of `ObservableArray` for Swift 4
 
 ## [1.1.0]
 ### Added

@@ -321,11 +321,22 @@ class TableViewKitTests: XCTestCase {
         section.items.append(item2)
         XCTAssert(item2.manager === manager)
 
-        let removedSection = manager.sections.removeFirst()
+        let removedSection = manager.sections.removeLast()
 
-        XCTAssert(removedSection === section)
+        XCTAssert(removedSection === section2)
         XCTAssertNil(removedSection.manager)
         XCTAssertNil(removedSection.items[0].manager)
+
+        manager.sections.append(removedSection)
+
+        XCTAssertNotNil(removedSection.manager)
+        XCTAssertNotNil(removedSection.items[0].manager)
+
+        let removedFirstSection = manager.sections.removeFirst()
+
+        XCTAssert(removedFirstSection === section)
+        XCTAssertNil(removedFirstSection.manager)
+        XCTAssertNil(removedFirstSection.items[0].manager)
 
     }
 }

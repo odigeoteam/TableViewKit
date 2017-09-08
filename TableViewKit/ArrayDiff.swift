@@ -7,20 +7,25 @@ struct Diff<Element> {
 
     var insertsElement: [Element]
     var deletesElement: [Element]
+    var fromElements: [Element]
+    var toElements: [Element]
 
     var isEmpty: Bool {
         return (inserts.count + deletes.count + moves.count) == 0
     }
 
     init(inserts: [Int] = [], deletes: [Int] = [], moves: [(Int, Int)] = [],
-         insertsElement: [Element] = [], deletesElement: [Element] = []) {
+         insertsElement: [Element] = [], deletesElement: [Element] = [],
+         fromElements: [Element] = [], toElements: [Element] = []) {
         self.inserts = inserts
         self.deletes = deletes
         self.moves = moves
         self.insertsElement = insertsElement
         self.deletesElement = deletesElement
+        self.fromElements = fromElements
+        self.toElements = toElements
     }
-    }
+}
 
 enum ArrayIndexesChanges {
     case inserts(Int)
@@ -105,10 +110,17 @@ extension Array {
 
     typealias Predicate = (Element, Element) -> Bool
 
-    static func diff(between x: [Element], and y: [Element], where predicate: Predicate) -> Diff<Element> {
+    static func diff(between x: [Element], and y: [Element],
+                     subrange: Range<Index>? = nil,
+                     where predicate: Predicate) -> Diff<Element> {
+        let subarray: [Element] = {
+            guard let subrange = subrange else { return x }
+            return Array(x[subrange.lowerBound..<subrange.upperBound])
+        }()
+        let lowerBond: Int = subrange?.lowerBound ?? 0
 
-        var matrix = Matrix(rows: x.count + 1, columns: y.count + 1, repeatedValue: 0)
-        for (i, xElem) in x.enumerated() {
+        var matrix = Matrix(rows: subarray.count + 1, columns: y.count + 1, repeatedValue: 0)
+        for (i, xElem) in subarray.enumerated() {
             for (j, yElem) in y.enumerated() {
                 if predicate(xElem, yElem) {
                     matrix[i + 1, j + 1] = matrix[i, j] + 1
@@ -121,12 +133,12 @@ extension Array {
         let changes = [ArrayIndexesChanges](DiffSequence(matrix: matrix))
         var inserts: [Int] = changes.flatMap { change -> Int? in
             guard case .inserts(let index) = change else { return nil }
-            return index
+            return index + lowerBond
         }.sorted { $0 > $1 }
 
         var deletes: [Int] = changes.flatMap { change -> Int? in
             guard case .deletes(let index) = change else { return nil }
-            return index
+            return index + lowerBond
         }.sorted { $0 < $1 }
 
         var moves: [(Int, Int)] = []
@@ -148,8 +160,10 @@ extension Array {
         let diff = Diff(inserts: inserts,
                         deletes: deletes,
                         moves: moves,
-                        insertsElement: inserts.flatMap { y[$0] },
-                        deletesElement: deletes.flatMap { x[$0] })
+                        insertsElement: inserts.flatMap { y[$0 - lowerBond] },
+                        deletesElement: deletes.flatMap { x[$0] },
+                        fromElements: x,
+                        toElements: y)
 
         return diff
     }
