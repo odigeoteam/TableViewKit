@@ -62,6 +62,27 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
         return item.actions
     }
 
+    /// Implementation of UITableViewDelegate
+    open func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        return manager.item(at: indexPath) is ActionPerformable
+    }
+
+    /// Implementation of UITableViewDelegate
+    // swiftlint:disable:next line_length
+    open func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        guard let item = manager.item(at: indexPath) as? ActionPerformable,
+            let action = ItemAction(action: action) else { return false }
+        return item.canPerformAction(action)
+    }
+
+    /// Implementation of UITableViewDelegate
+    // swiftlint:disable:next line_length
+    open func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
+        guard let item = manager.item(at: indexPath) as? ActionPerformable,
+            let action = ItemAction(action: action)  else { return }
+        item.performAction(action)
+    }
+
     /// Implementation of UIScrollViewDelegate
     open func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollDelegate?.scrollViewDidScroll?(scrollView)
