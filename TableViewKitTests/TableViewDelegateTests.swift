@@ -83,6 +83,22 @@ class SelectableItem: Selectable, Item {
     }
 }
 
+class ActionableItem: ActionPerformable, Item {
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
+
+    public var check: Int = 0
+
+    public init() {}
+
+    func canPerformAction(_ action: ItemAction) -> Bool {
+        return true
+    }
+
+    func performAction(_ action: ItemAction) {
+        check += 1
+    }
+}
+
 class EditableItem: SelectableItem, Editable {
     public var actions: [UITableViewRowAction]?
 }
@@ -233,5 +249,55 @@ class TableViewDelegateTests: XCTestCase {
         view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 2)
         expect(view).toNot(beNil())
 
+    }
+
+    func testShouldShowMenuForRow() {
+        let section = tableViewManager.sections.first!
+        let firstRow = IndexPath(row: 0, section: 0)
+        var result = delegate.tableView(tableViewManager.tableView, shouldShowMenuForRowAt: firstRow)
+
+        expect(result).to(beFalse())
+
+        let actionableItem = ActionableItem()
+
+        section.items.replace(with: [actionableItem])
+
+        result = delegate.tableView(tableViewManager.tableView, shouldShowMenuForRowAt: firstRow)
+        expect(result).to(beTrue())
+
+    }
+
+    func testCanPerformActionForRow() {
+        let selector = #selector(UIResponderStandardEditActions.copy(_:))
+        let section = tableViewManager.sections.first!
+        let firstRow = IndexPath(row: 0, section: 0)
+        var result = delegate.tableView(tableViewManager.tableView,
+                                        canPerformAction: selector,
+                                        forRowAt: firstRow,
+                                        withSender: nil)
+
+        expect(result).to(beFalse())
+
+        let actionableItem = ActionableItem()
+        section.items.replace(with: [actionableItem])
+        result = delegate.tableView(tableViewManager.tableView,
+                                    canPerformAction: selector,
+                                    forRowAt: firstRow,
+                                    withSender: nil)
+        expect(result).to(beTrue())
+    }
+
+    func testPerformActionForRow() {
+        let selector = #selector(UIResponderStandardEditActions.copy(_:))
+        let section = tableViewManager.sections.first!
+        let firstRow = IndexPath(row: 0, section: 0)
+
+        let actionableItem = ActionableItem()
+        section.items.replace(with: [actionableItem])
+        delegate.tableView(tableViewManager.tableView,
+                                    performAction: selector,
+                                    forRowAt: firstRow,
+                                    withSender: nil)
+        expect(actionableItem.check) == 1
     }
 }

@@ -1,7 +1,11 @@
 import Foundation
 
+/// A type that represent the kind of action an item should perform.
+/// I.e.: copy or paste
 public enum ItemAction {
+    /// A copy action
     case copy
+    /// A paste action
     case paste
 
     init?(action: Selector) {

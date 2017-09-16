@@ -43,7 +43,7 @@ public struct AnyHeaderFooterDrawer {
     let draw: (UITableViewHeaderFooterView, HeaderFooter) -> Void
 
 	/// Creates a type-erased drawer that wraps the given header or footer drawer
-    public init<Drawer: HeaderFooterDrawer, GenericItem, View: UITableViewHeaderFooterView>(_ drawer: Drawer.Type)
+    public init<Drawer: HeaderFooterDrawer, GenericItem, View>(_ drawer: Drawer.Type)
         where Drawer.GenericItem == GenericItem, Drawer.View == View {
         self.type = drawer.type.headerFooterType
         // swiftlint:disable:next force_cast

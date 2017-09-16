@@ -53,7 +53,7 @@ public struct AnyCellDrawer {
     let draw: (UITableViewCell, Item) -> Void
 
 	/// Creates a type-erased drawer that wraps the given cell drawer
-    public init<Drawer: CellDrawer, GenericItem, Cell: UITableViewCell>(_ drawer: Drawer.Type)
+    public init<Drawer: CellDrawer, GenericItem, Cell>(_ drawer: Drawer.Type)
         where Drawer.GenericItem == GenericItem, Drawer.Cell == Cell {
         self.type = drawer.type.cellType
         // swiftlint:disable:next force_cast
