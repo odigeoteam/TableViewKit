@@ -1,9 +1,9 @@
 import Foundation
 import TableViewKit
 
-class HelpCenterSection: Section {
+class HelpCenterSection: TableSection {
 
-    var items: ObservableArray<Item> = []
+    var items: ObservableArray<TableItem> = []
     var header: HeaderFooterView = .title("How can we help you today?")
     let presenter: AboutPresenterProtocol?
 

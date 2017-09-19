@@ -21,7 +21,7 @@ public enum ItemAction {
 }
 
 /// A type that represent an item that can perform some action like copy and paste
-public protocol ActionPerformable: Item {
+public protocol ActionPerformable: TableItem {
 
     /// Asks if the editing menu should omit the Copy or Paste command
     ///

@@ -17,14 +17,14 @@ extension HeaderFooterView: Equatable {
     }
 }
 
-class HeaderFooterTitleSection: Section {
-    var items: ObservableArray<Item> = []
+class HeaderFooterTitleSection: TableSection {
+    var items: ObservableArray<TableItem> = []
     weak var tableViewManager: TableViewManager!
 
     internal var header: HeaderFooterView { return .title("Header") }
     internal var footer: HeaderFooterView { return .title("Footer") }
 
-    convenience init(items: [Item]) {
+    convenience init(items: [TableItem]) {
         self.init()
         self.items.insert(contentsOf: items, at: 0)
     }
@@ -32,10 +32,10 @@ class HeaderFooterTitleSection: Section {
 
 class TestDrawer: CellDrawer {
     static internal var type = CellType.class(TestCell.self)
-    static internal func draw(_ cell: TestCell, with item: Item) { }
+    static internal func draw(_ cell: TestCell, with item: TableItem) { }
 }
 
-class TestItem: Item, Selectable {
+class TestItem: TableItem, Selectable {
     static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     public func didSelect() {
@@ -45,10 +45,10 @@ class TestItem: Item, Selectable {
 }
 
 class TestCell: UITableViewCell, ItemCompatible {
-    internal var item: Item?
+    internal var item: TableItem?
 }
 
-class DifferentItem: Item {
+class DifferentItem: TableItem {
 
     static var drawer = AnyCellDrawer(DifferentDrawer.self)
 }
@@ -97,7 +97,7 @@ class TableViewDataSourceTests: XCTestCase {
 
         let indexPath = otherItem.indexPath!
         let drawer = type(of: otherItem).drawer
-        let cell = drawer.cell(in: tableViewManager, with: otherItem as Item, for: indexPath)
+        let cell = drawer.cell(in: tableViewManager, with: otherItem as TableItem, for: indexPath)
 
         XCTAssertTrue(cell is DifferentCell)
     }

@@ -1,9 +1,9 @@
 import Foundation
 import TableViewKit
 
-class MoreAboutSection: Section {
+class MoreAboutSection: TableSection {
 
-    var items: ObservableArray<Item> = []
+    var items: ObservableArray<TableItem> = []
     var header: HeaderFooterView = .title("More about eDreams")
     let presenter: AboutPresenterProtocol?
     weak var manager: TableViewManager?
@@ -21,7 +21,7 @@ class MoreAboutSection: Section {
         })
 
         let types: [MoreAboutItemType] = [.faq, .contact, .terms, .feedback, .share, .rate]
-        let items: [Item] = types.map {
+        let items: [TableItem] = types.map {
             let moreAboutItem = MoreAboutItem(type: $0, presenter: presenter, manager: manager)
             moreAboutItem.actions = [deleteAction, moreAction]
             return moreAboutItem

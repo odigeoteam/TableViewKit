@@ -1,7 +1,7 @@
 import Foundation
 
 /// A type that represent an item that can be selected
-public protocol Selectable: Item {
+public protocol Selectable: TableItem {
 
     /// Method called once an item is selected by a selectRow.
     func didSelect()

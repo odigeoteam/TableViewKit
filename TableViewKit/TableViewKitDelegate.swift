@@ -4,7 +4,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
 
     open unowned var manager: TableViewManager
     open weak var scrollDelegate: UIScrollViewDelegate?
-    private var sections: ObservableArray<Section> { return manager.sections }
+    private var sections: ObservableArray<TableSection> { return manager.sections }
 
     public required init(manager: TableViewManager) {
         self.manager = manager
@@ -98,7 +98,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
         scrollDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
 
-    fileprivate func view(for key: (Section) -> HeaderFooterView, inSection section: Int) -> UIView? {
+    fileprivate func view(for key: (TableSection) -> HeaderFooterView, inSection section: Int) -> UIView? {
         guard case .view(let item) = key(sections[section]) else { return nil }
 
         let drawer = type(of: item).drawer
@@ -108,7 +108,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
         return view
     }
 
-    fileprivate func estimatedHeight(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
+    fileprivate func estimatedHeight(for key: (TableSection) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
         let item = key(sections[section])
         switch item {
         case .view(let view):
@@ -126,7 +126,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
         return height.estimated
     }
 
-    fileprivate func height(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
+    fileprivate func height(for key: (TableSection) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
         guard case .view(let view) = key(sections[section]), let value = view.height
             else { return nil }
         return value.height

@@ -11,9 +11,9 @@ protocol ActionManagerCompatible {
 }
 
 class Example1: UIViewController, TableViewManagerCompatible {
-    fileprivate class FirstSection: Section, StaticStateful {
-        var items: ObservableArray<Item> = []
-        var states: [State: [Item]] = [:]
+    fileprivate class FirstSection: TableSection, StaticStateful {
+        var items: ObservableArray<TableItem> = []
+        var states: [State: [TableItem]] = [:]
 
         enum State: Int {
             case preParty
@@ -63,9 +63,9 @@ class Example1: UIViewController, TableViewManagerCompatible {
 
     }
 
-    fileprivate class SecondSection: Section {
+    fileprivate class SecondSection: TableSection {
 
-        var items: ObservableArray<Item> = []
+        var items: ObservableArray<TableItem> = []
 
         internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "Second Section"))
 
@@ -75,7 +75,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
             self.vc = vc
 
             let total: [Int] = Array(1...100)
-            let items = total.map({ (index) -> Item in
+            let items = total.map({ (index) -> TableItem in
                 if (index % 2 == 0) {
                     let item = TextFieldItem(placeHolder: "Textfield \(index)", actionBarDelegate: vc.actionBarManager)
                     return item
@@ -91,15 +91,15 @@ class Example1: UIViewController, TableViewManagerCompatible {
         }
     }
 
-    fileprivate class ThirdSection: Section, Stateful {
+    fileprivate class ThirdSection: TableSection, Stateful {
 
         enum State {
             case all
-            case selected(Item)
+            case selected(TableItem)
         }
 
-        var items: ObservableArray<Item> = []
-        var allItems: [Item] = []
+        var items: ObservableArray<TableItem> = []
+        var allItems: [TableItem] = []
         var currentState: State = .all
 
         let vc: TableViewManagerCompatible
@@ -108,7 +108,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
             self.vc = vc
 
             let total: [Int] = Array(1...10)
-            self.allItems = total.map { (index) -> Item in
+            self.allItems = total.map { (index) -> TableItem in
                 let item = CustomItem(title: "Label  \(index)")
                 item.onSelection = { item in
                     switch self.currentState {
@@ -124,7 +124,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
             self.transition(to: currentState)
         }
 
-        func items(for state: State) -> [Item] {
+        func items(for state: State) -> [TableItem] {
             switch state {
             case .all:
                 return allItems
