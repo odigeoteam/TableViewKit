@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ---
 
 ## [Unreleased]
+### Added
+- Support for item's `copy` and `paste` action via `ActionPerformable`
 ### Changed
 - Optimize diff algorithm used by `ObservableArray` for common methods such as `insert(at:)`, `remove(at:)` etc...
 - Fix a bug where `manager` was not set correctly on `Item` or `Section`
