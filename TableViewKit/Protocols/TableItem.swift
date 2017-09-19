@@ -1,8 +1,11 @@
 import Foundation
 
+@available(*, deprecated, renamed: "TableItem")
+public typealias Item = TableItem
+
 /// A type that represent an item to be displayed
 /// defining the `drawer` and the `height`
-public protocol Item: class, AnyEquatable {
+public protocol TableItem: class, AnyEquatable {
 
     /// The `drawer` of the item
     static var drawer: AnyCellDrawer { get }
@@ -11,7 +14,7 @@ public protocol Item: class, AnyEquatable {
     var height: Height? { get }
 }
 
-public extension Item where Self: Equatable {
+public extension TableItem where Self: Equatable {
     func equals(_ other: Any?) -> Bool {
         if let other = other as? Self {
             return other == self
@@ -23,7 +26,7 @@ public extension Item where Self: Equatable {
 // swiftlint:disable:next identifier_name
 private var ItemTableViewManagerKey: UInt8 = 0
 
-extension Item {
+extension TableItem {
 
     public internal(set) var manager: TableViewManager? {
         get {
@@ -38,7 +41,7 @@ extension Item {
     }
 }
 
-extension Item {
+extension TableItem {
 
     public func equals(_ other: Any?) -> Bool {
         if let other = other as AnyObject? {
@@ -55,7 +58,7 @@ extension Item {
     /// Returns the `section` of the `item`
     ///
     /// - returns: The `section` of the `item` or `nil` if not present
-    public var section: Section? {
+    public var section: TableSection? {
         guard let indexPath = indexPath else { return nil }
         return manager?.sections[indexPath.section]
     }
@@ -87,9 +90,9 @@ extension Item {
 
 }
 
-public extension Collection where Self.Iterator.Element == Item {
+public extension Collection where Self.Iterator.Element == TableItem {
     /// Return the index of the `element` inside a collection of items
-    func index(of element: Item) -> Self.Index? {
+    func index(of element: TableItem) -> Self.Index? {
         return index(where: { $0 === element })
     }
 }

@@ -2,10 +2,10 @@ import XCTest
 import TableViewKit
 import Nimble
 
-class NoHeaderFooterSection: Section {
-    var items: ObservableArray<Item> = []
+class NoHeaderFooterSection: TableSection {
+    var items: ObservableArray<TableItem> = []
 
-    convenience init(items: [Item]) {
+    convenience init(items: [TableItem]) {
         self.init()
         self.items.insert(contentsOf: items, at: 0)
     }
@@ -46,32 +46,32 @@ class ViewHeaderFooter: HeaderFooter {
     }
 }
 
-class ViewHeaderFooterSection: Section {
-    var items: ObservableArray<Item> = []
+class ViewHeaderFooterSection: TableSection {
+    var items: ObservableArray<TableItem> = []
 
     internal var header: HeaderFooterView = .view(ViewHeaderFooter(title: "First Section"))
     internal var footer: HeaderFooterView = .view(ViewHeaderFooter(title: "Section Footer\nHola"))
 
-    convenience init(items: [Item]) {
+    convenience init(items: [TableItem]) {
         self.init()
         self.items.insert(contentsOf: items, at: 0)
     }
 }
 
-class NoHeigthItem: Item {
+class NoHeigthItem: TableItem {
     static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     internal var height: Height?
 }
 
-class StaticHeigthItem: Item {
+class StaticHeigthItem: TableItem {
     static let testStaticHeightValue: CGFloat = 20.0
     static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     internal var height: Height? = .static(20.0)
 }
 
-class SelectableItem: Selectable, Item {
+class SelectableItem: Selectable, TableItem {
     static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     public var check: Int = 0
@@ -83,7 +83,7 @@ class SelectableItem: Selectable, Item {
     }
 }
 
-class ActionableItem: ActionPerformable, Item {
+class ActionableItem: ActionPerformable, TableItem {
     static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     public var check: Int = 0

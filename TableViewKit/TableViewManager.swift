@@ -11,7 +11,7 @@ open class TableViewManager {
     open let tableView: UITableView
 
     /// An array of sections
-    open var sections: ObservableArray<Section>
+    open var sections: ObservableArray<TableSection>
 
     open var animation: UITableViewRowAnimation = .automatic
 
@@ -25,7 +25,7 @@ open class TableViewManager {
     ///
     /// - parameter tableView: A `tableView` that will be controlled by the `TableViewManager`
     /// - parameter sections: An array of sections
-    public init(tableView: UITableView, sections: [Section] = []) {
+    public init(tableView: UITableView, sections: [TableSection] = []) {
         self.tableView = tableView
         self.sections = ObservableArray(array: sections)
         self.setupDelegates()
@@ -42,7 +42,7 @@ open class TableViewManager {
         sections.callback = { [weak self] in self?.onSectionsUpdate(with: $0) }
     }
 
-    func onSectionsUpdate(with changes: ArrayChanges<Section>) {
+    func onSectionsUpdate(with changes: ArrayChanges<TableSection>) {
         switch changes {
         case .inserts(let indexes, let insertedSections):
             insertedSections.forEach { $0.register(in: self) }
@@ -71,7 +71,7 @@ open class TableViewManager {
         }
     }
 
-    func onItemsUpdate(with changes: ArrayChanges<Item>, forSectionIndex sectionIndex: Int) {
+    func onItemsUpdate(with changes: ArrayChanges<TableItem>, forSectionIndex sectionIndex: Int) {
 
         switch changes {
         case .inserts(let array, let insertedItems):
@@ -114,7 +114,7 @@ extension TableViewManager {
         }
     }
 
-    func item(at indexPath: IndexPath) -> Item {
+    func item(at indexPath: IndexPath) -> TableItem {
         return sections[indexPath.section].items[indexPath.row]
     }
 }

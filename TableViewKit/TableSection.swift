@@ -1,12 +1,15 @@
 import Foundation
 import UIKit
 
+@available(*, deprecated, renamed: "TableSection")
+public typealias Section = TableSection
+
 /// A type that represent a section to be displayed
 /// containing `items`, a `header` and a `footer`
-public protocol Section: class, AnyEquatable {
+public protocol TableSection: class, AnyEquatable {
 
     /// A array containing the `items` of the section
-    var items: ObservableArray<Item> { get set }
+    var items: ObservableArray<TableItem> { get set }
 
     /// The `header` of the section, none if not defined
     /// - Default: none
@@ -17,7 +20,7 @@ public protocol Section: class, AnyEquatable {
     var index: Int? { get }
 }
 
-public extension Section where Self: Equatable {
+public extension TableSection where Self: Equatable {
 
     func equals(_ other: Any?) -> Bool {
         if let other = other as? Self {
@@ -27,7 +30,7 @@ public extension Section where Self: Equatable {
 }
 }
 
-extension Section {
+extension TableSection {
 
     /// Empty header
     public var header: HeaderFooterView { return nil }
@@ -38,7 +41,7 @@ extension Section {
 // swiftlint:disable:next identifier_name
 private var SectionTableViewManagerKey: UInt8 = 0
 
-extension Section {
+extension TableSection {
 
     public internal(set) var manager: TableViewManager? {
         get {
@@ -53,7 +56,7 @@ extension Section {
     }
 }
 
-extension Section {
+extension TableSection {
 
     public func equals(_ other: Any?) -> Bool {
         if let other = other as AnyObject? {
@@ -108,9 +111,9 @@ extension Section {
 
 }
 
-public extension Collection where Self.Iterator.Element == Section {
+public extension Collection where Self.Iterator.Element == TableSection {
     /// Return the index of the `element` inside a collection of sections
-    func index(of element: Section) -> Self.Index? {
+    func index(of element: TableSection) -> Self.Index? {
         return index(where: { $0 === element })
     }
 }

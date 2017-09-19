@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Support for item's `copy` and `paste` action via `ActionPerformable`
 ### Changed
+- Deprecated `Item` in favour of `TableItem`
+- Deprecated `Section` in favour of `TableSection`
 - Optimize diff algorithm used by `ObservableArray` for common methods such as `insert(at:)`, `remove(at:)` etc...
 - Fix a bug where `manager` was not set correctly on `Item` or `Section`
 - Fix memory ownership of `ObservableArray` for Swift 4
