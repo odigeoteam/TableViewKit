@@ -94,6 +94,15 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
     }
 
     /// Implementation of UIScrollViewDelegate
+    // swiftlint:disable:next line_length
+    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        scrollDelegate?.scrollViewWillEndDragging?(
+            scrollView,
+            withVelocity: velocity,
+            targetContentOffset: targetContentOffset)
+    }
+
+    /// Implementation of UIScrollViewDelegate
     open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         scrollDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
