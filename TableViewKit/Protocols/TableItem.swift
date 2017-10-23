@@ -92,7 +92,7 @@ extension TableItem {
         section?.items.callback?(.updates([indexPath.row]))
     }
 
-    /// Force redraw the `item` without reloading it
+    /// Redraw the associated `cell` of the `item` without reloading it
     /// The `draw` method of `CellDrawer` get called if the `cell` is visible
     public func redraw() {
         guard let cell = cell else { return }
