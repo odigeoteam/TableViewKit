@@ -35,11 +35,18 @@ public extension Stateful {
     }
 }
 
-public protocol StaticStateful: Stateful {
-    associatedtype State: Hashable
+#if swift(>=3.2)
+    public protocol StaticStateful: Stateful where State: Hashable {
 
     var states: [State: [TableItem]] { get }
-}
+    }
+#else
+    public protocol StaticStateful: Stateful {
+        associatedtype State: Hashable
+
+        var states: [State: [TableItem]] { get }
+    }
+#endif
 
 public extension StaticStateful {
 
