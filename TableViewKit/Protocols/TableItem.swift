@@ -77,15 +77,26 @@ extension TableItem {
         return nil
     }
 
+    /// Returns the `cell` of the `item`, if visibile
+    public var cell: UITableViewCell? {
+        guard let indexPath = indexPath else { return nil }
+        return manager?.tableView.cellForRow(at: indexPath)
+    }
+
     /// Reload the `item` with an `animation`
     ///
     /// - parameter animation: A constant that indicates how the reloading is to be animated
-    ///
-    /// - returns: The `section` of the `item` or `nil` if not present
     public func reload(with animation: UITableViewRowAnimation = .automatic) {
         guard let indexPath = indexPath else { return }
         let section = manager?.sections[indexPath.section]
         section?.items.callback?(.updates([indexPath.row]))
+    }
+
+    /// Force redraw the `item` without reloading it
+    /// The `draw` method of `CellDrawer` get called if the `cell` is visible
+    public func redraw() {
+        guard let cell = cell else { return }
+        Self.drawer.draw(cell, self)
     }
 
 }
