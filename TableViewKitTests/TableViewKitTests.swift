@@ -165,7 +165,6 @@ class TableViewKitTests: XCTestCase {
     }
 
     func testUpdateRow() {
-
         let item = TestReloadItem()
         item.title = "Before"
 
@@ -180,6 +179,27 @@ class TableViewKitTests: XCTestCase {
 
         item.title = "After"
         item.reload()
+
+        cell = dataSource.tableView(manager.tableView, cellForRowAt: indexPath)
+
+        expect(cell.textLabel?.text) == item.title
+    }
+
+    func testUpdateRowWithoutReload() {
+        let item = TestReloadItem()
+        item.title = "Before"
+
+        let section = HeaderFooterTitleSection(items: [item])
+        manager = TableViewManager(tableView: UITableView(), sections: [section])
+
+        guard let indexPath = item.indexPath else { return }
+        let dataSource = manager.dataSource!
+        var cell = dataSource.tableView(manager.tableView, cellForRowAt: indexPath)
+
+        expect(cell.textLabel?.text) == item.title
+
+        item.title = "After"
+        item.redraw()
 
         cell = dataSource.tableView(manager.tableView, cellForRowAt: indexPath)
 
