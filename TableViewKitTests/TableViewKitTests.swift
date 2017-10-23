@@ -46,7 +46,7 @@ class StatefulSection: HeaderFooterTitleSection, StaticStateful {
     }
 
     var currentState: StatefulSection.State = .login
-    var states: [StatefulSection.State : [TableItem]] = [:]
+    var states: [StatefulSection.State: [TableItem]] = [:]
 
     override init() {
         super.init()

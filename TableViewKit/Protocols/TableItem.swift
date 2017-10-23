@@ -78,7 +78,7 @@ extension TableItem {
     }
 
     /// Returns the `cell` of the `item`, if visibile
-    public var cell: UITableViewCell? {
+    var cell: UITableViewCell? {
         guard let indexPath = indexPath else { return nil }
         return manager?.tableView.cellForRow(at: indexPath)
     }
