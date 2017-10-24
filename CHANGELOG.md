@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+- Official support to Swift 4
+- Support for `TableItem` method `redraw()`
 - Support for `scrollViewWillEndDragging`
 - Support for item's `copy` and `paste` action via `ActionPerformable`
 ### Changed

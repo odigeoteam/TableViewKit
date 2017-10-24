@@ -106,7 +106,7 @@ public class ObservableArray<T>: RandomAccessCollection, ExpressibleByArrayLiter
     /// - parameter subrange: The subrange that must be replaced
     /// - parameter newElements: The new elements that must be replaced
     // swiftlint:disable:next line_length
-    public func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, C.Iterator.Element == T {
+    public func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C: Collection, C.Iterator.Element == T {
         let temp = Array(newElements)
         var diff = Array.diff(between: self.array,
                               and: temp,

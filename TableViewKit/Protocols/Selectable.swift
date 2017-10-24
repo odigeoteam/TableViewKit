@@ -13,7 +13,6 @@ extension Selectable {
     ///
     /// - parameter animated:       If the selection should be animated
     /// - parameter scrollPosition: The scrolling position
-    // swiftlint:disable:next line_length
     public func select(animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
         guard let tableView = manager?.tableView else { return }
 
