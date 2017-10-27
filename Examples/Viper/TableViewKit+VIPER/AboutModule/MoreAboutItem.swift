@@ -23,7 +23,7 @@ enum MoreAboutItemType {
     }
 }
 
-class MoreAboutItem: Item, Selectable, Editable {
+class MoreAboutItem: TableItem, Selectable, Editable {
     public static var drawer = AnyCellDrawer(MoreAboutDrawer.self)
 
     var type: MoreAboutItemType

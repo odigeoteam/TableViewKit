@@ -11,7 +11,7 @@ open class TableViewManager {
     open let tableView: UITableView
 
     /// An array of sections
-    open var sections: ObservableArray<Section>
+    open var sections: ObservableArray<TableSection>
 
     open var animation: UITableViewRowAnimation = .automatic
 
@@ -25,7 +25,7 @@ open class TableViewManager {
     ///
     /// - parameter tableView: A `tableView` that will be controlled by the `TableViewManager`
     /// - parameter sections: An array of sections
-    public init(tableView: UITableView, sections: [Section] = []) {
+    public init(tableView: UITableView, sections: [TableSection] = []) {
         self.tableView = tableView
         self.sections = ObservableArray(array: sections)
         self.setupDelegates()
@@ -39,10 +39,10 @@ open class TableViewManager {
 
     private func setupSections() {
         sections.forEach { $0.register(in: self) }
-        sections.callback = { [weak self] in self?.onSectionsUpdate(withChanges: $0) }
+        sections.callback = { [weak self] in self?.onSectionsUpdate(with: $0) }
     }
 
-    private func onSectionsUpdate(withChanges changes: ArrayChanges<Section>) {
+    func onSectionsUpdate(with changes: ArrayChanges<TableSection>) {
         switch changes {
         case .inserts(let indexes, let insertedSections):
             insertedSections.forEach { $0.register(in: self) }
@@ -56,7 +56,9 @@ open class TableViewManager {
             let fromIndex = indexes.map { $0.0 }
             let toIndex = indexes.map { $0.1 }
             tableView.moveSections(from: fromIndex, to: toIndex)
-        case .beginUpdates:
+        case .beginUpdates(let from, let to):
+            from.forEach { $0.manager = nil }
+            to.forEach { $0.manager = self }
             if animation == .none {
                 UIView.setAnimationsEnabled(false)
             }
@@ -66,6 +68,32 @@ open class TableViewManager {
             if animation == .none {
                 UIView.setAnimationsEnabled(true)
             }
+        }
+    }
+
+    func onItemsUpdate(with changes: ArrayChanges<TableItem>, forSectionIndex sectionIndex: Int) {
+
+        switch changes {
+        case .inserts(let array, let insertedItems):
+            insertedItems.forEach { register(type(of: $0).drawer.type) }
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            tableView.insertRows(at: indexPaths, with: animation)
+        case .deletes(let array, _):
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            tableView.deleteRows(at: indexPaths, with: animation)
+        case .updates(let array):
+            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
+            tableView.reloadRows(at: indexPaths, with: animation)
+        case .moves(let array):
+            let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
+            let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
+            tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
+        case .beginUpdates(let from, let to):
+            from.forEach { $0.manager = nil }
+            to.forEach { $0.manager = self }
+            tableView.beginUpdates()
+        case .endUpdates:
+            tableView.endUpdates()
         }
     }
 
@@ -86,7 +114,7 @@ extension TableViewManager {
         }
     }
 
-    func item(at indexPath: IndexPath) -> Item {
+    func item(at indexPath: IndexPath) -> TableItem {
         return sections[indexPath.section].items[indexPath.row]
     }
 }

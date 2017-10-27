@@ -14,7 +14,7 @@ class TestReloadDrawer: CellDrawer {
     }
 }
 
-class TestReloadItem: Item {
+class TestReloadItem: TableItem {
     static internal var drawer = AnyCellDrawer(TestReloadDrawer.self)
 
     internal var title: String?
@@ -46,7 +46,7 @@ class StatefulSection: HeaderFooterTitleSection, StaticStateful {
     }
 
     var currentState: StatefulSection.State = .login
-    var states: [StatefulSection.State : [Item]] = [:]
+    var states: [StatefulSection.State: [TableItem]] = [:]
 
     override init() {
         super.init()
@@ -92,7 +92,7 @@ class TableViewKitTests: XCTestCase {
 
         manager = TableViewManager(tableView: UITableView())
 
-        let item: Item = TestItem()
+        let item: TableItem = TestItem()
 
         let section = HeaderFooterTitleSection()
         section.items.append(item)
@@ -149,8 +149,8 @@ class TableViewKitTests: XCTestCase {
         manager = TableViewManager(tableView: UITableView())
         manager.sections.insert(HeaderFooterTitleSection(items: [TestItem()]), at: 0)
 
-        weak var section: Section? = manager.sections.first
-        weak var item: Item? = section!.items.first
+        weak var section: TableSection? = manager.sections.first
+        weak var item: TableItem? = section!.items.first
         expect(section).toNot(beNil())
         expect(item).toNot(beNil())
         manager.sections.replace(with: [HeaderFooterTitleSection()])
@@ -165,7 +165,6 @@ class TableViewKitTests: XCTestCase {
     }
 
     func testUpdateRow() {
-
         let item = TestReloadItem()
         item.title = "Before"
 
@@ -180,6 +179,27 @@ class TableViewKitTests: XCTestCase {
 
         item.title = "After"
         item.reload()
+
+        cell = dataSource.tableView(manager.tableView, cellForRowAt: indexPath)
+
+        expect(cell.textLabel?.text) == item.title
+    }
+
+    func testUpdateRowWithoutReload() {
+        let item = TestReloadItem()
+        item.title = "Before"
+
+        let section = HeaderFooterTitleSection(items: [item])
+        manager = TableViewManager(tableView: UITableView(), sections: [section])
+
+        guard let indexPath = item.indexPath else { return }
+        let dataSource = manager.dataSource!
+        var cell = dataSource.tableView(manager.tableView, cellForRowAt: indexPath)
+
+        expect(cell.textLabel?.text) == item.title
+
+        item.title = "After"
+        item.redraw()
 
         cell = dataSource.tableView(manager.tableView, cellForRowAt: indexPath)
 
@@ -232,7 +252,7 @@ class TableViewKitTests: XCTestCase {
     func testNoCrashOnNonAddedItem() {
         manager = TableViewManager(tableView: UITableView(), sections: [HeaderFooterTitleSection()])
 
-        let item: Item = TestReloadItem()
+        let item: TableItem = TestReloadItem()
         item.reload(with: .automatic)
 
         let section = item.section
@@ -321,11 +341,22 @@ class TableViewKitTests: XCTestCase {
         section.items.append(item2)
         XCTAssert(item2.manager === manager)
 
-        let removedSection = manager.sections.removeFirst()
+        let removedSection = manager.sections.removeLast()
 
-        XCTAssert(removedSection === section)
+        XCTAssert(removedSection === section2)
         XCTAssertNil(removedSection.manager)
         XCTAssertNil(removedSection.items[0].manager)
+
+        manager.sections.append(removedSection)
+
+        XCTAssertNotNil(removedSection.manager)
+        XCTAssertNotNil(removedSection.items[0].manager)
+
+        let removedFirstSection = manager.sections.removeFirst()
+
+        XCTAssert(removedFirstSection === section)
+        XCTAssertNil(removedFirstSection.manager)
+        XCTAssertNil(removedFirstSection.items[0].manager)
 
     }
 }

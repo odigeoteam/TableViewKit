@@ -1,7 +1,7 @@
 import Foundation
 
 /// A type that represent an item that can be selected
-public protocol Selectable: Item {
+public protocol Selectable: TableItem {
 
     /// Method called once an item is selected by a selectRow.
     func didSelect()
@@ -13,7 +13,6 @@ extension Selectable {
     ///
     /// - parameter animated:       If the selection should be animated
     /// - parameter scrollPosition: The scrolling position
-    // swiftlint:disable:next line_length
     public func select(animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
         guard let tableView = manager?.tableView else { return }
 

@@ -28,7 +28,7 @@ TableViewKit is designed:
 
 ### Quickstart
 
-Create an `Item` with a `UITableViewCell` and `CellDrawer`. An item may have a model of the data you want to display and may control the interaction if any.
+Create an `TableItem` with a `UITableViewCell` and `CellDrawer`. An item may have a model of the data you want to display and may control the interaction if any.
 
 ```swift
 
@@ -42,7 +42,7 @@ class YourDrawer: CellDrawer {
     }
 }
 
-class YourItem: Item {
+class YourItem: TableItem {
 
     var drawer = AnyCellDrawer(YourDrawer.self)
 
@@ -52,11 +52,11 @@ class YourItem: Item {
 }
 ```
 
-Create a custom `Section` with your items.
+Create a custom `TableSection` with your items.
 
 ```swift
-class YourSection: Section {
-    var items: ObservableArray<Item>
+class YourSection: TableSection {
+    var items: ObservableArray<TableItem>
 
     var header: HeaderFooterView = .title("Your section")
 

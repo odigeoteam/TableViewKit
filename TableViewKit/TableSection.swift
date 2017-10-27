@@ -1,12 +1,15 @@
 import Foundation
 import UIKit
 
+@available(*, deprecated, renamed: "TableSection")
+public typealias Section = TableSection
+
 /// A type that represent a section to be displayed
 /// containing `items`, a `header` and a `footer`
-public protocol Section: class, AnyEquatable {
+public protocol TableSection: class, AnyEquatable {
 
     /// A array containing the `items` of the section
-    var items: ObservableArray<Item> { get set }
+    var items: ObservableArray<TableItem> { get set }
 
     /// The `header` of the section, none if not defined
     /// - Default: none
@@ -17,7 +20,7 @@ public protocol Section: class, AnyEquatable {
     var index: Int? { get }
 }
 
-public extension Section where Self: Equatable {
+public extension TableSection where Self: Equatable {
 
     func equals(_ other: Any?) -> Bool {
         if let other = other as? Self {
@@ -27,7 +30,7 @@ public extension Section where Self: Equatable {
 }
 }
 
-extension Section {
+extension TableSection {
 
     /// Empty header
     public var header: HeaderFooterView { return nil }
@@ -38,7 +41,7 @@ extension Section {
 // swiftlint:disable:next identifier_name
 private var SectionTableViewManagerKey: UInt8 = 0
 
-extension Section {
+extension TableSection {
 
     public internal(set) var manager: TableViewManager? {
         get {
@@ -53,7 +56,7 @@ extension Section {
     }
 }
 
-extension Section {
+extension TableSection {
 
     public func equals(_ other: Any?) -> Bool {
         if let other = other as AnyObject? {
@@ -99,50 +102,18 @@ extension Section {
     private func setup(in manager: TableViewManager) {
         self.manager = manager
 
-        items.callback = { [weak self] change in
-            if let weakSelf = self, let manager = weakSelf.manager {
-                weakSelf.onItemsUpdate(withChanges: change, in: manager)
+        items.callback = { [weak self] changes in
+            if let manager = self?.manager, let sectionIndex = self?.index {
+                manager.onItemsUpdate(with: changes, forSectionIndex: sectionIndex)
             }
         }
     }
 
-    private func onItemsUpdate(withChanges changes: ArrayChanges<Item>, in manager: TableViewManager) {
-
-        guard let sectionIndex = index else { return }
-        let tableView = manager.tableView
-
-        if case .inserts(_, let items) = changes {
-            items.forEach { item in
-                item.manager = manager
-                manager.register(type(of: item).drawer.type)
-            }
-        }
-
-        switch changes {
-        case .inserts(let array, _):
-            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-            tableView.insertRows(at: indexPaths, with: manager.animation)
-        case .deletes(let array, _):
-            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-            tableView.deleteRows(at: indexPaths, with: manager.animation)
-        case .updates(let array):
-            let indexPaths = array.map { IndexPath(item: $0, section: sectionIndex) }
-            tableView.reloadRows(at: indexPaths, with: manager.animation)
-        case .moves(let array):
-            let fromIndexPaths = array.map { IndexPath(item: $0.0, section: sectionIndex) }
-            let toIndexPaths = array.map { IndexPath(item: $0.1, section: sectionIndex) }
-            tableView.moveRows(at: fromIndexPaths, to: toIndexPaths)
-        case .beginUpdates:
-            tableView.beginUpdates()
-        case .endUpdates:
-            tableView.endUpdates()
-        }
-    }
 }
 
-public extension Collection where Self.Iterator.Element == Section {
+public extension Collection where Self.Iterator.Element == TableSection {
     /// Return the index of the `element` inside a collection of sections
-    func index(of element: Section) -> Self.Index? {
+    func index(of element: TableSection) -> Self.Index? {
         return index(where: { $0 === element })
     }
 }

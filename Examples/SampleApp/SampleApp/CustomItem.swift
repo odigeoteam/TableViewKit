@@ -13,7 +13,7 @@ public class CustomDrawer: CellDrawer {
     }
 }
 
-public class CustomItem: Selectable, Item {
+public class CustomItem: Selectable, TableItem {
     public static var drawer = AnyCellDrawer(CustomDrawer.self)
 
     public var title: String?

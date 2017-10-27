@@ -7,7 +7,7 @@ import Foundation
 /// needed to perform a transition from the `currentState` to a `newState`.
 /// You must implement `items(for:)`, that will be used to know
 /// which items belong to which `State`.
-public protocol Stateful: Section {
+public protocol Stateful: TableSection {
 
     /// A type that represent a state, such as an enum.
     associatedtype State
@@ -20,7 +20,7 @@ public protocol Stateful: Section {
     /// - parameter state: A concrete `state`
     ///
     /// - returns: The `items` belonging to a `state`
-    func items(for state: State) -> [Item]
+    func items(for state: State) -> [TableItem]
 
     /// Performs a transition from the `currentState` to a `newState`
     ///
@@ -35,15 +35,22 @@ public extension Stateful {
     }
 }
 
-public protocol StaticStateful: Stateful {
-    associatedtype State: Hashable
+#if swift(>=3.2)
+    public protocol StaticStateful: Stateful where State: Hashable {
 
-    var states: [State: [Item]] { get }
-}
+    var states: [State: [TableItem]] { get }
+    }
+#else
+    public protocol StaticStateful: Stateful {
+        associatedtype State: Hashable
+
+        var states: [State: [TableItem]] { get }
+    }
+#endif
 
 public extension StaticStateful {
 
-    func items(for state: State) -> [Item] {
+    func items(for state: State) -> [TableItem] {
         return states[state]!
     }
 

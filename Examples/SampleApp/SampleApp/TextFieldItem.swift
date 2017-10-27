@@ -3,7 +3,7 @@ import TableViewKit
 
 public class TextFieldCell: UITableViewCell, ItemCompatible, ActionBarDelegate {
 
-    public var item: Item?
+    public var item: TableItem?
 
     public var textFieldItem: TextFieldItem {
         get {
@@ -58,7 +58,7 @@ public class TextFieldDrawer: CellDrawer {
     }
 }
 
-public class TextFieldItem: UIResponder, Item, ContentValidatable, Validationable {
+public class TextFieldItem: UIResponder, TableItem, ContentValidatable, Validationable {
 
     public static var drawer = AnyCellDrawer(TextFieldDrawer.self)
 
