@@ -38,7 +38,7 @@ public extension CellDrawer {
         cell.selectionStyle = item is Selectable ? .default : .none
 
         if let cell = cell as? ItemCompatible {
-            cell.item = item as? Item
+            cell.item = item as? TableItem
         }
 
         // swiftlint:disable:next force_cast
@@ -49,11 +49,11 @@ public extension CellDrawer {
 /// A type-erased wrapper over any cell drawer
 public struct AnyCellDrawer {
     let type: CellType<UITableViewCell>
-    let cell: (TableViewManager, Item, IndexPath) -> UITableViewCell
-    let draw: (UITableViewCell, Item) -> Void
+    let cell: (TableViewManager, TableItem, IndexPath) -> UITableViewCell
+    let draw: (UITableViewCell, TableItem) -> Void
 
 	/// Creates a type-erased drawer that wraps the given cell drawer
-    public init<Drawer: CellDrawer, GenericItem, Cell: UITableViewCell>(_ drawer: Drawer.Type)
+    public init<Drawer: CellDrawer, GenericItem, Cell>(_ drawer: Drawer.Type)
         where Drawer.GenericItem == GenericItem, Drawer.Cell == Cell {
         self.type = drawer.type.cellType
         // swiftlint:disable:next force_cast
@@ -62,11 +62,11 @@ public struct AnyCellDrawer {
         self.draw = { cell, item in drawer.draw(cell as! Cell, with: item as! GenericItem) }
     }
 
-	public func cell(in manager: TableViewManager, with item: Item, for indexPath: IndexPath) -> UITableViewCell {
+	public func cell(in manager: TableViewManager, with item: TableItem, for indexPath: IndexPath) -> UITableViewCell {
         return cell(manager, item, indexPath)
     }
 
-	public func draw(_ cell: UITableViewCell, with item: Item) {
+	public func draw(_ cell: UITableViewCell, with item: TableItem) {
         draw(cell, item)
     }
 

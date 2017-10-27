@@ -7,5 +7,5 @@ import Foundation
 public protocol ItemCompatible: class {
 
     /// The associated item
-    var item: Item? { get set }
+    var item: TableItem? { get set }
 }

@@ -13,7 +13,7 @@ class HelpCenterDrawer: CellDrawer {
 
 class HelpCenterCell: UITableViewCell, ItemCompatible {
 
-    public var item: Item?
+    public var item: TableItem?
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!

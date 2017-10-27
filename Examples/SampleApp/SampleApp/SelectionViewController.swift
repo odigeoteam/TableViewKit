@@ -2,14 +2,14 @@ import Foundation
 import UIKit
 import TableViewKit
 
-class SelectionSection: Section {
-    var items: ObservableArray<Item> = []
+class SelectionSection: TableSection {
+    var items: ObservableArray<TableItem> = []
     weak var tableViewManager: TableViewManager!
 
     required init() { }
 }
 
-public protocol SelectionItemProtocol: Item {
+public protocol SelectionItemProtocol: TableItem {
 
     var value: Any { get }
     var selected: Bool { get set }

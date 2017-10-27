@@ -3,8 +3,8 @@ import TableViewKit
 
 class ViewController: UIViewController, TableViewManagerCompatible {
 
-    fileprivate class CustomSection: Section {
-        var items: ObservableArray<Item>
+    fileprivate class CustomSection: TableSection {
+        var items: ObservableArray<TableItem>
 
         let vc: ViewController
 
@@ -13,7 +13,7 @@ class ViewController: UIViewController, TableViewManagerCompatible {
             self.items = []
 
             let array: [UIViewController.Type] = [Example1.self]
-            let mappedItems = array.map({ (className) -> Item in
+            let mappedItems = array.map({ (className) -> TableItem in
                 let viewController = className.init(nibName: String(describing: className), bundle: nil)
 
                 let navigationController = UINavigationController(rootViewController: viewController)

@@ -20,7 +20,7 @@ class ActionBarManager: ActionBarDelegate {
 
     fileprivate func indexPathForResponder(forDirection direction: Direction) -> IndexPath? {
 
-        func isFirstResponder(item: Item) -> Bool {
+        func isFirstResponder(item: TableItem) -> Bool {
             if isResponder(item: item),
                 let indexPath = item.indexPath,
                 manager.tableView.cellForRow(at: indexPath)?.isFirstResponder == true {
@@ -29,7 +29,7 @@ class ActionBarManager: ActionBarDelegate {
             return false
         }
 
-        func isResponder(item: Item) -> Bool {
+        func isResponder(item: TableItem) -> Bool {
             return (item as? UIResponder)?.canBecomeFirstResponder ?? false
         }
 
@@ -38,7 +38,7 @@ class ActionBarManager: ActionBarDelegate {
             let index = array.index(of: currentItem)
             else { return nil }
 
-        let item: Item?
+        let item: TableItem?
 
         switch direction {
         case .next:

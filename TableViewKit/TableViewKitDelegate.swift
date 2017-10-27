@@ -4,7 +4,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
 
     open unowned var manager: TableViewManager
     open weak var scrollDelegate: UIScrollViewDelegate?
-    private var sections: ObservableArray<Section> { return manager.sections }
+    private var sections: ObservableArray<TableSection> { return manager.sections }
 
     public required init(manager: TableViewManager) {
         self.manager = manager
@@ -62,6 +62,27 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
         return item.actions
     }
 
+    /// Implementation of UITableViewDelegate
+    open func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        return manager.item(at: indexPath) is ActionPerformable
+    }
+
+    /// Implementation of UITableViewDelegate
+    // swiftlint:disable:next line_length
+    open func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        guard let item = manager.item(at: indexPath) as? ActionPerformable,
+            let action = ItemAction(action: action) else { return false }
+        return item.canPerformAction(action)
+    }
+
+    /// Implementation of UITableViewDelegate
+    // swiftlint:disable:next line_length
+    open func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
+        guard let item = manager.item(at: indexPath) as? ActionPerformable,
+            let action = ItemAction(action: action)  else { return }
+        item.performAction(action)
+    }
+
     /// Implementation of UIScrollViewDelegate
     open func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollDelegate?.scrollViewDidScroll?(scrollView)
@@ -73,11 +94,20 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
     }
 
     /// Implementation of UIScrollViewDelegate
+    // swiftlint:disable:next line_length
+    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        scrollDelegate?.scrollViewWillEndDragging?(
+            scrollView,
+            withVelocity: velocity,
+            targetContentOffset: targetContentOffset)
+    }
+
+    /// Implementation of UIScrollViewDelegate
     open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         scrollDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
 
-    fileprivate func view(for key: (Section) -> HeaderFooterView, inSection section: Int) -> UIView? {
+    fileprivate func view(for key: (TableSection) -> HeaderFooterView, inSection section: Int) -> UIView? {
         guard case .view(let item) = key(sections[section]) else { return nil }
 
         let drawer = type(of: item).drawer
@@ -87,7 +117,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
         return view
     }
 
-    fileprivate func estimatedHeight(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
+    fileprivate func estimatedHeight(for key: (TableSection) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
         let item = key(sections[section])
         switch item {
         case .view(let view):
@@ -105,7 +135,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
         return height.estimated
     }
 
-    fileprivate func height(for key: (Section) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
+    fileprivate func height(for key: (TableSection) -> HeaderFooterView, inSection section: Int) -> CGFloat? {
         guard case .view(let view) = key(sections[section]), let value = view.height
             else { return nil }
         return value.height

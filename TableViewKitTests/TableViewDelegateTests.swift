@@ -2,10 +2,10 @@ import XCTest
 import TableViewKit
 import Nimble
 
-class NoHeaderFooterSection: Section {
-    var items: ObservableArray<Item> = []
+class NoHeaderFooterSection: TableSection {
+    var items: ObservableArray<TableItem> = []
 
-    convenience init(items: [Item]) {
+    convenience init(items: [TableItem]) {
         self.init()
         self.items.insert(contentsOf: items, at: 0)
     }
@@ -46,32 +46,32 @@ class ViewHeaderFooter: HeaderFooter {
     }
 }
 
-class ViewHeaderFooterSection: Section {
-    var items: ObservableArray<Item> = []
+class ViewHeaderFooterSection: TableSection {
+    var items: ObservableArray<TableItem> = []
 
     internal var header: HeaderFooterView = .view(ViewHeaderFooter(title: "First Section"))
     internal var footer: HeaderFooterView = .view(ViewHeaderFooter(title: "Section Footer\nHola"))
 
-    convenience init(items: [Item]) {
+    convenience init(items: [TableItem]) {
         self.init()
         self.items.insert(contentsOf: items, at: 0)
     }
 }
 
-class NoHeigthItem: Item {
+class NoHeigthItem: TableItem {
     static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     internal var height: Height?
 }
 
-class StaticHeigthItem: Item {
+class StaticHeigthItem: TableItem {
     static let testStaticHeightValue: CGFloat = 20.0
     static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     internal var height: Height? = .static(20.0)
 }
 
-class SelectableItem: Selectable, Item {
+class SelectableItem: Selectable, TableItem {
     static internal var drawer = AnyCellDrawer(TestDrawer.self)
 
     public var check: Int = 0
@@ -79,6 +79,22 @@ class SelectableItem: Selectable, Item {
     public init() {}
 
     func didSelect() {
+        check += 1
+    }
+}
+
+class ActionableItem: ActionPerformable, TableItem {
+    static internal var drawer = AnyCellDrawer(TestDrawer.self)
+
+    public var check: Int = 0
+
+    public init() {}
+
+    func canPerformAction(_ action: ItemAction) -> Bool {
+        return true
+    }
+
+    func performAction(_ action: ItemAction) {
         check += 1
     }
 }
@@ -233,5 +249,55 @@ class TableViewDelegateTests: XCTestCase {
         view = delegate.tableView(self.tableViewManager.tableView, viewForFooterInSection: 2)
         expect(view).toNot(beNil())
 
+    }
+
+    func testShouldShowMenuForRow() {
+        let section = tableViewManager.sections.first!
+        let firstRow = IndexPath(row: 0, section: 0)
+        var result = delegate.tableView(tableViewManager.tableView, shouldShowMenuForRowAt: firstRow)
+
+        expect(result).to(beFalse())
+
+        let actionableItem = ActionableItem()
+
+        section.items.replace(with: [actionableItem])
+
+        result = delegate.tableView(tableViewManager.tableView, shouldShowMenuForRowAt: firstRow)
+        expect(result).to(beTrue())
+
+    }
+
+    func testCanPerformActionForRow() {
+        let selector = #selector(UIResponderStandardEditActions.copy(_:))
+        let section = tableViewManager.sections.first!
+        let firstRow = IndexPath(row: 0, section: 0)
+        var result = delegate.tableView(tableViewManager.tableView,
+                                        canPerformAction: selector,
+                                        forRowAt: firstRow,
+                                        withSender: nil)
+
+        expect(result).to(beFalse())
+
+        let actionableItem = ActionableItem()
+        section.items.replace(with: [actionableItem])
+        result = delegate.tableView(tableViewManager.tableView,
+                                    canPerformAction: selector,
+                                    forRowAt: firstRow,
+                                    withSender: nil)
+        expect(result).to(beTrue())
+    }
+
+    func testPerformActionForRow() {
+        let selector = #selector(UIResponderStandardEditActions.copy(_:))
+        let section = tableViewManager.sections.first!
+        let firstRow = IndexPath(row: 0, section: 0)
+
+        let actionableItem = ActionableItem()
+        section.items.replace(with: [actionableItem])
+        delegate.tableView(tableViewManager.tableView,
+                                    performAction: selector,
+                                    forRowAt: firstRow,
+                                    withSender: nil)
+        expect(actionableItem.check) == 1
     }
 }

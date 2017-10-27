@@ -3,7 +3,7 @@ import UIKit
 open class TableViewKitDataSource: NSObject, UITableViewDataSource {
 
     open unowned var manager: TableViewManager
-    private var sections: ObservableArray<Section> { return manager.sections }
+    private var sections: ObservableArray<TableSection> { return manager.sections }
 
     public required init(manager: TableViewManager) {
         self.manager = manager
@@ -52,7 +52,7 @@ open class TableViewKitDataSource: NSObject, UITableViewDataSource {
         return manager.item(at: indexPath) is Editable
     }
 
-    fileprivate func title(for key: (Section) -> HeaderFooterView, inSection section: Int) -> String? {
+    fileprivate func title(for key: (TableSection) -> HeaderFooterView, inSection section: Int) -> String? {
         if case .title(let value) = key(sections[section]) {
             return value
         }

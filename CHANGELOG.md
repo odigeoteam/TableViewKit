@@ -2,8 +2,18 @@
 All notable changes to this project will be documented in this file.
 
 ---
-
-## [Unreleased]
+## [1.2.0]
+### Added
+- Official support to Swift 4
+- Support for `TableItem` method `redraw()`
+- Support for `scrollViewWillEndDragging`
+- Support for item's `copy` and `paste` action via `ActionPerformable`
+### Changed
+- Deprecated `Item` in favour of `TableItem`
+- Deprecated `Section` in favour of `TableSection`
+- Optimize diff algorithm used by `ObservableArray` for common methods such as `insert(at:)`, `remove(at:)` etc...
+- Fix a bug where `manager` was not set correctly on `Item` or `Section`
+- Fix memory ownership of `ObservableArray` for Swift 4
 
 ## [1.1.0]
 ### Added
