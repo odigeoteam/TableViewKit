@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage                = "http://github.com/odigeoteam/TableViewKit/"
   s.license                 = "MIT"
   s.author                  = "TableViewKit Contributors"
-  s.ios.deployment_target   = "9.3"
+  s.ios.deployment_target   = "8.0"
   s.source                  = { :git => 'https://github.com/odigeoteam/TableViewKit.git', :tag => "v#{s.version}" }
   s.source_files  			= "TableViewKit/**/*.swift"
   s.framework  				= "UIKit", "Foundation"
