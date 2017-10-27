@@ -2,8 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ---
-
-## [Unreleased]
+## [1.2.0]
 ### Added
 - Official support to Swift 4
 - Support for `TableItem` method `redraw()`
