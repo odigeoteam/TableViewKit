@@ -2,15 +2,11 @@ import Foundation
 import UIKit
 import TableViewKit
 
-public protocol TableViewManagerCompatible {
-    var tableViewManager: TableViewManager! { get }
-}
-
 protocol ActionManagerCompatible {
     var actionBarManager: TableViewManager! { get }
 }
 
-class Example1: UIViewController, TableViewManagerCompatible {
+class Example1: UIViewController {
     fileprivate class FirstSection: TableSection, StaticStateful {
         var items: ObservableArray<TableItem> = []
         var states: [State: [TableItem]] = [:]
@@ -23,7 +19,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
 
         var currentState: State = .preParty
 
-        let vc: Example1
+        weak var vc: Example1!
 
         internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "First Section"))
         internal var footer: HeaderFooterView = .view(CustomHeaderItem(title: "Section Footer\nHola"))
@@ -69,7 +65,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
 
         internal var header: HeaderFooterView = .view(CustomHeaderItem(title: "Second Section"))
 
-        let vc: Example1
+        weak var vc: Example1!
 
         required init(vc: Example1) {
             self.vc = vc
@@ -102,11 +98,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
         var allItems: [TableItem] = []
         var currentState: State = .all
 
-        let vc: TableViewManagerCompatible
-
-        required init(vc: TableViewManagerCompatible) {
-            self.vc = vc
-
+        required init() {
             let total: [Int] = Array(1...10)
             self.allItems = total.map { (index) -> TableItem in
                 let item = CustomItem(title: "Label  \(index)")
@@ -163,8 +155,8 @@ class Example1: UIViewController, TableViewManagerCompatible {
 
         firstSection = FirstSection(vc: self)
         tableViewManager.sections.append(firstSection)
-        tableViewManager.sections.append(ThirdSection(vc: self))
-        tableViewManager.sections.append(SecondSection(vc: self))
+		tableViewManager.sections.append(SecondSection(vc: self))
+        tableViewManager.sections.append(ThirdSection())
 
         // TODO think about a better way to handle self registration
         // In this way we do not take in consideration when the items changes

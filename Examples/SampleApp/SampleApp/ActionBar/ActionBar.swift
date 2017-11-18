@@ -6,7 +6,7 @@ public enum Direction {
     case previous
 }
 
-public protocol ActionBarDelegate {
+public protocol ActionBarDelegate: class {
 
     func actionBar(_ actionBar: ActionBar, direction: Direction)
     func actionBar(_ actionBar: ActionBar, doneButtonPressed doneButtonItem: UIBarButtonItem)

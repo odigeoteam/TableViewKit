@@ -63,13 +63,13 @@ public class TextFieldItem: UIResponder, TableItem, ContentValidatable, Validati
     public static var drawer = AnyCellDrawer(TextFieldDrawer.self)
 
     public lazy var validation: Validation<String?> = {
-        return Validation<String?>(forInput: self, withIdentifier: self)
+        return Validation<String?>(forInput: self, withIdentifier: self.placeHolder)
     }()
 
     public var placeHolder: String?
     public var value: String?
 
-    fileprivate let actionBarDelegate: ActionBarDelegate
+    fileprivate weak var actionBarDelegate: ActionBarDelegate!
 
     public init(placeHolder: String?, actionBarDelegate: ActionBarDelegate) {
         self.placeHolder = placeHolder
