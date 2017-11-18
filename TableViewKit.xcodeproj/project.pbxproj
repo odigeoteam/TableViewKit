@@ -39,6 +39,7 @@
 		CCEF387E1D8D59C000F5893F /* NibClassType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEF387D1D8D59C000F5893F /* NibClassType.swift */; };
 		CCEF38801D8D5A7A00F5893F /* HeaderFooterDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEF387F1D8D5A7A00F5893F /* HeaderFooterDrawer.swift */; };
 		CCFD05CC1D95BD3C0063A002 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFD05CB1D95BD3C0063A002 /* Stateful.swift */; };
+		D320F0601FC0BA550010D428 /* TableViewKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320F05F1FC0BA550010D428 /* TableViewKitViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		CCEF387D1D8D59C000F5893F /* NibClassType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibClassType.swift; sourceTree = "<group>"; };
 		CCEF387F1D8D5A7A00F5893F /* HeaderFooterDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderFooterDrawer.swift; path = Protocols/HeaderFooterDrawer.swift; sourceTree = "<group>"; };
 		CCFD05CB1D95BD3C0063A002 /* Stateful.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stateful.swift; path = Protocols/Stateful.swift; sourceTree = "<group>"; };
+		D320F05F1FC0BA550010D428 /* TableViewKitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewKitViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CC09F88A1EA791B7006FF4EA /* TableViewKitDelegate.swift */,
 				CC09F8881EA79178006FF4EA /* TableViewKitDataSource.swift */,
+				D320F05F1FC0BA550010D428 /* TableViewKitViewController.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
 				CCBE45611D72F69500414A64 /* Info.plist */,
 				CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */,
@@ -348,6 +351,7 @@
 				CC09F8891EA79178006FF4EA /* TableViewKitDataSource.swift in Sources */,
 				CCBE45931D72F79C00414A64 /* UITableView+Register.swift in Sources */,
 				CCBE459D1D72F79C00414A64 /* CellDrawer.swift in Sources */,
+				D320F0601FC0BA550010D428 /* TableViewKitViewController.swift in Sources */,
 				CCBE459F1D72F79C00414A64 /* TableItem.swift in Sources */,
 				CCCAC1221D7D9E440001FC1D /* (null) in Sources */,
 			);
