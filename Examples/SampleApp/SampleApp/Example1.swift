@@ -74,7 +74,7 @@ class Example1: UIViewController, TableViewManagerCompatible {
         required init(vc: Example1) {
             self.vc = vc
 
-            let total: [Int] = Array(1...100)
+            let total: [Int] = Array(1...10)
             let items = total.map({ (index) -> TableItem in
                 if (index % 2 == 0) {
                     let item = TextFieldItem(placeHolder: "Textfield \(index)", actionBarDelegate: vc.actionBarManager)
