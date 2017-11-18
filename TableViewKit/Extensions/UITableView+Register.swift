@@ -11,6 +11,8 @@ extension UITableView {
             self.register(cellClass, forCellReuseIdentifier: type.reusableIdentifier)
         case .nib(let nib, _):
             self.register(nib, forCellReuseIdentifier: type.reusableIdentifier)
+		default:
+			break
         }
     }
 
@@ -23,6 +25,8 @@ extension UITableView {
             self.register(cellClass, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
         case .nib(let nib, _):
             self.register(nib, forHeaderFooterViewReuseIdentifier: type.reusableIdentifier)
+		default:
+			break
         }
     }
 }
