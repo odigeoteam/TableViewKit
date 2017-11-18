@@ -14,17 +14,16 @@ class ViewController: UIViewController, TableViewManagerCompatible {
 
             let array: [UIViewController.Type] = [Example1.self]
             let mappedItems = array.map({ (className) -> TableItem in
-                let viewController = className.init(nibName: String(describing: className), bundle: nil)
-
-                let navigationController = UINavigationController(rootViewController: viewController)
-
-                let item = CustomItem(title: "Example 1")
-                item.onSelection = { _ in
+				
+                let cItem = CustomItem(title: String(describing: className))
+                cItem.onSelection = { item in
+					let viewController = className.init(nibName: String(describing: className), bundle: nil)
+					let navigationController = UINavigationController(rootViewController: viewController)
                     self.vc.present(navigationController, animated: true, completion: {
                         item.deselect(animated: false)
                     })
                 }
-                return item
+                return cItem
             })
 
             self.items.insert(contentsOf: mappedItems, at: 0)
