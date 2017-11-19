@@ -13,15 +13,25 @@ public enum NibClassType<T> {
     /// The reusable identifier for the type
     public var reusableIdentifier: String {
 		switch self {
-		case .nib(_, let cellClass):
-			return String(describing: cellClass)
-		case .class(let cellClass):
-			return String(describing: cellClass)
+		case .class, .nib:
+			return String(describing: typeClass)
 		case .prototype(let identifier, _):
 			return identifier
 		}
 		
     }
+	
+	/// The type class
+	public var typeClass: T.Type {
+		switch self {
+		case .class(let cellClass):
+			return cellClass
+		case .nib(_, let cellClass):
+			return cellClass
+		case .prototype(_, let cellClass):
+			return cellClass
+		}
+	}
 
 }
 
