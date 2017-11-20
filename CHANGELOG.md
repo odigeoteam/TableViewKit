@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ---
+## [Unreleased]
+
+- Improved/Fixed examples ([PR#34](https://github.com/odigeoteam/TableViewKit/pull/34), [PR#35](https://github.com/odigeoteam/TableViewKit/pull/35))
+
 ## [1.2.0]
 ### Added
 - Official support to Swift 4

@@ -1,12 +1,12 @@
 import UIKit
 import TableViewKit
 
-class ViewController: UIViewController, TableViewManagerCompatible {
+class ViewController: UIViewController {
 
     fileprivate class CustomSection: TableSection {
         var items: ObservableArray<TableItem>
 
-        let vc: ViewController
+        weak var vc: ViewController!
 
         required init(vc: ViewController) {
             self.vc = vc
