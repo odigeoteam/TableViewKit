@@ -13,6 +13,7 @@
 		2564E61C1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2564E61B1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib */; };
 		25837C781D87F819001EF4B8 /* ItemCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25837C771D87F819001EF4B8 /* ItemCompatible.swift */; };
 		25B0B7541DC74F6C00591467 /* Editable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B0B7531DC74F6C00591467 /* Editable.swift */; };
+		34A206811FC33340009A7ED3 /* TableViewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A206801FC33340009A7ED3 /* TableViewManagerTests.swift */; };
 		CC09F8891EA79178006FF4EA /* TableViewKitDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC09F8881EA79178006FF4EA /* TableViewKitDataSource.swift */; };
 		CC09F88B1EA791B7006FF4EA /* TableViewKitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC09F88A1EA791B7006FF4EA /* TableViewKitDelegate.swift */; };
 		CC0DE2C81DE33B9C00E2EDE5 /* AnyEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DE2C71DE33B9C00E2EDE5 /* AnyEquatable.swift */; };
@@ -39,6 +40,7 @@
 		CCEF387E1D8D59C000F5893F /* NibClassType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEF387D1D8D59C000F5893F /* NibClassType.swift */; };
 		CCEF38801D8D5A7A00F5893F /* HeaderFooterDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEF387F1D8D5A7A00F5893F /* HeaderFooterDrawer.swift */; };
 		CCFD05CC1D95BD3C0063A002 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFD05CB1D95BD3C0063A002 /* Stateful.swift */; };
+		D320F0601FC0BA550010D428 /* TableViewKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320F05F1FC0BA550010D428 /* TableViewKitViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,7 @@
 		2564E61B1D88450F00A9DC3E /* TestRegisterHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestRegisterHeaderFooterView.xib; sourceTree = "<group>"; };
 		25837C771D87F819001EF4B8 /* ItemCompatible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemCompatible.swift; path = Protocols/ItemCompatible.swift; sourceTree = "<group>"; };
 		25B0B7531DC74F6C00591467 /* Editable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Editable.swift; path = Protocols/Editable.swift; sourceTree = "<group>"; };
+		34A206801FC33340009A7ED3 /* TableViewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewManagerTests.swift; sourceTree = "<group>"; };
 		4BCAD51C1D89A704002F3420 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "External/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
 		CC09F8881EA79178006FF4EA /* TableViewKitDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewKitDataSource.swift; sourceTree = "<group>"; };
 		CC09F88A1EA791B7006FF4EA /* TableViewKitDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewKitDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 		CCEF387D1D8D59C000F5893F /* NibClassType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibClassType.swift; sourceTree = "<group>"; };
 		CCEF387F1D8D5A7A00F5893F /* HeaderFooterDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderFooterDrawer.swift; path = Protocols/HeaderFooterDrawer.swift; sourceTree = "<group>"; };
 		CCFD05CB1D95BD3C0063A002 /* Stateful.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stateful.swift; path = Protocols/Stateful.swift; sourceTree = "<group>"; };
+		D320F05F1FC0BA550010D428 /* TableViewKitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewKitViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,7 @@
 				CCBE458E1D72F79C00414A64 /* TableViewManager.swift */,
 				CC09F88A1EA791B7006FF4EA /* TableViewKitDelegate.swift */,
 				CC09F8881EA79178006FF4EA /* TableViewKitDataSource.swift */,
+				D320F05F1FC0BA550010D428 /* TableViewKitViewController.swift */,
 				CCBE455F1D72F69500414A64 /* TableViewKit.h */,
 				CCBE45611D72F69500414A64 /* Info.plist */,
 				CC5CF11B1D839E71004DECB3 /* ArrayDiff.swift */,
@@ -180,6 +185,7 @@
 				CCE400F51D731B7300537715 /* TableViewDataSourceTests.swift */,
 				CC12F72A1F2611BE00F20671 /* ArrayChangesUtils.swift */,
 				CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */,
+				34A206801FC33340009A7ED3 /* TableViewManagerTests.swift */,
 				2519E1CC1E015A0A0021E06E /* ObservableArrayTests.swift */,
 				CCBE456D1D72F69500414A64 /* Info.plist */,
 				2564E6191D88419B00A9DC3E /* TestRegisterNibCell.xib */,
@@ -348,6 +354,7 @@
 				CC09F8891EA79178006FF4EA /* TableViewKitDataSource.swift in Sources */,
 				CCBE45931D72F79C00414A64 /* UITableView+Register.swift in Sources */,
 				CCBE459D1D72F79C00414A64 /* CellDrawer.swift in Sources */,
+				D320F0601FC0BA550010D428 /* TableViewKitViewController.swift in Sources */,
 				CCBE459F1D72F79C00414A64 /* TableItem.swift in Sources */,
 				CCCAC1221D7D9E440001FC1D /* (null) in Sources */,
 			);
@@ -362,6 +369,7 @@
 				CC9D50E11D8496180010FCA3 /* TableViewDelegateTests.swift in Sources */,
 				CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */,
 				CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */,
+				34A206811FC33340009A7ED3 /* TableViewManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
