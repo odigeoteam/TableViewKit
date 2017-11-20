@@ -66,6 +66,23 @@ class StatefulSection: HeaderFooterTitleSection, StaticStateful {
 class TestRegisterNibCell: UITableViewCell { }
 class TestRegisterHeaderFooterView: UITableViewHeaderFooterView { }
 
+class TestRegisterPrototypeTableView: UITableView {
+
+    var registedCell = false
+
+    override func register(_ cellClass: Swift.AnyClass?, forCellReuseIdentifier identifier: String) {
+        registedCell = true
+    }
+
+    override func register(_ nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
+        registedCell = true
+    }
+
+    override func register(_ aClass: Swift.AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
+        registedCell = true
+    }
+}
+
 class TableViewKitTests: XCTestCase {
 
     var manager: TableViewManager!
@@ -300,6 +317,37 @@ class TableViewKitTests: XCTestCase {
 		let type = HeaderFooterType<TestRegisterHeaderFooterView>.nib(nib, TestRegisterHeaderFooterView.self)
 		_ = type.headerFooterType
 	}
+
+    func testRegisterPrototypeCells() {
+        let cellType = CellType<UITableViewCell>.prototype("testReuseIdentifier", UITableViewCell.self)
+
+        let tableView = TestRegisterPrototypeTableView()
+        tableView.register(cellType)
+
+        expect(tableView.registedCell) == false
+    }
+
+    func testRegisterPrototypeHeaderFooter() {
+
+        // swiftlint:disable:next line_length
+        let headerFooterType = HeaderFooterType<UITableViewHeaderFooterView>.prototype("testReuseIdentifier", UITableViewHeaderFooterView.self)
+
+        let tableView = TestRegisterPrototypeTableView()
+        tableView.register(headerFooterType)
+
+        expect(tableView.registedCell) == false
+    }
+
+    func testPrototypeClassTypeCells() {
+        let type = CellType<UITableViewCell>.prototype("testReuseIdentifier", UITableViewCell.self)
+        _ = type.cellType
+    }
+
+    func testPrototypeClassTypeHeaderFooter() {
+        // swiftlint:disable:next line_length
+        let type = HeaderFooterType<UITableViewHeaderFooterView>.prototype("testReuseIdentifier", UITableViewHeaderFooterView.self)
+        _ = type.headerFooterType
+    }
 
     func testLoginState() {
 
