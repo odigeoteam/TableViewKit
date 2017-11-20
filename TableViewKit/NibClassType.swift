@@ -19,7 +19,7 @@ public enum NibClassType<T> {
             return identifier
         }
     }
-	
+
     /// The type class
     public var typeClass: T.Type {
         switch self {
@@ -59,4 +59,3 @@ extension NibClassType where T: UITableViewHeaderFooterView {
         }
     }
 }
-
