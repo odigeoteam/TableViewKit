@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 - Improved/Fixed examples ([PR#34](https://github.com/odigeoteam/TableViewKit/pull/34), [PR#35](https://github.com/odigeoteam/TableViewKit/pull/35))
 - Added *prototype* cell type to use with Storyboard's prototype cells ([PR#36](https://github.com/odigeoteam/TableViewKit/pull/36))
+- Added an inheritable ViewController as a helper to work with TableViewKit
 
 ## [1.2.0]
 ### Added
