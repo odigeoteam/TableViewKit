@@ -80,7 +80,7 @@ public class ObservableArray<T>: RandomAccessCollection, ExpressibleByArrayLiter
             return array[index]
         }
         set {
-            array[index] = newValue
+            replaceSubrange(index..<index + 1, with: [newValue])
         }
     }
 
