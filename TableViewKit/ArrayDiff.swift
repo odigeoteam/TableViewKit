@@ -146,7 +146,7 @@ extension Array {
         var deleted: Int = 0
         for (deleteIndex, deleteAtIndex) in deletes.enumerated() {
             let elem = x[deleteAtIndex]
-            let temp = inserts.index { predicate(y[$0], elem) }
+            let temp = inserts.index { predicate(y[$0 - lowerBond], elem) }
             guard let insertIndex = temp else { continue }
 
             let insertAtIndex = inserts[insertIndex]

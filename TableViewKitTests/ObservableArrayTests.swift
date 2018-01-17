@@ -170,4 +170,15 @@ class ObservableArrayTests: XCTestCase {
             .endUpdates(from: [], to: [])]
         expect(self.results) == expectedResults
     }
+
+    func testReplaceSingleValue() {
+        reset()
+        numbers[2] = 99
+        expectedResults = [
+            .beginUpdates(from: [], to: []),
+            .deletes([2], [2]),
+            .inserts([2], [99]),
+            .endUpdates(from: [], to: [])]
+        expect(self.results) == expectedResults
+    }
 }
