@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ---
 ## [Unreleased]
 
+- Improved initial slicing for diff algorithm ([PR#39](https://github.com/odigeoteam/TableViewKit/pull/39))
 - Fixed ObservableArray setter ([PR#38](https://github.com/odigeoteam/TableViewKit/pull/38))
 - Improved/Fixed examples ([PR#34](https://github.com/odigeoteam/TableViewKit/pull/34), [PR#35](https://github.com/odigeoteam/TableViewKit/pull/35))
 - Added *prototype* cell type to use with Storyboard's prototype cells ([PR#36](https://github.com/odigeoteam/TableViewKit/pull/36))

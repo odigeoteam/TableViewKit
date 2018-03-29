@@ -95,7 +95,6 @@ public class ObservableArray<T>: RandomAccessCollection, ExpressibleByArrayLiter
 
         let diff = Array.diff(between: self.array,
                               and: array,
-                              subrange: 0..<self.array.count,
                               where: compare)
         self.array = array
         notifyChanges(with: diff)
