@@ -17,7 +17,7 @@ open class TableViewManager {
 
     open var dataSource: TableViewKitDataSource? { didSet { tableView.dataSource = dataSource } }
     open var delegate: TableViewKitDelegate? { didSet { tableView.delegate = delegate } }
-    open var scrollDelegate: UIScrollViewDelegate? { didSet { delegate?.scrollDelegate = scrollDelegate } }
+    open weak var scrollDelegate: UIScrollViewDelegate? { didSet { delegate?.scrollDelegate = scrollDelegate } }
 
     var reusableIdentifiers: Set<String> = []
 

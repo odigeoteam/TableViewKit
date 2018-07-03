@@ -24,3 +24,5 @@ identifier_name:
     - from
     - to
     - n
+    - i
+    - j
