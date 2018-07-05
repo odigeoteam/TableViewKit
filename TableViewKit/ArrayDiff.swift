@@ -176,15 +176,19 @@ extension Array {
                      where predicate: Predicate) -> Diff<Element> {
         let sliceOfX: ArraySlice<Element>
         let sliceOfY: ArraySlice<Element>
+        let offsetForY: Int
         if let subrange = subrange {
             sliceOfX = x[subrange]
             sliceOfY = y[y.startIndex..<y.endIndex]
+            offsetForY = sliceOfX.startIndex
         } else if x.startIndex == y.startIndex && x.endIndex == y.endIndex {
             sliceOfX = makeOptimalSlice(between: x, and: y, where: predicate)
             sliceOfY = y[sliceOfX.startIndex..<sliceOfX.endIndex]
+            offsetForY = 0
         } else {
             sliceOfX = x[x.startIndex..<x.endIndex]
             sliceOfY = y[y.startIndex..<y.endIndex]
+            offsetForY = 0
         }
 
         let matrix = makeLCSMatrix(between: sliceOfX, and: sliceOfY, where: predicate)
@@ -210,7 +214,7 @@ extension Array {
         let diff = Diff(inserts: inserts,
                         deletes: deletes,
                         moves: moves,
-                        insertsElement: inserts.flatMap { y[$0 - lowerBound] },
+                        insertsElement: inserts.flatMap { y[$0 - offsetForY] },
                         deletesElement: deletes.flatMap { x[$0] },
                         fromElements: x,
                         toElements: y)
