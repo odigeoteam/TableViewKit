@@ -49,14 +49,14 @@ struct Movement: Hashable {
 
 extension Array where Element == ArrayIndexesChanges {
     func filterInsertsIndexes(withOffset offset: Int) -> [Int] {
-        return flatMap { change -> Int? in
+        return compactMap { change -> Int? in
             guard case .inserts(let index) = change else { return nil }
             return index + offset
         }
     }
 
     func filterDeletesIndexes(withOffset offset: Int) -> [Int] {
-        return flatMap { change -> Int? in
+        return compactMap { change -> Int? in
             guard case .deletes(let index) = change else { return nil }
             return index + offset
         }
@@ -214,8 +214,8 @@ extension Array {
         let diff = Diff(inserts: inserts,
                         deletes: deletes,
                         moves: moves,
-                        insertsElement: inserts.flatMap { y[$0 - offsetForY] },
-                        deletesElement: deletes.flatMap { x[$0] },
+                        insertsElement: inserts.compactMap { y[$0 - offsetForY] },
+                        deletesElement: deletes.compactMap { x[$0] },
                         fromElements: x,
                         toElements: y)
 

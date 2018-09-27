@@ -25,7 +25,7 @@ public enum Height {
         case .static(let value):
             return value
         case .dynamic:
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
     }
 }

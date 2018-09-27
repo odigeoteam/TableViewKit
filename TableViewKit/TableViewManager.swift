@@ -8,12 +8,12 @@ import UIKit
 open class TableViewManager {
 
     /// The `tableView` linked to this manager
-    open let tableView: UITableView
+    open var tableView: UITableView
 
     /// An array of sections
     open var sections: ObservableArray<TableSection>
 
-    open var animation: UITableViewRowAnimation = .automatic
+    open var animation: UITableView.RowAnimation = .automatic
 
     open var dataSource: TableViewKitDataSource? { didSet { tableView.dataSource = dataSource } }
     open var delegate: TableViewKitDelegate? { didSet { tableView.delegate = delegate } }

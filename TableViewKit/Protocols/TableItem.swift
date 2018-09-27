@@ -86,7 +86,7 @@ extension TableItem {
     /// Reload the `item` with an `animation`
     ///
     /// - parameter animation: A constant that indicates how the reloading is to be animated
-    public func reload(with animation: UITableViewRowAnimation = .automatic) {
+    public func reload(with animation: UITableView.RowAnimation = .automatic) {
         guard let indexPath = indexPath else { return }
         let section = manager?.sections[indexPath.section]
         section?.items.callback?(.updates([indexPath.row]))
@@ -101,9 +101,9 @@ extension TableItem {
 
 }
 
-public extension Collection where Self.Iterator.Element == TableItem {
+public extension Collection where Element == TableItem {
     /// Return the index of the `element` inside a collection of items
-    func index(of element: TableItem) -> Self.Index? {
+    func index(of element: TableItem) -> Index? {
         return index(where: { $0 === element })
     }
 }
