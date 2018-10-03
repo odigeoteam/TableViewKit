@@ -137,7 +137,7 @@ class TableViewDelegateTests: XCTestCase {
         var height: CGFloat
 
         height = delegate.tableView(tableViewManager.tableView, heightForHeaderInSection: 0)
-        expect(height) == UITableViewAutomaticDimension
+        expect(height) == UITableView.automaticDimension
     }
 
     func testEstimatedHeightForFooter() {
@@ -157,10 +157,10 @@ class TableViewDelegateTests: XCTestCase {
         var height: CGFloat
 
         height = delegate.tableView(tableViewManager.tableView, heightForFooterInSection: 0)
-        expect(height) == UITableViewAutomaticDimension
+        expect(height) == UITableView.automaticDimension
 
         height = delegate.tableView(tableViewManager.tableView, heightForFooterInSection: 2)
-        expect(height) == UITableViewAutomaticDimension
+        expect(height) == UITableView.automaticDimension
     }
 
     func testEstimatedHeightForRowAtIndexPath() {
@@ -186,7 +186,7 @@ class TableViewDelegateTests: XCTestCase {
 
         indexPath = IndexPath(row: 0, section: 0)
         height = delegate.tableView(tableViewManager.tableView, heightForRowAt: indexPath)
-        expect(height) == UITableViewAutomaticDimension
+        expect(height) == UITableView.automaticDimension
 
         indexPath = IndexPath(row: 0, section: 1)
         height = delegate.tableView(tableViewManager.tableView, heightForRowAt: indexPath)

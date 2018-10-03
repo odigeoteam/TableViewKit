@@ -13,7 +13,7 @@ extension Selectable {
     ///
     /// - parameter animated:       If the selection should be animated
     /// - parameter scrollPosition: The scrolling position
-    public func select(animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
+    public func select(animated: Bool, scrollPosition: UITableView.ScrollPosition = .none) {
         guard let tableView = manager?.tableView else { return }
 
         tableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)

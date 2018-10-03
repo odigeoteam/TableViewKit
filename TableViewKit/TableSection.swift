@@ -27,7 +27,7 @@ public extension TableSection where Self: Equatable {
             return other == self
         }
         return false
-}
+    }
 }
 
 extension TableSection {
@@ -111,9 +111,9 @@ extension TableSection {
 
 }
 
-public extension Collection where Self.Iterator.Element == TableSection {
+public extension Collection where Element == TableSection {
     /// Return the index of the `element` inside a collection of sections
-    func index(of element: TableSection) -> Self.Index? {
+    func index(of element: TableSection) -> Index? {
         return index(where: { $0 === element })
     }
 }

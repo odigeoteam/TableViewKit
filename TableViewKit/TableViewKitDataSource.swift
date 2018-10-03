@@ -43,7 +43,7 @@ open class TableViewKitDataSource: NSObject, UITableViewDataSource {
 
     /// Implementation of UITableViewDataSource
     // swiftlint:disable:next line_length
-    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // Intentionally blank. Required to use UITableViewRowActions
     }
 
