@@ -159,7 +159,7 @@ open class PickerControl: NSObject {
         self.cancelCallback = cancelCallback
     }
 
-    public convenience init(datePickerMode: UIDatePickerMode, fromDate: Date, toDate: Date, minuteInterval: Int, selectCallback: SelectCallBack? = nil, cancelCallback: CancelCallBack? = nil) {
+    public convenience init(datePickerMode: UIDatePicker.Mode, fromDate: Date, toDate: Date, minuteInterval: Int, selectCallback: SelectCallBack? = nil, cancelCallback: CancelCallBack? = nil) {
 
         self.init()
 

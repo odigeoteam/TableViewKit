@@ -148,8 +148,8 @@ class Example1: UIViewController {
 
         super.viewDidLoad()
 
-        self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension
-        self.tableView.sectionFooterHeight = UITableViewAutomaticDimension
+        self.tableView.sectionHeaderHeight = UITableView.automaticDimension
+        self.tableView.sectionFooterHeight = UITableView.automaticDimension
         self.tableView.estimatedSectionHeaderHeight = 100
         self.tableView.estimatedSectionFooterHeight = 100
 
@@ -162,7 +162,7 @@ class Example1: UIViewController {
         // In this way we do not take in consideration when the items changes
         tableViewManager.sections
             .flatMap { $0.items }
-            .flatMap { $0 as? Validationable }
+            .compactMap { $0 as? Validationable }
             .forEach { validator.add(validation: $0.validation) }
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Validate", style: .plain, target: self, action: #selector(validationAction))

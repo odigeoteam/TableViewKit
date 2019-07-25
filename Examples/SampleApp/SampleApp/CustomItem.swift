@@ -20,10 +20,10 @@ public class CustomItem: Selectable, TableItem {
 
     public var onSelection: (Selectable) -> Void = { _ in }
 
-    public var cellStyle: UITableViewCellStyle = .default
-    public var accessoryType: UITableViewCellAccessoryType = .none
+    public var cellStyle: UITableViewCell.CellStyle = .default
+    public var accessoryType: UITableViewCell.AccessoryType = .none
     public var accessoryView: UIView?
-    public var cellHeight: CGFloat? = UITableViewAutomaticDimension
+    public var cellHeight: CGFloat? = UITableView.automaticDimension
 
     public init() { }
 
