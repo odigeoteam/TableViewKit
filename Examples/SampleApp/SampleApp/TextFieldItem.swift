@@ -24,7 +24,7 @@ public class TextFieldCell: UITableViewCell, ItemCompatible, ActionBarDelegate {
 
     }
 
-    public func onTextChange(textField: UITextField) {
+    @objc public func onTextChange(textField: UITextField) {
         textFieldItem.value = textField.text
     }
 

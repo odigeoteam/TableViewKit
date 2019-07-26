@@ -34,7 +34,7 @@ class AboutViewController: UITableViewController, AboutViewControllerProtocol {
         present(alertController, animated: true, completion: nil)
     }
 
-    func insertSection() {
+    @objc func insertSection() {
 
         let newSection = OtherSection()
         tableViewManager?.sections.insert(newSection, at: 1)
@@ -42,7 +42,7 @@ class AboutViewController: UITableViewController, AboutViewControllerProtocol {
         navigationItem.rightBarButtonItem = moveSectionButtonItem
     }
 
-    func moveSection() {
+    @objc func moveSection() {
 
         guard let section1 = tableViewManager?.sections[0],
             let section2 = tableViewManager?.sections[1],

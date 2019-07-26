@@ -30,7 +30,7 @@ public struct CharactersLengthRule: Validatable {
 
     public func test(_ validationContent: String?) -> Bool {
         guard let validationContent = validationContent else { return true }
-        return (min...max ~= validationContent.characters.count)
+        return (min...max ~= validationContent.count)
     }
 }
 

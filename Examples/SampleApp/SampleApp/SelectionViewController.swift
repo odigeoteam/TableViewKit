@@ -31,9 +31,9 @@ public class SelectionItem: SelectionItemProtocol {
 
     public var onSelection: (Selectable) -> Void = { _ in }
 
-    public var accessoryType: UITableViewCellAccessoryType = .none
+    public var accessoryType: UITableViewCell.AccessoryType = .none
     public var accessoryView: UIView?
-    public var cellHeight: CGFloat? = UITableViewAutomaticDimension
+    public var cellHeight: CGFloat? = UITableView.automaticDimension
 
     public required init(title: String, value: Any, selected: Bool = false) {
         self.value = value
@@ -63,7 +63,7 @@ public class SelectionViewController: UITableViewController {
         commonInit()
     }
 
-    public init(style: UITableViewStyle, selectionType: SelectionType) {
+    public init(style: UITableView.Style, selectionType: SelectionType) {
 
         super.init(style: style)
         commonInit()
