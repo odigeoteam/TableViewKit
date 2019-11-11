@@ -102,9 +102,9 @@ extension TableSection {
     private func setup(in manager: TableViewManager) {
         self.manager = manager
 
-        items.callback = { [weak self] changes in
+        items.callback = { [weak self] changes, animation in
             if let manager = self?.manager, let sectionIndex = self?.index {
-                manager.onItemsUpdate(with: changes, forSectionIndex: sectionIndex)
+                manager.onItemsUpdate(with: changes, forSectionIndex: sectionIndex, animation: animation)
             }
         }
     }

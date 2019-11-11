@@ -17,7 +17,7 @@ public class ObservableArray<T>: RandomAccessCollection, ExpressibleByArrayLiter
 
     var array: [T]
 
-    var callback: ((ArrayChanges<T>) -> Void)?
+    var callback: ((ArrayChanges<T>, UITableView.RowAnimation?) -> Void)?
 
     /// Creates an empty `ObservableArray`
     public required init() {
@@ -183,11 +183,11 @@ public class ObservableArray<T>: RandomAccessCollection, ExpressibleByArrayLiter
     }
 
     private func notifyChanges(with diff: Diff<T>) {
-        callback?(.beginUpdates(from: diff.fromElements, to: diff.toElements))
-        if !diff.moves.isEmpty { callback?(.moves(diff.moves)) }
-        if !diff.deletes.isEmpty { callback?(.deletes(diff.deletes, diff.deletesElement)) }
-        if !diff.inserts.isEmpty { callback?(.inserts(diff.inserts, diff.insertsElement)) }
-        callback?(.endUpdates(from: diff.fromElements, to: diff.toElements))
+        callback?(.beginUpdates(from: diff.fromElements, to: diff.toElements), nil)
+        if !diff.moves.isEmpty { callback?(.moves(diff.moves), nil) }
+        if !diff.deletes.isEmpty { callback?(.deletes(diff.deletes, diff.deletesElement), nil) }
+        if !diff.inserts.isEmpty { callback?(.inserts(diff.inserts, diff.insertsElement), nil) }
+        callback?(.endUpdates(from: diff.fromElements, to: diff.toElements), nil)
     }
 
 }

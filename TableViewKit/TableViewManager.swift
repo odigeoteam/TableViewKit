@@ -39,10 +39,13 @@ open class TableViewManager {
 
     private func setupSections() {
         sections.forEach { $0.register(in: self) }
-        sections.callback = { [weak self] in self?.onSectionsUpdate(with: $0) }
+        sections.callback = { [weak self] section, animation in
+            self?.onSectionsUpdate(with: section, animation: animation)
+        }
     }
 
-    func onSectionsUpdate(with changes: ArrayChanges<TableSection>) {
+    func onSectionsUpdate(with changes: ArrayChanges<TableSection>, animation: UITableView.RowAnimation? = nil) {
+        let animation = animation ?? self.animation
         switch changes {
         case .inserts(let indexes, let insertedSections):
             insertedSections.forEach { $0.register(in: self) }
@@ -71,8 +74,8 @@ open class TableViewManager {
         }
     }
 
-    func onItemsUpdate(with changes: ArrayChanges<TableItem>, forSectionIndex sectionIndex: Int) {
-
+    func onItemsUpdate(with changes: ArrayChanges<TableItem>, forSectionIndex sectionIndex: Int, animation: UITableView.RowAnimation? = nil) {
+        let animation = animation ?? self.animation
         switch changes {
         case .inserts(let array, let insertedItems):
             insertedItems.forEach { register(type(of: $0).drawer.type) }

@@ -89,7 +89,7 @@ extension TableItem {
     public func reload(with animation: UITableView.RowAnimation = .automatic) {
         guard let indexPath = indexPath else { return }
         let section = manager?.sections[indexPath.section]
-        section?.items.callback?(.updates([indexPath.row]))
+        section?.items.callback?(.updates([indexPath.row]), animation)
     }
 
     /// Redraw the associated `cell` of the `item` without reloading it
