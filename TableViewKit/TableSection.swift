@@ -6,7 +6,7 @@ public typealias Section = TableSection
 
 /// A type that represent a section to be displayed
 /// containing `items`, a `header` and a `footer`
-public protocol TableSection: class, AnyEquatable {
+public protocol TableSection: AnyObject, AnyEquatable {
 
     /// A array containing the `items` of the section
     var items: ObservableArray<TableItem> { get set }
@@ -114,6 +114,6 @@ extension TableSection {
 public extension Collection where Element == TableSection {
     /// Return the index of the `element` inside a collection of sections
     func index(of element: TableSection) -> Index? {
-        return index(where: { $0 === element })
+        return firstIndex(where: { $0 === element })
     }
 }

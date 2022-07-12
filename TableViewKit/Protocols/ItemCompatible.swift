@@ -4,7 +4,7 @@ import Foundation
 /// When a UITableViewCell conforms to this protocol and
 /// if the cell is initialiated by the TableViewManager,
 /// the item will be setted automatically.
-public protocol ItemCompatible: class {
+public protocol ItemCompatible: AnyObject {
 
     /// The associated item
     var item: TableItem? { get set }
