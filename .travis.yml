@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode10
+osx_image: xcode13.3
 script:
   - swiftlint
   - travis_retry sh build.sh
