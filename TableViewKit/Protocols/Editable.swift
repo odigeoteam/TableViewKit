@@ -10,16 +10,21 @@ public protocol Editable: TableItem {
 
     /// The associated configuration
     var configuration: UISwipeActionsConfiguration? { get set }
+
 }
 
-extension Editable {
+public extension Editable {
+
     var actions: [UITableViewRowAction]? {
         get { return [] }
+        // swiftlint:disable:next unused_setter_value
         set {}
     }
 
     var configuration: UISwipeActionsConfiguration? {
         get { return nil }
+        // swiftlint:disable:next unused_setter_value
         set {}
     }
+
 }
