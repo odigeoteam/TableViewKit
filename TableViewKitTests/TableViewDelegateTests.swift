@@ -101,6 +101,7 @@ class ActionableItem: ActionPerformable, TableItem {
 
 class EditableItem: SelectableItem, Editable {
     public var actions: [UITableViewRowAction]?
+    public var configuration: UISwipeActionsConfiguration?
 }
 
 class TableViewDelegateTests: XCTestCase {
@@ -218,7 +219,7 @@ class TableViewDelegateTests: XCTestCase {
         expect(item.check) == 2
     }
 
-    func testEditableRows() {
+    func testEditableRowsWithActions() {
         let section = tableViewManager.sections.first!
         let deleteAction = UITableViewRowAction(style: .normal, title: "Delete", handler: { _, _ in
             print("DeleteAction")
@@ -231,6 +232,23 @@ class TableViewDelegateTests: XCTestCase {
         let actions = delegate.tableView(tableViewManager.tableView, editActionsForRowAt: indexPath)
         XCTAssertNotNil(actions)
         XCTAssert(actions!.count == 1)
+    }
+
+    func testEditableRowsWithConfiguration() {
+        let section = tableViewManager.sections.first!
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completionHandler  in
+            print("DeleteAction")
+            completionHandler(true)
+        }
+
+        let editableItem = EditableItem()
+        editableItem.configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        section.items.append(editableItem)
+
+        let indexPath = editableItem.indexPath!
+        let configuration = delegate.tableView(tableViewManager.tableView, trailingSwipeActionsConfigurationForRowAt: indexPath)
+        XCTAssertNotNil(configuration)
+        XCTAssertEqual(configuration?.actions.count, 1)
     }
 
     func testViewForHeaderInSection() {
