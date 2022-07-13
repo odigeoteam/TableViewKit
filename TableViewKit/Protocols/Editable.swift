@@ -8,8 +8,11 @@ public protocol Editable: TableItem {
     @available(*, deprecated, message: "'actions' was deprecated in iOS 13.0: Use 'configuration' and related APIs instead.")
     var actions: [UITableViewRowAction]? { get set }
 
-    /// The associated configuration
-    var configuration: UISwipeActionsConfiguration? { get set }
+    /// The associated leading configuration
+    var trailingConfiguration: UISwipeActionsConfiguration? { get set }
+
+    /// The associated leading configuration
+    var leadingConfiguration: UISwipeActionsConfiguration? { get set }
 
 }
 
@@ -21,7 +24,13 @@ public extension Editable {
         set {}
     }
 
-    var configuration: UISwipeActionsConfiguration? {
+    var trailingConfiguration: UISwipeActionsConfiguration? {
+        get { return nil }
+        // swiftlint:disable:next unused_setter_value
+        set {}
+    }
+
+    var leadingConfiguration: UISwipeActionsConfiguration? {
         get { return nil }
         // swiftlint:disable:next unused_setter_value
         set {}
