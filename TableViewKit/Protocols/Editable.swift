@@ -5,10 +5,10 @@ public protocol Editable: TableItem {
 
     /// The associated actions
     // swiftlint:disable:next line_length
-    @available(*, deprecated, message: "'actions' was deprecated in iOS 13.0: Use 'configuration' and related APIs instead.")
+    @available(*, deprecated, message: "'actions' was deprecated in iOS 13.0: Use 'trailingConfiguration or leadingConfiguration' and related APIs instead.")
     var actions: [UITableViewRowAction]? { get set }
 
-    /// The associated leading configuration
+    /// The associated trailing configuration
     var trailingConfiguration: UISwipeActionsConfiguration? { get set }
 
     /// The associated leading configuration
