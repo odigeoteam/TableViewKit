@@ -37,7 +37,9 @@ enum ArrayIndexesChanges {
 }
 
 struct Movement: Hashable {
-    var hashValue: Int { return from.hashValue ^ to.hashValue }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(from.hashValue ^ to.hashValue)
+    }
 
     static func == (lhs: Movement, rhs: Movement) -> Bool {
         return (lhs.from == rhs.from && lhs.to == rhs.to)

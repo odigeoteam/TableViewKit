@@ -17,7 +17,7 @@ public enum HeaderFooterView: ExpressibleByNilLiteral {
 }
 
 /// A type that it's associated to header/footer drawer
-public protocol HeaderFooter: class {
+public protocol HeaderFooter: AnyObject {
 
     /// The `drawer` of the header/footer
     static var drawer: AnyHeaderFooterDrawer { get }

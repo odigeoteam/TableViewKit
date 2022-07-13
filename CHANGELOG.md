@@ -11,6 +11,12 @@ All notable changes to this project will be documented in this file.
 - Added *prototype* cell type to use with Storyboard's prototype cells ([PR#36](https://github.com/odigeoteam/TableViewKit/pull/36))
 - Added `TableViewKitViewController` as an inheritable View Controller as a helper ([PR#37](https://github.com/odigeoteam/TableViewKit/pull/37))
 
+## [1.3.0]
+### Added
+- Official support to Swift 5
+- Support for `UISwipeActionsConfiguration`
+- Support for `trailingSwipeActionsConfigurationForRowAt` and `leadingSwipeActionsConfigurationForRowAt` delegate method
+
 ## [1.2.0]
 ### Added
 - Official support to Swift 4

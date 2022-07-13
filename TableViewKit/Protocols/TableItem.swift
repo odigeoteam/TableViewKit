@@ -5,7 +5,7 @@ public typealias Item = TableItem
 
 /// A type that represent an item to be displayed
 /// defining the `drawer` and the `height`
-public protocol TableItem: class, AnyEquatable {
+public protocol TableItem: AnyObject, AnyEquatable {
 
     /// The `drawer` of the item
     static var drawer: AnyCellDrawer { get }
@@ -104,6 +104,6 @@ extension TableItem {
 public extension Collection where Element == TableItem {
     /// Return the index of the `element` inside a collection of items
     func index(of element: TableItem) -> Index? {
-        return index(where: { $0 === element })
+        return firstIndex(where: { $0 === element })
     }
 }
