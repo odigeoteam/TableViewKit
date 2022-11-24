@@ -40,6 +40,10 @@ public extension CellDrawer {
         if let cell = cell as? ItemCompatible {
             cell.item = item as? TableItem
         }
+        
+        if let zPosition = manager.zPositionForCell(at: indexPath) {
+            cell.layer.zPosition = zPosition
+        }
 
         // swiftlint:disable:next force_cast
         return cell as! Cell
