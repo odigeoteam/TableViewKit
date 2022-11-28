@@ -198,4 +198,19 @@ class TableViewManagerTests: XCTestCase {
 
     }
 
+    func testZPositionForCell() throws {
+        let zPosition: CGFloat = 4
+        let sections = Array(
+            repeating: HeaderFooterTitleSection(items: .init(repeating: TestItem(), count: 3)),
+            count: 2
+        )
+        let tableManager = TableViewManagerMock(tableView: UITableView(), sections: sections)
+        tableManager.zPositionForCellReturnValue = zPosition
+        let dataSource = try XCTUnwrap(tableManager.dataSource)
+        
+        let cell = dataSource.tableView(tableManager.tableView, cellForRowAt: .init(row: 1, section: 1))
+        
+        XCTAssertEqual(tableManager.zPositionForCellCallsCount, 1)
+        XCTAssertEqual(cell.layer.zPosition, zPosition)
+    }
 }

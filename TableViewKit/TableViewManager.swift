@@ -97,6 +97,9 @@ open class TableViewManager {
         }
     }
 
+    open func zPositionForCell(at indexPath: IndexPath) -> CGFloat? {
+        nil
+    }
 }
 
 extension TableViewManager {

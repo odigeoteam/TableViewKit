@@ -14,6 +14,7 @@
 		25837C781D87F819001EF4B8 /* ItemCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25837C771D87F819001EF4B8 /* ItemCompatible.swift */; };
 		25B0B7541DC74F6C00591467 /* Editable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B0B7531DC74F6C00591467 /* Editable.swift */; };
 		34A206811FC33340009A7ED3 /* TableViewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A206801FC33340009A7ED3 /* TableViewManagerTests.swift */; };
+		76F8AD97292F6937004A8DF2 /* TableViewManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F8AD96292F6937004A8DF2 /* TableViewManagerMock.swift */; };
 		CC09F8891EA79178006FF4EA /* TableViewKitDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC09F8881EA79178006FF4EA /* TableViewKitDataSource.swift */; };
 		CC09F88B1EA791B7006FF4EA /* TableViewKitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC09F88A1EA791B7006FF4EA /* TableViewKitDelegate.swift */; };
 		CC0DE2C81DE33B9C00E2EDE5 /* AnyEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DE2C71DE33B9C00E2EDE5 /* AnyEquatable.swift */; };
@@ -62,6 +63,7 @@
 		25B0B7531DC74F6C00591467 /* Editable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Editable.swift; path = Protocols/Editable.swift; sourceTree = "<group>"; };
 		34A206801FC33340009A7ED3 /* TableViewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewManagerTests.swift; sourceTree = "<group>"; };
 		4BCAD51C1D89A704002F3420 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "External/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
+		76F8AD96292F6937004A8DF2 /* TableViewManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewManagerMock.swift; sourceTree = "<group>"; };
 		CC09F8881EA79178006FF4EA /* TableViewKitDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewKitDataSource.swift; sourceTree = "<group>"; };
 		CC09F88A1EA791B7006FF4EA /* TableViewKitDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewKitDelegate.swift; sourceTree = "<group>"; };
 		CC0DE2C71DE33B9C00E2EDE5 /* AnyEquatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnyEquatable.swift; path = Protocols/AnyEquatable.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				CC12F72A1F2611BE00F20671 /* ArrayChangesUtils.swift */,
 				CCBE456B1D72F69500414A64 /* TableViewKitTests.swift */,
 				34A206801FC33340009A7ED3 /* TableViewManagerTests.swift */,
+				76F8AD96292F6937004A8DF2 /* TableViewManagerMock.swift */,
 				2519E1CC1E015A0A0021E06E /* ObservableArrayTests.swift */,
 				CCBE456D1D72F69500414A64 /* Info.plist */,
 				2564E6191D88419B00A9DC3E /* TestRegisterNibCell.xib */,
@@ -280,6 +283,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = CCBE45521D72F69400414A64;
@@ -368,6 +372,7 @@
 				2519E1CD1E015A0A0021E06E /* ObservableArrayTests.swift in Sources */,
 				CC9D50E11D8496180010FCA3 /* TableViewDelegateTests.swift in Sources */,
 				CCE400F61D731B7300537715 /* TableViewDataSourceTests.swift in Sources */,
+				76F8AD97292F6937004A8DF2 /* TableViewManagerMock.swift in Sources */,
 				CCBE456C1D72F69500414A64 /* TableViewKitTests.swift in Sources */,
 				34A206811FC33340009A7ED3 /* TableViewManagerTests.swift in Sources */,
 			);
