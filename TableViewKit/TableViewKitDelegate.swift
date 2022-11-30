@@ -48,12 +48,24 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return view(for: { $0.header }, inSection: section)
+        let view = view(for: { $0.header }, inSection: section)
+
+        if let zPosition = manager.zPositionForHeader(in: section) {
+            view?.layer.zPosition = zPosition
+        }
+
+        return view
     }
 
     /// Implementation of UITableViewDelegate
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return view(for: { $0.footer }, inSection: section)
+        let view = view(for: { $0.footer }, inSection: section)
+
+        if let zPosition = manager.zPositionForFooter(in: section) {
+            view?.layer.zPosition = zPosition
+        }
+
+        return views
     }
 
     /// Implementation of UITableViewDelegate

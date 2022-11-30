@@ -100,6 +100,15 @@ open class TableViewManager {
     open func zPositionForCell(at indexPath: IndexPath) -> CGFloat? {
         nil
     }
+
+    open func zPositionForHeader(in section: Int) -> CGFloat? {
+        nil
+    }
+
+    open func zPositionForFooter(in section: Int) -> CGFloat? {
+        nil
+    }
+
 }
 
 extension TableViewManager {
