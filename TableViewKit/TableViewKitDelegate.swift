@@ -65,7 +65,7 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
             view?.layer.zPosition = zPosition
         }
 
-        return views
+        return view
     }
 
     /// Implementation of UITableViewDelegate
