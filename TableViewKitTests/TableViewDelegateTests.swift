@@ -23,6 +23,23 @@ class CustomHeaderFooterView: UITableViewHeaderFooterView {
     }
 }
 
+class TestRegisterHeaderFooterViewItem: HeaderFooter {
+    static var drawer = AnyHeaderFooterDrawer(TestRegisterHeaderFooterDrawer.self)
+    var height: Height? = .static(60)
+}
+
+// MARK: - AncillariesBundleInTheAppHeaderDrawer
+
+class TestRegisterHeaderFooterDrawer: HeaderFooterDrawer {
+    static let bundle = Bundle(for: TestRegisterHeaderFooterViewItem.self)
+    static let nib = UINib(nibName: String(describing: TestRegisterHeaderFooterView.self), bundle: bundle)
+    static var type = HeaderFooterType.nib(TestRegisterHeaderFooterDrawer.nib, TestRegisterHeaderFooterView.self)
+
+    static func draw(_ view: TestRegisterHeaderFooterView, with item: TestRegisterHeaderFooterViewItem) {
+    }
+}
+
+
 class CustomHeaderDrawer: HeaderFooterDrawer {
 
     static public var type = HeaderFooterType.class(CustomHeaderFooterView.self)
@@ -51,6 +68,18 @@ class ViewHeaderFooterSection: TableSection {
 
     internal var header: HeaderFooterView = .view(ViewHeaderFooter(title: "First Section"))
     internal var footer: HeaderFooterView = .view(ViewHeaderFooter(title: "Section Footer\nHola"))
+
+    convenience init(items: [TableItem]) {
+        self.init()
+        self.items.insert(contentsOf: items, at: 0)
+    }
+}
+
+class ViewHeaderFooterSectionInstaciated: TableSection {
+    var items: ObservableArray<TableItem> = []
+
+    internal var header: HeaderFooterView = .view(TestRegisterHeaderFooterViewItem())
+    internal var footer: HeaderFooterView = .view(TestRegisterHeaderFooterViewItem())
 
     convenience init(items: [TableItem]) {
         self.init()
@@ -318,4 +347,5 @@ class TableViewDelegateTests: XCTestCase {
                                     withSender: nil)
         expect(actionableItem.check) == 1
     }
+    
 }

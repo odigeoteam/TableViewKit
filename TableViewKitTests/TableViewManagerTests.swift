@@ -213,4 +213,42 @@ class TableViewManagerTests: XCTestCase {
         XCTAssertEqual(tableManager.zPositionForCellCallsCount, 1)
         XCTAssertEqual(cell.layer.zPosition, zPosition)
     }
+
+    func testZPositionForHeader() throws {
+        // Given
+        let zPosition: CGFloat = 4
+        let tableManager = tableManagerForInstanciatedSections(itemsBySection: 3, numberOfSections: 2)
+        tableManager.zPositionForHeaderReturnValue = zPosition
+        let delegate = try XCTUnwrap(tableManager.delegate)
+        // When
+        let headerSection0 = try XCTUnwrap(delegate.tableView(tableManager.tableView, viewForHeaderInSection: 0))
+        let headerSection1 = try XCTUnwrap(delegate.tableView(tableManager.tableView, viewForHeaderInSection: 1))
+        // Then
+        XCTAssertEqual(tableManager.zPositionForHeaderCallsCount, 2)
+        XCTAssertEqual(headerSection0.layer.zPosition, zPosition)
+        XCTAssertEqual(headerSection1.layer.zPosition, zPosition)
+    }
+
+    func testZPositionForFooter() throws {
+        // Given
+        let zPosition: CGFloat = 4
+        let tableManager = tableManagerForInstanciatedSections(itemsBySection: 3, numberOfSections: 2)
+        tableManager.zPositionForFooterReturnValue = zPosition
+        let delegate = try XCTUnwrap(tableManager.delegate)
+        // When
+        let footerSection0 = try XCTUnwrap(delegate.tableView(tableManager.tableView, viewForFooterInSection: 0))
+        let footerSection1 = try XCTUnwrap(delegate.tableView(tableManager.tableView, viewForFooterInSection: 1))
+        // Then
+        XCTAssertEqual(tableManager.zPositionForFooterCallsCount, 2)
+        XCTAssertEqual(footerSection0.layer.zPosition, zPosition)
+        XCTAssertEqual(footerSection1.layer.zPosition, zPosition)
+    }
+
+    private func tableManagerForInstanciatedSections(itemsBySection: Int, numberOfSections: Int) -> TableViewManagerMock {
+        let sections = Array(
+            repeating: ViewHeaderFooterSectionInstaciated(items: .init(repeating: TestItem(), count: itemsBySection)),
+            count: numberOfSections
+        )
+        return TableViewManagerMock(tableView: UITableView(), sections: sections)
+    }
 }
