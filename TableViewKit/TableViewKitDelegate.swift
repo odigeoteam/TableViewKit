@@ -77,14 +77,16 @@ open class TableViewKitDelegate: NSObject, UITableViewDelegate {
     /// Implementation of UITableViewDelegate
     // swiftlint:disable:next line_length
     public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let item = manager.item(at: indexPath) as? Editable else { return nil }
+        guard manager.itemExists(at: indexPath),
+            let item = manager.item(at: indexPath) as? Editable else { return nil }
         return item.trailingConfiguration
     }
 
     /// Implementation of UITableViewDelegate
     // swiftlint:disable:next line_length
     public func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let item = manager.item(at: indexPath) as? Editable else { return nil }
+        guard manager.itemExists(at: indexPath),
+              let item = manager.item(at: indexPath) as? Editable else { return nil }
         return item.leadingConfiguration
     }
 

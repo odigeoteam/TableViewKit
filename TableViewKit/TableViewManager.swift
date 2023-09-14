@@ -129,4 +129,19 @@ extension TableViewManager {
     func item(at indexPath: IndexPath) -> TableItem {
         return sections[indexPath.section].items[indexPath.row]
     }
+    func itemExists(at indexPath: IndexPath) -> Bool {
+        sections[safe: indexPath.section]?.items[safe: indexPath.row] != nil
+    }
+}
+
+private extension Collection {
+    /// Returns the element at the specified index if it is within bounds, otherwise nil.
+    subscript(safe index: Index) -> Iterator.Element? {
+        self.existElement(at: index) ? self[index] : nil
+    }
+
+    /// Returns if exist element at the specified index
+    func existElement(at index: Index) -> Bool {
+        indices.contains(index)
+    }
 }
