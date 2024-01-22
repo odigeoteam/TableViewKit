@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 /// A Nib/Class loadable type
 public enum NibClassType<T> {

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 @available(*, deprecated, renamed: "TableItem")
 public typealias Item = TableItem

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 /// Defines either a dynamic or static height
 public enum Height {
