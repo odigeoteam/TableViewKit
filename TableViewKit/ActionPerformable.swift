@@ -1,5 +1,5 @@
 import Foundation
-
+import UIKit
 /// A type that represent the kind of action an item should perform.
 /// I.e.: copy or paste
 public enum ItemAction {

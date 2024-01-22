@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 /// A type that represent an item that can be edited
 public protocol Editable: TableItem {
